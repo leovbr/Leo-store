@@ -65,7 +65,9 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
 
-  /* fallback */
+  /* =========================================
+     FALLBACK LAST ORDER
+     ========================================= */
 
   if (!order) {
 
@@ -155,9 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     </div>
 
-
     <hr>
-
 
     <div class="order-info">
 
@@ -194,9 +194,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     </div>
 
-
     <hr>
-
 
     <div class="payment-box">
 
@@ -213,7 +211,6 @@ document.addEventListener("DOMContentLoaded", () => {
           Number(order.price)
         )}
       </h2>
-
 
       ${
         order.payment === "qris"
@@ -247,7 +244,6 @@ document.addEventListener("DOMContentLoaded", () => {
           : ""
       }
 
-
       ${
         order.payment === "ewallet"
           ? `
@@ -259,7 +255,6 @@ document.addEventListener("DOMContentLoaded", () => {
           : ""
       }
 
-
       ${
         order.payment === "bank"
           ? `
@@ -270,7 +265,6 @@ document.addEventListener("DOMContentLoaded", () => {
           `
           : ""
       }
-
 
       <button
         id="paidButton"
@@ -292,7 +286,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById(
       "paidButton"
     );
-
 
   if (!paidButton) return;
 
@@ -317,7 +310,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
           order.status =
             "Pembayaran Berhasil";
-
 
           order.paidAt =
             new Date().toISOString();
@@ -378,7 +370,6 @@ document.addEventListener("DOMContentLoaded", () => {
             )
           );
 
-
           localStorage.setItem(
             "fidelis_last_order",
             JSON.stringify(
@@ -388,11 +379,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
           /* =================================
-             START TRANSACTION
+             REDIRECT
              ================================= */
 
-          startTransaction(
-            order.orderId
+          window.location.replace(
+            `order.html?id=${encodeURIComponent(
+              order.orderId
+            )}`
           );
 
         },
@@ -403,205 +396,6 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
 });
-
-
-/* =========================================
-   START TRANSACTION
-   ========================================= */
-
-function startTransaction(
-  orderId
-) {
-
-  let orders = [];
-
-  try {
-
-    orders =
-      JSON.parse(
-        localStorage.getItem(
-          "fidelis_orders"
-        )
-      ) || [];
-
-  } catch (error) {
-
-    orders = [];
-
-  }
-
-
-  const index =
-    orders.findIndex(
-      order =>
-        order.orderId === orderId
-    );
-
-
-  if (index === -1) {
-
-    console.error(
-      "Order tidak ditemukan."
-    );
-
-    return;
-
-  }
-
-
-  const order =
-    orders[index];
-
-
-  /* =========================================
-     CHANGE TO PROCESSING
-     ========================================= */
-
-  order.status =
-    "Pesanan Diproses";
-
-  order.processingAt =
-    new Date().toISOString();
-
-
-  orders[index] =
-    order;
-
-
-  localStorage.setItem(
-    "fidelis_orders",
-    JSON.stringify(
-      orders
-    )
-  );
-
-
-  localStorage.setItem(
-    "fidelis_last_order",
-    JSON.stringify(
-      order
-    )
-  );
-
-
-  /*
-   * Beri waktu 4 detik untuk
-   * simulasi proses top up.
-   */
-
-  setTimeout(
-    () => {
-
-      completeTransaction(
-        orderId
-      );
-
-    },
-    4000
-  );
-
-
-  /*
-   * Tampilkan halaman processing
-   */
-
-  window.location.replace(
-    `order.html?id=${encodeURIComponent(
-      orderId
-    )}`
-  );
-
-}
-
-
-/* =========================================
-   COMPLETE TRANSACTION
-   ========================================= */
-
-function completeTransaction(
-  orderId
-) {
-
-  let orders = [];
-
-  try {
-
-    orders =
-      JSON.parse(
-        localStorage.getItem(
-          "fidelis_orders"
-        )
-      ) || [];
-
-  } catch (error) {
-
-    orders = [];
-
-  }
-
-
-  const index =
-    orders.findIndex(
-      order =>
-        order.orderId === orderId
-    );
-
-
-  if (index === -1) {
-    return;
-  }
-
-
-  const order =
-    orders[index];
-
-
-  /* =========================================
-     COMPLETE
-     ========================================= */
-
-  order.status =
-    "Top Up Berhasil";
-
-  order.completedAt =
-    new Date().toISOString();
-
-
-  orders[index] =
-    order;
-
-
-  /* =========================================
-     SAVE
-     ========================================= */
-
-  localStorage.setItem(
-    "fidelis_orders",
-    JSON.stringify(
-      orders
-    )
-  );
-
-
-  localStorage.setItem(
-    "fidelis_last_order",
-    JSON.stringify(
-      order
-    )
-  );
-
-
-  /* =========================================
-     BACK TO ORDER
-     ========================================= */
-
-  window.location.replace(
-    `order.html?id=${encodeURIComponent(
-      orderId
-    )}`
-  );
-
-}
 
 
 /* =========================================
