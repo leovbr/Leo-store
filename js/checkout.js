@@ -1,5 +1,5 @@
 /* =========================================
-   FIDELIS TOPUP
+   LEO STORE
    CHECKOUT ENGINE
    ========================================= */
 
@@ -11,9 +11,9 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!form) return;
 
 
-  /* =======================================
-     ELEMENTS
-     ======================================= */
+  /* =========================================
+     ELEMENT
+     ========================================= */
 
   const gameSelect =
     document.getElementById("game");
@@ -31,22 +31,22 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("payment");
 
 
-  /* =======================================
-     GET GAME FROM URL
-     ======================================= */
+  /* =========================================
+     URL PARAMETER
+     ========================================= */
 
   const params =
     new URLSearchParams(
       window.location.search
     );
 
-  const gameSlug =
+  let gameSlug =
     params.get("game");
 
 
-  /* =======================================
+  /* =========================================
      LOAD GAME
-     ======================================= */
+     ========================================= */
 
   function loadGame() {
 
@@ -54,17 +54,23 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+
     const product =
       getProduct(gameSlug);
 
+
     if (!product) {
+
+      alert(
+        "Game tidak ditemukan."
+      );
+
       return;
+
     }
 
 
-    /*
-     * Select game.
-     */
+    /* pilih game */
 
     if (gameSelect) {
 
@@ -74,9 +80,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /*
-     * Update nominal.
-     */
+    /* =====================================
+       NOMINAL
+       ===================================== */
 
     if (nominalSelect) {
 
@@ -84,6 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
         `<option value="">
           Pilih Nominal
         </option>`;
+
 
       product.denominations.forEach(
         item => {
@@ -93,11 +100,14 @@ document.addEventListener("DOMContentLoaded", () => {
               "option"
             );
 
+
           option.value =
             item.id;
 
+
           option.textContent =
             `${item.amount} — ${formatPrice(item.price)}`;
+
 
           nominalSelect.appendChild(
             option
@@ -109,40 +119,67 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /*
-     * Server visibility.
-     */
+    /* =====================================
+       SERVER / ZONE
+       ===================================== */
 
-    if (serverInput) {
+    updateServerField(
+      product
+    );
 
-      const serverLabel =
-        document.querySelector(
-          'label[for="server"]'
-        );
+  }
 
-      if (product.requiresServer) {
 
-        serverInput.required = true;
+  /* =========================================
+     SERVER FIELD
+     ========================================= */
 
-        serverInput.placeholder =
-          "Masukkan Server / Zone";
+  function updateServerField(
+    product
+  ) {
 
-        if (serverLabel) {
-          serverLabel.textContent =
-            "Server / Zone";
-        }
+    if (!serverInput) {
+      return;
+    }
 
-      } else {
 
-        serverInput.required = false;
+    const serverLabel =
+      document.querySelector(
+        'label[for="server"]'
+      );
 
-        serverInput.placeholder =
-          "Tidak diperlukan";
 
-        if (serverLabel) {
-          serverLabel.textContent =
-            "Server / Zone (Opsional)";
-        }
+    if (product.requiresServer) {
+
+      serverInput.required =
+        true;
+
+
+      serverInput.placeholder =
+        "Masukkan Server / Zone";
+
+
+      if (serverLabel) {
+
+        serverLabel.textContent =
+          "Server / Zone";
+
+      }
+
+    } else {
+
+      serverInput.required =
+        false;
+
+
+      serverInput.placeholder =
+        "Tidak diperlukan";
+
+
+      if (serverLabel) {
+
+        serverLabel.textContent =
+          "Server / Zone (Opsional)";
 
       }
 
@@ -151,21 +188,120 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  /* =======================================
-     UPDATE PRICE PREVIEW
-     ======================================= */
+  /* =========================================
+     GAME SELECT CHANGE
+     ========================================= */
+
+  if (gameSelect) {
+
+    gameSelect.addEventListener(
+      "change",
+      () => {
+
+        gameSlug =
+          gameSelect.value;
+
+
+        const product =
+          getProduct(gameSlug);
+
+
+        if (!product) {
+          return;
+        }
+
+
+        updateServerField(
+          product
+        );
+
+
+        if (nominalSelect) {
+
+          nominalSelect.innerHTML =
+            `<option value="">
+              Pilih Nominal
+            </option>`;
+
+
+          product.denominations.forEach(
+            item => {
+
+              const option =
+                document.createElement(
+                  "option"
+                );
+
+
+              option.value =
+                item.id;
+
+
+              option.textContent =
+                `${item.amount} — ${formatPrice(item.price)}`;
+
+
+              nominalSelect.appendChild(
+                option
+              );
+
+            }
+          );
+
+        }
+
+
+        const pricePreview =
+          document.getElementById(
+            "pricePreview"
+          );
+
+
+        if (pricePreview) {
+
+          pricePreview.textContent =
+            "";
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /* =========================================
+     PRICE PREVIEW
+     ========================================= */
 
   function updatePrice() {
 
     const selectedId =
       nominalSelect.value;
 
+
     const product =
       getProduct(gameSlug);
 
+
     if (!product || !selectedId) {
+
+      const pricePreview =
+        document.getElementById(
+          "pricePreview"
+        );
+
+
+      if (pricePreview) {
+        pricePreview.textContent =
+          "";
+      }
+
+
       return;
+
     }
+
 
     const denomination =
       getDenomination(
@@ -173,21 +309,17 @@ document.addEventListener("DOMContentLoaded", () => {
         selectedId
       );
 
+
     if (!denomination) {
       return;
     }
 
 
-    /*
-     * Kalau nanti kita tambahkan
-     * price preview element,
-     * otomatis akan digunakan.
-     */
-
     const priceElement =
       document.getElementById(
         "pricePreview"
       );
+
 
     if (priceElement) {
 
@@ -201,9 +333,19 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  /* =======================================
-     SUBMIT ORDER
-     ======================================= */
+  if (nominalSelect) {
+
+    nominalSelect.addEventListener(
+      "change",
+      updatePrice
+    );
+
+  }
+
+
+  /* =========================================
+     SUBMIT
+     ========================================= */
 
   form.addEventListener(
     "submit",
@@ -212,35 +354,48 @@ document.addEventListener("DOMContentLoaded", () => {
       event.preventDefault();
 
 
+      /* =====================================
+         VALIDATE GAME
+         ===================================== */
+
       const product =
         getProduct(gameSlug);
+
 
       if (!product) {
 
         alert(
-          "Produk tidak ditemukan."
+          "Silakan pilih game."
         );
 
         return;
+
       }
 
+
+      /* =====================================
+         GET DATA
+         ===================================== */
 
       const playerId =
         playerInput.value.trim();
 
+
       const server =
         serverInput.value.trim();
 
+
       const denominationId =
         nominalSelect.value;
+
 
       const payment =
         paymentSelect.value;
 
 
-      /* ===================================
+      /* =====================================
          VALIDATION
-         =================================== */
+         ===================================== */
 
       if (!playerId) {
 
@@ -251,6 +406,7 @@ document.addEventListener("DOMContentLoaded", () => {
         playerInput.focus();
 
         return;
+
       }
 
 
@@ -266,6 +422,7 @@ document.addEventListener("DOMContentLoaded", () => {
         serverInput.focus();
 
         return;
+
       }
 
 
@@ -278,6 +435,7 @@ document.addEventListener("DOMContentLoaded", () => {
         nominalSelect.focus();
 
         return;
+
       }
 
 
@@ -290,14 +448,20 @@ document.addEventListener("DOMContentLoaded", () => {
         paymentSelect.focus();
 
         return;
+
       }
 
+
+      /* =====================================
+         GET DENOMINATION
+         ===================================== */
 
       const denomination =
         getDenomination(
           gameSlug,
           denominationId
         );
+
 
       if (!denomination) {
 
@@ -306,12 +470,13 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         return;
+
       }
 
 
-      /* ===================================
+      /* =====================================
          GENERATE ORDER ID
-         =================================== */
+         ===================================== */
 
       const random =
         Math.floor(
@@ -319,21 +484,23 @@ document.addEventListener("DOMContentLoaded", () => {
           Math.random() * 9000
         );
 
+
       const orderId =
-        `FDL-${Date.now()
+        `LEO-${Date.now()
           .toString()
           .slice(-6)}-${random}`;
 
 
-      /* ===================================
+      /* =====================================
          CREATE ORDER
-         =================================== */
+         ===================================== */
 
       const order = {
 
         orderId,
 
-        game: gameSlug,
+        game:
+          gameSlug,
 
         gameName:
           product.name,
@@ -361,9 +528,9 @@ document.addEventListener("DOMContentLoaded", () => {
       };
 
 
-      /* ===================================
-         SAVE ORDER
-         =================================== */
+      /* =====================================
+         SAVE LAST ORDER
+         ===================================== */
 
       localStorage.setItem(
         "fidelis_last_order",
@@ -371,9 +538,9 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
 
-      /*
-       * Simpan juga ke daftar order.
-       */
+      /* =====================================
+         SAVE ORDER HISTORY
+         ===================================== */
 
       const existingOrders =
         JSON.parse(
@@ -382,7 +549,11 @@ document.addEventListener("DOMContentLoaded", () => {
           )
         ) || [];
 
-      existingOrders.push(order);
+
+      existingOrders.push(
+        order
+      );
+
 
       localStorage.setItem(
         "fidelis_orders",
@@ -392,26 +563,22 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
 
-      /* ===================================
-         REDIRECT
-         =================================== */
+      /* =====================================
+         GO TO PAYMENT
+         ===================================== */
 
       window.location.href =
-        `order.html?id=${encodeURIComponent(orderId)}`;
+        `payment.html?id=${encodeURIComponent(
+          orderId
+        )}`;
 
     }
   );
 
 
-  if (nominalSelect) {
-
-    nominalSelect.addEventListener(
-      "change",
-      updatePrice
-    );
-
-  }
-
+  /* =========================================
+     INITIALIZE
+     ========================================= */
 
   loadGame();
 
