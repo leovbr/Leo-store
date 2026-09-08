@@ -1,6 +1,6 @@
 /* =========================================
    LEO STORE
-   ORDER TRACKING
+   ORDER TRACKING + ORDER HISTORY
    ========================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!container) return;
 
+
   const params =
     new URLSearchParams(
       window.location.search
@@ -18,77 +19,142 @@ document.addEventListener("DOMContentLoaded", () => {
   const requestedId =
     params.get("id");
 
-  const orders =
+
+  let orders =
     getOrders();
 
   const lastOrder =
     getLastOrder();
 
-  let order = null;
+
+  /* =========================================
+     SINGLE ORDER MODE
+     ========================================= */
 
   if (requestedId) {
 
-    order =
+    let order =
       orders.find(
         item =>
           item.orderId === requestedId
       );
+
 
     if (
       !order &&
       lastOrder &&
       lastOrder.orderId === requestedId
     ) {
-      order = lastOrder;
+
+      order =
+        lastOrder;
+
     }
 
-  } else {
 
-    order = lastOrder;
+    if (!order) {
 
-  }
+      renderEmpty(
+        container,
+        "Pesanan tidak ditemukan."
+      );
 
-  if (!order) {
+      return;
 
-    container.innerHTML = `
+    }
 
-      <div class="order-empty">
 
-        <h3>
-          Belum Ada Pesanan
-        </h3>
+    renderOrder(
+      container,
+      order
+    );
 
-        <p>
-          Belum ada pesanan yang tersimpan.
-        </p>
 
-        <br>
+    handleProcessing(
+      order
+    );
 
-        <a href="shop.html">
-          <button>
-            Mulai Top Up
-          </button>
-        </a>
-
-      </div>
-
-    `;
 
     return;
 
   }
 
-  renderOrder(
+
+  /* =========================================
+     HISTORY MODE
+     ========================================= */
+
+  if (
+    !orders.length &&
+    lastOrder
+  ) {
+
+    orders = [
+      lastOrder
+    ];
+
+  }
+
+
+  if (!orders.length) {
+
+    renderEmpty(
+      container,
+      "Belum ada pesanan yang tersimpan."
+    );
+
+    return;
+
+  }
+
+
+  renderHistory(
     container,
-    order
+    orders
   );
 
 
   /*
-   * ================================
-   * STATUS MACHINE
-   * ================================
+   * Tetap cek order yang sedang diproses.
    */
+
+  orders.forEach(
+    order => {
+
+      if (
+        order.status ===
+        "Pembayaran Berhasil"
+      ) {
+
+        startProcessing(
+          order.orderId
+        );
+
+      }
+
+      else if (
+        order.status ===
+        "Pesanan Diproses"
+      ) {
+
+        continueProcessing(
+          order.orderId,
+          order.processingAt
+        );
+
+      }
+
+    }
+  );
+
+});
+
+
+/* =========================================
+   PROCESSING HANDLER
+   ========================================= */
+
+function handleProcessing(order) {
 
   if (
     order.status ===
@@ -113,14 +179,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-});
+}
 
 
-/*
- * ================================
- * MULAI PROSES TOP UP
- * ================================
- */
+/* =========================================
+   START PROCESSING
+   ========================================= */
 
 function startProcessing(orderId) {
 
@@ -137,24 +201,32 @@ function startProcessing(orderId) {
     return;
   }
 
+
   const order =
     orders[index];
+
 
   if (
     order.status !==
     "Pembayaran Berhasil"
   ) {
+
     return;
+
   }
+
 
   order.status =
     "Pesanan Diproses";
 
+
   order.processingAt =
     new Date().toISOString();
 
+
   orders[index] =
     order;
+
 
   saveOrders(
     orders
@@ -164,12 +236,11 @@ function startProcessing(orderId) {
     order
   );
 
-  renderOrder(
-    document.getElementById(
-      "orderContainer"
-    ),
+
+  renderCurrentPage(
     order
   );
+
 
   continueProcessing(
     order.orderId,
@@ -179,11 +250,9 @@ function startProcessing(orderId) {
 }
 
 
-/*
- * ================================
- * LANJUTKAN PROSES
- * ================================
- */
+/* =========================================
+   CONTINUE PROCESSING
+   ========================================= */
 
 function continueProcessing(
   orderId,
@@ -197,25 +266,30 @@ function continueProcessing(
 
   }
 
+
   const started =
     new Date(
       processingAt
     ).getTime();
 
-  const now =
-    Date.now();
-
-  const processingDuration =
-    4000;
 
   const elapsed =
-    now - started;
+    Date.now() -
+    started;
+
+
+  const duration =
+    4000;
+
 
   const remaining =
-    processingDuration - elapsed;
+    duration -
+    elapsed;
 
 
-  if (remaining <= 0) {
+  if (
+    remaining <= 0
+  ) {
 
     completeTransaction(
       orderId
@@ -240,16 +314,15 @@ function continueProcessing(
 }
 
 
-/*
- * ================================
- * SELESAIKAN TRANSAKSI
- * ================================
- */
+/* =========================================
+   COMPLETE TRANSACTION
+   ========================================= */
 
 function completeTransaction(orderId) {
 
   const orders =
     getOrders();
+
 
   const index =
     orders.findIndex(
@@ -257,28 +330,37 @@ function completeTransaction(orderId) {
         item.orderId === orderId
     );
 
+
   if (index === -1) {
     return;
   }
 
+
   const order =
     orders[index];
+
 
   if (
     order.status !==
     "Pesanan Diproses"
   ) {
+
     return;
+
   }
+
 
   order.status =
     "Top Up Berhasil";
 
+
   order.completedAt =
     new Date().toISOString();
 
+
   orders[index] =
     order;
+
 
   saveOrders(
     orders
@@ -288,61 +370,83 @@ function completeTransaction(orderId) {
     order
   );
 
-  renderOrder(
-    document.getElementById(
-      "orderContainer"
-    ),
+
+  renderCurrentPage(
     order
   );
 
 }
 
 
-/*
- * ================================
- * RENDER ORDER
- * ================================
- */
+/* =========================================
+   RENDER CURRENT ORDER
+   ========================================= */
+
+function renderCurrentPage(order) {
+
+  const container =
+    document.getElementById(
+      "orderContainer"
+    );
+
+
+  if (!container) {
+    return;
+  }
+
+
+  renderOrder(
+    container,
+    order
+  );
+
+}
+
+
+/* =========================================
+   ORDER DETAIL
+   ========================================= */
 
 function renderOrder(
   container,
   order
 ) {
 
-  let dateText = "-";
+  const dateText =
+    formatDate(
+      order.createdAt
+    );
 
-  if (order.createdAt) {
-
-    dateText =
-      new Date(
-        order.createdAt
-      ).toLocaleString(
-        "id-ID",
-        {
-          dateStyle: "medium",
-          timeStyle: "short"
-        }
-      );
-
-  }
 
   const status =
     order.status ||
     "Menunggu Pembayaran";
 
+
   const paymentDone =
-    status === "Pembayaran Berhasil" ||
-    status === "Pesanan Diproses" ||
-    status === "Top Up Berhasil";
+    status ===
+      "Pembayaran Berhasil" ||
+    status ===
+      "Pesanan Diproses" ||
+    status ===
+      "Top Up Berhasil";
+
 
   const processing =
-    status === "Pesanan Diproses" ||
-    status === "Top Up Berhasil";
+    status ===
+      "Pesanan Diproses" ||
+    status ===
+      "Top Up Berhasil";
+
 
   const success =
-    status === "Top Up Berhasil";
+    status ===
+    "Top Up Berhasil";
 
-  let paymentButton = "";
+
+  let paymentButton =
+    "";
+
 
   if (
     status ===
@@ -441,7 +545,9 @@ function renderOrder(
       <p>
         <strong>Pembayaran:</strong>
         ${escapeHTML(
-          order.payment
+          getPaymentName(
+            order.payment
+          )
         )}
       </p>
 
@@ -503,6 +609,16 @@ function renderOrder(
 
     <br>
 
+    <a href="order.html">
+
+      <button>
+        Riwayat Pesanan
+      </button>
+
+    </a>
+
+    <br><br>
+
     <a href="shop.html">
 
       <button>
@@ -516,11 +632,248 @@ function renderOrder(
 }
 
 
-/*
- * ================================
- * STORAGE
- * ================================
- */
+/* =========================================
+   ORDER HISTORY
+   ========================================= */
+
+function renderHistory(
+  container,
+  orders
+) {
+
+  /*
+   * Pesanan terbaru berada di atas.
+   */
+
+  const sortedOrders =
+    [...orders].sort(
+      (a, b) => {
+
+        return (
+          new Date(
+            b.createdAt || 0
+          ) -
+          new Date(
+            a.createdAt || 0
+          )
+        );
+
+      }
+    );
+
+
+  let html = `
+
+    <section>
+
+      <h3>
+        Riwayat Pesanan
+      </h3>
+
+  `;
+
+
+  sortedOrders.forEach(
+    order => {
+
+      const status =
+        order.status ||
+        "Menunggu Pembayaran";
+
+
+      html += `
+
+        <article class="order-history-card">
+
+          <p>
+            <strong>
+              ${escapeHTML(
+                order.orderId
+              )}
+            </strong>
+          </p>
+
+          <p>
+            ${escapeHTML(
+              order.gameName ||
+              order.game
+            )}
+          </p>
+
+          <p>
+            ${escapeHTML(
+              order.amount
+            )}
+          </p>
+
+          <p>
+            ${formatPrice(
+              Number(order.price)
+            )}
+          </p>
+
+          <p>
+            Status:
+            <strong>
+              ${escapeHTML(
+                status
+              )}
+            </strong>
+          </p>
+
+          <a
+            href="order.html?id=${encodeURIComponent(
+              order.orderId
+            )}"
+          >
+
+            <button>
+              Lihat Detail
+            </button>
+
+          </a>
+
+        </article>
+
+        <br>
+
+      `;
+
+    }
+  );
+
+
+  html += `
+
+    </section>
+
+    <br>
+
+    <a href="shop.html">
+
+      <button>
+        Top Up Lagi
+      </button>
+
+    </a>
+
+  `;
+
+
+  container.innerHTML =
+    html;
+
+}
+
+
+/* =========================================
+   EMPTY STATE
+   ========================================= */
+
+function renderEmpty(
+  container,
+  message
+) {
+
+  container.innerHTML = `
+
+    <div class="order-empty">
+
+      <h3>
+        Belum Ada Pesanan
+      </h3>
+
+      <p>
+        ${escapeHTML(
+          message
+        )}
+      </p>
+
+      <br>
+
+      <a href="shop.html">
+
+        <button>
+          Mulai Top Up
+        </button>
+
+      </a>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================
+   PAYMENT NAME
+   ========================================= */
+
+function getPaymentName(
+  payment
+) {
+
+  if (
+    payment === "qris"
+  ) {
+    return "QRIS";
+  }
+
+  if (
+    payment === "ewallet"
+  ) {
+    return "E-Wallet";
+  }
+
+  if (
+    payment === "bank"
+  ) {
+    return "Virtual Account";
+  }
+
+  return payment || "-";
+
+}
+
+
+/* =========================================
+   FORMAT DATE
+   ========================================= */
+
+function formatDate(
+  date
+) {
+
+  if (!date) {
+    return "-";
+  }
+
+
+  try {
+
+    return new Date(
+      date
+    ).toLocaleString(
+      "id-ID",
+      {
+        dateStyle: "medium",
+        timeStyle: "short"
+      }
+    );
+
+  } catch (error) {
+
+    return "-";
+
+  }
+
+}
+
+
+/* =========================================
+   STORAGE
+   ========================================= */
 
 function getOrders() {
 
@@ -560,33 +913,41 @@ function getLastOrder() {
 }
 
 
-function saveOrders(orders) {
+function saveOrders(
+  orders
+) {
 
   localStorage.setItem(
     "fidelis_orders",
-    JSON.stringify(orders)
+    JSON.stringify(
+      orders
+    )
   );
 
 }
 
 
-function saveLastOrder(order) {
+function saveLastOrder(
+  order
+) {
 
   localStorage.setItem(
     "fidelis_last_order",
-    JSON.stringify(order)
+    JSON.stringify(
+      order
+    )
   );
 
 }
 
 
-/*
- * ================================
- * FORMAT PRICE
- * ================================
- */
+/* =========================================
+   FORMAT PRICE
+   ========================================= */
 
-function formatPrice(price) {
+function formatPrice(
+  price
+) {
 
   return new Intl.NumberFormat(
     "id-ID",
@@ -600,19 +961,36 @@ function formatPrice(price) {
 }
 
 
-/*
- * ================================
- * SECURITY
- * ================================
- */
+/* =========================================
+   SECURITY
+   ========================================= */
 
-function escapeHTML(value) {
+function escapeHTML(
+  value
+) {
 
-  return String(value ?? "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+  return String(
+    value ?? ""
+  )
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
 
 }
