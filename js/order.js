@@ -1,6 +1,6 @@
 /* =========================================
    LEO STORE
-   ORDER TRACKING + ORDER HISTORY
+   ORDER TRACKING + HISTORY + SEARCH
    ========================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -27,9 +27,11 @@ document.addEventListener("DOMContentLoaded", () => {
     getLastOrder();
 
 
-  /* =========================================
-     SINGLE ORDER DETAIL
-     ========================================= */
+  /*
+   * ========================================
+   * SINGLE ORDER DETAIL
+   * ========================================
+   */
 
   if (requestedId) {
 
@@ -80,9 +82,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  /* =========================================
-     HISTORY MODE
-     ========================================= */
+  /*
+   * ========================================
+   * HISTORY MODE
+   * ========================================
+   */
 
   if (
     !orders.length &&
@@ -96,27 +100,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  if (!orders.length) {
-
-    renderEmpty(
-      container,
-      "Belum ada pesanan yang tersimpan."
-    );
-
-    return;
-
-  }
-
-
-  renderHistory(
+  renderHistoryPage(
     container,
     orders
   );
 
 
   /*
-   * Check semua transaksi
-   * yang masih berjalan.
+   * Check transaksi berjalan.
    */
 
   orders.forEach(
@@ -615,7 +606,7 @@ function renderOrder(
     <a href="order.html">
 
       <button>
-        Riwayat Pesanan
+        ← Riwayat Pesanan
       </button>
 
     </a>
@@ -636,10 +627,10 @@ function renderOrder(
 
 
 /* =========================================
-   ORDER HISTORY
+   HISTORY PAGE
    ========================================= */
 
-function renderHistory(
+function renderHistoryPage(
   container,
   orders
 ) {
@@ -661,38 +652,283 @@ function renderHistory(
     );
 
 
-  let html = `
+  container.innerHTML = `
 
-    <div class="history-section-header">
+    <div class="history-page">
 
-      <div>
+      <div
+        class="history-section-header"
+      >
 
-        <h3>
-          Riwayat Pesanan
-        </h3>
+        <div>
 
-        <p
-          style="
-            margin: 4px 0 0;
-            opacity: .5;
-            font-size: 12px;
-          "
+          <h3>
+            Riwayat Pesanan
+          </h3>
+
+          <p
+            style="
+              margin: 4px 0 0;
+              opacity: .5;
+              font-size: 12px;
+            "
+          >
+            Kelola dan cari transaksi kamu
+          </p>
+
+        </div>
+
+        <span
+          class="history-count"
+          id="historyCount"
         >
-          Semua transaksi kamu
-        </p>
+          ${sortedOrders.length} Pesanan
+        </span>
 
       </div>
 
-      <span class="history-count">
-        ${sortedOrders.length} Pesanan
-      </span>
+
+      <div
+        class="history-tools"
+      >
+
+        <div
+          class="history-search"
+        >
+
+          <span>
+            🔎
+          </span>
+
+          <input
+            type="text"
+            id="orderSearch"
+            placeholder="Cari Order ID atau Player ID..."
+            autocomplete="off"
+          >
+
+        </div>
+
+
+        <select
+          id="statusFilter"
+          class="history-filter"
+        >
+
+          <option value="all">
+            Semua Status
+          </option>
+
+          <option value="Top Up Berhasil">
+            Berhasil
+          </option>
+
+          <option value="Pesanan Diproses">
+            Diproses
+          </option>
+
+          <option value="Pembayaran Berhasil">
+            Pembayaran Berhasil
+          </option>
+
+          <option value="Menunggu Pembayaran">
+            Menunggu Pembayaran
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div
+        id="historyList"
+      ></div>
 
     </div>
+
+    <br>
+
+    <a href="shop.html">
+
+      <button>
+        + Top Up Lagi
+      </button>
+
+    </a>
 
   `;
 
 
-  sortedOrders.forEach(
+  const searchInput =
+    document.getElementById(
+      "orderSearch"
+    );
+
+  const statusFilter =
+    document.getElementById(
+      "statusFilter"
+    );
+
+
+  function updateHistory() {
+
+    const keyword =
+      searchInput.value
+        .trim()
+        .toLowerCase();
+
+
+    const selectedStatus =
+      statusFilter.value;
+
+
+    const filtered =
+      sortedOrders.filter(
+        order => {
+
+          const orderId =
+            String(
+              order.orderId || ""
+            ).toLowerCase();
+
+
+          const playerId =
+            String(
+              order.playerId || ""
+            ).toLowerCase();
+
+
+          const gameName =
+            String(
+              order.gameName ||
+              order.game ||
+              ""
+            ).toLowerCase();
+
+
+          const matchesSearch =
+            !keyword ||
+            orderId.includes(
+              keyword
+            ) ||
+            playerId.includes(
+              keyword
+            ) ||
+            gameName.includes(
+              keyword
+            );
+
+
+          const matchesStatus =
+            selectedStatus ===
+              "all" ||
+            (
+              order.status ||
+              "Menunggu Pembayaran"
+            ) ===
+              selectedStatus;
+
+
+          return (
+            matchesSearch &&
+            matchesStatus
+          );
+
+        }
+      );
+
+
+    renderHistoryList(
+      filtered
+    );
+
+
+    const count =
+      document.getElementById(
+        "historyCount"
+      );
+
+
+    if (count) {
+
+      count.textContent =
+        `${filtered.length} Pesanan`;
+
+    }
+
+  }
+
+
+  searchInput.addEventListener(
+    "input",
+    updateHistory
+  );
+
+
+  statusFilter.addEventListener(
+    "change",
+    updateHistory
+  );
+
+
+  updateHistory();
+
+}
+
+
+/* =========================================
+   HISTORY LIST
+   ========================================= */
+
+function renderHistoryList(
+  orders
+) {
+
+  const list =
+    document.getElementById(
+      "historyList"
+    );
+
+
+  if (!list) {
+    return;
+  }
+
+
+  if (!orders.length) {
+
+    list.innerHTML = `
+
+      <div
+        class="history-no-result"
+      >
+
+        <div>
+          🔎
+        </div>
+
+        <h3>
+          Pesanan Tidak Ditemukan
+        </h3>
+
+        <p>
+          Coba gunakan Order ID,
+          Player ID, atau filter lain.
+        </p>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  let html = "";
+
+
+  orders.forEach(
     order => {
 
       const status =
@@ -738,9 +974,13 @@ function renderHistory(
           class="order-history-card"
         >
 
-          <div class="history-top">
+          <div
+            class="history-top"
+          >
 
-            <div class="history-game">
+            <div
+              class="history-game"
+            >
 
               <div
                 class="history-game-icon"
@@ -786,9 +1026,13 @@ function renderHistory(
           </div>
 
 
-          <div class="history-body">
+          <div
+            class="history-body"
+          >
 
-            <div class="history-info">
+            <div
+              class="history-info"
+            >
 
               <span
                 class="history-label"
@@ -807,7 +1051,9 @@ function renderHistory(
             </div>
 
 
-            <div class="history-info">
+            <div
+              class="history-info"
+            >
 
               <span
                 class="history-label"
@@ -826,7 +1072,9 @@ function renderHistory(
             </div>
 
 
-            <div class="history-info">
+            <div
+              class="history-info"
+            >
 
               <span
                 class="history-label"
@@ -847,7 +1095,9 @@ function renderHistory(
             </div>
 
 
-            <div class="history-info">
+            <div
+              class="history-info"
+            >
 
               <span
                 class="history-label"
@@ -870,15 +1120,19 @@ function renderHistory(
           </div>
 
 
-          <div class="history-bottom">
+          <div
+            class="history-bottom"
+          >
 
             <span
               class="history-order-id"
             >
+
               ID:
               ${escapeHTML(
                 order.orderId
               )}
+
             </span>
 
 
@@ -888,7 +1142,9 @@ function renderHistory(
                 order.orderId
               )}"
             >
+
               Lihat Detail →
+
             </a>
 
           </div>
@@ -901,22 +1157,7 @@ function renderHistory(
   );
 
 
-  html += `
-
-    <br>
-
-    <a href="shop.html">
-
-      <button>
-        + Top Up Lagi
-      </button>
-
-    </a>
-
-  `;
-
-
-  container.innerHTML =
+  list.innerHTML =
     html;
 
 }
@@ -964,7 +1205,9 @@ function renderEmpty(
 
   container.innerHTML = `
 
-    <div class="order-empty">
+    <div
+      class="order-empty"
+    >
 
       <div
         style="
@@ -1011,27 +1254,21 @@ function getPaymentName(payment) {
   if (
     payment === "qris"
   ) {
-
     return "QRIS";
-
   }
 
 
   if (
     payment === "ewallet"
   ) {
-
     return "E-Wallet";
-
   }
 
 
   if (
     payment === "bank"
   ) {
-
     return "Virtual Account";
-
   }
 
 
@@ -1186,4 +1423,4 @@ function escapeHTML(value) {
       "&#039;"
     );
 
-     }
+}
