@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =========================================
-     AMBIL ORDER ID DARI URL
+     GET ORDER ID
      ========================================= */
 
   const params =
@@ -24,16 +24,39 @@ document.addEventListener("DOMContentLoaded", () => {
     params.get("id");
 
 
+  if (!orderId) {
+
+    showError(
+      container,
+      "Order ID tidak ditemukan."
+    );
+
+    return;
+
+  }
+
+
   /* =========================================
-     AMBIL DATA ORDER
+     LOAD ORDER
      ========================================= */
 
-  const orders =
-    JSON.parse(
-      localStorage.getItem(
-        "fidelis_orders"
-      )
-    ) || [];
+  let orders = [];
+
+  try {
+
+    orders =
+      JSON.parse(
+        localStorage.getItem(
+          "fidelis_orders"
+        )
+      ) || [];
+
+  } catch (error) {
+
+    orders = [];
+
+  }
+
 
   let order =
     orders.find(
@@ -42,23 +65,35 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
 
-  /* fallback ke last order */
+  /* fallback */
 
   if (!order) {
 
-    const lastOrder =
-      JSON.parse(
-        localStorage.getItem(
-          "fidelis_last_order"
-        )
+    try {
+
+      const lastOrder =
+        JSON.parse(
+          localStorage.getItem(
+            "fidelis_last_order"
+          )
+        );
+
+      if (
+        lastOrder &&
+        lastOrder.orderId === orderId
+      ) {
+
+        order =
+          lastOrder;
+
+      }
+
+    } catch (error) {
+
+      console.error(
+        "Gagal membaca last order:",
+        error
       );
-
-    if (
-      lastOrder &&
-      lastOrder.orderId === orderId
-    ) {
-
-      order = lastOrder;
 
     }
 
@@ -66,35 +101,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =========================================
-     ORDER TIDAK DITEMUKAN
+     ORDER NOT FOUND
      ========================================= */
 
   if (!order) {
 
-    container.innerHTML = `
-
-      <div class="order-empty">
-
-        <h3>
-          Pesanan Tidak Ditemukan
-        </h3>
-
-        <p>
-          Order ID tidak valid atau
-          data pesanan sudah tidak tersedia.
-        </p>
-
-        <br>
-
-        <a href="shop.html">
-          <button>
-            Kembali ke Top Up
-          </button>
-        </a>
-
-      </div>
-
-    `;
+    showError(
+      container,
+      "Pesanan tidak ditemukan."
+    );
 
     return;
 
@@ -102,74 +117,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =========================================
-     CEK STATUS
-     ========================================= */
-
-  if (
-    order.status !==
-    "Menunggu Pembayaran"
-  ) {
-
-    container.innerHTML = `
-
-      <div class="order-empty">
-
-        <h3>
-          Pesanan Sudah Diproses
-        </h3>
-
-        <p>
-          Status pesanan:
-          <strong>
-            ${escapeHTML(order.status)}
-          </strong>
-        </p>
-
-        <br>
-
-        <a href="order.html?id=${encodeURIComponent(order.orderId)}">
-          <button>
-            Lihat Pesanan
-          </button>
-        </a>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  /* =========================================
-     PAYMENT METHOD
+     PAYMENT NAME
      ========================================= */
 
   let paymentName =
     order.payment;
 
+
   if (order.payment === "qris") {
-
     paymentName = "QRIS";
-
   }
 
   if (order.payment === "ewallet") {
-
     paymentName = "E-Wallet";
-
   }
 
   if (order.payment === "bank") {
-
     paymentName = "Virtual Account";
-
   }
 
 
   /* =========================================
-     RENDER PAYMENT PAGE
+     RENDER PAYMENT
      ========================================= */
 
   container.innerHTML = `
@@ -186,6 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     </div>
 
+
     <hr>
 
 
@@ -197,6 +167,22 @@ document.addEventListener("DOMContentLoaded", () => {
       </p>
 
       <p>
+        <strong>Player:</strong>
+        ${escapeHTML(order.playerId)}
+      </p>
+
+      ${
+        order.server
+          ? `
+            <p>
+              <strong>Server:</strong>
+              ${escapeHTML(order.server)}
+            </p>
+          `
+          : ""
+      }
+
+      <p>
         <strong>Produk:</strong>
         ${escapeHTML(order.amount)}
       </p>
@@ -206,14 +192,8 @@ document.addEventListener("DOMContentLoaded", () => {
         ${escapeHTML(paymentName)}
       </p>
 
-      <p>
-        <strong>Total:</strong>
-        ${formatPrice(
-          Number(order.price)
-        )}
-      </p>
-
     </div>
+
 
     <hr>
 
@@ -224,12 +204,24 @@ document.addEventListener("DOMContentLoaded", () => {
         Menunggu Pembayaran
       </h3>
 
+      <p>
+        Silakan lakukan pembayaran sebesar:
+      </p>
+
+      <h2>
+        ${formatPrice(
+          Number(order.price)
+        )}
+      </h2>
+
+
       ${
         order.payment === "qris"
           ? `
             <div class="fake-qris">
 
               <div class="fake-qris-pattern">
+
                 ▦ ▦ ▦ ▦ ▦
                 <br>
                 ▦ ▦ ▦ ▦ ▦
@@ -239,6 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ▦ ▦ ▦ ▦ ▦
                 <br>
                 ▦ ▦ ▦ ▦ ▦
+
               </div>
 
               <p>
@@ -259,8 +252,8 @@ document.addEventListener("DOMContentLoaded", () => {
         order.payment === "ewallet"
           ? `
             <p>
-              Silakan lakukan pembayaran
-              melalui E-Wallet yang tersedia.
+              Lakukan pembayaran melalui
+              E-Wallet yang dipilih.
             </p>
           `
           : ""
@@ -271,19 +264,12 @@ document.addEventListener("DOMContentLoaded", () => {
         order.payment === "bank"
           ? `
             <p>
-              Silakan lakukan pembayaran
-              melalui Virtual Account.
+              Lakukan pembayaran melalui
+              Virtual Account.
             </p>
           `
           : ""
       }
-
-
-      <h2>
-        ${formatPrice(
-          Number(order.price)
-        )}
-      </h2>
 
 
       <button
@@ -299,13 +285,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =========================================
-     BUTTON SUDAH BAYAR
+     PAID BUTTON
      ========================================= */
 
   const paidButton =
     document.getElementById(
       "paidButton"
     );
+
 
   if (!paidButton) return;
 
@@ -318,22 +305,48 @@ document.addEventListener("DOMContentLoaded", () => {
         true;
 
       paidButton.textContent =
-        "Memverifikasi Pembayaran...";
+        "Memverifikasi...";
 
+
+      /* =====================================
+         SIMULATE PAYMENT VERIFICATION
+         ===================================== */
 
       setTimeout(
         () => {
-
-          /* update order */
 
           order.status =
             "Pembayaran Berhasil";
 
 
-          /* update array */
+          order.paidAt =
+            new Date().toISOString();
+
+
+          /* =================================
+             UPDATE ORDER
+             ================================= */
+
+          let currentOrders = [];
+
+          try {
+
+            currentOrders =
+              JSON.parse(
+                localStorage.getItem(
+                  "fidelis_orders"
+                )
+              ) || [];
+
+          } catch (error) {
+
+            currentOrders = [];
+
+          }
+
 
           const index =
-            orders.findIndex(
+            currentOrders.findIndex(
               item =>
                 item.orderId ===
                 order.orderId
@@ -342,22 +355,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
           if (index !== -1) {
 
-            orders[index] =
+            currentOrders[index] =
               order;
 
           } else {
 
-            orders.push(order);
+            currentOrders.push(
+              order
+            );
 
           }
 
 
-          /* simpan */
+          /* =================================
+             SAVE
+             ================================= */
 
           localStorage.setItem(
             "fidelis_orders",
             JSON.stringify(
-              orders
+              currentOrders
             )
           );
 
@@ -370,12 +387,13 @@ document.addEventListener("DOMContentLoaded", () => {
           );
 
 
-          /* lanjut ke order */
+          /* =================================
+             START TRANSACTION
+             ================================= */
 
-          window.location.href =
-            `order.html?id=${encodeURIComponent(
-              order.orderId
-            )}`;
+          startTransaction(
+            order.orderId
+          );
 
         },
         1500
@@ -385,6 +403,243 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
 });
+
+
+/* =========================================
+   START TRANSACTION
+   ========================================= */
+
+function startTransaction(
+  orderId
+) {
+
+  let orders = [];
+
+  try {
+
+    orders =
+      JSON.parse(
+        localStorage.getItem(
+          "fidelis_orders"
+        )
+      ) || [];
+
+  } catch (error) {
+
+    orders = [];
+
+  }
+
+
+  const index =
+    orders.findIndex(
+      order =>
+        order.orderId === orderId
+    );
+
+
+  if (index === -1) {
+
+    console.error(
+      "Order tidak ditemukan."
+    );
+
+    return;
+
+  }
+
+
+  const order =
+    orders[index];
+
+
+  /* =========================================
+     CHANGE TO PROCESSING
+     ========================================= */
+
+  order.status =
+    "Pesanan Diproses";
+
+  order.processingAt =
+    new Date().toISOString();
+
+
+  orders[index] =
+    order;
+
+
+  localStorage.setItem(
+    "fidelis_orders",
+    JSON.stringify(
+      orders
+    )
+  );
+
+
+  localStorage.setItem(
+    "fidelis_last_order",
+    JSON.stringify(
+      order
+    )
+  );
+
+
+  /*
+   * Beri waktu 4 detik untuk
+   * simulasi proses top up.
+   */
+
+  setTimeout(
+    () => {
+
+      completeTransaction(
+        orderId
+      );
+
+    },
+    4000
+  );
+
+
+  /*
+   * Tampilkan halaman processing
+   */
+
+  window.location.replace(
+    `order.html?id=${encodeURIComponent(
+      orderId
+    )}`
+  );
+
+}
+
+
+/* =========================================
+   COMPLETE TRANSACTION
+   ========================================= */
+
+function completeTransaction(
+  orderId
+) {
+
+  let orders = [];
+
+  try {
+
+    orders =
+      JSON.parse(
+        localStorage.getItem(
+          "fidelis_orders"
+        )
+      ) || [];
+
+  } catch (error) {
+
+    orders = [];
+
+  }
+
+
+  const index =
+    orders.findIndex(
+      order =>
+        order.orderId === orderId
+    );
+
+
+  if (index === -1) {
+    return;
+  }
+
+
+  const order =
+    orders[index];
+
+
+  /* =========================================
+     COMPLETE
+     ========================================= */
+
+  order.status =
+    "Top Up Berhasil";
+
+  order.completedAt =
+    new Date().toISOString();
+
+
+  orders[index] =
+    order;
+
+
+  /* =========================================
+     SAVE
+     ========================================= */
+
+  localStorage.setItem(
+    "fidelis_orders",
+    JSON.stringify(
+      orders
+    )
+  );
+
+
+  localStorage.setItem(
+    "fidelis_last_order",
+    JSON.stringify(
+      order
+    )
+  );
+
+
+  /* =========================================
+     BACK TO ORDER
+     ========================================= */
+
+  window.location.replace(
+    `order.html?id=${encodeURIComponent(
+      orderId
+    )}`
+  );
+
+}
+
+
+/* =========================================
+   ERROR
+   ========================================= */
+
+function showError(
+  container,
+  message
+) {
+
+  container.innerHTML = `
+
+    <div class="order-empty">
+
+      <h3>
+        Terjadi Kesalahan
+      </h3>
+
+      <p>
+        ${escapeHTML(message)}
+      </p>
+
+      <br>
+
+      <a href="shop.html">
+
+        <button>
+          Kembali ke Top Up
+        </button>
+
+      </a>
+
+    </div>
+
+  `;
+
+}
 
 
 /* =========================================
