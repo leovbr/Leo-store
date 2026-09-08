@@ -1,0 +1,1320 @@
+/* =========================================
+   LEO STORE — ADMIN DASHBOARD
+   ========================================= */
+
+:root {
+  --bg: #08090d;
+  --panel: #11131b;
+  --card: #161923;
+  --card-hover: #1c202d;
+
+  --primary: #7c5cff;
+  --primary-hover: #9278ff;
+
+  --text: #ffffff;
+  --muted: #969baa;
+
+  --border: rgba(255, 255, 255, 0.08);
+
+  --success: #35d07f;
+  --warning: #ffb84d;
+  --danger: #ff5c6c;
+
+  --radius: 16px;
+  --container: 1180px;
+}
+
+
+/* =========================================
+   RESET
+   ========================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+
+  color: var(--text);
+
+  background:
+    radial-gradient(
+      circle at 10% 0%,
+      rgba(124, 92, 255, 0.14),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 90% 10%,
+      rgba(40, 130, 255, 0.08),
+      transparent 25%
+    ),
+    var(--bg);
+
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  line-height: 1.5;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  border: none;
+  outline: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+
+/* =========================================
+   HEADER
+   ========================================= */
+
+.admin-header {
+  position: sticky;
+
+  top: 0;
+
+  z-index: 1000;
+
+  width: 100%;
+
+  min-height: 76px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding:
+    0 max(
+      20px,
+      calc((100% - var(--container)) / 2)
+    );
+
+  background:
+    rgba(8, 9, 13, 0.82);
+
+  border-bottom:
+    1px solid var(--border);
+
+  backdrop-filter:
+    blur(18px);
+}
+
+
+/* =========================================
+   BRAND
+   ========================================= */
+
+.admin-brand {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+.brand-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  font-size: 20px;
+  font-weight: 900;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--primary),
+      #a68cff
+    );
+
+  box-shadow:
+    0 8px 25px
+    rgba(124, 92, 255, 0.28);
+}
+
+.admin-brand h1 {
+  font-size: 17px;
+
+  line-height: 1.1;
+}
+
+.admin-brand span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: var(--muted);
+
+  font-size: 11px;
+}
+
+
+/* =========================================
+   BACK STORE
+   ========================================= */
+
+.back-store {
+  padding:
+    9px 14px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    10px;
+
+  color:
+    var(--muted);
+
+  background:
+    rgba(255,255,255,0.035);
+
+  font-size:
+    13px;
+
+  font-weight:
+    600;
+
+  transition:
+    0.2s ease;
+}
+
+.back-store:hover {
+  color:
+    var(--text);
+
+  border-color:
+    rgba(124,92,255,0.4);
+
+  background:
+    rgba(124,92,255,0.1);
+
+  transform:
+    translateY(-1px);
+}
+
+
+/* =========================================
+   MAIN
+   ========================================= */
+
+.admin-main {
+  width:
+    min(
+      calc(100% - 32px),
+      var(--container)
+    );
+
+  margin:
+    0 auto;
+
+  padding:
+    45px 0 80px;
+}
+
+
+/* =========================================
+   PAGE TITLE
+   ========================================= */
+
+.admin-title {
+  display:
+    flex;
+
+  align-items:
+    flex-end;
+
+  justify-content:
+    space-between;
+
+  gap:
+    20px;
+
+  margin-bottom:
+    30px;
+}
+
+.eyebrow {
+  display:
+    inline-block;
+
+  margin-bottom:
+    8px;
+
+  color:
+    var(--primary-hover);
+
+  font-size:
+    11px;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    1.5px;
+}
+
+.admin-title h2 {
+  margin-bottom:
+    5px;
+
+  font-size:
+    clamp(30px, 5vw, 44px);
+
+  line-height:
+    1.05;
+
+  letter-spacing:
+    -1.5px;
+}
+
+.admin-title p {
+  color:
+    var(--muted);
+
+  font-size:
+    14px;
+}
+
+
+/* =========================================
+   REFRESH BUTTON
+   ========================================= */
+
+.refresh-btn {
+  padding:
+    11px 17px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    10px;
+
+  color:
+    var(--text);
+
+  background:
+    rgba(255,255,255,0.05);
+
+  cursor:
+    pointer;
+
+  font-size:
+    13px;
+
+  font-weight:
+    700;
+
+  transition:
+    0.2s ease;
+}
+
+.refresh-btn:hover {
+  background:
+    rgba(124,92,255,0.15);
+
+  border-color:
+    rgba(124,92,255,0.35);
+
+  transform:
+    translateY(-1px);
+}
+
+
+/* =========================================
+   STATISTICS GRID
+   ========================================= */
+
+.stats-grid {
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap:
+    14px;
+
+  margin-bottom:
+    28px;
+}
+
+
+/* =========================================
+   STAT CARD
+   ========================================= */
+
+.stat-card {
+  min-height:
+    125px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    15px;
+
+  padding:
+    20px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,0.065),
+      rgba(255,255,255,0.025)
+    );
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    var(--radius);
+
+  transition:
+    0.25s ease;
+}
+
+.stat-card:hover {
+  transform:
+    translateY(-3px);
+
+  border-color:
+    rgba(124,92,255,0.35);
+
+  background:
+    var(--card-hover);
+}
+
+
+/* =========================================
+   STAT ICON
+   ========================================= */
+
+.stat-icon {
+  width:
+    46px;
+
+  height:
+    46px;
+
+  flex-shrink:
+    0;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  border-radius:
+    13px;
+
+  background:
+    rgba(124,92,255,0.1);
+
+  border:
+    1px solid
+    rgba(124,92,255,0.15);
+
+  font-size:
+    20px;
+}
+
+.stat-card span {
+  display:
+    block;
+
+  margin-bottom:
+    3px;
+
+  color:
+    var(--muted);
+
+  font-size:
+    11px;
+}
+
+.stat-card strong {
+  display:
+    block;
+
+  font-size:
+    23px;
+
+  line-height:
+    1.2;
+}
+
+
+/* =========================================
+   ORDERS PANEL
+   ========================================= */
+
+.orders-panel {
+  padding:
+    24px;
+
+  background:
+    rgba(17,19,27,0.88);
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    20px;
+
+  box-shadow:
+    0 25px 70px
+    rgba(0,0,0,0.25);
+}
+
+
+/* =========================================
+   PANEL HEADER
+   ========================================= */
+
+.panel-header {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  gap:
+    15px;
+
+  margin-bottom:
+    18px;
+}
+
+.panel-header h3 {
+  margin-bottom:
+    3px;
+
+  font-size:
+    18px;
+}
+
+.panel-header p {
+  color:
+    var(--muted);
+
+  font-size:
+    12px;
+}
+
+.order-count {
+  padding:
+    6px 10px;
+
+  border-radius:
+    999px;
+
+  color:
+    var(--muted);
+
+  background:
+    rgba(255,255,255,0.05);
+
+  font-size:
+    11px;
+
+  white-space:
+    nowrap;
+}
+
+
+/* =========================================
+   ADMIN TOOLS
+   ========================================= */
+
+.admin-tools {
+  display:
+    grid;
+
+  grid-template-columns:
+    1fr 190px 190px;
+
+  gap:
+    10px;
+
+  margin-bottom:
+    20px;
+}
+
+
+/* =========================================
+   SEARCH
+   ========================================= */
+
+.admin-search {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    10px;
+
+  padding:
+    0 14px;
+
+  background:
+    rgba(255,255,255,0.035);
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    11px;
+
+  transition:
+    0.2s ease;
+}
+
+.admin-search:focus-within {
+  border-color:
+    var(--primary);
+
+  box-shadow:
+    0 0 0 3px
+    rgba(124,92,255,0.1);
+}
+
+.admin-search span {
+  flex-shrink:
+    0;
+
+  opacity:
+    0.55;
+}
+
+.admin-search input {
+  width:
+    100%;
+
+  padding:
+    12px 0;
+
+  border:
+    none;
+
+  outline:
+    none;
+
+  color:
+    var(--text);
+
+  background:
+    transparent;
+
+  box-shadow:
+    none;
+}
+
+.admin-search input::placeholder {
+  color:
+    rgba(255,255,255,0.3);
+}
+
+.admin-search input:focus {
+  border:
+    none;
+
+  box-shadow:
+    none;
+}
+
+
+/* =========================================
+   FILTER
+   ========================================= */
+
+.admin-filter {
+  width:
+    100%;
+
+  padding:
+    12px 13px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    11px;
+
+  outline:
+    none;
+
+  color:
+    var(--text);
+
+  background:
+    #0d0f15;
+
+  cursor:
+    pointer;
+}
+
+.admin-filter:focus {
+  border-color:
+    var(--primary);
+
+  box-shadow:
+    0 0 0 3px
+    rgba(124,92,255,0.1);
+}
+
+.admin-filter option {
+  background:
+    #10121a;
+}
+
+
+/* =========================================
+   ORDER LIST
+   ========================================= */
+
+.admin-order-list {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    10px;
+}
+
+
+/* =========================================
+   ADMIN ORDER ROW
+   ========================================= */
+
+.admin-order {
+  display:
+    grid;
+
+  grid-template-columns:
+    minmax(190px, 1.4fr)
+    minmax(120px, 1fr)
+    minmax(130px, 0.8fr)
+    minmax(130px, 0.8fr)
+    auto;
+
+  align-items:
+    center;
+
+  gap:
+    15px;
+
+  padding:
+    16px;
+
+  background:
+    rgba(255,255,255,0.035);
+
+  border:
+    1px solid
+    rgba(255,255,255,0.065);
+
+  border-radius:
+    13px;
+
+  transition:
+    0.2s ease;
+}
+
+.admin-order:hover {
+  background:
+    rgba(255,255,255,0.055);
+
+  border-color:
+    rgba(124,92,255,0.25);
+
+  transform:
+    translateY(-1px);
+}
+
+
+/* =========================================
+   ORDER GAME
+   ========================================= */
+
+.admin-order-game {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    11px;
+
+  min-width:
+    0;
+}
+
+.admin-game-icon {
+  width:
+    40px;
+
+  height:
+    40px;
+
+  flex-shrink:
+    0;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  border-radius:
+    11px;
+
+  background:
+    rgba(255,255,255,0.07);
+
+  font-size:
+    18px;
+}
+
+.admin-game-name {
+  font-size:
+    13px;
+
+  font-weight:
+    700;
+
+  white-space:
+    nowrap;
+
+  overflow:
+    hidden;
+
+  text-overflow:
+    ellipsis;
+}
+
+.admin-game-product {
+  margin-top:
+    2px;
+
+  color:
+    var(--muted);
+
+  font-size:
+    11px;
+}
+
+
+/* =========================================
+   ORDER INFO
+   ========================================= */
+
+.admin-order-info {
+  min-width:
+    0;
+}
+
+.admin-order-label {
+  display:
+    block;
+
+  margin-bottom:
+    3px;
+
+  color:
+    var(--muted);
+
+  font-size:
+    10px;
+
+  text-transform:
+    uppercase;
+
+  letter-spacing:
+    .4px;
+}
+
+.admin-order-value {
+  display:
+    block;
+
+  color:
+    var(--text);
+
+  font-size:
+    12px;
+
+  font-weight:
+    600;
+
+  white-space:
+    nowrap;
+
+  overflow:
+    hidden;
+
+  text-overflow:
+    ellipsis;
+}
+
+
+/* =========================================
+   STATUS
+   ========================================= */
+
+.admin-status {
+  display:
+    inline-flex;
+
+  width:
+    fit-content;
+
+  padding:
+    5px 9px;
+
+  border-radius:
+    999px;
+
+  font-size:
+    10px;
+
+  font-weight:
+    700;
+
+  white-space:
+    nowrap;
+}
+
+.admin-status.success {
+  color:
+    var(--success);
+
+  background:
+    rgba(53,208,127,0.1);
+
+  border:
+    1px solid
+    rgba(53,208,127,0.15);
+}
+
+.admin-status.processing {
+  color:
+    var(--warning);
+
+  background:
+    rgba(255,184,77,0.1);
+
+  border:
+    1px solid
+    rgba(255,184,77,0.15);
+}
+
+.admin-status.waiting {
+  color:
+    var(--warning);
+
+  background:
+    rgba(255,184,77,0.08);
+
+  border:
+    1px solid
+    rgba(255,184,77,0.12);
+}
+
+
+/* =========================================
+   DETAIL BUTTON
+   ========================================= */
+
+.admin-detail-btn {
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  padding:
+    8px 11px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    9px;
+
+  background:
+    rgba(255,255,255,0.045);
+
+  font-size:
+    11px;
+
+  font-weight:
+    700;
+
+  white-space:
+    nowrap;
+
+  transition:
+    0.2s ease;
+}
+
+.admin-detail-btn:hover {
+  background:
+    rgba(124,92,255,0.15);
+
+  border-color:
+    rgba(124,92,255,0.3);
+}
+
+
+/* =========================================
+   LOADING
+   ========================================= */
+
+.admin-loading {
+  padding:
+    45px 20px;
+
+  text-align:
+    center;
+
+  color:
+    var(--muted);
+
+  font-size:
+    13px;
+}
+
+
+/* =========================================
+   EMPTY
+   ========================================= */
+
+.admin-empty {
+  padding:
+    55px 20px;
+
+  text-align:
+    center;
+
+  border:
+    1px dashed
+    rgba(255,255,255,0.1);
+
+  border-radius:
+    15px;
+
+  background:
+    rgba(255,255,255,0.02);
+}
+
+.admin-empty-icon {
+  margin-bottom:
+    10px;
+
+  font-size:
+    35px;
+}
+
+.admin-empty h3 {
+  margin-bottom:
+    5px;
+
+  font-size:
+    16px;
+}
+
+.admin-empty p {
+  color:
+    var(--muted);
+
+  font-size:
+    12px;
+}
+
+
+/* =========================================
+   FOOTER
+   ========================================= */
+
+.admin-footer {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  gap:
+    10px;
+
+  width:
+    min(
+      calc(100% - 32px),
+      var(--container)
+    );
+
+  margin:
+    0 auto;
+
+  padding:
+    22px 0;
+
+  border-top:
+    1px solid var(--border);
+
+  color:
+    var(--muted);
+
+  font-size:
+    11px;
+}
+
+
+/* =========================================
+   TABLET
+   ========================================= */
+
+@media (max-width: 1000px) {
+
+  .stats-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .admin-order {
+    grid-template-columns:
+      1.4fr
+      1fr
+      1fr
+      auto;
+  }
+
+  .admin-order .admin-order-info:nth-child(4) {
+    display:
+      none;
+  }
+
+}
+
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 700px) {
+
+  .admin-header {
+    padding:
+      0 16px;
+  }
+
+  .admin-main {
+    width:
+      calc(100% - 24px);
+
+    padding-top:
+      30px;
+  }
+
+  .admin-title {
+    align-items:
+      flex-start;
+
+    flex-direction:
+      column;
+  }
+
+  .refresh-btn {
+    width:
+      100%;
+  }
+
+  .stats-grid {
+    grid-template-columns:
+      1fr 1fr;
+
+    gap:
+      10px;
+  }
+
+  .stat-card {
+    min-height:
+      105px;
+
+    padding:
+      15px;
+
+    gap:
+      10px;
+  }
+
+  .stat-icon {
+    width:
+      38px;
+
+    height:
+      38px;
+
+    font-size:
+      16px;
+  }
+
+  .stat-card strong {
+    font-size:
+      18px;
+  }
+
+  .orders-panel {
+    padding:
+      16px;
+
+    border-radius:
+      16px;
+  }
+
+  .admin-tools {
+    grid-template-columns:
+      1fr;
+
+    gap:
+      9px;
+  }
+
+  .admin-order {
+    grid-template-columns:
+      1fr 1fr;
+
+    gap:
+      14px 10px;
+
+    padding:
+      14px;
+  }
+
+  .admin-order-game {
+    grid-column:
+      1 / -1;
+  }
+
+  .admin-order .admin-order-info:nth-child(4) {
+    display:
+      block;
+  }
+
+  .admin-order > .admin-detail-btn {
+    grid-column:
+      1 / -1;
+
+    width:
+      100%;
+  }
+
+  .panel-header {
+    align-items:
+      flex-start;
+
+    flex-direction:
+      column;
+  }
+
+  .order-count {
+    align-self:
+      flex-start;
+  }
+
+  .admin-footer {
+    width:
+      calc(100% - 24px);
+
+    flex-direction:
+      column;
+
+    align-items:
+      flex-start;
+  }
+
+}
+
+
+/* =========================================
+   VERY SMALL MOBILE
+   ========================================= */
+
+@media (max-width: 380px) {
+
+  .stats-grid {
+    grid-template-columns:
+      1fr;
+  }
+
+  .admin-brand span {
+    display:
+      none;
+  }
+
+  .admin-order {
+    grid-template-columns:
+      1fr;
+  }
+
+  .admin-order-game,
+  .admin-order > .admin-detail-btn {
+    grid-column:
+      auto;
+  }
+
+}
