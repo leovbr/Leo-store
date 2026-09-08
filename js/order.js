@@ -1,5 +1,5 @@
 /* =========================================
-   FIDELIS TOPUP
+   LEO STORE
    ORDER TRACKING
    ========================================= */
 
@@ -13,17 +13,30 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!container) return;
 
 
-  /* =======================================
-     GET ORDER
-     ======================================= */
+  /* =========================================
+     URL
+     ========================================= */
 
   const params =
     new URLSearchParams(
       window.location.search
     );
 
+
   const requestedId =
     params.get("id");
+
+
+  /* =========================================
+     LOAD ORDERS
+     ========================================= */
+
+  const orders =
+    JSON.parse(
+      localStorage.getItem(
+        "fidelis_orders"
+      )
+    ) || [];
 
 
   const lastOrder =
@@ -34,31 +47,45 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
 
+  /* =========================================
+     FIND ORDER
+     ========================================= */
+
   let order = null;
 
 
-  /* =======================================
-     FIND ORDER
-     ======================================= */
+  if (requestedId) {
 
-  if (
-    requestedId &&
-    lastOrder &&
-    lastOrder.orderId === requestedId
-  ) {
+    order =
+      orders.find(
+        item =>
+          item.orderId ===
+          requestedId
+      );
 
-    order = lastOrder;
 
-  } else if (!requestedId) {
+    if (
+      !order &&
+      lastOrder &&
+      lastOrder.orderId === requestedId
+    ) {
 
-    order = lastOrder;
+      order =
+        lastOrder;
+
+    }
+
+  } else {
+
+    order =
+      lastOrder;
 
   }
 
 
-  /* =======================================
-     NO ORDER
-     ======================================= */
+  /* =========================================
+     ORDER NOT FOUND
+     ========================================= */
 
   if (!order) {
 
@@ -66,7 +93,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <div class="order-empty">
 
-        <h3>Belum Ada Pesanan</h3>
+        <h3>
+          Belum Ada Pesanan
+        </h3>
 
         <p>
           Kamu belum memiliki pesanan
@@ -76,9 +105,11 @@ document.addEventListener("DOMContentLoaded", () => {
         <br>
 
         <a href="shop.html">
+
           <button>
             Mulai Top Up
           </button>
+
         </a>
 
       </div>
@@ -86,14 +117,17 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
 
     return;
+
   }
 
 
-  /* =======================================
-     FORMAT DATE
-     ======================================= */
+  /* =========================================
+     DATE
+     ========================================= */
 
-  let dateText = "-";
+  let dateText =
+    "-";
+
 
   if (order.createdAt) {
 
@@ -111,31 +145,146 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  /* =======================================
+  /* =========================================
      STATUS
-     ======================================= */
+     ========================================= */
 
   const status =
     order.status ||
     "Menunggu Pembayaran";
 
 
-  /* =======================================
+  let paymentDone =
+    false;
+
+
+  let processing =
+    false;
+
+
+  let success =
+    false;
+
+
+  if (
+    status ===
+    "Pembayaran Berhasil"
+  ) {
+
+    paymentDone =
+      true;
+
+  }
+
+
+  if (
+    status ===
+    "Pesanan Diproses"
+  ) {
+
+    paymentDone =
+      true;
+
+    processing =
+      true;
+
+  }
+
+
+  if (
+    status ===
+    "Top Up Berhasil"
+  ) {
+
+    paymentDone =
+      true;
+
+    processing =
+      true;
+
+    success =
+      true;
+
+  }
+
+
+  /* =========================================
+     PAYMENT BUTTON
+     ========================================= */
+
+  let paymentButton = "";
+
+
+  if (
+    status ===
+    "Menunggu Pembayaran"
+  ) {
+
+    paymentButton = `
+
+      <br>
+
+      <a href="payment.html?id=${encodeURIComponent(order.orderId)}">
+
+        <button>
+          Lanjut Pembayaran
+        </button>
+
+      </a>
+
+    `;
+
+  }
+
+
+  /* =========================================
+     PROGRESS CLASS
+     ========================================= */
+
+  const step1 =
+    "active";
+
+
+  const step2 =
+    paymentDone
+      ? "active"
+      : "";
+
+
+  const step3 =
+    processing
+      ? "active"
+      : "";
+
+
+  const step4 =
+    success
+      ? "active"
+      : "";
+
+
+  /* =========================================
      RENDER
-     ======================================= */
+     ========================================= */
 
   container.innerHTML = `
 
     <div class="order-header">
 
-      <p>Order ID</p>
+      <p>
+        Order ID
+      </p>
 
       <h3>
-        ${escapeHTML(order.orderId)}
+        ${escapeHTML(
+          order.orderId
+        )}
       </h3>
 
       <p>
-        ${escapeHTML(dateText)}
+        ${escapeHTML(
+          dateText
+        )}
       </p>
 
     </div>
@@ -147,52 +296,89 @@ document.addEventListener("DOMContentLoaded", () => {
     <div class="order-info">
 
       <p>
-        <strong>Game:</strong>
+
+        <strong>
+          Game:
+        </strong>
+
         ${escapeHTML(
           order.gameName ||
           order.game
         )}
+
       </p>
 
+
       <p>
-        <strong>Player:</strong>
+
+        <strong>
+          Player:
+        </strong>
+
         ${escapeHTML(
           order.playerId
         )}
+
       </p>
+
 
       ${
         order.server
           ? `
+
             <p>
-              <strong>Server:</strong>
+
+              <strong>
+                Server:
+              </strong>
+
               ${escapeHTML(
                 order.server
               )}
+
             </p>
+
           `
           : ""
       }
 
+
       <p>
-        <strong>Produk:</strong>
+
+        <strong>
+          Produk:
+        </strong>
+
         ${escapeHTML(
           order.amount
         )}
+
       </p>
 
+
       <p>
-        <strong>Total:</strong>
+
+        <strong>
+          Total:
+        </strong>
+
         ${formatPrice(
           Number(order.price)
         )}
+
       </p>
 
+
       <p>
-        <strong>Pembayaran:</strong>
+
+        <strong>
+          Pembayaran:
+        </strong>
+
         ${escapeHTML(
           order.payment
         )}
+
       </p>
 
     </div>
@@ -203,10 +389,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     <div class="order-status">
 
-      <h3>Status Pesanan</h3>
+      <h3>
+        Status Pesanan
+      </h3>
+
 
       <p>
-        ${escapeHTML(status)}
+        ${escapeHTML(
+          status
+        )}
       </p>
 
     </div>
@@ -216,19 +407,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <ol>
 
-        <li class="active">
+        <li class="${step1}">
           Pesanan dibuat
         </li>
 
-        <li>
-          Menunggu pembayaran
+
+        <li class="${step2}">
+          Pembayaran
         </li>
 
-        <li>
+
+        <li class="${step3}">
           Pesanan diproses
         </li>
 
-        <li>
+
+        <li class="${step4}">
           Top Up berhasil
         </li>
 
@@ -237,13 +431,18 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
 
 
+    ${paymentButton}
+
+
     <br>
 
 
     <a href="shop.html">
+
       <button>
         Top Up Lagi
       </button>
+
     </a>
 
   `;
@@ -252,7 +451,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /* =========================================
-   SECURITY HELPER
+   FORMAT PRICE
+   ========================================= */
+
+function formatPrice(price) {
+
+  return new Intl.NumberFormat(
+    "id-ID",
+    {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0
+    }
+  ).format(price);
+
+}
+
+
+/* =========================================
+   SECURITY
    ========================================= */
 
 function escapeHTML(value) {
