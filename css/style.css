@@ -149,14 +149,16 @@ nav a {
 }
 
 nav a:hover {
-  color: var(--text);
+  color:
+    var(--text);
 
   transform:
     translateY(-1px);
 }
 
 nav a.active {
-  color: var(--text);
+  color:
+    var(--text);
 }
 
 
@@ -171,29 +173,35 @@ main {
       var(--container)
     );
 
-  margin: 0 auto;
+  margin:
+    0 auto;
 
   padding:
     60px 0 80px;
 }
 
 section {
-  margin-bottom: 50px;
+  margin-bottom:
+    50px;
 }
 
 h2 {
-  margin-bottom: 14px;
+  margin-bottom:
+    14px;
 
   font-size:
     clamp(28px, 5vw, 46px);
 
-  line-height: 1.1;
+  line-height:
+    1.1;
 
-  letter-spacing: -1px;
+  letter-spacing:
+    -1px;
 }
 
 h3 {
-  margin-bottom: 8px;
+  margin-bottom:
+    8px;
 }
 
 p {
@@ -210,12 +218,14 @@ main > section:first-child {
   padding:
     70px 30px;
 
-  text-align: center;
+  text-align:
+    center;
 
   border:
     1px solid var(--border);
 
-  border-radius: 24px;
+  border-radius:
+    24px;
 
   background:
     linear-gradient(
@@ -230,7 +240,8 @@ main > section:first-child {
 }
 
 main > section:first-child p {
-  max-width: 650px;
+  max-width:
+    650px;
 
   margin:
     0 auto 28px;
@@ -242,8 +253,11 @@ main > section:first-child p {
    ========================================= */
 
 button {
-  border: none;
-  outline: none;
+  border:
+    none;
+
+  outline:
+    none;
 
   padding:
     12px 22px;
@@ -257,9 +271,11 @@ button {
   background:
     var(--primary);
 
-  font-weight: 700;
+  font-weight:
+    700;
 
-  cursor: pointer;
+  cursor:
+    pointer;
 
   transition:
     transform 0.2s ease,
@@ -285,9 +301,14 @@ button:active {
 }
 
 button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
+  opacity:
+    0.6;
+
+  cursor:
+    not-allowed;
+
+  transform:
+    none;
 }
 
 
@@ -297,29 +318,39 @@ button:disabled {
 
 main > section:nth-child(2) > div,
 main section {
-  position: relative;
+  position:
+    relative;
 }
 
 main > section:nth-child(2) > div {
-  display: grid;
+  display:
+    grid;
 
   grid-template-columns:
     repeat(4, minmax(0, 1fr));
 
-  gap: 16px;
+  gap:
+    16px;
 }
 
 main > section:nth-child(2) a {
-  min-height: 120px;
+  min-height:
+    120px;
 
-  display: flex;
+  display:
+    flex;
 
-  align-items: center;
-  justify-content: center;
+  align-items:
+    center;
 
-  padding: 20px;
+  justify-content:
+    center;
 
-  text-align: center;
+  padding:
+    20px;
+
+  text-align:
+    center;
 
   background:
     var(--card);
@@ -330,7 +361,8 @@ main > section:nth-child(2) a {
   border-radius:
     var(--radius);
 
-  font-weight: 700;
+  font-weight:
+    700;
 
   transition:
     transform 0.25s ease,
@@ -355,12 +387,14 @@ main > section:nth-child(2) a:hover {
    ========================================= */
 
 main > section:has(article) {
-  display: grid;
+  display:
+    grid;
 
   grid-template-columns:
     repeat(4, minmax(0, 1fr));
 
-  gap: 16px;
+  gap:
+    16px;
 }
 
 main > section:has(article) h2 {
@@ -369,7 +403,8 @@ main > section:has(article) h2 {
 }
 
 article {
-  padding: 24px;
+  padding:
+    24px;
 
   background:
     var(--card);
@@ -398,7 +433,8 @@ article:hover {
 }
 
 article p {
-  margin-bottom: 18px;
+  margin-bottom:
+    18px;
 }
 
 
@@ -407,7 +443,8 @@ article p {
    ========================================= */
 
 form {
-  max-width: 700px;
+  max-width:
+    700px;
 
   margin:
     0 auto;
@@ -435,7 +472,8 @@ form section {
 }
 
 label {
-  display: block;
+  display:
+    block;
 
   margin:
     14px 0 7px;
@@ -443,13 +481,17 @@ label {
   color:
     var(--text-secondary);
 
-  font-size: 14px;
-  font-weight: 600;
+  font-size:
+    14px;
+
+  font-weight:
+    600;
 }
 
 input,
 select {
-  width: 100%;
+  width:
+    100%;
 
   padding:
     13px 14px;
@@ -460,7 +502,8 @@ select {
   border-radius:
     10px;
 
-  outline: none;
+  outline:
+    none;
 
   color:
     var(--text);
@@ -541,11 +584,174 @@ select option {
 
 
 /* =========================================
-   ORDER HISTORY — PREMIUM
+   ORDER STATUS
+   ========================================= */
+
+.order-status {
+  padding:
+    16px;
+
+  margin:
+    20px 0;
+
+  border-radius:
+    12px;
+
+  background:
+    rgba(124, 92, 255, 0.06);
+
+  border:
+    1px solid
+    rgba(124, 92, 255, 0.12);
+}
+
+
+/* =========================================
+   ORDER HISTORY
+   ========================================= */
+
+.history-page {
+  width:
+    100%;
+}
+
+.history-section-header {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  gap:
+    15px;
+
+  margin-bottom:
+    16px;
+}
+
+.history-section-header h3 {
+  margin:
+    0;
+}
+
+.history-count {
+  font-size:
+    12px;
+
+  opacity:
+    0.5;
+
+  white-space:
+    nowrap;
+}
+
+
+/* =========================================
+   SEARCH + FILTER
+   ========================================= */
+
+.history-tools {
+  display:
+    grid;
+
+  grid-template-columns:
+    1fr 190px;
+
+  gap:
+    10px;
+
+  margin-bottom:
+    18px;
+}
+
+.history-search {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    10px;
+
+  padding:
+    0 14px;
+
+  background:
+    rgba(255, 255, 255, 0.035);
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    12px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.history-search:focus-within {
+  border-color:
+    var(--primary);
+
+  box-shadow:
+    0 0 0 3px
+    rgba(124, 92, 255, 0.10);
+}
+
+.history-search span {
+  flex-shrink:
+    0;
+
+  font-size:
+    15px;
+
+  opacity:
+    0.55;
+}
+
+.history-search input {
+  border:
+    none;
+
+  background:
+    transparent;
+
+  box-shadow:
+    none;
+
+  padding:
+    13px 0;
+}
+
+.history-search input:focus {
+  border:
+    none;
+
+  box-shadow:
+    none;
+}
+
+.history-filter {
+  width:
+    100%;
+
+  cursor:
+    pointer;
+}
+
+
+/* =========================================
+   HISTORY CARD
    ========================================= */
 
 .order-history-card {
-  position: relative;
+  position:
+    relative;
 
   background:
     linear-gradient(
@@ -580,20 +786,29 @@ select option {
 /* LEFT ACCENT */
 
 .order-history-card::before {
-  content: "";
+  content:
+    "";
 
-  position: absolute;
+  position:
+    absolute;
 
-  left: 0;
-  top: 0;
-  bottom: 0;
+  left:
+    0;
 
-  width: 4px;
+  top:
+    0;
+
+  bottom:
+    0;
+
+  width:
+    4px;
 
   background:
     var(--primary);
 
-  opacity: 0.8;
+  opacity:
+    0.8;
 }
 
 .order-history-card:hover {
@@ -610,42 +825,60 @@ select option {
    ========================================= */
 
 .history-top {
-  display: flex;
+  display:
+    flex;
 
-  align-items: center;
-  justify-content: space-between;
+  align-items:
+    center;
 
-  gap: 12px;
+  justify-content:
+    space-between;
+
+  gap:
+    12px;
 
   margin-bottom:
     18px;
 }
 
 .history-game {
-  display: flex;
+  display:
+    flex;
 
-  align-items: center;
+  align-items:
+    center;
 
-  gap: 12px;
+  gap:
+    12px;
 
-  min-width: 0;
+  min-width:
+    0;
 }
 
 .history-game-icon {
-  width: 46px;
-  height: 46px;
+  width:
+    46px;
 
-  flex-shrink: 0;
+  height:
+    46px;
+
+  flex-shrink:
+    0;
 
   border-radius:
     13px;
 
-  display: flex;
+  display:
+    flex;
 
-  align-items: center;
-  justify-content: center;
+  align-items:
+    center;
 
-  font-size: 22px;
+  justify-content:
+    center;
+
+  font-size:
+    22px;
 
   background:
     rgba(255, 255, 255, 0.08);
@@ -656,7 +889,8 @@ select option {
 }
 
 .history-game-name {
-  margin: 0;
+  margin:
+    0;
 
   font-size:
     16px;
@@ -684,7 +918,7 @@ select option {
 
 
 /* =========================================
-   HISTORY STATUS
+   STATUS BADGE
    ========================================= */
 
 .history-status {
@@ -749,7 +983,8 @@ select option {
    ========================================= */
 
 .history-body {
-  display: grid;
+  display:
+    grid;
 
   grid-template-columns:
     1fr 1fr;
@@ -762,11 +997,13 @@ select option {
 }
 
 .history-info {
-  min-width: 0;
+  min-width:
+    0;
 }
 
 .history-label {
-  display: block;
+  display:
+    block;
 
   font-size:
     11px;
@@ -782,7 +1019,8 @@ select option {
 }
 
 .history-value {
-  display: block;
+  display:
+    block;
 
   font-size:
     13px;
@@ -816,10 +1054,14 @@ select option {
   padding-top:
     14px;
 
-  display: flex;
+  display:
+    flex;
 
-  align-items: center;
-  justify-content: space-between;
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
 
   gap:
     12px;
@@ -843,13 +1085,20 @@ select option {
 
   white-space:
     nowrap;
+
+  min-width:
+    0;
 }
 
 .history-detail-btn {
-  display: inline-flex;
+  display:
+    inline-flex;
 
-  align-items: center;
-  justify-content: center;
+  align-items:
+    center;
+
+  justify-content:
+    center;
 
   padding:
     8px 13px;
@@ -875,6 +1124,9 @@ select option {
 
   transition:
     0.2s ease;
+
+  white-space:
+    nowrap;
 }
 
 .history-detail-btn:hover {
@@ -890,30 +1142,43 @@ select option {
 
 
 /* =========================================
-   HISTORY SECTION HEADER
+   NO SEARCH RESULT
    ========================================= */
 
-.history-section-header {
-  display: flex;
+.history-no-result {
+  text-align:
+    center;
 
-  align-items: center;
-  justify-content: space-between;
+  padding:
+    45px 20px;
+
+  background:
+    rgba(255, 255, 255, 0.025);
+
+  border:
+    1px dashed
+    rgba(255, 255, 255, 0.12);
+
+  border-radius:
+    18px;
+}
+
+.history-no-result > div {
+  font-size:
+    35px;
 
   margin-bottom:
-    16px;
+    8px;
 }
 
-.history-section-header h3 {
-  margin:
-    0;
+.history-no-result h3 {
+  margin-bottom:
+    5px;
 }
 
-.history-count {
+.history-no-result p {
   font-size:
-    12px;
-
-  opacity:
-    0.5;
+    13px;
 }
 
 
@@ -951,29 +1216,6 @@ select option {
 
 
 /* =========================================
-   ORDER STATUS
-   ========================================= */
-
-.order-status {
-  padding:
-    16px;
-
-  margin:
-    20px 0;
-
-  border-radius:
-    12px;
-
-  background:
-    rgba(124, 92, 255, 0.06);
-
-  border:
-    1px solid
-    rgba(124, 92, 255, 0.12);
-}
-
-
-/* =========================================
    PAYMENT
    ========================================= */
 
@@ -991,8 +1233,7 @@ select option {
     var(--card);
 
   border:
-    1px solid
-    var(--border);
+    1px solid var(--border);
 
   border-radius:
     var(--radius);
@@ -1016,8 +1257,7 @@ footer {
     center;
 
   border-top:
-    1px solid
-    var(--border);
+    1px solid var(--border);
 }
 
 footer p {
@@ -1101,7 +1341,25 @@ footer p {
   }
 
 
-  /* HISTORY MOBILE */
+  /* HISTORY */
+
+  .history-section-header {
+    align-items:
+      flex-start;
+  }
+
+  .history-tools {
+    grid-template-columns:
+      1fr;
+
+    gap:
+      10px;
+  }
+
+  .history-filter {
+    width:
+      100%;
+  }
 
   .order-history-card {
     padding:
@@ -1195,4 +1453,4 @@ footer p {
       100%;
   }
 
-   }
+     }
