@@ -3,104 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cek Pesanan - Fidelis TopUp</title>
+
+  <title>Cek Pesanan — Leo Store</title>
+
   <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
   <header>
-    <h1>Fidelis TopUp</h1>
+
+    <h1>Leo Store</h1>
 
     <nav>
       <a href="index.html">Home</a>
       <a href="shop.html">Top Up</a>
       <a href="order.html">Cek Pesanan</a>
     </nav>
+
   </header>
+
 
   <main>
 
-    <h2>Status Pesanan</h2>
+    <h2>
+      Cek Pesanan
+    </h2>
+
 
     <div id="orderContainer">
-      <p>Memuat pesanan...</p>
+
+      <p>
+        Memuat pesanan...
+      </p>
+
     </div>
 
   </main>
 
-  <script>
 
-    const container =
-      document.getElementById("orderContainer");
+  <footer>
 
-    const savedOrder =
-      localStorage.getItem("fidelis_last_order");
+    <p>
+      © 2026 Leo Store
+    </p>
 
-    if (!savedOrder) {
+  </footer>
 
-      container.innerHTML = `
-        <p>Belum ada pesanan.</p>
-        <a href="shop.html">
-          <button>Mulai Top Up</button>
-        </a>
-      `;
 
-    } else {
-
-      const order = JSON.parse(savedOrder);
-
-      container.innerHTML = `
-        <div>
-
-          <h3>${order.orderId}</h3>
-
-          <p>
-            <strong>Status:</strong>
-            ${order.status}
-          </p>
-
-          <p>
-            <strong>Game:</strong>
-            ${order.game}
-          </p>
-
-          <p>
-            <strong>Player:</strong>
-            ${order.playerId}
-          </p>
-
-          <p>
-            <strong>Nominal:</strong>
-            ${order.nominal}
-          </p>
-
-          <p>
-            <strong>Pembayaran:</strong>
-            ${order.payment}
-          </p>
-
-        </div>
-
-        <hr>
-
-        <h3>Progress Pesanan</h3>
-
-        <ol>
-          <li>Pesanan dibuat ✓</li>
-          <li>Menunggu pembayaran</li>
-          <li>Pesanan diproses</li>
-          <li>Top Up berhasil</li>
-        </ol>
-
-        <a href="shop.html">
-          <button>Top Up Lagi</button>
-        </a>
-
-      `;
-    }
-
-  </script>
+  <script src="js/products.js"></script>
+  <script src="js/order.js"></script>
+  <script src="js/app.js"></script>
 
 </body>
 </html>
