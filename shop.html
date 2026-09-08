@@ -3,63 +3,144 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Top Up Game - Fidelis</title>
+
+  <title>Top Up — Leo Store</title>
+
   <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
   <header>
-    <h1>Fidelis TopUp</h1>
+
+    <h1>Leo Store</h1>
 
     <nav>
       <a href="index.html">Home</a>
       <a href="shop.html">Top Up</a>
       <a href="order.html">Cek Pesanan</a>
     </nav>
+
   </header>
+
 
   <main>
 
-    <h2>Pilih Game</h2>
+    <h2>
+      Pilih Game
+    </h2>
+
 
     <section>
 
-      <article>
-        <h3>Mobile Legends</h3>
-        <p>Diamond Mobile Legends</p>
-        <a href="checkout.html?game=mobile-legends">
-          <button>Pilih</button>
+      <article data-game="mobile-legends">
+
+        <h3 data-product-name>
+          Mobile Legends
+        </h3>
+
+        <p data-product-type>
+          Diamond
+        </p>
+
+        <br>
+
+        <a
+          href="checkout.html?game=mobile-legends"
+        >
+          <button>
+            Pilih Game
+          </button>
         </a>
+
       </article>
 
-      <article>
-        <h3>Free Fire</h3>
-        <p>Diamond Free Fire</p>
-        <a href="checkout.html?game=free-fire">
-          <button>Pilih</button>
+
+      <article data-game="free-fire">
+
+        <h3 data-product-name>
+          Free Fire
+        </h3>
+
+        <p data-product-type>
+          Diamond
+        </p>
+
+        <br>
+
+        <a
+          href="checkout.html?game=free-fire"
+        >
+          <button>
+            Pilih Game
+          </button>
         </a>
+
       </article>
 
-      <article>
-        <h3>Roblox</h3>
-        <p>Robux</p>
-        <a href="checkout.html?game=roblox">
-          <button>Pilih</button>
+
+      <article data-game="roblox">
+
+        <h3 data-product-name>
+          Roblox
+        </h3>
+
+        <p data-product-type>
+          Robux
+        </p>
+
+        <br>
+
+        <a
+          href="checkout.html?game=roblox"
+        >
+          <button>
+            Pilih Game
+          </button>
         </a>
+
       </article>
 
-      <article>
-        <h3>PUBG Mobile</h3>
-        <p>UC PUBG Mobile</p>
-        <a href="checkout.html?game=pubg-mobile">
-          <button>Pilih</button>
+
+      <article data-game="pubg-mobile">
+
+        <h3 data-product-name>
+          PUBG Mobile
+        </h3>
+
+        <p data-product-type>
+          UC
+        </p>
+
+        <br>
+
+        <a
+          href="checkout.html?game=pubg-mobile"
+        >
+          <button>
+            Pilih Game
+          </button>
         </a>
+
       </article>
 
     </section>
 
   </main>
+
+
+  <footer>
+
+    <p>
+      © 2026 Leo Store
+    </p>
+
+  </footer>
+
+
+  <script src="js/products.js"></script>
+  <script src="js/shop.js"></script>
+  <script src="js/app.js"></script>
 
 </body>
 </html>
