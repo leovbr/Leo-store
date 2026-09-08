@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Admin Dashboard — Leo Store</title>
+
+  <link
+    rel="stylesheet"
+    href="css/admin.css"
+  >
+
+</head>
+
+
+<body>
+
+  <header class="admin-header">
+
+    <div class="admin-brand">
+
+      <div class="brand-icon">
+        L
+      </div>
+
+      <div>
+
+        <h1>
+          Leo Store
+        </h1>
+
+        <span>
+          Admin Dashboard
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <a
+      href="index.html"
+      class="back-store"
+    >
+      ← Store
+    </a>
+
+  </header>
+
+
+  <main class="admin-main">
+
+
+    <!-- =====================================
+         PAGE HEADER
+         ===================================== -->
+
+    <section class="admin-title">
+
+      <div>
+
+        <span class="eyebrow">
+          MANAGEMENT
+        </span>
+
+        <h2>
+          Dashboard
+        </h2>
+
+        <p>
+          Pantau transaksi dan aktivitas
+          Leo Store.
+        </p>
+
+      </div>
+
+
+      <button
+        id="refreshBtn"
+        class="refresh-btn"
+      >
+        ↻ Refresh
+      </button>
+
+    </section>
+
+
+
+    <!-- =====================================
+         STATISTICS
+         ===================================== -->
+
+    <section class="stats-grid">
+
+
+      <article class="stat-card">
+
+        <div class="stat-icon">
+          🛒
+        </div>
+
+        <div>
+
+          <span>
+            Total Transaksi
+          </span>
+
+          <strong id="totalOrders">
+            0
+          </strong>
+
+        </div>
+
+      </article>
+
+
+
+      <article class="stat-card">
+
+        <div class="stat-icon">
+          💰
+        </div>
+
+        <div>
+
+          <span>
+            Total Omzet
+          </span>
+
+          <strong id="totalRevenue">
+            Rp0
+          </strong>
+
+        </div>
+
+      </article>
+
+
+
+      <article class="stat-card">
+
+        <div class="stat-icon">
+          ✅
+        </div>
+
+        <div>
+
+          <span>
+            Berhasil
+          </span>
+
+          <strong id="successOrders">
+            0
+          </strong>
+
+        </div>
+
+      </article>
+
+
+
+      <article class="stat-card">
+
+        <div class="stat-icon">
+          ⏳
+        </div>
+
+        <div>
+
+          <span>
+            Pending / Proses
+          </span>
+
+          <strong id="pendingOrders">
+            0
+          </strong>
+
+        </div>
+
+      </article>
+
+
+    </section>
+
+
+
+    <!-- =====================================
+         ORDER MANAGEMENT
+         ===================================== -->
+
+    <section class="orders-panel">
+
+
+      <div class="panel-header">
+
+        <div>
+
+          <h3>
+            Semua Transaksi
+          </h3>
+
+          <p>
+            Data transaksi dari sistem Leo Store
+          </p>
+
+        </div>
+
+        <span
+          id="orderCount"
+          class="order-count"
+        >
+          0 transaksi
+        </span>
+
+      </div>
+
+
+
+      <!-- SEARCH -->
+
+      <div class="admin-tools">
+
+
+        <div class="admin-search">
+
+          <span>
+            🔎
+          </span>
+
+          <input
+            type="text"
+            id="adminSearch"
+            placeholder="Cari Order ID atau Player ID..."
+            autocomplete="off"
+          >
+
+        </div>
+
+
+        <!-- GAME FILTER -->
+
+        <select
+          id="gameFilter"
+          class="admin-filter"
+        >
+
+          <option value="all">
+            Semua Game
+          </option>
+
+          <option value="mobile-legends">
+            Mobile Legends
+          </option>
+
+          <option value="free-fire">
+            Free Fire
+          </option>
+
+          <option value="roblox">
+            Roblox
+          </option>
+
+          <option value="pubg-mobile">
+            PUBG Mobile
+          </option>
+
+        </select>
+
+
+        <!-- STATUS FILTER -->
+
+        <select
+          id="adminStatusFilter"
+          class="admin-filter"
+        >
+
+          <option value="all">
+            Semua Status
+          </option>
+
+          <option value="Top Up Berhasil">
+            Berhasil
+          </option>
+
+          <option value="Pesanan Diproses">
+            Diproses
+          </option>
+
+          <option value="Pembayaran Berhasil">
+            Pembayaran Berhasil
+          </option>
+
+          <option value="Menunggu Pembayaran">
+            Menunggu Pembayaran
+          </option>
+
+        </select>
+
+
+      </div>
+
+
+
+      <!-- ORDER LIST -->
+
+      <div
+        id="adminOrderList"
+        class="admin-order-list"
+      >
+
+        <div class="admin-loading">
+
+          Memuat transaksi...
+
+        </div>
+
+      </div>
+
+
+    </section>
+
+
+  </main>
+
+
+
+  <footer class="admin-footer">
+
+    <p>
+      Leo Store Admin Panel
+    </p>
+
+    <span>
+      © 2026 Leo Store
+    </span>
+
+  </footer>
+
+
+
+  <script src="js/admin.js"></script>
+
+</body>
+
+</html>
