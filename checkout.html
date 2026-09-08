@@ -3,44 +3,88 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Checkout - Fidelis TopUp</title>
+
+  <title>Checkout — Leo Store</title>
+
   <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
   <header>
-    <h1>Fidelis TopUp</h1>
+
+    <h1>Leo Store</h1>
 
     <nav>
       <a href="index.html">Home</a>
       <a href="shop.html">Top Up</a>
       <a href="order.html">Cek Pesanan</a>
     </nav>
+
   </header>
+
 
   <main>
 
-    <h2>Checkout</h2>
+    <h2>
+      Checkout
+    </h2>
+
 
     <form id="checkoutForm">
 
-      <section>
-        <h3>Produk</h3>
 
-        <label for="game">Game</label>
-        <select id="game" name="game" required>
-          <option value="">Pilih Game</option>
-          <option value="mobile-legends">Mobile Legends</option>
-          <option value="free-fire">Free Fire</option>
-          <option value="roblox">Roblox</option>
-          <option value="pubg-mobile">PUBG Mobile</option>
+      <!-- GAME -->
+
+      <section>
+
+        <h3>
+          Produk
+        </h3>
+
+        <label for="game">
+          Game
+        </label>
+
+        <select
+          id="game"
+          name="game"
+          required
+        >
+
+          <option value="">
+            Pilih Game
+          </option>
+
+          <option value="mobile-legends">
+            Mobile Legends
+          </option>
+
+          <option value="free-fire">
+            Free Fire
+          </option>
+
+          <option value="roblox">
+            Roblox
+          </option>
+
+          <option value="pubg-mobile">
+            PUBG Mobile
+          </option>
+
         </select>
+
       </section>
 
+
+      <!-- PLAYER -->
+
       <section>
 
-        <h3>Data Player</h3>
+        <h3>
+          Data Player
+        </h3>
+
 
         <label for="playerId">
           User ID / Username
@@ -51,8 +95,10 @@
           id="playerId"
           name="playerId"
           placeholder="Masukkan ID / username"
+          autocomplete="off"
           required
         >
+
 
         <label for="server">
           Server / Zone
@@ -63,91 +109,99 @@
           id="server"
           name="server"
           placeholder="Opsional jika tidak diperlukan"
+          autocomplete="off"
         >
 
       </section>
 
+
+      <!-- NOMINAL -->
+
       <section>
 
-        <h3>Nominal</h3>
+        <h3>
+          Nominal
+        </h3>
 
-        <select id="nominal" name="nominal" required>
-          <option value="">Pilih Nominal</option>
-          <option value="small">Nominal Kecil</option>
-          <option value="medium">Nominal Sedang</option>
-          <option value="large">Nominal Besar</option>
+        <select
+          id="nominal"
+          name="nominal"
+          required
+        >
+
+          <option value="">
+            Pilih Game Terlebih Dahulu
+          </option>
+
+        </select>
+
+
+        <p
+          id="pricePreview"
+          style="margin-top: 12px;"
+        >
+        </p>
+
+      </section>
+
+
+      <!-- PAYMENT -->
+
+      <section>
+
+        <h3>
+          Pembayaran
+        </h3>
+
+        <select
+          id="payment"
+          name="payment"
+          required
+        >
+
+          <option value="">
+            Pilih Metode Pembayaran
+          </option>
+
+          <option value="qris">
+            QRIS
+          </option>
+
+          <option value="ewallet">
+            E-Wallet
+          </option>
+
+          <option value="bank">
+            Virtual Account
+          </option>
+
         </select>
 
       </section>
 
-      <section>
-
-        <h3>Pembayaran</h3>
-
-        <select id="payment" name="payment" required>
-          <option value="">Pilih Metode Pembayaran</option>
-          <option value="qris">QRIS</option>
-          <option value="ewallet">E-Wallet</option>
-          <option value="bank">Virtual Account</option>
-        </select>
-
-      </section>
 
       <button type="submit">
         Buat Pesanan
       </button>
 
+
     </form>
 
   </main>
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const selectedGame = params.get("game");
 
-    if (selectedGame) {
-      const gameSelect = document.getElementById("game");
+  <footer>
 
-      if (
-        [...gameSelect.options]
-          .some(option => option.value === selectedGame)
-      ) {
-        gameSelect.value = selectedGame;
-      }
-    }
+    <p>
+      © 2026 Leo Store
+    </p>
 
-    document
-      .getElementById("checkoutForm")
-      .addEventListener("submit", function(event) {
+  </footer>
 
-        event.preventDefault();
 
-        const game = document.getElementById("game").value;
-        const playerId = document.getElementById("playerId").value;
-        const nominal = document.getElementById("nominal").value;
-        const payment = document.getElementById("payment").value;
-
-        const orderId =
-          "FDL-" +
-          Date.now().toString().slice(-8);
-
-        localStorage.setItem(
-          "fidelis_last_order",
-          JSON.stringify({
-            orderId,
-            game,
-            playerId,
-            nominal,
-            payment,
-            status: "Menunggu Pembayaran",
-            createdAt: new Date().toISOString()
-          })
-        );
-
-        window.location.href =
-          "order.html?id=" + orderId;
-      });
-  </script>
+  <script src="js/products.js"></script>
+  <script src="js/checkout.js"></script>
+  <script src="js/app.js"></script>
 
 </body>
 </html>
