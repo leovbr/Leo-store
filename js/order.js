@@ -6,86 +6,47 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   const container =
-    document.getElementById(
-      "orderContainer"
-    );
+    document.getElementById("orderContainer");
 
   if (!container) return;
-
-
-  /* =========================================
-     URL
-     ========================================= */
 
   const params =
     new URLSearchParams(
       window.location.search
     );
 
-
   const requestedId =
     params.get("id");
 
-
-  /* =========================================
-     LOAD ORDERS
-     ========================================= */
-
   const orders =
-    JSON.parse(
-      localStorage.getItem(
-        "fidelis_orders"
-      )
-    ) || [];
-
+    getOrders();
 
   const lastOrder =
-    JSON.parse(
-      localStorage.getItem(
-        "fidelis_last_order"
-      )
-    );
-
-
-  /* =========================================
-     FIND ORDER
-     ========================================= */
+    getLastOrder();
 
   let order = null;
-
 
   if (requestedId) {
 
     order =
       orders.find(
         item =>
-          item.orderId ===
-          requestedId
+          item.orderId === requestedId
       );
-
 
     if (
       !order &&
       lastOrder &&
       lastOrder.orderId === requestedId
     ) {
-
-      order =
-        lastOrder;
-
+      order = lastOrder;
     }
 
   } else {
 
-    order =
-      lastOrder;
+    order = lastOrder;
 
   }
-
-
-  /* =========================================
-     ORDER NOT FOUND
-     ========================================= */
 
   if (!order) {
 
@@ -98,18 +59,15 @@ document.addEventListener("DOMContentLoaded", () => {
         </h3>
 
         <p>
-          Kamu belum memiliki pesanan
-          yang tersimpan di perangkat ini.
+          Belum ada pesanan yang tersimpan.
         </p>
 
         <br>
 
         <a href="shop.html">
-
           <button>
             Mulai Top Up
           </button>
-
         </a>
 
       </div>
@@ -120,14 +78,178 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
+  renderOrder(
+    container,
+    order
+  );
 
-  /* =========================================
-     DATE
-     ========================================= */
+  /*
+   * Jika pembayaran sudah berhasil,
+   * jalankan simulasi proses transaksi.
+   */
 
-  let dateText =
-    "-";
+  if (
+    order.status ===
+    "Pembayaran Berhasil"
+  ) {
 
+    startProcessing(
+      order.orderId
+    );
+
+  }
+
+});
+
+
+/* =========================================
+   START PROCESSING
+   ========================================= */
+
+function startProcessing(orderId) {
+
+  let orders =
+    getOrders();
+
+  const index =
+    orders.findIndex(
+      item =>
+        item.orderId === orderId
+    );
+
+  if (index === -1) {
+    return;
+  }
+
+  const order =
+    orders[index];
+
+  /*
+   * Jangan mulai ulang kalau sudah
+   * masuk proses atau selesai.
+   */
+
+  if (
+    order.status !==
+    "Pembayaran Berhasil"
+  ) {
+    return;
+  }
+
+  order.status =
+    "Pesanan Diproses";
+
+  order.processingAt =
+    new Date().toISOString();
+
+  orders[index] =
+    order;
+
+  saveOrders(
+    orders
+  );
+
+  saveLastOrder(
+    order
+  );
+
+  /*
+   * Refresh tampilan supaya status
+   * langsung berubah.
+   */
+
+  renderOrder(
+    document.getElementById(
+      "orderContainer"
+    ),
+    order
+  );
+
+  /*
+   * Simulasi proses top up.
+   * 4 detik kemudian selesai.
+   */
+
+  setTimeout(
+    () => {
+
+      completeTransaction(
+        orderId
+      );
+
+    },
+    4000
+  );
+
+}
+
+
+/* =========================================
+   COMPLETE TRANSACTION
+   ========================================= */
+
+function completeTransaction(orderId) {
+
+  let orders =
+    getOrders();
+
+  const index =
+    orders.findIndex(
+      item =>
+        item.orderId === orderId
+    );
+
+  if (index === -1) {
+    return;
+  }
+
+  const order =
+    orders[index];
+
+  if (
+    order.status !==
+    "Pesanan Diproses"
+  ) {
+    return;
+  }
+
+  order.status =
+    "Top Up Berhasil";
+
+  order.completedAt =
+    new Date().toISOString();
+
+  orders[index] =
+    order;
+
+  saveOrders(
+    orders
+  );
+
+  saveLastOrder(
+    order
+  );
+
+  renderOrder(
+    document.getElementById(
+      "orderContainer"
+    ),
+    order
+  );
+
+}
+
+
+/* =========================================
+   RENDER ORDER
+   ========================================= */
+
+function renderOrder(
+  container,
+  order
+) {
+
+  let dateText = "-";
 
   if (order.createdAt) {
 
@@ -144,76 +266,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-
-  /* =========================================
-     STATUS
-     ========================================= */
-
   const status =
     order.status ||
     "Menunggu Pembayaran";
 
 
-  let paymentDone =
-    false;
+  const paymentDone =
+    status === "Pembayaran Berhasil" ||
+    status === "Pesanan Diproses" ||
+    status === "Top Up Berhasil";
 
 
-  let processing =
-    false;
+  const processing =
+    status === "Pesanan Diproses" ||
+    status === "Top Up Berhasil";
 
 
-  let success =
-    false;
+  const success =
+    status === "Top Up Berhasil";
 
-
-  if (
-    status ===
-    "Pembayaran Berhasil"
-  ) {
-
-    paymentDone =
-      true;
-
-  }
-
-
-  if (
-    status ===
-    "Pesanan Diproses"
-  ) {
-
-    paymentDone =
-      true;
-
-    processing =
-      true;
-
-  }
-
-
-  if (
-    status ===
-    "Top Up Berhasil"
-  ) {
-
-    paymentDone =
-      true;
-
-    processing =
-      true;
-
-    success =
-      true;
-
-  }
-
-
-  /* =========================================
-     PAYMENT BUTTON
-     ========================================= */
 
   let paymentButton = "";
-
 
   if (
     status ===
@@ -224,7 +297,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <br>
 
-      <a href="payment.html?id=${encodeURIComponent(order.orderId)}">
+      <a
+        href="payment.html?id=${encodeURIComponent(
+          order.orderId
+        )}"
+      >
 
         <button>
           Lanjut Pembayaran
@@ -237,36 +314,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  /* =========================================
-     PROGRESS CLASS
-     ========================================= */
-
-  const step1 =
-    "active";
-
-
-  const step2 =
-    paymentDone
-      ? "active"
-      : "";
-
-
-  const step3 =
-    processing
-      ? "active"
-      : "";
-
-
-  const step4 =
-    success
-      ? "active"
-      : "";
-
-
-  /* =========================================
-     RENDER
-     ========================================= */
-
   container.innerHTML = `
 
     <div class="order-header">
@@ -276,116 +323,71 @@ document.addEventListener("DOMContentLoaded", () => {
       </p>
 
       <h3>
-        ${escapeHTML(
-          order.orderId
-        )}
+        ${escapeHTML(order.orderId)}
       </h3>
 
       <p>
-        ${escapeHTML(
-          dateText
-        )}
+        ${escapeHTML(dateText)}
       </p>
 
     </div>
 
-
     <hr>
-
 
     <div class="order-info">
 
       <p>
-
-        <strong>
-          Game:
-        </strong>
-
+        <strong>Game:</strong>
         ${escapeHTML(
           order.gameName ||
           order.game
         )}
-
       </p>
 
-
       <p>
-
-        <strong>
-          Player:
-        </strong>
-
+        <strong>Player:</strong>
         ${escapeHTML(
           order.playerId
         )}
-
       </p>
-
 
       ${
         order.server
           ? `
-
             <p>
-
-              <strong>
-                Server:
-              </strong>
-
+              <strong>Server:</strong>
               ${escapeHTML(
                 order.server
               )}
-
             </p>
-
           `
           : ""
       }
 
-
       <p>
-
-        <strong>
-          Produk:
-        </strong>
-
+        <strong>Produk:</strong>
         ${escapeHTML(
           order.amount
         )}
-
       </p>
 
-
       <p>
-
-        <strong>
-          Total:
-        </strong>
-
+        <strong>Total:</strong>
         ${formatPrice(
           Number(order.price)
         )}
-
       </p>
 
-
       <p>
-
-        <strong>
-          Pembayaran:
-        </strong>
-
+        <strong>Pembayaran:</strong>
         ${escapeHTML(
           order.payment
         )}
-
       </p>
 
     </div>
 
-
     <hr>
-
 
     <div class="order-status">
 
@@ -393,36 +395,41 @@ document.addEventListener("DOMContentLoaded", () => {
         Status Pesanan
       </h3>
 
-
       <p>
-        ${escapeHTML(
-          status
-        )}
+        ${escapeHTML(status)}
       </p>
 
     </div>
-
 
     <div class="order-progress">
 
       <ol>
 
-        <li class="${step1}">
+        <li class="active">
           Pesanan dibuat
         </li>
 
-
-        <li class="${step2}">
+        <li class="${
+          paymentDone
+            ? "active"
+            : ""
+        }">
           Pembayaran
         </li>
 
-
-        <li class="${step3}">
+        <li class="${
+          processing
+            ? "active"
+            : ""
+        }">
           Pesanan diproses
         </li>
 
-
-        <li class="${step4}">
+        <li class="${
+          success
+            ? "active"
+            : ""
+        }">
           Top Up berhasil
         </li>
 
@@ -430,12 +437,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     </div>
 
-
     ${paymentButton}
 
-
     <br>
-
 
     <a href="shop.html">
 
@@ -447,7 +451,69 @@ document.addEventListener("DOMContentLoaded", () => {
 
   `;
 
-});
+}
+
+
+/* =========================================
+   STORAGE
+   ========================================= */
+
+function getOrders() {
+
+  try {
+
+    return JSON.parse(
+      localStorage.getItem(
+        "fidelis_orders"
+      )
+    ) || [];
+
+  } catch (error) {
+
+    return [];
+
+  }
+
+}
+
+
+function getLastOrder() {
+
+  try {
+
+    return JSON.parse(
+      localStorage.getItem(
+        "fidelis_last_order"
+      )
+    );
+
+  } catch (error) {
+
+    return null;
+
+  }
+
+}
+
+
+function saveOrders(orders) {
+
+  localStorage.setItem(
+    "fidelis_orders",
+    JSON.stringify(orders)
+  );
+
+}
+
+
+function saveLastOrder(order) {
+
+  localStorage.setItem(
+    "fidelis_last_order",
+    JSON.stringify(order)
+  );
+
+}
 
 
 /* =========================================
