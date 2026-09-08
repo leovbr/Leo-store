@@ -83,9 +83,11 @@ document.addEventListener("DOMContentLoaded", () => {
     order
   );
 
+
   /*
-   * Jika pembayaran sudah berhasil,
-   * jalankan simulasi proses transaksi.
+   * ================================
+   * STATUS MACHINE
+   * ================================
    */
 
   if (
@@ -99,16 +101,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
+  else if (
+    order.status ===
+    "Pesanan Diproses"
+  ) {
+
+    continueProcessing(
+      order.orderId,
+      order.processingAt
+    );
+
+  }
+
 });
 
 
-/* =========================================
-   START PROCESSING
-   ========================================= */
+/*
+ * ================================
+ * MULAI PROSES TOP UP
+ * ================================
+ */
 
 function startProcessing(orderId) {
 
-  let orders =
+  const orders =
     getOrders();
 
   const index =
@@ -123,11 +139,6 @@ function startProcessing(orderId) {
 
   const order =
     orders[index];
-
-  /*
-   * Jangan mulai ulang kalau sudah
-   * masuk proses atau selesai.
-   */
 
   if (
     order.status !==
@@ -153,11 +164,6 @@ function startProcessing(orderId) {
     order
   );
 
-  /*
-   * Refresh tampilan supaya status
-   * langsung berubah.
-   */
-
   renderOrder(
     document.getElementById(
       "orderContainer"
@@ -165,10 +171,60 @@ function startProcessing(orderId) {
     order
   );
 
-  /*
-   * Simulasi proses top up.
-   * 4 detik kemudian selesai.
-   */
+  continueProcessing(
+    order.orderId,
+    order.processingAt
+  );
+
+}
+
+
+/*
+ * ================================
+ * LANJUTKAN PROSES
+ * ================================
+ */
+
+function continueProcessing(
+  orderId,
+  processingAt
+) {
+
+  if (!processingAt) {
+
+    processingAt =
+      new Date().toISOString();
+
+  }
+
+  const started =
+    new Date(
+      processingAt
+    ).getTime();
+
+  const now =
+    Date.now();
+
+  const processingDuration =
+    4000;
+
+  const elapsed =
+    now - started;
+
+  const remaining =
+    processingDuration - elapsed;
+
+
+  if (remaining <= 0) {
+
+    completeTransaction(
+      orderId
+    );
+
+    return;
+
+  }
+
 
   setTimeout(
     () => {
@@ -178,19 +234,21 @@ function startProcessing(orderId) {
       );
 
     },
-    4000
+    remaining
   );
 
 }
 
 
-/* =========================================
-   COMPLETE TRANSACTION
-   ========================================= */
+/*
+ * ================================
+ * SELESAIKAN TRANSAKSI
+ * ================================
+ */
 
 function completeTransaction(orderId) {
 
-  let orders =
+  const orders =
     getOrders();
 
   const index =
@@ -240,9 +298,11 @@ function completeTransaction(orderId) {
 }
 
 
-/* =========================================
-   RENDER ORDER
-   ========================================= */
+/*
+ * ================================
+ * RENDER ORDER
+ * ================================
+ */
 
 function renderOrder(
   container,
@@ -270,21 +330,17 @@ function renderOrder(
     order.status ||
     "Menunggu Pembayaran";
 
-
   const paymentDone =
     status === "Pembayaran Berhasil" ||
     status === "Pesanan Diproses" ||
     status === "Top Up Berhasil";
 
-
   const processing =
     status === "Pesanan Diproses" ||
     status === "Top Up Berhasil";
 
-
   const success =
     status === "Top Up Berhasil";
-
 
   let paymentButton = "";
 
@@ -323,11 +379,15 @@ function renderOrder(
       </p>
 
       <h3>
-        ${escapeHTML(order.orderId)}
+        ${escapeHTML(
+          order.orderId
+        )}
       </h3>
 
       <p>
-        ${escapeHTML(dateText)}
+        ${escapeHTML(
+          dateText
+        )}
       </p>
 
     </div>
@@ -396,7 +456,9 @@ function renderOrder(
       </h3>
 
       <p>
-        ${escapeHTML(status)}
+        ${escapeHTML(
+          status
+        )}
       </p>
 
     </div>
@@ -454,9 +516,11 @@ function renderOrder(
 }
 
 
-/* =========================================
-   STORAGE
-   ========================================= */
+/*
+ * ================================
+ * STORAGE
+ * ================================
+ */
 
 function getOrders() {
 
@@ -516,9 +580,11 @@ function saveLastOrder(order) {
 }
 
 
-/* =========================================
-   FORMAT PRICE
-   ========================================= */
+/*
+ * ================================
+ * FORMAT PRICE
+ * ================================
+ */
 
 function formatPrice(price) {
 
@@ -534,9 +600,11 @@ function formatPrice(price) {
 }
 
 
-/* =========================================
-   SECURITY
-   ========================================= */
+/*
+ * ================================
+ * SECURITY
+ * ================================
+ */
 
 function escapeHTML(value) {
 
