@@ -1,5 +1,5 @@
 /* =========================================
-   FIDELIS TOPUP — GLOBAL STYLE
+   LEO STORE — GLOBAL STYLE
    ========================================= */
 
 :root {
@@ -23,6 +23,7 @@
   --container: 1180px;
 }
 
+
 /* =========================================
    RESET
    ========================================= */
@@ -39,6 +40,7 @@ html {
 
 body {
   min-height: 100vh;
+
   background:
     radial-gradient(
       circle at 15% 10%,
@@ -53,6 +55,7 @@ body {
     var(--bg);
 
   color: var(--text);
+
   font-family:
     Inter,
     system-ui,
@@ -75,16 +78,22 @@ select {
   font: inherit;
 }
 
+
 /* =========================================
    HEADER
    ========================================= */
 
 header {
   width: 100%;
-  border-bottom: 1px solid var(--border);
 
-  background: rgba(8, 9, 13, 0.78);
-  backdrop-filter: blur(16px);
+  border-bottom:
+    1px solid var(--border);
+
+  background:
+    rgba(8, 9, 13, 0.78);
+
+  backdrop-filter:
+    blur(16px);
 
   position: sticky;
   top: 0;
@@ -92,35 +101,45 @@ header {
 }
 
 header > * {
-  max-width: var(--container);
+  max-width:
+    var(--container);
+
   margin-left: auto;
   margin-right: auto;
 }
 
 header h1 {
   padding-top: 18px;
+
   font-size: 24px;
   font-weight: 800;
 
-  background: linear-gradient(
-    90deg,
-    #ffffff,
-    #9c88ff
-  );
+  background:
+    linear-gradient(
+      90deg,
+      #ffffff,
+      #9c88ff
+    );
 
   -webkit-background-clip: text;
   background-clip: text;
+
   color: transparent;
 }
 
 nav {
   display: flex;
+
   gap: 26px;
-  padding: 12px 0 18px;
+
+  padding:
+    12px 0 18px;
 }
 
 nav a {
-  color: var(--text-secondary);
+  color:
+    var(--text-secondary);
+
   font-size: 14px;
   font-weight: 600;
 
@@ -131,21 +150,31 @@ nav a {
 
 nav a:hover {
   color: var(--text);
-  transform: translateY(-1px);
+
+  transform:
+    translateY(-1px);
 }
+
+nav a.active {
+  color: var(--text);
+}
+
 
 /* =========================================
    MAIN
    ========================================= */
 
 main {
-  width: min(
-    calc(100% - 32px),
-    var(--container)
-  );
+  width:
+    min(
+      calc(100% - 32px),
+      var(--container)
+    );
 
   margin: 0 auto;
-  padding: 60px 0 80px;
+
+  padding:
+    60px 0 80px;
 }
 
 section {
@@ -155,8 +184,11 @@ section {
 h2 {
   margin-bottom: 14px;
 
-  font-size: clamp(28px, 5vw, 46px);
+  font-size:
+    clamp(28px, 5vw, 46px);
+
   line-height: 1.1;
+
   letter-spacing: -1px;
 }
 
@@ -165,19 +197,24 @@ h3 {
 }
 
 p {
-  color: var(--text-secondary);
+  color:
+    var(--text-secondary);
 }
+
 
 /* =========================================
    HERO
    ========================================= */
 
 main > section:first-child {
-  padding: 70px 30px;
+  padding:
+    70px 30px;
 
   text-align: center;
 
-  border: 1px solid var(--border);
+  border:
+    1px solid var(--border);
+
   border-radius: 24px;
 
   background:
@@ -188,13 +225,17 @@ main > section:first-child {
     );
 
   box-shadow:
-    0 25px 80px rgba(0, 0, 0, 0.35);
+    0 25px 80px
+    rgba(0, 0, 0, 0.35);
 }
 
 main > section:first-child p {
   max-width: 650px;
-  margin: 0 auto 28px;
+
+  margin:
+    0 auto 28px;
 }
+
 
 /* =========================================
    BUTTON
@@ -204,14 +245,20 @@ button {
   border: none;
   outline: none;
 
-  padding: 12px 22px;
+  padding:
+    12px 22px;
 
-  border-radius: 12px;
+  border-radius:
+    12px;
 
-  color: white;
-  background: var(--primary);
+  color:
+    white;
+
+  background:
+    var(--primary);
 
   font-weight: 700;
+
   cursor: pointer;
 
   transition:
@@ -221,16 +268,28 @@ button {
 }
 
 button:hover {
-  background: var(--primary-hover);
-  transform: translateY(-2px);
+  background:
+    var(--primary-hover);
+
+  transform:
+    translateY(-2px);
 
   box-shadow:
-    0 10px 25px rgba(124, 92, 255, 0.28);
+    0 10px 25px
+    rgba(124, 92, 255, 0.28);
 }
 
 button:active {
-  transform: translateY(0);
+  transform:
+    translateY(0);
 }
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
 
 /* =========================================
    GAME CARDS
@@ -254,6 +313,7 @@ main > section:nth-child(2) a {
   min-height: 120px;
 
   display: flex;
+
   align-items: center;
   justify-content: center;
 
@@ -261,10 +321,14 @@ main > section:nth-child(2) a {
 
   text-align: center;
 
-  background: var(--card);
+  background:
+    var(--card);
 
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    var(--radius);
 
   font-weight: 700;
 
@@ -275,13 +339,16 @@ main > section:nth-child(2) a {
 }
 
 main > section:nth-child(2) a:hover {
-  background: var(--card-hover);
+  background:
+    var(--card-hover);
 
   border-color:
     rgba(124, 92, 255, 0.45);
 
-  transform: translateY(-5px);
+  transform:
+    translateY(-5px);
 }
+
 
 /* =========================================
    SHOP
@@ -297,16 +364,21 @@ main > section:has(article) {
 }
 
 main > section:has(article) h2 {
-  grid-column: 1 / -1;
+  grid-column:
+    1 / -1;
 }
 
 article {
   padding: 24px;
 
-  background: var(--card);
+  background:
+    var(--card);
 
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    var(--radius);
 
   transition:
     transform 0.25s ease,
@@ -315,9 +387,11 @@ article {
 }
 
 article:hover {
-  transform: translateY(-5px);
+  transform:
+    translateY(-5px);
 
-  background: var(--card-hover);
+  background:
+    var(--card-hover);
 
   border-color:
     rgba(124, 92, 255, 0.45);
@@ -327,27 +401,37 @@ article p {
   margin-bottom: 18px;
 }
 
+
 /* =========================================
    CHECKOUT FORM
    ========================================= */
 
 form {
   max-width: 700px;
-  margin: 0 auto;
 
-  padding: 30px;
+  margin:
+    0 auto;
 
-  background: var(--card);
+  padding:
+    30px;
 
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  background:
+    var(--card);
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    var(--radius);
 
   box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.25);
+    0 20px 60px
+    rgba(0, 0, 0, 0.25);
 }
 
 form section {
-  margin-bottom: 30px;
+  margin-bottom:
+    30px;
 }
 
 label {
@@ -356,7 +440,8 @@ label {
   margin:
     14px 0 7px;
 
-  color: var(--text-secondary);
+  color:
+    var(--text-secondary);
 
   font-size: 14px;
   font-weight: 600;
@@ -366,15 +451,22 @@ input,
 select {
   width: 100%;
 
-  padding: 13px 14px;
+  padding:
+    13px 14px;
 
-  border: 1px solid var(--border);
-  border-radius: 10px;
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    10px;
 
   outline: none;
 
-  color: var(--text);
-  background: #0d0f15;
+  color:
+    var(--text);
+
+  background:
+    #0d0f15;
 
   transition:
     border-color 0.2s ease,
@@ -383,69 +475,559 @@ select {
 
 input:focus,
 select:focus {
-  border-color: var(--primary);
+  border-color:
+    var(--primary);
 
   box-shadow:
-    0 0 0 3px rgba(124, 92, 255, 0.12);
+    0 0 0 3px
+    rgba(124, 92, 255, 0.12);
 }
 
 select option {
-  background: #10121a;
+  background:
+    #10121a;
 }
 
+
 /* =========================================
-   ORDER
+   ORDER DETAIL
    ========================================= */
 
 #orderContainer {
-  max-width: 700px;
-  margin: 0 auto;
+  max-width:
+    700px;
 
-  padding: 30px;
+  margin:
+    0 auto;
 
-  background: var(--card);
+  padding:
+    30px;
 
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  background:
+    var(--card);
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    var(--radius);
 }
 
 #orderContainer p {
-  margin: 8px 0;
+  margin:
+    8px 0;
 }
 
 #orderContainer strong {
-  color: var(--text);
+  color:
+    var(--text);
 }
 
 #orderContainer ol {
-  margin: 20px 0 25px;
-  padding-left: 25px;
+  margin:
+    20px 0 25px;
 
-  color: var(--text-secondary);
+  padding-left:
+    25px;
+
+  color:
+    var(--text-secondary);
 }
 
 #orderContainer li {
-  margin: 8px 0;
+  margin:
+    8px 0;
 }
+
+
+/* =========================================
+   ORDER HISTORY — PREMIUM
+   ========================================= */
+
+.order-history-card {
+  position: relative;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.07),
+      rgba(255, 255, 255, 0.025)
+    );
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.09);
+
+  border-radius:
+    18px;
+
+  padding:
+    20px;
+
+  margin-bottom:
+    14px;
+
+  overflow:
+    hidden;
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease;
+}
+
+
+/* LEFT ACCENT */
+
+.order-history-card::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+  width: 4px;
+
+  background:
+    var(--primary);
+
+  opacity: 0.8;
+}
+
+.order-history-card:hover {
+  transform:
+    translateY(-2px);
+
+  border-color:
+    rgba(255, 255, 255, 0.18);
+}
+
+
+/* =========================================
+   HISTORY HEADER
+   ========================================= */
+
+.history-top {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  margin-bottom:
+    18px;
+}
+
+.history-game {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  min-width: 0;
+}
+
+.history-game-icon {
+  width: 46px;
+  height: 46px;
+
+  flex-shrink: 0;
+
+  border-radius:
+    13px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-size: 22px;
+
+  background:
+    rgba(255, 255, 255, 0.08);
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.06);
+}
+
+.history-game-name {
+  margin: 0;
+
+  font-size:
+    16px;
+
+  white-space:
+    nowrap;
+
+  overflow:
+    hidden;
+
+  text-overflow:
+    ellipsis;
+}
+
+.history-game-type {
+  margin:
+    3px 0 0;
+
+  font-size:
+    12px;
+
+  opacity:
+    0.55;
+}
+
+
+/* =========================================
+   HISTORY STATUS
+   ========================================= */
+
+.history-status {
+  padding:
+    6px 10px;
+
+  border-radius:
+    999px;
+
+  font-size:
+    11px;
+
+  font-weight:
+    700;
+
+  white-space:
+    nowrap;
+
+  background:
+    rgba(255, 255, 255, 0.08);
+}
+
+.history-status.success {
+  color:
+    var(--success);
+
+  background:
+    rgba(53, 208, 127, 0.12);
+
+  border:
+    1px solid
+    rgba(53, 208, 127, 0.18);
+}
+
+.history-status.processing {
+  color:
+    var(--warning);
+
+  background:
+    rgba(255, 184, 77, 0.12);
+
+  border:
+    1px solid
+    rgba(255, 184, 77, 0.18);
+}
+
+.history-status.waiting {
+  color:
+    var(--warning);
+
+  background:
+    rgba(255, 184, 77, 0.10);
+
+  border:
+    1px solid
+    rgba(255, 184, 77, 0.15);
+}
+
+
+/* =========================================
+   HISTORY BODY
+   ========================================= */
+
+.history-body {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:
+    13px;
+
+  margin-bottom:
+    18px;
+}
+
+.history-info {
+  min-width: 0;
+}
+
+.history-label {
+  display: block;
+
+  font-size:
+    11px;
+
+  color:
+    var(--text-secondary);
+
+  opacity:
+    0.55;
+
+  margin-bottom:
+    4px;
+}
+
+.history-value {
+  display: block;
+
+  font-size:
+    13px;
+
+  font-weight:
+    600;
+
+  color:
+    var(--text);
+
+  overflow:
+    hidden;
+
+  text-overflow:
+    ellipsis;
+
+  white-space:
+    nowrap;
+}
+
+
+/* =========================================
+   HISTORY FOOTER
+   ========================================= */
+
+.history-bottom {
+  border-top:
+    1px solid
+    rgba(255, 255, 255, 0.07);
+
+  padding-top:
+    14px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap:
+    12px;
+}
+
+.history-order-id {
+  font-size:
+    11px;
+
+  color:
+    var(--text-secondary);
+
+  opacity:
+    0.55;
+
+  overflow:
+    hidden;
+
+  text-overflow:
+    ellipsis;
+
+  white-space:
+    nowrap;
+}
+
+.history-detail-btn {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding:
+    8px 13px;
+
+  border-radius:
+    9px;
+
+  font-size:
+    12px;
+
+  font-weight:
+    700;
+
+  text-decoration:
+    none;
+
+  background:
+    rgba(255, 255, 255, 0.08);
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.06);
+
+  transition:
+    0.2s ease;
+}
+
+.history-detail-btn:hover {
+  background:
+    rgba(124, 92, 255, 0.18);
+
+  border-color:
+    rgba(124, 92, 255, 0.3);
+
+  transform:
+    translateY(-1px);
+}
+
+
+/* =========================================
+   HISTORY SECTION HEADER
+   ========================================= */
+
+.history-section-header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom:
+    16px;
+}
+
+.history-section-header h3 {
+  margin:
+    0;
+}
+
+.history-count {
+  font-size:
+    12px;
+
+  opacity:
+    0.5;
+}
+
+
+/* =========================================
+   EMPTY STATE
+   ========================================= */
+
+.order-empty {
+  text-align:
+    center;
+
+  padding:
+    50px 20px;
+
+  background:
+    rgba(255, 255, 255, 0.035);
+
+  border:
+    1px dashed
+    rgba(255, 255, 255, 0.12);
+
+  border-radius:
+    18px;
+}
+
+.order-empty h3 {
+  margin-bottom:
+    8px;
+}
+
+.order-empty p {
+  opacity:
+    0.55;
+}
+
+
+/* =========================================
+   ORDER STATUS
+   ========================================= */
+
+.order-status {
+  padding:
+    16px;
+
+  margin:
+    20px 0;
+
+  border-radius:
+    12px;
+
+  background:
+    rgba(124, 92, 255, 0.06);
+
+  border:
+    1px solid
+    rgba(124, 92, 255, 0.12);
+}
+
+
+/* =========================================
+   PAYMENT
+   ========================================= */
+
+#paymentContainer {
+  max-width:
+    700px;
+
+  margin:
+    0 auto;
+
+  padding:
+    30px;
+
+  background:
+    var(--card);
+
+  border:
+    1px solid
+    var(--border);
+
+  border-radius:
+    var(--radius);
+}
+
+#paymentContainer p {
+  margin:
+    8px 0;
+}
+
 
 /* =========================================
    FOOTER
    ========================================= */
 
 footer {
-  padding: 25px 16px;
+  padding:
+    25px 16px;
 
-  text-align: center;
+  text-align:
+    center;
 
-  border-top: 1px solid var(--border);
+  border-top:
+    1px solid
+    var(--border);
 }
 
 footer p {
-  font-size: 13px;
+  font-size:
+    13px;
 }
 
+
 /* =========================================
-   RESPONSIVE
+   RESPONSIVE — TABLET
    ========================================= */
 
 @media (max-width: 900px) {
@@ -462,44 +1044,155 @@ footer p {
 
 }
 
+
+/* =========================================
+   RESPONSIVE — MOBILE
+   ========================================= */
+
 @media (max-width: 600px) {
 
   header {
-    position: relative;
+    position:
+      relative;
   }
 
   header h1,
   nav {
-    width: min(
-      calc(100% - 32px),
-      var(--container)
-    );
+    width:
+      min(
+        calc(100% - 32px),
+        var(--container)
+      );
   }
 
   nav {
-    gap: 16px;
-    flex-wrap: wrap;
+    gap:
+      16px;
+
+    flex-wrap:
+      wrap;
   }
 
   main {
-    padding-top: 35px;
+    padding-top:
+      35px;
   }
 
   main > section:first-child {
-    padding: 45px 20px;
+    padding:
+      45px 20px;
   }
 
   main > section:nth-child(2) > div {
-    grid-template-columns: 1fr;
+    grid-template-columns:
+      1fr;
   }
 
   main > section:has(article) {
-    grid-template-columns: 1fr;
+    grid-template-columns:
+      1fr;
   }
 
   form,
-  #orderContainer {
-    padding: 20px;
+  #orderContainer,
+  #paymentContainer {
+    padding:
+      20px;
+  }
+
+
+  /* HISTORY MOBILE */
+
+  .order-history-card {
+    padding:
+      16px;
+
+    border-radius:
+      16px;
+  }
+
+  .history-top {
+    align-items:
+      flex-start;
+  }
+
+  .history-game-icon {
+    width:
+      42px;
+
+    height:
+      42px;
+  }
+
+  .history-game-name {
+    font-size:
+      15px;
+  }
+
+  .history-body {
+    grid-template-columns:
+      1fr 1fr;
+
+    gap:
+      12px 10px;
+  }
+
+  .history-bottom {
+    align-items:
+      center;
+  }
+
+  .history-detail-btn {
+    padding:
+      8px 11px;
+
+    flex-shrink:
+      0;
+  }
+
+  .history-order-id {
+    max-width:
+      52%;
   }
 
 }
+
+
+/* =========================================
+   VERY SMALL SCREEN
+   ========================================= */
+
+@media (max-width: 380px) {
+
+  .history-top {
+    flex-direction:
+      column;
+
+    align-items:
+      stretch;
+  }
+
+  .history-status {
+    width:
+      fit-content;
+  }
+
+  .history-bottom {
+    flex-direction:
+      column;
+
+    align-items:
+      stretch;
+  }
+
+  .history-order-id {
+    max-width:
+      100%;
+  }
+
+  .history-detail-btn {
+    width:
+      100%;
+  }
+
+   }
