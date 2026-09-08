@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =========================================
-     SINGLE ORDER MODE
+     SINGLE ORDER DETAIL
      ========================================= */
 
   if (requestedId) {
@@ -115,7 +115,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /*
-   * Tetap cek order yang sedang diproses.
+   * Check semua transaksi
+   * yang masih berjalan.
    */
 
   orders.forEach(
@@ -191,11 +192,13 @@ function startProcessing(orderId) {
   const orders =
     getOrders();
 
+
   const index =
     orders.findIndex(
       item =>
         item.orderId === orderId
     );
+
 
   if (index === -1) {
     return;
@@ -278,12 +281,12 @@ function continueProcessing(
     started;
 
 
-  const duration =
+  const processingDuration =
     4000;
 
 
   const remaining =
-    duration -
+    processingDuration -
     elapsed;
 
 
@@ -641,10 +644,6 @@ function renderHistory(
   orders
 ) {
 
-  /*
-   * Pesanan terbaru berada di atas.
-   */
-
   const sortedOrders =
     [...orders].sort(
       (a, b) => {
@@ -664,11 +663,31 @@ function renderHistory(
 
   let html = `
 
-    <section>
+    <div class="history-section-header">
 
-      <h3>
-        Riwayat Pesanan
-      </h3>
+      <div>
+
+        <h3>
+          Riwayat Pesanan
+        </h3>
+
+        <p
+          style="
+            margin: 4px 0 0;
+            opacity: .5;
+            font-size: 12px;
+          "
+        >
+          Semua transaksi kamu
+        </p>
+
+      </div>
+
+      <span class="history-count">
+        ${sortedOrders.length} Pesanan
+      </span>
+
+    </div>
 
   `;
 
@@ -681,61 +700,200 @@ function renderHistory(
         "Menunggu Pembayaran";
 
 
+      let statusClass =
+        "waiting";
+
+
+      if (
+        status ===
+        "Pesanan Diproses"
+      ) {
+
+        statusClass =
+          "processing";
+
+      }
+
+
+      if (
+        status ===
+        "Top Up Berhasil"
+      ) {
+
+        statusClass =
+          "success";
+
+      }
+
+
+      const gameIcon =
+        getGameIcon(
+          order.game
+        );
+
+
       html += `
 
-        <article class="order-history-card">
+        <article
+          class="order-history-card"
+        >
 
-          <p>
-            <strong>
-              ${escapeHTML(
-                order.orderId
-              )}
-            </strong>
-          </p>
+          <div class="history-top">
 
-          <p>
-            ${escapeHTML(
-              order.gameName ||
-              order.game
-            )}
-          </p>
+            <div class="history-game">
 
-          <p>
-            ${escapeHTML(
-              order.amount
-            )}
-          </p>
+              <div
+                class="history-game-icon"
+              >
+                ${gameIcon}
+              </div>
 
-          <p>
-            ${formatPrice(
-              Number(order.price)
-            )}
-          </p>
+              <div>
 
-          <p>
-            Status:
-            <strong>
+                <h4
+                  class="history-game-name"
+                >
+                  ${escapeHTML(
+                    order.gameName ||
+                    order.game
+                  )}
+                </h4>
+
+                <p
+                  class="history-game-type"
+                >
+                  ${escapeHTML(
+                    order.amount
+                  )}
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <span
+              class="
+                history-status
+                ${statusClass}
+              "
+            >
               ${escapeHTML(
                 status
               )}
-            </strong>
-          </p>
+            </span>
 
-          <a
-            href="order.html?id=${encodeURIComponent(
-              order.orderId
-            )}"
-          >
+          </div>
 
-            <button>
-              Lihat Detail
-            </button>
 
-          </a>
+          <div class="history-body">
+
+            <div class="history-info">
+
+              <span
+                class="history-label"
+              >
+                Player
+              </span>
+
+              <span
+                class="history-value"
+              >
+                ${escapeHTML(
+                  order.playerId
+                )}
+              </span>
+
+            </div>
+
+
+            <div class="history-info">
+
+              <span
+                class="history-label"
+              >
+                Total
+              </span>
+
+              <span
+                class="history-value"
+              >
+                ${formatPrice(
+                  Number(order.price)
+                )}
+              </span>
+
+            </div>
+
+
+            <div class="history-info">
+
+              <span
+                class="history-label"
+              >
+                Pembayaran
+              </span>
+
+              <span
+                class="history-value"
+              >
+                ${escapeHTML(
+                  getPaymentName(
+                    order.payment
+                  )
+                )}
+              </span>
+
+            </div>
+
+
+            <div class="history-info">
+
+              <span
+                class="history-label"
+              >
+                Tanggal
+              </span>
+
+              <span
+                class="history-value"
+              >
+                ${escapeHTML(
+                  formatDate(
+                    order.createdAt
+                  )
+                )}
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="history-bottom">
+
+            <span
+              class="history-order-id"
+            >
+              ID:
+              ${escapeHTML(
+                order.orderId
+              )}
+            </span>
+
+
+            <a
+              class="history-detail-btn"
+              href="order.html?id=${encodeURIComponent(
+                order.orderId
+              )}"
+            >
+              Lihat Detail →
+            </a>
+
+          </div>
 
         </article>
-
-        <br>
 
       `;
 
@@ -745,14 +903,12 @@ function renderHistory(
 
   html += `
 
-    </section>
-
     <br>
 
     <a href="shop.html">
 
       <button>
-        Top Up Lagi
+        + Top Up Lagi
       </button>
 
     </a>
@@ -762,6 +918,37 @@ function renderHistory(
 
   container.innerHTML =
     html;
+
+}
+
+
+/* =========================================
+   GAME ICON
+   ========================================= */
+
+function getGameIcon(game) {
+
+  const icons = {
+
+    "mobile-legends":
+      "⚔️",
+
+    "free-fire":
+      "🔥",
+
+    "roblox":
+      "🧱",
+
+    "pubg-mobile":
+      "🎯"
+
+  };
+
+
+  return (
+    icons[game] ||
+    "🎮"
+  );
 
 }
 
@@ -778,6 +965,15 @@ function renderEmpty(
   container.innerHTML = `
 
     <div class="order-empty">
+
+      <div
+        style="
+          font-size: 42px;
+          margin-bottom: 12px;
+        "
+      >
+        📦
+      </div>
 
       <h3>
         Belum Ada Pesanan
@@ -810,27 +1006,34 @@ function renderEmpty(
    PAYMENT NAME
    ========================================= */
 
-function getPaymentName(
-  payment
-) {
+function getPaymentName(payment) {
 
   if (
     payment === "qris"
   ) {
+
     return "QRIS";
+
   }
+
 
   if (
     payment === "ewallet"
   ) {
+
     return "E-Wallet";
+
   }
+
 
   if (
     payment === "bank"
   ) {
+
     return "Virtual Account";
+
   }
+
 
   return payment || "-";
 
@@ -841,9 +1044,7 @@ function getPaymentName(
    FORMAT DATE
    ========================================= */
 
-function formatDate(
-  date
-) {
+function formatDate(date) {
 
   if (!date) {
     return "-";
@@ -913,9 +1114,7 @@ function getLastOrder() {
 }
 
 
-function saveOrders(
-  orders
-) {
+function saveOrders(orders) {
 
   localStorage.setItem(
     "fidelis_orders",
@@ -927,9 +1126,7 @@ function saveOrders(
 }
 
 
-function saveLastOrder(
-  order
-) {
+function saveLastOrder(order) {
 
   localStorage.setItem(
     "fidelis_last_order",
@@ -945,9 +1142,7 @@ function saveLastOrder(
    FORMAT PRICE
    ========================================= */
 
-function formatPrice(
-  price
-) {
+function formatPrice(price) {
 
   return new Intl.NumberFormat(
     "id-ID",
@@ -965,9 +1160,7 @@ function formatPrice(
    SECURITY
    ========================================= */
 
-function escapeHTML(
-  value
-) {
+function escapeHTML(value) {
 
   return String(
     value ?? ""
@@ -993,4 +1186,4 @@ function escapeHTML(
       "&#039;"
     );
 
-}
+     }
