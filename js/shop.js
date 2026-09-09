@@ -3,259 +3,150 @@
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-  initShop();
-});
-
-
-/* =========================================================
-   INIT
-   ========================================================= */
-
-function initShop() {
-
   const productList = document.getElementById("productList");
-
-  if (!productList) {
-    console.warn("Leo Store: #productList tidak ditemukan.");
-    return;
-  }
-
-  renderProducts();
-
-}
-
-
-/* =========================================================
-   RENDER PRODUCTS
-   ========================================================= */
-
-function renderProducts() {
-
-  const productList = document.getElementById("productList");
+  const searchInput = document.getElementById("shopSearch");
 
   if (!productList) return;
 
-  const products = getProducts();
-
-  if (!products || products.length === 0) {
-
-    productList.innerHTML = `
-      <div class="shop-empty">
-        <div class="shop-empty-icon">📦</div>
-        <h3>Produk belum tersedia</h3>
-        <p>Belum ada produk yang bisa ditampilkan.</p>
-      </div>
-    `;
-
-    return;
+  function escapeHTML(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
   }
 
-
-  productList.innerHTML = products.map(product => {
-
-    const cheapest = getCheapestDenomination(product.id);
-
-    const price = cheapest
-      ? formatRupiah(cheapest.price)
-      : "Harga belum tersedia";
-
-    const amount = cheapest
-      ? cheapest.amount
-      : "—";
-
-
-    return `
-      <article
-        class="product-card"
-        data-game="${escapeHTML(product.slug)}"
-      >
-
-        <div class="product-icon">
-          ${product.icon || "🎮"}
+  function renderProducts(products) {
+    if (!products || products.length === 0) {
+      productList.innerHTML = `
+        <div class="empty-state">
+          <strong>Game tidak ditemukan</strong>
+          <span>Coba cari nama game yang berbeda.</span>
         </div>
+      `;
 
-        <div class="product-info">
+      return;
+    }
 
-          <h3>
-            ${escapeHTML(product.name)}
-          </h3>
+    productList.innerHTML = products.map(product => {
+      const cheapest = getCheapestDenomination(product.id);
 
-          <p>
-            ${escapeHTML(
-              product.description ||
-              "Top up cepat dan mudah."
-            )}
-          </p>
+      const denominations = Array.isArray(product.denominations)
+        ? product.denominations
+        : [];
 
-          <div class="product-price">
-            Mulai ${price}
+      const preview = denominations.slice(0, 5);
+
+      const nominalHTML = preview.length
+        ? `
+          <div class="product-denominations">
+            ${preview.map(item => `
+              <span class="denomination-chip">
+                ${escapeHTML(item.shortAmount || item.amount)}
+              </span>
+            `).join("")}
+
+            ${
+              denominations.length > 5
+                ? `<span class="denomination-more">
+                    +${denominations.length - 5}
+                  </span>`
+                : ""
+            }
           </div>
+        `
+        : "";
 
-          <div class="product-minimum">
-            ${escapeHTML(amount)}
+      const imageHTML = product.image
+        ? `
+          <img
+            class="product-game-image"
+            src="${escapeHTML(product.image)}"
+            alt="${escapeHTML(product.name)}"
+            loading="lazy"
+            onerror="
+              this.style.display='none';
+              this.nextElementSibling.style.display='flex';
+            "
+          >
+
+          <div
+            class="product-icon product-icon-fallback"
+            style="display:none;"
+          >
+            ${escapeHTML(product.icon || "🎮")}
           </div>
-
-        </div>
-
-        <a
-          href="checkout.html?game=${encodeURIComponent(product.slug)}"
-          class="product-btn"
-        >
-          Top Up
-        </a>
-
-      </article>
-    `;
-
-  }).join("");
-
-}
-
-
-/* =========================================================
-   SEARCH
-   ========================================================= */
-
-function initSearch() {
-
-  const searchInput =
-    document.getElementById("shopSearch");
-
-  if (!searchInput) return;
-
-  searchInput.addEventListener("input", () => {
-
-    const keyword =
-      searchInput.value.trim();
-
-    renderSearchResults(keyword);
-
-  });
-
-}
-
-
-function renderSearchResults(keyword) {
-
-  const productList =
-    document.getElementById("productList");
-
-  if (!productList) return;
-
-
-  const products =
-    searchProducts(keyword);
-
-
-  if (!products.length) {
-
-    productList.innerHTML = `
-      <div class="shop-empty">
-
-        <div class="shop-empty-icon">
-          🔎
-        </div>
-
-        <h3>Produk tidak ditemukan</h3>
-
-        <p>
-          Coba cari dengan nama game lain.
-        </p>
-
-      </div>
-    `;
-
-    return;
-  }
-
-
-  productList.innerHTML =
-    products.map(product => {
-
-      const cheapest =
-        getCheapestDenomination(product.id);
-
-      const price =
-        cheapest
-          ? formatRupiah(cheapest.price)
-          : "Harga belum tersedia";
-
-      const amount =
-        cheapest
-          ? cheapest.amount
-          : "—";
-
+        `
+        : `
+          <div class="product-icon">
+            ${escapeHTML(product.icon || "🎮")}
+          </div>
+        `;
 
       return `
-        <article
-          class="product-card"
-          data-game="${escapeHTML(product.slug)}"
-        >
+        <article class="product-card">
 
-          <div class="product-icon">
-            ${product.icon || "🎮"}
+          <div class="product-image-wrap">
+            ${imageHTML}
           </div>
 
           <div class="product-info">
 
-            <h3>
-              ${escapeHTML(product.name)}
-            </h3>
+            <h3>${escapeHTML(product.name)}</h3>
 
             <p>
               ${escapeHTML(
                 product.description ||
-                "Top up cepat dan mudah."
+                `Top Up ${product.name}`
               )}
             </p>
 
-            <div class="product-price">
-              Mulai ${price}
-            </div>
+            ${nominalHTML}
 
-            <div class="product-minimum">
-              ${escapeHTML(amount)}
-            </div>
+            ${
+              cheapest
+                ? `
+                  <div class="product-price">
+                    Mulai dari ${formatRupiah(cheapest.price)}
+                  </div>
+
+                  <div class="product-minimum">
+                    ${escapeHTML(
+                      cheapest.shortAmount ||
+                      cheapest.amount
+                    )}
+                  </div>
+                `
+                : ""
+            }
+
+            <a
+              class="product-btn"
+              href="checkout.html?game=${encodeURIComponent(product.slug)}"
+            >
+              Top Up
+            </a>
 
           </div>
-
-          <a
-            href="checkout.html?game=${encodeURIComponent(product.slug)}"
-            class="product-btn"
-          >
-            Top Up
-          </a>
-
         </article>
       `;
-
     }).join("");
+  }
 
-}
+  function loadProducts(keyword = "") {
+    const products = keyword
+      ? searchProducts(keyword)
+      : getProducts();
 
+    renderProducts(products);
+  }
 
-/* =========================================================
-   ESCAPE HTML
-   ========================================================= */
+  loadProducts();
 
-function escapeHTML(value) {
-
-  return String(value ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-
-}
-
-
-/* =========================================================
-   START SEARCH
-   ========================================================= */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-  initSearch();
-
+  if (searchInput) {
+    searchInput.addEventListener("input", () => {
+      loadProducts(searchInput.value);
+    });
+  }
 });
