@@ -2,7 +2,6 @@
 <html lang="id">
 
 <head>
-
   <meta charset="UTF-8">
 
   <meta
@@ -16,11 +15,13 @@
     rel="stylesheet"
     href="css/admin.css"
   >
-
 </head>
 
-
 <body>
+
+  <!-- =====================================
+       HEADER
+       ===================================== -->
 
   <header class="admin-header">
 
@@ -31,7 +32,6 @@
       </div>
 
       <div>
-
         <h1>
           Leo Store
         </h1>
@@ -39,7 +39,6 @@
         <span>
           Admin Dashboard
         </span>
-
       </div>
 
     </div>
@@ -54,6 +53,10 @@
 
   </header>
 
+
+  <!-- =====================================
+       MAIN
+       ===================================== -->
 
   <main class="admin-main">
 
@@ -85,6 +88,7 @@
       <button
         id="refreshBtn"
         class="refresh-btn"
+        type="button"
       >
         ↻ Refresh
       </button>
@@ -99,6 +103,8 @@
 
     <section class="stats-grid">
 
+
+      <!-- TOTAL ORDERS -->
 
       <article class="stat-card">
 
@@ -122,6 +128,8 @@
 
 
 
+      <!-- TOTAL REVENUE -->
+
       <article class="stat-card">
 
         <div class="stat-icon">
@@ -144,6 +152,8 @@
 
 
 
+      <!-- SUCCESS -->
+
       <article class="stat-card">
 
         <div class="stat-icon">
@@ -165,6 +175,8 @@
       </article>
 
 
+
+      <!-- PENDING -->
 
       <article class="stat-card">
 
@@ -198,6 +210,8 @@
     <section class="orders-panel">
 
 
+      <!-- PANEL HEADER -->
+
       <div class="panel-header">
 
         <div>
@@ -212,6 +226,7 @@
 
         </div>
 
+
         <span
           id="orderCount"
           class="order-count"
@@ -223,10 +238,14 @@
 
 
 
-      <!-- SEARCH -->
+      <!-- =====================================
+           SEARCH & FILTER
+           ===================================== -->
 
       <div class="admin-tools">
 
+
+        <!-- SEARCH -->
 
         <div class="admin-search">
 
@@ -237,7 +256,7 @@
           <input
             type="text"
             id="adminSearch"
-            placeholder="Cari Order ID atau Player ID..."
+            placeholder="Cari Order ID, Player ID, game..."
             autocomplete="off"
           >
 
@@ -310,7 +329,9 @@
 
 
 
-      <!-- ORDER LIST -->
+      <!-- =====================================
+           ORDER LIST
+           ===================================== -->
 
       <div
         id="adminOrderList"
@@ -331,6 +352,10 @@
 
 
 
+  <!-- =====================================
+       FOOTER
+       ===================================== -->
+
   <footer class="admin-footer">
 
     <p>
@@ -344,6 +369,10 @@
   </footer>
 
 
+
+  <!-- =====================================
+       JAVASCRIPT
+       ===================================== -->
 
   <script src="js/admin.js"></script>
 
