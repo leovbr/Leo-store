@@ -1,146 +1,163 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Top Up — Leo Store</title>
+  <title>Top Up Game — Leo Store</title>
+
+  <meta
+    name="description"
+    content="Top up game cepat, mudah, dan praktis di Leo Store."
+  >
 
   <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-  <header>
+  <!-- =====================================================
+       HEADER
+       ===================================================== -->
 
-    <h1>Leo Store</h1>
+  <header class="site-header">
 
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="shop.html">Top Up</a>
-      <a href="order.html">Cek Pesanan</a>
-    </nav>
+    <div class="container">
+
+      <a href="index.html" class="logo">
+        Leo Store
+      </a>
+
+      <nav class="main-nav">
+
+        <a href="index.html">
+          Home
+        </a>
+
+        <a href="shop.html" class="active">
+          Top Up
+        </a>
+
+        <a href="order.html">
+          Cek Pesanan
+        </a>
+
+      </nav>
+
+    </div>
 
   </header>
 
 
+  <!-- =====================================================
+       MAIN
+       ===================================================== -->
+
   <main>
 
-    <h2>
-      Pilih Game
-    </h2>
+    <section class="shop-page">
+
+      <div class="container">
+
+        <!-- PAGE TITLE -->
+
+        <div class="shop-heading">
+
+          <span class="eyebrow">
+            LEO STORE
+          </span>
+
+          <h1>
+            Top Up Game
+          </h1>
+
+          <p>
+            Pilih game yang ingin kamu top up.
+          </p>
+
+        </div>
 
 
-    <section>
+        <!-- SEARCH -->
 
-      <article data-game="mobile-legends">
+        <div class="shop-search">
 
-        <h3 data-product-name>
-          Mobile Legends
-        </h3>
+          <span>
+            🔎
+          </span>
 
-        <p data-product-type>
-          Diamond
-        </p>
+          <input
+            type="search"
+            id="shopSearch"
+            placeholder="Cari game..."
+            autocomplete="off"
+          >
 
-        <br>
+        </div>
 
-        <a
-          href="checkout.html?game=mobile-legends"
+
+        <!-- PRODUCT LIST -->
+
+        <section
+          id="productList"
+          class="product-list"
+          aria-live="polite"
         >
-          <button>
-            Pilih Game
-          </button>
-        </a>
 
-      </article>
+          <div class="shop-empty">
 
+            <div class="shop-empty-icon">
+              ⏳
+            </div>
 
-      <article data-game="free-fire">
+            <h3>
+              Memuat produk...
+            </h3>
 
-        <h3 data-product-name>
-          Free Fire
-        </h3>
+            <p>
+              Tunggu sebentar.
+            </p>
 
-        <p data-product-type>
-          Diamond
-        </p>
+          </div>
 
-        <br>
+        </section>
 
-        <a
-          href="checkout.html?game=free-fire"
-        >
-          <button>
-            Pilih Game
-          </button>
-        </a>
-
-      </article>
-
-
-      <article data-game="roblox">
-
-        <h3 data-product-name>
-          Roblox
-        </h3>
-
-        <p data-product-type>
-          Robux
-        </p>
-
-        <br>
-
-        <a
-          href="checkout.html?game=roblox"
-        >
-          <button>
-            Pilih Game
-          </button>
-        </a>
-
-      </article>
-
-
-      <article data-game="pubg-mobile">
-
-        <h3 data-product-name>
-          PUBG Mobile
-        </h3>
-
-        <p data-product-type>
-          UC
-        </p>
-
-        <br>
-
-        <a
-          href="checkout.html?game=pubg-mobile"
-        >
-          <button>
-            Pilih Game
-          </button>
-        </a>
-
-      </article>
+      </div>
 
     </section>
 
   </main>
 
 
-  <footer>
+  <!-- =====================================================
+       FOOTER
+       ===================================================== -->
 
-    <p>
-      © 2026 Leo Store
-    </p>
+  <footer class="site-footer">
+
+    <div class="container">
+
+      <p>
+        Leo Store
+      </p>
+
+      <span>
+        © 2026 Leo Store
+      </span>
+
+    </div>
 
   </footer>
 
 
+  <!-- =====================================================
+       JAVASCRIPT
+       ===================================================== -->
+
   <script src="js/products.js"></script>
   <script src="js/shop.js"></script>
-  <script src="js/app.js"></script>
 
 </body>
+
 </html>
