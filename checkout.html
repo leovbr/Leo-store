@@ -1,207 +1,441 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Checkout — Leo Store</title>
 
+  <meta
+    name="description"
+    content="Checkout top up game di Leo Store."
+  >
+
   <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-  <header>
+  <!-- =====================================================
+       HEADER
+       ===================================================== -->
 
-    <h1>Leo Store</h1>
+  <header class="site-header">
 
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="shop.html">Top Up</a>
-      <a href="order.html">Cek Pesanan</a>
-    </nav>
+    <div class="container">
+
+      <a href="index.html" class="logo">
+        Leo Store
+      </a>
+
+      <nav class="main-nav">
+
+        <a href="index.html">
+          Home
+        </a>
+
+        <a href="shop.html" class="active">
+          Top Up
+        </a>
+
+        <a href="order.html">
+          Cek Pesanan
+        </a>
+
+      </nav>
+
+    </div>
 
   </header>
 
 
+  <!-- =====================================================
+       MAIN
+       ===================================================== -->
+
   <main>
 
-    <h2>
-      Checkout
-    </h2>
+    <section class="checkout-page">
+
+      <div class="container">
+
+        <!-- HEADING -->
+
+        <div class="checkout-heading">
+
+          <span class="eyebrow">
+            LEO STORE
+          </span>
+
+          <h1>
+            Checkout
+          </h1>
+
+          <p>
+            Lengkapi data pesanan kamu.
+          </p>
+
+        </div>
 
 
-    <form id="checkoutForm">
+        <!-- FORM -->
+
+        <form id="checkoutForm" class="checkout-form">
 
 
-      <!-- GAME -->
+          <!-- =================================================
+               PRODUK
+               ================================================= -->
 
-      <section>
+          <section class="checkout-section">
 
-        <h3>
-          Produk
-        </h3>
+            <div class="checkout-section-heading">
 
-        <label for="game">
-          Game
-        </label>
+              <span class="checkout-step">
+                01
+              </span>
 
-        <select
-          id="game"
-          name="game"
-          required
-        >
+              <div>
 
-          <option value="">
-            Pilih Game
-          </option>
+                <h2>
+                  Produk
+                </h2>
 
-          <option value="mobile-legends">
-            Mobile Legends
-          </option>
+                <p>
+                  Pilih game yang ingin kamu top up.
+                </p>
 
-          <option value="free-fire">
-            Free Fire
-          </option>
+              </div>
 
-          <option value="roblox">
-            Roblox
-          </option>
-
-          <option value="pubg-mobile">
-            PUBG Mobile
-          </option>
-
-        </select>
-
-      </section>
+            </div>
 
 
-      <!-- PLAYER -->
+            <label for="game">
+              Game
+            </label>
 
-      <section>
+            <select
+              id="game"
+              name="game"
+              required
+            >
 
-        <h3>
-          Data Player
-        </h3>
+              <option value="">
+                Pilih Game
+              </option>
 
+              <option value="mobile-legends">
+                Mobile Legends
+              </option>
 
-        <label for="playerId">
-          User ID / Username
-        </label>
+              <option value="free-fire">
+                Free Fire
+              </option>
 
-        <input
-          type="text"
-          id="playerId"
-          name="playerId"
-          placeholder="Masukkan ID / username"
-          autocomplete="off"
-          required
-        >
+              <option value="roblox">
+                Roblox
+              </option>
 
+              <option value="pubg-mobile">
+                PUBG Mobile
+              </option>
 
-        <label for="server">
-          Server / Zone
-        </label>
+            </select>
 
-        <input
-          type="text"
-          id="server"
-          name="server"
-          placeholder="Opsional jika tidak diperlukan"
-          autocomplete="off"
-        >
-
-      </section>
+          </section>
 
 
-      <!-- NOMINAL -->
+          <!-- =================================================
+               NOMINAL
+               ================================================= -->
 
-      <section>
+          <section class="checkout-section">
 
-        <h3>
-          Nominal
-        </h3>
+            <div class="checkout-section-heading">
 
-        <select
-          id="nominal"
-          name="nominal"
-          required
-        >
+              <span class="checkout-step">
+                02
+              </span>
 
-          <option value="">
-            Pilih Game Terlebih Dahulu
-          </option>
+              <div>
 
-        </select>
+                <h2>
+                  Pilih Nominal
+                </h2>
 
+                <p>
+                  Pilih nominal yang ingin kamu beli.
+                </p>
 
-        <p
-          id="pricePreview"
-          style="margin-top: 12px;"
-        >
-        </p>
+              </div>
 
-      </section>
+            </div>
 
 
-      <!-- PAYMENT -->
+            <div
+              id="denominationList"
+              class="checkout-denomination-list"
+            >
 
-      <section>
+              <div class="checkout-empty">
 
-        <h3>
-          Pembayaran
-        </h3>
+                <div>
+                  🎮
+                </div>
 
-        <select
-          id="payment"
-          name="payment"
-          required
-        >
+                <h3>
+                  Pilih game terlebih dahulu
+                </h3>
 
-          <option value="">
-            Pilih Metode Pembayaran
-          </option>
+                <p>
+                  Daftar nominal akan muncul di sini.
+                </p>
 
-          <option value="qris">
-            QRIS
-          </option>
+              </div>
 
-          <option value="ewallet">
-            E-Wallet
-          </option>
-
-          <option value="bank">
-            Virtual Account
-          </option>
-
-        </select>
-
-      </section>
+            </div>
 
 
-      <button type="submit">
-        Buat Pesanan
-      </button>
+            <!-- Hidden field used by checkout.js -->
+
+            <input
+              type="hidden"
+              id="nominal"
+              name="nominal"
+              value=""
+              required
+            >
 
 
-    </form>
+            <div
+              id="pricePreview"
+              class="checkout-price-preview"
+            >
+            </div>
+
+          </section>
+
+
+          <!-- =================================================
+               DATA PLAYER
+               ================================================= -->
+
+          <section class="checkout-section">
+
+            <div class="checkout-section-heading">
+
+              <span class="checkout-step">
+                03
+              </span>
+
+              <div>
+
+                <h2>
+                  Data Player
+                </h2>
+
+                <p>
+                  Masukkan data akun tujuan top up.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label for="playerId">
+                User ID / Username
+              </label>
+
+              <input
+                type="text"
+                id="playerId"
+                name="playerId"
+                placeholder="Masukkan ID / username"
+                autocomplete="off"
+                required
+              >
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label for="server">
+                Server / Zone
+              </label>
+
+              <input
+                type="text"
+                id="server"
+                name="server"
+                placeholder="Opsional jika tidak diperlukan"
+                autocomplete="off"
+              >
+
+            </div>
+
+          </section>
+
+
+          <!-- =================================================
+               PEMBAYARAN
+               ================================================= -->
+
+          <section class="checkout-section">
+
+            <div class="checkout-section-heading">
+
+              <span class="checkout-step">
+                04
+              </span>
+
+              <div>
+
+                <h2>
+                  Pembayaran
+                </h2>
+
+                <p>
+                  Pilih metode pembayaran.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <select
+              id="payment"
+              name="payment"
+              required
+            >
+
+              <option value="">
+                Pilih Metode Pembayaran
+              </option>
+
+              <option value="qris">
+                QRIS
+              </option>
+
+              <option value="ewallet">
+                E-Wallet
+              </option>
+
+              <option value="bank">
+                Virtual Account
+              </option>
+
+            </select>
+
+          </section>
+
+
+          <!-- =================================================
+               SUMMARY
+               ================================================= -->
+
+          <section
+            id="checkoutSummary"
+            class="checkout-summary"
+          >
+
+            <div class="checkout-summary-row">
+
+              <span>
+                Produk
+              </span>
+
+              <strong id="summaryName">
+                -
+              </strong>
+
+            </div>
+
+
+            <div class="checkout-summary-row">
+
+              <span>
+                Nominal
+              </span>
+
+              <strong id="summaryDenomination">
+                -
+              </strong>
+
+            </div>
+
+
+            <div class="checkout-summary-row total">
+
+              <span>
+                Total
+              </span>
+
+              <strong id="summaryPrice">
+                Rp 0
+              </strong>
+
+            </div>
+
+          </section>
+
+
+          <!-- =================================================
+               SUBMIT
+               ================================================= -->
+
+          <button
+            type="submit"
+            id="checkoutButton"
+            class="checkout-submit"
+          >
+            Buat Pesanan
+          </button>
+
+
+        </form>
+
+      </div>
+
+    </section>
 
   </main>
 
 
-  <footer>
+  <!-- =====================================================
+       FOOTER
+       ===================================================== -->
 
-    <p>
-      © 2026 Leo Store
-    </p>
+  <footer class="site-footer">
+
+    <div class="container">
+
+      <p>
+        Leo Store
+      </p>
+
+      <span>
+        © 2026 Leo Store
+      </span>
+
+    </div>
 
   </footer>
 
+
+  <!-- =====================================================
+       JAVASCRIPT
+       ===================================================== -->
 
   <script src="js/products.js"></script>
   <script src="js/checkout.js"></script>
   <script src="js/app.js"></script>
 
 </body>
+
 </html>
