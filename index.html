@@ -1,78 +1,265 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Leo Store — Top Up Game</title>
 
+  <meta
+    name="description"
+    content="Leo Store — Top up game cepat, mudah, dan praktis."
+  >
+
   <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body class="home-page">
 
-  <header>
+  <!-- ================================
+       HEADER
+  ================================= -->
 
-    <h1>Leo Store</h1>
+  <header class="site-header home-header">
 
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="shop.html">Top Up</a>
-      <a href="order.html">Cek Pesanan</a>
-    </nav>
+    <div class="container">
+
+      <a href="index.html" class="logo">
+        Leo Store
+      </a>
+
+      <nav class="main-nav">
+
+        <a href="index.html" class="active">
+          Home
+        </a>
+
+        <a href="shop.html">
+          Top Up
+        </a>
+
+        <a href="order.html">
+          Cek Pesanan
+        </a>
+
+      </nav>
+
+    </div>
 
   </header>
 
 
   <main>
 
-    <section>
+    <!-- ================================
+         BRAND INTRO
+    ================================= -->
 
-      <h2>
-        Top Up Game
-        <br>
-        Cepat & Mudah
-      </h2>
+    <section class="brand-intro">
 
-      <p>
-        Top up game favoritmu dengan proses
-        yang simpel, cepat, dan aman.
-      </p>
+      <div class="brand-intro-inner">
 
-      <br>
+        <div class="brand-animation">
 
-      <a href="shop.html">
-        <button>
-          Mulai Top Up
-        </button>
-      </a>
+          <div class="brand-logo-placeholder">
+            LOGO GW NANTI
+          </div>
+
+          <div class="brand-word">
+            LEOOSTORE
+          </div>
+
+        </div>
+
+        <p class="brand-tagline">
+          TOP UP CEPAT • AMAN • PRAKTIS
+        </p>
+
+      </div>
 
     </section>
 
 
-    <section>
+    <!-- ================================
+         GAME / EVENT BANNER
+    ================================= -->
 
-      <h2>
-        Game Populer
-      </h2>
+    <section class="home-banner-section">
 
-      <div>
+      <div class="container">
 
-        <a href="checkout.html?game=mobile-legends">
-          Mobile Legends
-        </a>
+        <div class="section-heading">
 
-        <a href="checkout.html?game=free-fire">
-          Free Fire
-        </a>
+          <span class="eyebrow">
+            EVENT & PROMO
+          </span>
 
-        <a href="checkout.html?game=roblox">
-          Roblox
-        </a>
+          <h1>
+            Top Up Lebih Mudah
+          </h1>
 
-        <a href="checkout.html?game=pubg-mobile">
-          PUBG Mobile
-        </a>
+          <p>
+            Pilih game favoritmu dan mulai top up sekarang.
+          </p>
+
+        </div>
+
+
+        <div class="banner-carousel">
+
+          <div
+            class="banner-track"
+            id="homeBannerTrack"
+          ></div>
+
+          <button
+            type="button"
+            class="banner-arrow banner-arrow-left"
+            id="bannerPrev"
+            aria-label="Banner sebelumnya"
+          >
+            ‹
+          </button>
+
+          <button
+            type="button"
+            class="banner-arrow banner-arrow-right"
+            id="bannerNext"
+            aria-label="Banner berikutnya"
+          >
+            ›
+          </button>
+
+          <div
+            class="banner-dots"
+            id="bannerDots"
+          ></div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================================
+         TRENDING
+    ================================= -->
+
+    <section class="home-games-section">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span class="eyebrow">
+            TRENDING
+          </span>
+
+          <h2>
+            Game Populer
+          </h2>
+
+          <p>
+            Berikut adalah beberapa game yang paling populer saat ini.
+          </p>
+
+        </div>
+
+
+        <div
+          class="home-game-grid"
+          id="trendingGames"
+        ></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================================
+         ALL GAMES
+    ================================= -->
+
+    <section class="home-games-section all-games-section">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span class="eyebrow">
+            TOP UP
+          </span>
+
+          <h2>
+            Semua Game
+          </h2>
+
+          <p>
+            Pilih game dan lanjutkan ke halaman top up.
+          </p>
+
+        </div>
+
+
+        <div
+          class="home-game-grid"
+          id="allGames"
+        ></div>
+
+
+        <div class="home-more-wrapper">
+
+          <a
+            href="shop.html"
+            class="home-more-button"
+          >
+            Tampilkan Semua Game
+            <span>→</span>
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================================
+         RESELLER
+    ================================= -->
+
+    <section class="reseller-section">
+
+      <div class="container">
+
+        <div class="reseller-card">
+
+          <div>
+
+            <span class="eyebrow">
+              RESELLER
+            </span>
+
+            <h2>
+              Mau Jualan Top Up?
+            </h2>
+
+            <p>
+              Bangun bisnis top up game kamu bersama Leo Store.
+            </p>
+
+          </div>
+
+          <a
+            href="shop.html"
+            class="reseller-button"
+          >
+            Mulai Sekarang
+          </a>
+
+        </div>
 
       </div>
 
@@ -81,17 +268,427 @@
   </main>
 
 
-  <footer>
+  <!-- ================================
+       FOOTER
+  ================================= -->
 
-    <p>
-      © 2026 Leo Store
-    </p>
+  <footer class="site-footer">
+
+    <div class="container">
+
+      <div>
+
+        <strong>
+          Leo Store
+        </strong>
+
+        <span>
+          © 2026 Leo Store
+        </span>
+
+      </div>
+
+    </div>
 
   </footer>
 
 
   <script src="js/products.js"></script>
-  <script src="js/app.js"></script>
+
+  <script>
+
+    document.addEventListener("DOMContentLoaded", () => {
+
+      const products =
+        typeof getProducts === "function"
+          ? getProducts()
+          : (window.PRODUCTS || []);
+
+
+      /*
+       * ========================================
+       * GAME CARD
+       * ========================================
+       */
+
+      function createGameCard(product) {
+
+        const card = document.createElement("a");
+
+        card.className = "home-game-card";
+
+        card.href =
+          `checkout.html?game=${encodeURIComponent(
+            product.slug || product.id
+          )}`;
+
+
+        const image =
+          product.image ||
+          product.icon ||
+          "";
+
+
+        card.innerHTML = `
+
+          <div class="home-game-image">
+
+            ${
+              image.includes(".")
+                ? `
+                  <img
+                    src="${image}"
+                    alt="${product.name || "Game"}"
+                    loading="lazy"
+                  >
+                `
+                : `
+                  <span class="home-game-fallback">
+                    ${image || "🎮"}
+                  </span>
+                `
+            }
+
+          </div>
+
+
+          <div class="home-game-info">
+
+            <strong>
+              ${product.name || "Game"}
+            </strong>
+
+            <span>
+              ${product.publisher || product.company || ""}
+            </span>
+
+          </div>
+
+        `;
+
+
+        return card;
+
+      }
+
+
+      /*
+       * ========================================
+       * TRENDING
+       * ========================================
+       */
+
+      const trending =
+        products.slice(0, 6);
+
+
+      const trendingContainer =
+        document.getElementById("trendingGames");
+
+
+      if (trendingContainer) {
+
+        trendingContainer.innerHTML = "";
+
+        trending.forEach(product => {
+
+          trendingContainer.appendChild(
+            createGameCard(product)
+          );
+
+        });
+
+      }
+
+
+      /*
+       * ========================================
+       * ALL GAMES
+       * ========================================
+       */
+
+      const allGames =
+        products.slice(0, 12);
+
+
+      const allGamesContainer =
+        document.getElementById("allGames");
+
+
+      if (allGamesContainer) {
+
+        allGamesContainer.innerHTML = "";
+
+        allGames.forEach(product => {
+
+          allGamesContainer.appendChild(
+            createGameCard(product)
+          );
+
+        });
+
+      }
+
+
+      /*
+       * ========================================
+       * BANNER DATA
+       * ========================================
+       */
+
+      const banners =
+        products
+          .filter(product => product.banner || product.image)
+          .slice(0, 8);
+
+
+      const track =
+        document.getElementById("homeBannerTrack");
+
+      const dots =
+        document.getElementById("bannerDots");
+
+
+      let currentBanner = 0;
+
+
+      function renderBanners() {
+
+        if (!track) return;
+
+        track.innerHTML = "";
+
+        banners.forEach((product, index) => {
+
+          const slide =
+            document.createElement("a");
+
+          slide.className =
+            "home-banner-slide";
+
+          slide.href =
+            `checkout.html?game=${encodeURIComponent(
+              product.slug || product.id
+            )}`;
+
+
+          const bannerImage =
+            product.banner ||
+            product.image;
+
+
+          slide.innerHTML = `
+
+            <img
+              src="${bannerImage}"
+              alt="${product.name || "Leo Store"}"
+              draggable="false"
+            >
+
+            <div class="home-banner-overlay">
+
+              <div>
+
+                <span>
+                  TOP UP SEKARANG
+                </span>
+
+                <strong>
+                  ${product.name || "Game Favorit"}
+                </strong>
+
+              </div>
+
+              <b>
+                →
+              </b>
+
+            </div>
+
+          `;
+
+
+          track.appendChild(slide);
+
+        });
+
+
+        if (dots) {
+
+          dots.innerHTML = "";
+
+          banners.forEach((_, index) => {
+
+            const dot =
+              document.createElement("button");
+
+            dot.type = "button";
+
+            dot.className =
+              "banner-dot" +
+              (index === 0 ? " active" : "");
+
+
+            dot.addEventListener(
+              "click",
+              () => goToBanner(index)
+            );
+
+
+            dots.appendChild(dot);
+
+          });
+
+        }
+
+
+        updateBanner();
+
+      }
+
+
+      function updateBanner() {
+
+        if (!track || !banners.length) return;
+
+        track.style.transform =
+          `translateX(-${currentBanner * 100}%)`;
+
+
+        document
+          .querySelectorAll(".banner-dot")
+          .forEach((dot, index) => {
+
+            dot.classList.toggle(
+              "active",
+              index === currentBanner
+            );
+
+          });
+
+      }
+
+
+      function goToBanner(index) {
+
+        if (!banners.length) return;
+
+        currentBanner =
+          (index + banners.length) %
+          banners.length;
+
+        updateBanner();
+
+      }
+
+
+      document
+        .getElementById("bannerPrev")
+        ?.addEventListener(
+          "click",
+          () => goToBanner(currentBanner - 1)
+        );
+
+
+      document
+        .getElementById("bannerNext")
+        ?.addEventListener(
+          "click",
+          () => goToBanner(currentBanner + 1)
+        );
+
+
+      /*
+       * AUTO SLIDE
+       */
+
+      let bannerTimer =
+        setInterval(
+          () => goToBanner(currentBanner + 1),
+          5000
+        );
+
+
+      const carousel =
+        document.querySelector(".banner-carousel");
+
+
+      carousel?.addEventListener(
+        "mouseenter",
+        () => clearInterval(bannerTimer)
+      );
+
+
+      carousel?.addEventListener(
+        "mouseleave",
+        () => {
+
+          bannerTimer =
+            setInterval(
+              () => goToBanner(currentBanner + 1),
+              5000
+            );
+
+        }
+      );
+
+
+      /*
+       * TOUCH SWIPE
+       */
+
+      let touchStartX = 0;
+
+
+      carousel?.addEventListener(
+        "touchstart",
+        event => {
+
+          touchStartX =
+            event.changedTouches[0].clientX;
+
+        },
+        { passive: true }
+      );
+
+
+      carousel?.addEventListener(
+        "touchend",
+        event => {
+
+          const touchEndX =
+            event.changedTouches[0].clientX;
+
+          const distance =
+            touchEndX - touchStartX;
+
+
+          if (Math.abs(distance) < 50) {
+            return;
+          }
+
+
+          if (distance < 0) {
+
+            goToBanner(currentBanner + 1);
+
+          } else {
+
+            goToBanner(currentBanner - 1);
+
+          }
+
+        },
+        { passive: true }
+      );
+
+
+      renderBanners();
+
+    });
+
+  </script>
 
 </body>
+
 </html>
