@@ -2686,3 +2686,109 @@ button {
   }
 
    }
+/* =========================================================
+   LEO STORE — HOME LAYOUT FIX
+   Remove edge clipping / safe mobile spacing
+   ========================================================= */
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Home-specific container */
+.home-page .container {
+  width: min(100% - 32px, var(--container));
+  max-width: var(--container);
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+/* Header */
+.home-page .home-header .container {
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+/* Main Home sections */
+.home-page .home-banner-section,
+.home-page .home-games-section {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Keep headings away from screen edges */
+.home-page .section-heading {
+  max-width: 760px;
+}
+
+/* Game grid must never push outside viewport */
+.home-page .home-game-grid {
+  width: 100%;
+  min-width: 0;
+}
+
+/* Banner must stay inside its container */
+.home-page .banner-carousel {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* =========================================================
+   MOBILE SAFE AREA
+   ========================================================= */
+
+@media (max-width: 720px) {
+
+  .home-page .container {
+    width: calc(100% - 32px);
+    max-width: none;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .home-page .home-header .container {
+    width: calc(100% - 24px);
+    gap: 10px;
+  }
+
+  .home-page .section-heading {
+    max-width: 100%;
+  }
+
+  .home-page .section-heading h1,
+  .home-page .section-heading h2,
+  .home-page .section-heading p {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .home-page .home-game-grid {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+
+/* =========================================================
+   SMALL PHONE
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+  .home-page .container {
+    width: calc(100% - 28px);
+  }
+
+  .home-page .home-header .container {
+    width: calc(100% - 20px);
+  }
+
+}
