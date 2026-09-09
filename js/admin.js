@@ -51,7 +51,6 @@ function saveOrders(orders) {
     JSON.stringify(orders)
   );
 
-  // Sync last order
   if (orders.length > 0) {
     localStorage.setItem(
       LAST_ORDER_KEY,
@@ -74,13 +73,11 @@ function escapeHTML(value) {
 }
 
 function formatPrice(value) {
-  const number = Number(value) || 0;
-
   return new Intl.NumberFormat("id-ID", {
     style: "currency",
     currency: "IDR",
     maximumFractionDigits: 0
-  }).format(number);
+  }).format(Number(value) || 0);
 }
 
 function formatDate(date) {
@@ -93,12 +90,16 @@ function formatDate(date) {
   }
 
   return parsed.toLocaleString("id-ID", {
-    day: "numeric",
+    day: "2-digit",
     month: "short",
     year: "numeric",
     hour: "2-digit",
     minute: "2-digit"
   });
+}
+
+function getOrderId(order) {
+  return order.orderId || "";
 }
 
 function getGameSlug(order) {
@@ -117,15 +118,6 @@ function getGameName(order) {
   );
 }
 
-function getOrderId(order) {
-  // Prioritaskan orderId karena seluruh sistem utama memakai ini.
-  return (
-    order.orderId ||
-    order.id ||
-    ""
-  );
-}
-
 function getStatusClass(status) {
   switch (status) {
     case "Top Up Berhasil":
@@ -135,10 +127,23 @@ function getStatusClass(status) {
       return "processing";
 
     case "Pembayaran Berhasil":
+      return "paid";
+
     case "Menunggu Pembayaran":
     default:
       return "waiting";
   }
+}
+
+function getGameIcon(order) {
+  const slug = getGameSlug(order);
+
+  if (slug === "free-fire") return "🔥";
+  if (slug === "mobile-legends") return "⚔️";
+  if (slug === "roblox") return "🧱";
+  if (slug === "pubg-mobile") return "🔫";
+
+  return "🎮";
 }
 
 // ================================
@@ -148,16 +153,20 @@ function getStatusClass(status) {
 function updateStats(orders) {
   const total = orders.length;
 
-  const revenue = orders.reduce((sum, order) => {
-    return sum + (Number(order.price) || 0);
-  }, 0);
+  const revenue = orders.reduce(
+    (sum, order) =>
+      sum + (Number(order.price) || 0),
+    0
+  );
 
   const success = orders.filter(
-    order => order.status === "Top Up Berhasil"
+    order =>
+      order.status === "Top Up Berhasil"
   ).length;
 
   const pending = orders.filter(
-    order => order.status !== "Top Up Berhasil"
+    order =>
+      order.status !== "Top Up Berhasil"
   ).length;
 
   if (totalOrdersEl) {
@@ -165,7 +174,8 @@ function updateStats(orders) {
   }
 
   if (totalRevenueEl) {
-    totalRevenueEl.textContent = formatPrice(revenue);
+    totalRevenueEl.textContent =
+      formatPrice(revenue);
   }
 
   if (successOrdersEl) {
@@ -186,43 +196,38 @@ function getFilteredOrders() {
 
   const search = (
     adminSearchEl?.value || ""
-  ).trim().toLowerCase();
+  )
+    .trim()
+    .toLowerCase();
 
-  const gameFilter = (
-    gameFilterEl?.value || "all"
-  ).toLowerCase();
+  const gameFilter =
+    gameFilterEl?.value || "all";
 
-  const statusFilter = (
-    adminStatusFilterEl?.value || "all"
-  );
+  const statusFilter =
+    adminStatusFilterEl?.value || "all";
 
   return orders.filter(order => {
-    const orderId = getOrderId(order).toLowerCase();
 
-    const playerId = String(
-      order.playerId || ""
-    ).toLowerCase();
-
-    const gameName = String(
-      getGameName(order)
-    ).toLowerCase();
-
-    const amount = String(
-      order.amount || ""
-    ).toLowerCase();
-
-    const gameSlug = getGameSlug(order);
+    const searchableText = [
+      getOrderId(order),
+      order.playerId,
+      order.server,
+      getGameName(order),
+      order.amount,
+      order.denominationId,
+      order.payment
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
 
     const matchesSearch =
       !search ||
-      orderId.includes(search) ||
-      playerId.includes(search) ||
-      gameName.includes(search) ||
-      amount.includes(search);
+      searchableText.includes(search);
 
     const matchesGame =
       gameFilter === "all" ||
-      gameSlug === gameFilter;
+      getGameSlug(order) === gameFilter;
 
     const matchesStatus =
       statusFilter === "all" ||
@@ -237,14 +242,18 @@ function getFilteredOrders() {
 }
 
 // ================================
-// STATUS UPDATE
+// STATUS
 // ================================
 
-function updateOrderStatus(orderId, newStatus) {
+function updateOrderStatus(
+  orderId,
+  newStatus
+) {
   const orders = getOrders();
 
   const index = orders.findIndex(
-    order => getOrderId(order) === orderId
+    order =>
+      getOrderId(order) === orderId
   );
 
   if (index === -1) {
@@ -259,19 +268,31 @@ function updateOrderStatus(orderId, newStatus) {
 
   order.status = newStatus;
 
-  if (newStatus === "Pembayaran Berhasil") {
+  const now =
+    new Date().toISOString();
+
+  if (
+    newStatus ===
+    "Pembayaran Berhasil"
+  ) {
     order.paidAt =
-      order.paidAt || new Date().toISOString();
+      order.paidAt || now;
   }
 
-  if (newStatus === "Pesanan Diproses") {
+  if (
+    newStatus ===
+    "Pesanan Diproses"
+  ) {
     order.processingAt =
-      order.processingAt || new Date().toISOString();
+      order.processingAt || now;
   }
 
-  if (newStatus === "Top Up Berhasil") {
+  if (
+    newStatus ===
+    "Top Up Berhasil"
+  ) {
     order.completedAt =
-      order.completedAt || new Date().toISOString();
+      order.completedAt || now;
   }
 
   orders[index] = order;
@@ -286,11 +307,19 @@ function updateOrderStatus(orderId, newStatus) {
 // ================================
 
 function createStatusSelect(order) {
-  const orderId = getOrderId(order);
-  const currentStatus = order.status || "Menunggu Pembayaran";
+  const orderId =
+    getOrderId(order);
+
+  const currentStatus =
+    order.status ||
+    "Menunggu Pembayaran";
 
   return `
     <div class="admin-status-control">
+      <span class="status-control-label">
+        Ubah Status
+      </span>
+
       <select
         class="admin-status-select"
         data-status-id="${escapeHTML(orderId)}"
@@ -313,32 +342,37 @@ function createStatusSelect(order) {
 // ================================
 
 function createOrderCard(order) {
-  const orderId = getOrderId(order);
 
-  const gameName = getGameName(order);
+  const orderId =
+    getOrderId(order);
 
-  const gameSlug = getGameSlug(order);
+  const gameName =
+    getGameName(order);
+
+  const gameIcon =
+    getGameIcon(order);
 
   const playerId =
     order.playerId || "-";
 
+  const server =
+    order.server || "-";
+
   const amount =
     order.amount || "-";
-
-  const price =
-    Number(order.price) || 0;
 
   const payment =
     order.payment || "-";
 
+  const price =
+    Number(order.price) || 0;
+
   const status =
-    order.status || "Menunggu Pembayaran";
+    order.status ||
+    "Menunggu Pembayaran";
 
   const statusClass =
     getStatusClass(status);
-
-  const safeOrderId =
-    escapeHTML(orderId);
 
   const detailUrl =
     `order.html?id=${encodeURIComponent(orderId)}`;
@@ -346,99 +380,152 @@ function createOrderCard(order) {
   return `
     <article class="admin-order">
 
-      <div class="admin-order-game">
+      <div class="admin-order-top">
 
-        <div class="admin-game-icon">
-          ${gameSlug === "free-fire" ? "🔥" :
-            gameSlug === "mobile-legends" ? "⚔️" :
-            gameSlug === "roblox" ? "🧱" :
-            gameSlug === "pubg-mobile" ? "🔫" :
-            "🎮"}
-        </div>
+        <div class="admin-order-game">
 
-        <div>
-          <div class="admin-game-name">
-            ${escapeHTML(gameName)}
+          <div class="admin-game-icon">
+            ${gameIcon}
           </div>
 
-          <div class="admin-game-type">
-            ${escapeHTML(amount)}
+          <div>
+            <div class="admin-game-name">
+              ${escapeHTML(gameName)}
+            </div>
+
+            <div class="admin-game-type">
+              ${escapeHTML(amount)}
+            </div>
           </div>
+
         </div>
-
-      </div>
-
-      <div class="admin-detail">
-
-        <span class="admin-detail-label">
-          Order ID
-        </span>
-
-        <span class="admin-detail-value">
-          ${safeOrderId || "-"}
-        </span>
-
-      </div>
-
-      <div class="admin-detail">
-
-        <span class="admin-detail-label">
-          Player ID
-        </span>
-
-        <span class="admin-detail-value">
-          ${escapeHTML(playerId)}
-        </span>
-
-      </div>
-
-      <div class="admin-detail">
-
-        <span class="admin-detail-label">
-          Total
-        </span>
-
-        <span class="admin-detail-value">
-          ${formatPrice(price)}
-        </span>
-
-      </div>
-
-      <div class="admin-detail">
-
-        <span class="admin-detail-label">
-          Pembayaran
-        </span>
-
-        <span class="admin-detail-value">
-          ${escapeHTML(payment)}
-        </span>
-
-      </div>
-
-      <div class="admin-detail">
-
-        <span class="admin-detail-label">
-          Status
-        </span>
 
         <span class="admin-status ${statusClass}">
+          <span class="status-dot"></span>
           ${escapeHTML(status)}
         </span>
 
       </div>
 
+      <div class="admin-details-grid">
+
+        <div class="admin-detail">
+          <span class="admin-detail-label">
+            Order ID
+          </span>
+
+          <span class="admin-detail-value order-id-value">
+            ${escapeHTML(orderId || "-")}
+          </span>
+        </div>
+
+        <div class="admin-detail">
+          <span class="admin-detail-label">
+            Player ID
+          </span>
+
+          <span class="admin-detail-value">
+            ${escapeHTML(playerId)}
+          </span>
+        </div>
+
+        <div class="admin-detail">
+          <span class="admin-detail-label">
+            Server
+          </span>
+
+          <span class="admin-detail-value">
+            ${escapeHTML(server)}
+          </span>
+        </div>
+
+        <div class="admin-detail">
+          <span class="admin-detail-label">
+            Nominal
+          </span>
+
+          <span class="admin-detail-value">
+            ${escapeHTML(amount)}
+          </span>
+        </div>
+
+        <div class="admin-detail">
+          <span class="admin-detail-label">
+            Harga
+          </span>
+
+          <span class="admin-detail-value price-value">
+            ${formatPrice(price)}
+          </span>
+        </div>
+
+        <div class="admin-detail">
+          <span class="admin-detail-label">
+            Pembayaran
+          </span>
+
+          <span class="admin-detail-value">
+            ${escapeHTML(payment)}
+          </span>
+        </div>
+
+        <div class="admin-detail">
+          <span class="admin-detail-label">
+            Dibuat
+          </span>
+
+          <span class="admin-detail-value">
+            ${formatDate(order.createdAt)}
+          </span>
+        </div>
+
+        <div class="admin-detail">
+          <span class="admin-detail-label">
+            Dibayar
+          </span>
+
+          <span class="admin-detail-value">
+            ${formatDate(order.paidAt)}
+          </span>
+        </div>
+
+        <div class="admin-detail">
+          <span class="admin-detail-label">
+            Diproses
+          </span>
+
+          <span class="admin-detail-value">
+            ${formatDate(order.processingAt)}
+          </span>
+        </div>
+
+        <div class="admin-detail">
+          <span class="admin-detail-label">
+            Selesai
+          </span>
+
+          <span class="admin-detail-value">
+            ${formatDate(order.completedAt)}
+          </span>
+        </div>
+
+      </div>
+
       ${createStatusSelect(order)}
 
-      <a
-        class="admin-detail-btn"
-        href="${detailUrl}"
-      >
-        Lihat Detail →
-      </a>
+      <div class="admin-order-bottom">
 
-      <div class="admin-order-date">
-        Tanggal: ${formatDate(order.createdAt)}
+        <a
+          class="admin-detail-btn"
+          href="${detailUrl}"
+        >
+          Lihat Detail →
+        </a>
+
+        <div class="admin-order-date">
+          ID: ${escapeHTML(orderId || "-")}
+        </div>
+
       </div>
 
     </article>
@@ -450,7 +537,9 @@ function createOrderCard(order) {
 // ================================
 
 function render() {
-  const orders = getOrders();
+
+  const orders =
+    getOrders();
 
   updateStats(orders);
 
@@ -466,11 +555,15 @@ function render() {
     return;
   }
 
-  if (filteredOrders.length === 0) {
+  if (
+    filteredOrders.length === 0
+  ) {
+
     adminOrderListEl.innerHTML = `
       <div class="admin-empty">
-        <div>📭</div>
+        <div class="empty-icon">📭</div>
         <p>Tidak ada transaksi ditemukan.</p>
+        <span>Coba ubah kata pencarian atau filter.</span>
       </div>
     `;
 
@@ -488,19 +581,22 @@ function render() {
 }
 
 // ================================
-// EVENTS
+// STATUS EVENTS
 // ================================
 
 function bindStatusEvents() {
+
   const selects =
     document.querySelectorAll(
       ".admin-status-select"
     );
 
   selects.forEach(select => {
+
     select.addEventListener(
       "change",
       event => {
+
         const orderId =
           event.target.dataset.statusId;
 
@@ -522,6 +618,10 @@ function bindStatusEvents() {
     );
   });
 }
+
+// ================================
+// LIVE SEARCH
+// ================================
 
 if (adminSearchEl) {
   adminSearchEl.addEventListener(
@@ -552,7 +652,24 @@ if (refreshBtnEl) {
 }
 
 // ================================
-// INITIAL LOAD
+// AUTO REFRESH
+// ================================
+
+window.addEventListener(
+  "storage",
+  event => {
+
+    if (
+      event.key === ORDERS_KEY ||
+      event.key === LAST_ORDER_KEY
+    ) {
+      render();
+    }
+  }
+);
+
+// ================================
+// INITIAL
 // ================================
 
 render();
