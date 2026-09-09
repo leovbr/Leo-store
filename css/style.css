@@ -2953,3 +2953,86 @@ body {
 .checkout-page * {
   --muted: var(--text-muted);
 }
+/* =========================================
+   CHECKOUT - WHATSAPP INPUT
+   ========================================= */
+
+.whatsapp-input {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 10px;
+  width: 100%;
+}
+
+.whatsapp-input select,
+.whatsapp-input input {
+  width: 100%;
+  min-height: 48px;
+  box-sizing: border-box;
+}
+
+.whatsapp-input select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 0 12px;
+  border: 1px solid var(--border, rgba(255,255,255,.1));
+  border-radius: 12px;
+  background: var(--surface, #111);
+  color: var(--text, #fff);
+  font: inherit;
+  cursor: pointer;
+}
+
+.whatsapp-input input {
+  padding: 0 14px;
+  border: 1px solid var(--border, rgba(255,255,255,.1));
+  border-radius: 12px;
+  background: var(--surface, #111);
+  color: var(--text, #fff);
+  font: inherit;
+}
+
+.whatsapp-input input::placeholder {
+  opacity: .55;
+}
+
+.whatsapp-input select:focus,
+.whatsapp-input input:focus {
+  outline: none;
+  border-color: var(--accent, #fff);
+}
+
+
+/* =========================================
+   CHECKOUT - REMOVE SECTION NUMBER SPACE
+   ========================================= */
+
+.checkout-page .section-heading {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.checkout-page .section-heading > div {
+  width: 100%;
+}
+
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 600px) {
+
+  .whatsapp-input {
+    grid-template-columns: 105px 1fr;
+    gap: 8px;
+  }
+
+  .whatsapp-input select,
+  .whatsapp-input input {
+    min-height: 46px;
+    font-size: 14px;
+  }
+
+}
