@@ -1654,3 +1654,1035 @@ button {
     font-size: 8px;
   }
 }
+/* =========================================================
+   LEO STORE — HOMEPAGE PREMIUM
+   ========================================================= */
+
+.brand-intro {
+  position: relative;
+  min-height: 310px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      rgba(120,90,255,.16),
+      transparent 38%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(8,7,18,.98),
+      rgba(4,4,10,1)
+    );
+}
+
+.brand-intro::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,.025),
+      transparent
+    );
+  pointer-events: none;
+}
+
+.brand-intro-inner {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.brand-animation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  overflow: hidden;
+}
+
+.brand-logo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  padding: 7px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 16px;
+  background: rgba(255,255,255,.035);
+  color: rgba(255,255,255,.55);
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: .7px;
+  text-align: center;
+  animation:
+    brandLogoReveal 7s ease-in-out infinite;
+}
+
+.brand-word {
+  font-size: clamp(28px, 5vw, 54px);
+  font-weight: 900;
+  letter-spacing: .2em;
+  background:
+    linear-gradient(
+      90deg,
+      #fff,
+      #bba9ff,
+      #fff
+    );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation:
+    brandTextReveal 7s ease-in-out infinite;
+}
+
+.brand-tagline {
+  margin-top: 18px;
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: rgba(255,255,255,.45);
+  animation:
+    brandTagline 7s ease-in-out infinite;
+}
+
+@keyframes brandLogoReveal {
+
+  0% {
+    opacity: 0;
+    transform: translateX(-70px) scale(.8);
+  }
+
+  14% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+
+  55% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+
+  72% {
+    opacity: .3;
+    transform: translateX(0) scale(.98);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(-30px) scale(.9);
+  }
+
+}
+
+@keyframes brandTextReveal {
+
+  0% {
+    opacity: 0;
+    transform: translateX(-35px);
+  }
+
+  16% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  56% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  74% {
+    opacity: .35;
+    transform: translateX(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(15px);
+  }
+
+}
+
+@keyframes brandTagline {
+
+  0%,
+  20% {
+    opacity: 0;
+  }
+
+  35%,
+  58% {
+    opacity: 1;
+  }
+
+  75%,
+  100% {
+    opacity: 0;
+  }
+
+}
+
+
+/* =========================================================
+   HOME SECTIONS
+   ========================================================= */
+
+.home-banner-section,
+.home-games-section,
+.reseller-section {
+  padding: 55px 0;
+}
+
+.section-heading {
+  margin-bottom: 24px;
+}
+
+.section-heading .eyebrow {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  opacity: .55;
+}
+
+.section-heading h1,
+.section-heading h2 {
+  margin: 0;
+  font-size: clamp(24px, 4vw, 36px);
+  line-height: 1.15;
+}
+
+.section-heading p {
+  margin-top: 10px;
+  max-width: 600px;
+  color: rgba(255,255,255,.52);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   BANNER CAROUSEL
+   ========================================================= */
+
+.banner-carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 24px;
+  background: #08080d;
+  border: 1px solid rgba(255,255,255,.07);
+  box-shadow:
+    0 25px 70px rgba(0,0,0,.3);
+  touch-action: pan-y;
+}
+
+.banner-track {
+  display: flex;
+  width: 100%;
+  transition: transform .55s cubic-bezier(.22,.61,.36,1);
+}
+
+.home-banner-slide {
+  position: relative;
+  flex: 0 0 100%;
+  aspect-ratio: 16 / 6.4;
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+}
+
+.home-banner-slide img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform .7s ease;
+}
+
+.home-banner-slide:hover img {
+  transform: scale(1.025);
+}
+
+.home-banner-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 28px;
+  background:
+    linear-gradient(
+      180deg,
+      transparent 35%,
+      rgba(0,0,0,.8)
+    );
+}
+
+.home-banner-overlay div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.home-banner-overlay span {
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  opacity: .7;
+}
+
+.home-banner-overlay strong {
+  font-size: clamp(20px, 4vw, 34px);
+}
+
+.home-banner-overlay b {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.1);
+  backdrop-filter: blur(10px);
+  font-size: 20px;
+}
+
+.banner-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 5;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 50%;
+  background: rgba(0,0,0,.38);
+  color: white;
+  font-size: 25px;
+  transform: translateY(-50%);
+  backdrop-filter: blur(10px);
+}
+
+.banner-arrow-left {
+  left: 15px;
+}
+
+.banner-arrow-right {
+  right: 15px;
+}
+
+.banner-dots {
+  position: absolute;
+  left: 50%;
+  bottom: 15px;
+  z-index: 5;
+  display: flex;
+  gap: 6px;
+  transform: translateX(-50%);
+}
+
+.banner-dot {
+  width: 6px;
+  height: 6px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,.3);
+}
+
+.banner-dot.active {
+  width: 20px;
+  border-radius: 10px;
+  background: white;
+}
+
+
+/* =========================================================
+   GAME GRID — 3 COLUMNS
+   ========================================================= */
+
+.home-game-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+  gap: 13px;
+}
+
+.home-game-card {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-width: 0;
+  padding: 13px;
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 17px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.045),
+      rgba(255,255,255,.015)
+    );
+  color: inherit;
+  text-decoration: none;
+  transition:
+    transform .2s ease,
+    border-color .2s ease,
+    background .2s ease;
+}
+
+.home-game-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(150,120,255,.4);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(120,90,255,.1),
+      rgba(255,255,255,.02)
+    );
+}
+
+.home-game-image {
+  flex: 0 0 56px;
+  width: 56px;
+  height: 56px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: rgba(255,255,255,.05);
+}
+
+.home-game-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.home-game-fallback {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.home-game-info {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.home-game-info strong {
+  overflow: hidden;
+  font-size: 13px;
+  line-height: 1.3;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.home-game-info span {
+  overflow: hidden;
+  color: rgba(255,255,255,.4);
+  font-size: 9px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.all-games-section {
+  padding-top: 15px;
+}
+
+.home-more-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}
+
+.home-more-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 12px;
+  color: white;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+  background: rgba(255,255,255,.035);
+}
+
+
+/* =========================================================
+   RESELLER
+   ========================================================= */
+
+.reseller-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 28px;
+  border: 1px solid rgba(150,120,255,.18);
+  border-radius: 22px;
+  background:
+    radial-gradient(
+      circle at right,
+      rgba(120,90,255,.14),
+      transparent 45%
+    ),
+    rgba(255,255,255,.025);
+}
+
+.reseller-card h2 {
+  margin: 8px 0;
+}
+
+.reseller-card p {
+  margin: 0;
+  color: rgba(255,255,255,.5);
+  font-size: 12px;
+}
+
+.reseller-button {
+  flex: 0 0 auto;
+  padding: 12px 18px;
+  border-radius: 11px;
+  background: white;
+  color: #08080c;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   CHECKOUT — QUANTITY
+   ========================================================= */
+
+.quantity-control {
+  display: flex;
+  align-items: center;
+  width: min(250px, 100%);
+  height: 58px;
+  margin-top: 5px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 15px;
+  background: rgba(255,255,255,.025);
+}
+
+.quantity-control button {
+  width: 58px;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: white;
+  font-size: 25px;
+}
+
+.quantity-control button:hover {
+  background: rgba(255,255,255,.06);
+}
+
+.quantity-control input {
+  flex: 1;
+  width: 0;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: white;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   PAYMENT CATEGORY
+   ========================================================= */
+
+.payment-category {
+  overflow: hidden;
+  margin-top: 12px;
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 16px;
+  background: rgba(255,255,255,.02);
+}
+
+.payment-category-header {
+  display: grid;
+  grid-template-columns:
+    minmax(130px, 1fr)
+    auto
+    22px;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  min-height: 72px;
+  padding: 12px 14px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+}
+
+.payment-category-title {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.payment-category-title strong {
+  font-size: 13px;
+}
+
+.payment-category-title span {
+  color: rgba(255,255,255,.4);
+  font-size: 9px;
+}
+
+.payment-category-preview {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  min-width: 0;
+}
+
+.payment-category-preview img {
+  width: 35px;
+  height: 35px;
+  padding: 5px;
+  object-fit: contain;
+  border-radius: 9px;
+  background: rgba(255,255,255,.06);
+}
+
+.payment-chevron {
+  color: rgba(255,255,255,.5);
+  font-size: 19px;
+  transition: transform .25s ease;
+}
+
+.payment-category.open
+.payment-chevron {
+  transform: rotate(180deg);
+}
+
+.payment-category-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition:
+    grid-template-rows .3s ease;
+}
+
+.payment-category-content > .payment-grid {
+  min-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+
+.payment-category.open
+.payment-category-content {
+  grid-template-rows: 1fr;
+}
+
+.payment-category.open
+.payment-category-content > .payment-grid {
+  opacity: 1;
+  padding: 0 12px 12px;
+}
+
+
+/* =========================================================
+   PAYMENT GRID — 2 COLUMNS
+   ========================================================= */
+
+.payment-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.payment-option {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 135px;
+  padding: 13px;
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 14px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.045),
+      rgba(255,255,255,.012)
+    );
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color .2s ease,
+    transform .2s ease,
+    background .2s ease;
+}
+
+.payment-option:hover {
+  transform: translateY(-2px);
+  border-color: rgba(150,120,255,.4);
+}
+
+.payment-option.selected {
+  border-color: rgba(150,120,255,.75);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(120,90,255,.15),
+      rgba(255,255,255,.025)
+    );
+  box-shadow:
+    0 0 0 1px rgba(150,120,255,.12);
+}
+
+.payment-option-top {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+}
+
+.payment-option-top img {
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+  padding: 5px;
+  object-fit: contain;
+  border-radius: 9px;
+  background: rgba(255,255,255,.06);
+}
+
+.payment-option-top strong {
+  min-width: 0;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.payment-option-price {
+  margin-top: auto;
+  padding-top: 18px;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.payment-option-fee {
+  margin-top: 5px;
+  color: rgba(255,255,255,.42);
+  font-size: 8px;
+  line-height: 1.4;
+}
+
+.payment-option-divider {
+  width: 100%;
+  height: 1px;
+  margin-top: 10px;
+  background: rgba(255,255,255,.07);
+}
+
+
+/* =========================================================
+   PROMO
+   ========================================================= */
+
+.promo-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 9px;
+}
+
+.promo-row input {
+  min-width: 0;
+}
+
+.promo-row button {
+  padding: 0 18px;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 11px;
+  background: rgba(255,255,255,.06);
+  color: white;
+  font-weight: 700;
+}
+
+.promo-message {
+  min-height: 18px;
+  margin-top: 8px;
+  font-size: 9px;
+}
+
+.promo-message.success {
+  color: #79e6a5;
+}
+
+.promo-message.error {
+  color: #ff8585;
+}
+
+.available-promo {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 13px;
+  padding: 12px 0 0;
+  border: 0;
+  border-top: 1px solid rgba(255,255,255,.07);
+  background: transparent;
+  color: rgba(255,255,255,.65);
+  font-size: 10px;
+}
+
+
+/* =========================================================
+   CONTACT
+   ========================================================= */
+
+.phone-row {
+  display: grid;
+  grid-template-columns: 65px 1fr;
+  gap: 8px;
+}
+
+.phone-prefix {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 11px;
+  background: rgba(255,255,255,.025);
+  color: rgba(255,255,255,.65);
+  font-size: 12px;
+}
+
+.contact-note {
+  margin: 9px 0 0;
+  color: rgba(255,255,255,.38);
+  font-size: 9px;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   SUMMARY
+   ========================================================= */
+
+.checkout-summary {
+  position: relative;
+}
+
+.summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 8px 0;
+}
+
+.summary-row span {
+  color: rgba(255,255,255,.45);
+  font-size: 10px;
+}
+
+.summary-row strong {
+  max-width: 60%;
+  font-size: 11px;
+  text-align: right;
+}
+
+.summary-divider {
+  width: 100%;
+  height: 1px;
+  margin: 13px 0;
+  background: rgba(255,255,255,.08);
+}
+
+.summary-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.summary-total span {
+  font-size: 11px;
+  color: rgba(255,255,255,.55);
+}
+
+.summary-total strong {
+  font-size: 20px;
+}
+
+.checkout-button {
+  width: 100%;
+  margin-top: 20px;
+  min-height: 52px;
+  border: 0;
+  border-radius: 13px;
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff,
+      #dcd7ff
+    );
+  color: #08080c;
+  font-size: 13px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow:
+    0 12px 30px rgba(100,80,200,.18);
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  .home-game-grid {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .home-game-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px;
+    gap: 8px;
+    border-radius: 13px;
+  }
+
+  .home-game-image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    flex-basis: auto;
+    border-radius: 11px;
+  }
+
+  .home-game-info strong {
+    font-size: 10px;
+  }
+
+  .home-game-info span {
+    font-size: 7px;
+  }
+
+  .home-banner-slide {
+    aspect-ratio: 16 / 9;
+  }
+
+  .home-banner-overlay {
+    padding: 18px;
+  }
+
+  .banner-arrow {
+    width: 34px;
+    height: 34px;
+    font-size: 20px;
+  }
+
+  .brand-intro {
+    min-height: 250px;
+  }
+
+  .brand-animation {
+    gap: 9px;
+  }
+
+  .brand-logo-placeholder {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+  }
+
+  .brand-word {
+    font-size: 25px;
+    letter-spacing: .12em;
+  }
+
+  .brand-tagline {
+    font-size: 7px;
+    letter-spacing: 2px;
+  }
+
+  .reseller-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+}
+
+
+@media (max-width: 520px) {
+
+  .payment-category-header {
+    grid-template-columns:
+      minmax(100px, 1fr)
+      auto
+      18px;
+    gap: 7px;
+  }
+
+  .payment-category-preview img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .payment-category-preview img:nth-child(n+4) {
+    display: none;
+  }
+
+  .payment-option {
+    min-height: 125px;
+    padding: 11px;
+  }
+
+  .payment-option-top strong {
+    font-size: 10px;
+  }
+
+  .payment-option-price {
+    font-size: 12px;
+  }
+
+  .payment-option-fee {
+    font-size: 7px;
+  }
+
+  .promo-row {
+    grid-template-columns: 1fr;
+  }
+
+  .promo-row button {
+    min-height: 44px;
+  }
+
+   }
