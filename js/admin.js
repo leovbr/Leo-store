@@ -1,1067 +1,558 @@
-/* =========================================
-   LEO STORE — ADMIN DASHBOARD
-   ========================================= */
+// ================================
+// LEO STORE — ADMIN DASHBOARD
+// ================================
 
-document.addEventListener("DOMContentLoaded", () => {
+const ORDERS_KEY = "fidelis_orders";
+const LAST_ORDER_KEY = "fidelis_last_order";
 
-  const orderList =
-    document.getElementById("adminOrderList");
+const STATUS_OPTIONS = [
+  "Menunggu Pembayaran",
+  "Pembayaran Berhasil",
+  "Pesanan Diproses",
+  "Top Up Berhasil"
+];
 
-  const searchInput =
-    document.getElementById("adminSearch");
+// ================================
+// ELEMENTS
+// ================================
 
-  const gameFilter =
-    document.getElementById("gameFilter");
+const totalOrdersEl = document.getElementById("totalOrders");
+const totalRevenueEl = document.getElementById("totalRevenue");
+const successOrdersEl = document.getElementById("successOrders");
+const pendingOrdersEl = document.getElementById("pendingOrders");
 
-  const statusFilter =
-    document.getElementById("adminStatusFilter");
+const orderCountEl = document.getElementById("orderCount");
+const adminSearchEl = document.getElementById("adminSearch");
+const gameFilterEl = document.getElementById("gameFilter");
+const adminStatusFilterEl = document.getElementById("adminStatusFilter");
+const adminOrderListEl = document.getElementById("adminOrderList");
+const refreshBtnEl = document.getElementById("refreshBtn");
 
-  const refreshBtn =
-    document.getElementById("refreshBtn");
+// ================================
+// STORAGE
+// ================================
 
-  const totalOrdersEl =
-    document.getElementById("totalOrders");
+function getOrders() {
+  try {
+    const orders = JSON.parse(
+      localStorage.getItem(ORDERS_KEY) || "[]"
+    );
 
-  const totalRevenueEl =
-    document.getElementById("totalRevenue");
-
-  const successOrdersEl =
-    document.getElementById("successOrders");
-
-  const pendingOrdersEl =
-    document.getElementById("pendingOrders");
-
-  const orderCountEl =
-    document.getElementById("orderCount");
-
-
-  let orders = [];
-
-
-  /* =========================================
-     STORAGE
-     ========================================= */
-
-  function loadOrders() {
-
-    try {
-
-      const saved =
-        localStorage.getItem(
-          "fidelis_orders"
-        );
-
-      if (!saved) {
-
-        orders = [];
-
-        return;
-
-      }
-
-      const parsed =
-        JSON.parse(saved);
-
-      orders =
-        Array.isArray(parsed)
-          ? parsed
-          : [];
-
-    } catch (error) {
-
-      console.error(
-        "Gagal membaca transaksi:",
-        error
-      );
-
-      orders = [];
-
-    }
-
+    return Array.isArray(orders) ? orders : [];
+  } catch (error) {
+    console.error("Gagal membaca orders:", error);
+    return [];
   }
+}
 
+function saveOrders(orders) {
+  localStorage.setItem(
+    ORDERS_KEY,
+    JSON.stringify(orders)
+  );
 
-  function saveOrders() {
-
+  // Sync last order
+  if (orders.length > 0) {
     localStorage.setItem(
-      "fidelis_orders",
-      JSON.stringify(orders)
+      LAST_ORDER_KEY,
+      JSON.stringify(orders[orders.length - 1])
     );
+  }
+}
 
+// ================================
+// HELPERS
+// ================================
 
-    /*
-     * Sinkronkan last order.
-     *
-     * IMPORTANT:
-     * Sistem Leo Store menggunakan
-     * order.orderId, bukan order.id.
-     */
+function escapeHTML(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
 
-    const lastOrder =
-      localStorage.getItem(
-        "fidelis_last_order"
-      );
+function formatPrice(value) {
+  const number = Number(value) || 0;
 
-    if (!lastOrder) {
-      return;
-    }
+  return new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    maximumFractionDigits: 0
+  }).format(number);
+}
 
+function formatDate(date) {
+  if (!date) return "-";
 
-    try {
+  const parsed = new Date(date);
 
-      const parsedLastOrder =
-        JSON.parse(lastOrder);
-
-
-      const updatedLastOrder =
-        orders.find(
-          order =>
-            order.orderId ===
-            parsedLastOrder.orderId
-        );
-
-
-      if (updatedLastOrder) {
-
-        localStorage.setItem(
-          "fidelis_last_order",
-          JSON.stringify(
-            updatedLastOrder
-          )
-        );
-
-      }
-
-    } catch (error) {
-
-      console.error(
-        "Gagal sinkronisasi last order:",
-        error
-      );
-
-    }
-
+  if (Number.isNaN(parsed.getTime())) {
+    return "-";
   }
 
+  return parsed.toLocaleString("id-ID", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+}
 
-  /* =========================================
-     FORMAT
-     ========================================= */
+function getGameSlug(order) {
+  return String(
+    order.gameSlug ||
+    order.game ||
+    ""
+  ).toLowerCase();
+}
 
-  function formatPrice(price) {
+function getGameName(order) {
+  return (
+    order.gameName ||
+    order.game ||
+    "Game"
+  );
+}
 
-    return new Intl.NumberFormat(
-      "id-ID",
-      {
-        style: "currency",
-        currency: "IDR",
-        minimumFractionDigits: 0
-      }
-    ).format(
-      Number(price) || 0
-    );
+function getOrderId(order) {
+  // Prioritaskan orderId karena seluruh sistem utama memakai ini.
+  return (
+    order.orderId ||
+    order.id ||
+    ""
+  );
+}
 
-  }
-
-
-  function formatDate(date) {
-
-    if (!date) {
-      return "-";
-    }
-
-
-    const parsed =
-      new Date(date);
-
-
-    if (
-      Number.isNaN(
-        parsed.getTime()
-      )
-    ) {
-
-      return "-";
-
-    }
-
-
-    return parsed.toLocaleString(
-      "id-ID",
-      {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit"
-      }
-    );
-
-  }
-
-
-  function escapeHTML(value) {
-
-    return String(
-      value ?? ""
-    )
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-
-  }
-
-
-  function getGameIcon(game) {
-
-    const icons = {
-
-      "mobile-legends":
-        "⚔️",
-
-      "free-fire":
-        "🔥",
-
-      "roblox":
-        "🧱",
-
-      "pubg-mobile":
-        "🎯"
-
-    };
-
-
-    return (
-      icons[game] ||
-      "🎮"
-    );
-
-  }
-
-
-  function getGameName(gameSlug) {
-
-    const names = {
-
-      "mobile-legends":
-        "Mobile Legends",
-
-      "free-fire":
-        "Free Fire",
-
-      "roblox":
-        "Roblox",
-
-      "pubg-mobile":
-        "PUBG Mobile"
-
-    };
-
-
-    return (
-      names[gameSlug] ||
-      gameSlug ||
-      "Game"
-    );
-
-  }
-
-
-  function getPaymentName(payment) {
-
-    const names = {
-
-      qris:
-        "QRIS",
-
-      ewallet:
-        "E-Wallet",
-
-      bank:
-        "Virtual Account"
-
-    };
-
-
-    return (
-      names[payment] ||
-      payment ||
-      "-"
-    );
-
-  }
-
-
-  function getStatusClass(status) {
-
-    if (
-      status ===
-      "Top Up Berhasil"
-    ) {
-
+function getStatusClass(status) {
+  switch (status) {
+    case "Top Up Berhasil":
       return "success";
 
-    }
-
-
-    if (
-      status ===
-        "Pesanan Diproses" ||
-      status ===
-        "Pembayaran Berhasil"
-    ) {
-
+    case "Pesanan Diproses":
       return "processing";
 
-    }
+    case "Pembayaran Berhasil":
+    case "Menunggu Pembayaran":
+    default:
+      return "waiting";
+  }
+}
 
+// ================================
+// STATS
+// ================================
 
-    return "waiting";
+function updateStats(orders) {
+  const total = orders.length;
 
+  const revenue = orders.reduce((sum, order) => {
+    return sum + (Number(order.price) || 0);
+  }, 0);
+
+  const success = orders.filter(
+    order => order.status === "Top Up Berhasil"
+  ).length;
+
+  const pending = orders.filter(
+    order => order.status !== "Top Up Berhasil"
+  ).length;
+
+  if (totalOrdersEl) {
+    totalOrdersEl.textContent = total;
   }
 
+  if (totalRevenueEl) {
+    totalRevenueEl.textContent = formatPrice(revenue);
+  }
 
-  /* =========================================
-     STATUS OPTIONS
-     ========================================= */
+  if (successOrdersEl) {
+    successOrdersEl.textContent = success;
+  }
 
-  const statusOptions = [
+  if (pendingOrdersEl) {
+    pendingOrdersEl.textContent = pending;
+  }
+}
 
-    "Menunggu Pembayaran",
+// ================================
+// FILTER
+// ================================
 
-    "Pembayaran Berhasil",
+function getFilteredOrders() {
+  const orders = getOrders();
 
-    "Pesanan Diproses",
+  const search = (
+    adminSearchEl?.value || ""
+  ).trim().toLowerCase();
 
-    "Top Up Berhasil"
+  const gameFilter = (
+    gameFilterEl?.value || "all"
+  ).toLowerCase();
 
-  ];
+  const statusFilter = (
+    adminStatusFilterEl?.value || "all"
+  );
 
+  return orders.filter(order => {
+    const orderId = getOrderId(order).toLowerCase();
 
-  function createStatusSelect(order) {
+    const playerId = String(
+      order.playerId || ""
+    ).toLowerCase();
 
-    const currentStatus =
-      order.status ||
-      "Menunggu Pembayaran";
+    const gameName = String(
+      getGameName(order)
+    ).toLowerCase();
 
+    const amount = String(
+      order.amount || ""
+    ).toLowerCase();
 
-    return `
+    const gameSlug = getGameSlug(order);
 
+    const matchesSearch =
+      !search ||
+      orderId.includes(search) ||
+      playerId.includes(search) ||
+      gameName.includes(search) ||
+      amount.includes(search);
+
+    const matchesGame =
+      gameFilter === "all" ||
+      gameSlug === gameFilter;
+
+    const matchesStatus =
+      statusFilter === "all" ||
+      order.status === statusFilter;
+
+    return (
+      matchesSearch &&
+      matchesGame &&
+      matchesStatus
+    );
+  });
+}
+
+// ================================
+// STATUS UPDATE
+// ================================
+
+function updateOrderStatus(orderId, newStatus) {
+  const orders = getOrders();
+
+  const index = orders.findIndex(
+    order => getOrderId(order) === orderId
+  );
+
+  if (index === -1) {
+    console.error(
+      "Order tidak ditemukan:",
+      orderId
+    );
+    return;
+  }
+
+  const order = orders[index];
+
+  order.status = newStatus;
+
+  if (newStatus === "Pembayaran Berhasil") {
+    order.paidAt =
+      order.paidAt || new Date().toISOString();
+  }
+
+  if (newStatus === "Pesanan Diproses") {
+    order.processingAt =
+      order.processingAt || new Date().toISOString();
+  }
+
+  if (newStatus === "Top Up Berhasil") {
+    order.completedAt =
+      order.completedAt || new Date().toISOString();
+  }
+
+  orders[index] = order;
+
+  saveOrders(orders);
+
+  render();
+}
+
+// ================================
+// STATUS SELECT
+// ================================
+
+function createStatusSelect(order) {
+  const orderId = getOrderId(order);
+  const currentStatus = order.status || "Menunggu Pembayaran";
+
+  return `
+    <div class="admin-status-control">
       <select
         class="admin-status-select"
-        data-status-id="${escapeHTML(
-          order.orderId
-        )}"
+        data-status-id="${escapeHTML(orderId)}"
       >
-
-        ${statusOptions
-          .map(status => `
-
-            <option
-              value="${escapeHTML(status)}"
-              ${
-                currentStatus === status
-                  ? "selected"
-                  : ""
-              }
-            >
-
-              ${escapeHTML(status)}
-
-            </option>
-
-          `)
-          .join("")}
-
+        ${STATUS_OPTIONS.map(status => `
+          <option
+            value="${escapeHTML(status)}"
+            ${status === currentStatus ? "selected" : ""}
+          >
+            ${escapeHTML(status)}
+          </option>
+        `).join("")}
       </select>
+    </div>
+  `;
+}
 
-    `;
+// ================================
+// ORDER CARD
+// ================================
 
-  }
+function createOrderCard(order) {
+  const orderId = getOrderId(order);
 
+  const gameName = getGameName(order);
 
-  /* =========================================
-     UPDATE STATUS
-     ========================================= */
+  const gameSlug = getGameSlug(order);
 
-  function updateOrderStatus(
-    orderId,
-    newStatus
-  ) {
+  const playerId =
+    order.playerId || "-";
 
-    /*
-     * IMPORTANT:
-     * Cari berdasarkan orderId karena
-     * checkout.js membuat:
-     *
-     * order.orderId
-     */
+  const amount =
+    order.amount || "-";
 
-    const order =
-      orders.find(
-        item =>
-          item.orderId ===
-          orderId
-      );
+  const price =
+    Number(order.price) || 0;
 
+  const payment =
+    order.payment || "-";
 
-    if (!order) {
+  const status =
+    order.status || "Menunggu Pembayaran";
 
-      console.error(
-        "Order tidak ditemukan:",
-        orderId
-      );
+  const statusClass =
+    getStatusClass(status);
 
-      return;
+  const safeOrderId =
+    escapeHTML(orderId);
 
-    }
+  const detailUrl =
+    `order.html?id=${encodeURIComponent(orderId)}`;
 
+  return `
+    <article class="admin-order">
 
-    const oldStatus =
-      order.status ||
-      "Menunggu Pembayaran";
+      <div class="admin-order-game">
 
-
-    order.status =
-      newStatus;
-
-
-    const now =
-      new Date().toISOString();
-
-
-    if (
-      newStatus ===
-      "Pembayaran Berhasil"
-    ) {
-
-      order.paidAt =
-        order.paidAt ||
-        now;
-
-    }
-
-
-    if (
-      newStatus ===
-      "Pesanan Diproses"
-    ) {
-
-      order.processingAt =
-        order.processingAt ||
-        now;
-
-    }
-
-
-    if (
-      newStatus ===
-      "Top Up Berhasil"
-    ) {
-
-      order.processingAt =
-        order.processingAt ||
-        now;
-
-      order.completedAt =
-        order.completedAt ||
-        now;
-
-    }
-
-
-    saveOrders();
-
-    renderStats();
-
-    renderOrders();
-
-
-    console.log(
-      `Status ${orderId}: ${oldStatus} → ${newStatus}`
-    );
-
-  }
-
-
-  /* =========================================
-     STATS
-     ========================================= */
-
-  function renderStats() {
-
-    const totalOrders =
-      orders.length;
-
-
-    const totalRevenue =
-      orders.reduce(
-        (total, order) => {
-
-          return (
-            total +
-            (
-              Number(
-                order.price
-              ) || 0
-            )
-          );
-
-        },
-        0
-      );
-
-
-    const successOrders =
-      orders.filter(
-        order =>
-          order.status ===
-          "Top Up Berhasil"
-      ).length;
-
-
-    const pendingOrders =
-      orders.filter(
-        order =>
-          order.status !==
-          "Top Up Berhasil"
-      ).length;
-
-
-    if (totalOrdersEl) {
-
-      totalOrdersEl.textContent =
-        totalOrders;
-
-    }
-
-
-    if (totalRevenueEl) {
-
-      totalRevenueEl.textContent =
-        formatPrice(
-          totalRevenue
-        );
-
-    }
-
-
-    if (successOrdersEl) {
-
-      successOrdersEl.textContent =
-        successOrders;
-
-    }
-
-
-    if (pendingOrdersEl) {
-
-      pendingOrdersEl.textContent =
-        pendingOrders;
-
-    }
-
-  }
-
-
-  /* =========================================
-     FILTER
-     ========================================= */
-
-  function getFilteredOrders() {
-
-    const search =
-      searchInput?.value
-        .trim()
-        .toLowerCase() || "";
-
-
-    const selectedGame =
-      gameFilter?.value ||
-      "all";
-
-
-    const selectedStatus =
-      statusFilter?.value ||
-      "all";
-
-
-    return [...orders]
-
-      .sort(
-        (a, b) => {
-
-          const dateA =
-            new Date(
-              a.createdAt || 0
-            ).getTime();
-
-
-          const dateB =
-            new Date(
-              b.createdAt || 0
-            ).getTime();
-
-
-          return (
-            dateB -
-            dateA
-          );
-
-        }
-      )
-
-      .filter(
-        order => {
-
-          if (
-            selectedGame !==
-              "all" &&
-            order.game !==
-              selectedGame
-          ) {
-
-            return false;
-
-          }
-
-
-          if (
-            selectedStatus !==
-              "all" &&
-            order.status !==
-              selectedStatus
-          ) {
-
-            return false;
-
-          }
-
-
-          if (!search) {
-
-            return true;
-
-          }
-
-
-          const orderId =
-            String(
-              order.orderId ||
-              ""
-            ).toLowerCase();
-
-
-          const playerId =
-            String(
-              order.playerId ||
-              ""
-            ).toLowerCase();
-
-
-          const gameName =
-            String(
-              order.gameName ||
-              order.game ||
-              ""
-            ).toLowerCase();
-
-
-          const amount =
-            String(
-              order.amount ||
-              ""
-            ).toLowerCase();
-
-
-          return (
-
-            orderId.includes(
-              search
-            ) ||
-
-            playerId.includes(
-              search
-            ) ||
-
-            gameName.includes(
-              search
-            ) ||
-
-            amount.includes(
-              search
-            )
-
-          );
-
-        }
-      );
-
-  }
-
-
-  /* =========================================
-     RENDER ORDERS
-     ========================================= */
-
-  function renderOrders() {
-
-    if (!orderList) {
-      return;
-    }
-
-
-    const filteredOrders =
-      getFilteredOrders();
-
-
-    if (orderCountEl) {
-
-      orderCountEl.textContent =
-        `${filteredOrders.length} transaksi`;
-
-    }
-
-
-    if (
-      filteredOrders.length ===
-      0
-    ) {
-
-      orderList.innerHTML = `
-
-        <div class="admin-empty">
-
-          <div class="admin-empty-icon">
-            📭
-          </div>
-
-          <h3>
-            Tidak ada transaksi
-          </h3>
-
-          <p>
-            Belum ada pesanan yang
-            cocok dengan pencarian
-            atau filter.
-          </p>
-
+        <div class="admin-game-icon">
+          ${gameSlug === "free-fire" ? "🔥" :
+            gameSlug === "mobile-legends" ? "⚔️" :
+            gameSlug === "roblox" ? "🧱" :
+            gameSlug === "pubg-mobile" ? "🔫" :
+            "🎮"}
         </div>
 
-      `;
+        <div>
+          <div class="admin-game-name">
+            ${escapeHTML(gameName)}
+          </div>
 
-      return;
+          <div class="admin-game-type">
+            ${escapeHTML(amount)}
+          </div>
+        </div>
 
-    }
+      </div>
 
+      <div class="admin-detail">
 
-    orderList.innerHTML =
-      filteredOrders
-        .map(order => {
+        <span class="admin-detail-label">
+          Order ID
+        </span>
 
-          const gameName =
-            order.gameName ||
-            getGameName(
-              order.game
-            );
+        <span class="admin-detail-value">
+          ${safeOrderId || "-"}
+        </span>
 
+      </div>
 
-          const status =
-            order.status ||
-            "Menunggu Pembayaran";
+      <div class="admin-detail">
 
+        <span class="admin-detail-label">
+          Player ID
+        </span>
 
-          const statusClass =
-            getStatusClass(
-              status
-            );
+        <span class="admin-detail-value">
+          ${escapeHTML(playerId)}
+        </span>
 
+      </div>
 
-          return `
+      <div class="admin-detail">
 
-            <div
-              class="admin-order"
-              data-order-id="${escapeHTML(
-                order.orderId
-              )}"
-            >
+        <span class="admin-detail-label">
+          Total
+        </span>
 
-              <div class="admin-order-game">
+        <span class="admin-detail-value">
+          ${formatPrice(price)}
+        </span>
 
-                <div class="admin-game-icon">
-                  ${getGameIcon(
-                    order.game
-                  )}
-                </div>
+      </div>
 
-                <div>
+      <div class="admin-detail">
 
-                  <div class="admin-game-name">
-                    ${escapeHTML(
-                      gameName
-                    )}
-                  </div>
+        <span class="admin-detail-label">
+          Pembayaran
+        </span>
 
-                  <div class="admin-game-type">
-                    ${escapeHTML(
-                      order.amount ||
-                      "-"
-                    )}
-                  </div>
+        <span class="admin-detail-value">
+          ${escapeHTML(payment)}
+        </span>
 
-                </div>
+      </div>
 
-              </div>
+      <div class="admin-detail">
 
+        <span class="admin-detail-label">
+          Status
+        </span>
 
-              <div class="admin-detail">
+        <span class="admin-status ${statusClass}">
+          ${escapeHTML(status)}
+        </span>
 
-                <span class="admin-detail-label">
-                  Player
-                </span>
+      </div>
 
-                <span class="admin-detail-value">
-                  ${escapeHTML(
-                    order.playerId ||
-                    "-"
-                  )}
-                </span>
+      ${createStatusSelect(order)}
 
-              </div>
+      <a
+        class="admin-detail-btn"
+        href="${detailUrl}"
+      >
+        Lihat Detail →
+      </a>
 
+      <div class="admin-order-date">
+        Tanggal: ${formatDate(order.createdAt)}
+      </div>
 
-              <div class="admin-detail">
+    </article>
+  `;
+}
 
-                <span class="admin-detail-label">
-                  Total
-                </span>
+// ================================
+// RENDER
+// ================================
 
-                <span class="admin-detail-value">
-                  ${formatPrice(
-                    order.price
-                  )}
-                </span>
+function render() {
+  const orders = getOrders();
 
-              </div>
+  updateStats(orders);
 
+  const filteredOrders =
+    getFilteredOrders();
 
-              <div class="admin-detail">
-
-                <span class="admin-detail-label">
-                  Pembayaran
-                </span>
-
-                <span class="admin-detail-value">
-                  ${escapeHTML(
-                    getPaymentName(
-                      order.payment
-                    )
-                  )}
-                </span>
-
-              </div>
-
-
-              <div class="admin-detail">
-
-                <span class="admin-detail-label">
-                  Status
-                </span>
-
-                <div class="admin-status ${statusClass}">
-                  ${escapeHTML(
-                    status
-                  )}
-                </div>
-
-              </div>
-
-
-              <div class="
-                admin-detail
-                admin-status-control
-              ">
-
-                <span class="admin-detail-label">
-                  Ubah Status
-                </span>
-
-                ${createStatusSelect(
-                  order
-                )}
-
-              </div>
-
-
-              <a
-                href="order.html?id=${encodeURIComponent(
-                  order.orderId
-                )}"
-                class="admin-detail-btn"
-              >
-                Lihat Detail →
-              </a>
-
-
-              <div class="admin-order-date">
-
-                Tanggal:
-                ${escapeHTML(
-                  formatDate(
-                    order.createdAt
-                  )
-                )}
-
-                <br>
-
-                ID:
-                ${escapeHTML(
-                  order.orderId ||
-                  "-"
-                )}
-
-              </div>
-
-            </div>
-
-          `;
-
-        })
-        .join("");
-
-
-    bindStatusControls();
-
+  if (orderCountEl) {
+    orderCountEl.textContent =
+      `${filteredOrders.length} transaksi`;
   }
 
+  if (!adminOrderListEl) {
+    return;
+  }
 
-  /* =========================================
-     STATUS CONTROL EVENTS
-     ========================================= */
+  if (filteredOrders.length === 0) {
+    adminOrderListEl.innerHTML = `
+      <div class="admin-empty">
+        <div>📭</div>
+        <p>Tidak ada transaksi ditemukan.</p>
+      </div>
+    `;
 
-  function bindStatusControls() {
+    return;
+  }
 
-    const selects =
-      document.querySelectorAll(
-        ".admin-status-select"
-      );
+  adminOrderListEl.innerHTML =
+    filteredOrders
+      .slice()
+      .reverse()
+      .map(createOrderCard)
+      .join("");
 
+  bindStatusEvents();
+}
 
-    selects.forEach(
-      select => {
+// ================================
+// EVENTS
+// ================================
 
-        select.addEventListener(
-          "change",
-          event => {
+function bindStatusEvents() {
+  const selects =
+    document.querySelectorAll(
+      ".admin-status-select"
+    );
 
-            const orderId =
-              event.target.dataset
-                .statusId;
+  selects.forEach(select => {
+    select.addEventListener(
+      "change",
+      event => {
+        const orderId =
+          event.target.dataset.statusId;
 
+        const newStatus =
+          event.target.value;
 
-            const newStatus =
-              event.target.value;
+        if (!orderId) {
+          console.error(
+            "Order ID kosong."
+          );
+          return;
+        }
 
-
-            updateOrderStatus(
-              orderId,
-              newStatus
-            );
-
-          }
+        updateOrderStatus(
+          orderId,
+          newStatus
         );
-
       }
     );
+  });
+}
 
-  }
+if (adminSearchEl) {
+  adminSearchEl.addEventListener(
+    "input",
+    render
+  );
+}
 
+if (gameFilterEl) {
+  gameFilterEl.addEventListener(
+    "change",
+    render
+  );
+}
 
-  /* =========================================
-     EVENTS
-     ========================================= */
+if (adminStatusFilterEl) {
+  adminStatusFilterEl.addEventListener(
+    "change",
+    render
+  );
+}
 
-  if (searchInput) {
+if (refreshBtnEl) {
+  refreshBtnEl.addEventListener(
+    "click",
+    render
+  );
+}
 
-    searchInput.addEventListener(
-      "input",
-      renderOrders
-    );
+// ================================
+// INITIAL LOAD
+// ================================
 
-  }
-
-
-  if (gameFilter) {
-
-    gameFilter.addEventListener(
-      "change",
-      renderOrders
-    );
-
-  }
-
-
-  if (statusFilter) {
-
-    statusFilter.addEventListener(
-      "change",
-      renderOrders
-    );
-
-  }
-
-
-  if (refreshBtn) {
-
-    refreshBtn.addEventListener(
-      "click",
-      () => {
-
-        refreshBtn.disabled =
-          true;
-
-
-        refreshBtn.textContent =
-          "Memuat...";
-
-
-        setTimeout(
-          () => {
-
-            loadOrders();
-
-            renderStats();
-
-            renderOrders();
-
-
-            refreshBtn.disabled =
-              false;
-
-
-            refreshBtn.textContent =
-              "↻ Refresh";
-
-          },
-          350
-        );
-
-      }
-    );
-
-  }
-
-
-  /* =========================================
-     INITIALIZE
-     ========================================= */
-
-  loadOrders();
-
-  renderStats();
-
-  renderOrders();
-
-});
+render();
