@@ -7,17 +7,18 @@ content="Leo Store — Top up game cepat, mudah, dan praktis."
 «»
 
   <link rel="stylesheet" href="css/style.css">
-</head><body class="home-page">  <!-- ================================
-       HEADER
-  ================================= -->  <header class="site-header home-header"><div class="container">
+</head><body class="home-page">  <!-- HEADER -->  <header class="site-header home-header"><div class="container">
 
   <a href="index.html" class="logo">
     Leo Store
   </a>
 
-  <nav class="main-nav">
+  <nav class="nav">
 
-    <a href="index.html" class="active">
+    <a
+      href="index.html"
+      class="active"
+    >
       Home
     </a>
 
@@ -33,10 +34,7 @@ content="Leo Store — Top up game cepat, mudah, dan praktis."
 
 </div>
 
-  </header>  <main><!-- ================================
-     BRAND INTRO
-================================= -->
-
+  </header>  <!-- MAIN -->  <main><!-- BRAND INTRO -->
 <section class="brand-intro">
 
   <div class="brand-intro-inner">
@@ -44,7 +42,7 @@ content="Leo Store — Top up game cepat, mudah, dan praktis."
     <div class="brand-animation">
 
       <div class="brand-logo-placeholder">
-        LOGO GW NANTI
+        LEO
       </div>
 
       <div class="brand-word">
@@ -62,10 +60,7 @@ content="Leo Store — Top up game cepat, mudah, dan praktis."
 </section>
 
 
-<!-- ================================
-     GAME / EVENT BANNER
-================================= -->
-
+<!-- EVENT / BANNER -->
 <section class="home-banner-section">
 
   <div class="container">
@@ -94,6 +89,7 @@ content="Leo Store — Top up game cepat, mudah, dan praktis."
         id="homeBannerTrack"
       ></div>
 
+
       <button
         type="button"
         class="banner-arrow banner-arrow-left"
@@ -103,6 +99,7 @@ content="Leo Store — Top up game cepat, mudah, dan praktis."
         ‹
       </button>
 
+
       <button
         type="button"
         class="banner-arrow banner-arrow-right"
@@ -111,6 +108,7 @@ content="Leo Store — Top up game cepat, mudah, dan praktis."
       >
         ›
       </button>
+
 
       <div
         class="banner-dots"
@@ -124,10 +122,7 @@ content="Leo Store — Top up game cepat, mudah, dan praktis."
 </section>
 
 
-<!-- ================================
-     TRENDING
-================================= -->
-
+<!-- TRENDING -->
 <section class="home-games-section">
 
   <div class="container">
@@ -159,10 +154,7 @@ content="Leo Store — Top up game cepat, mudah, dan praktis."
 </section>
 
 
-<!-- ================================
-     ALL GAMES
-================================= -->
-
+<!-- ALL GAMES -->
 <section class="home-games-section all-games-section">
 
   <div class="container">
@@ -206,9 +198,7 @@ content="Leo Store — Top up game cepat, mudah, dan praktis."
 
 </section>
 
-  </main>  <!-- ================================
-       FOOTER
-  ================================= -->  <footer class="site-footer"><div class="container">
+  </main>  <!-- FOOTER -->  <footer class="site-footer"><div class="container">
 
   <div>
 
@@ -224,7 +214,7 @@ content="Leo Store — Top up game cepat, mudah, dan praktis."
 
 </div>
 
-  </footer>  <script src="js/products.js"></script>  <script>
+  </footer>  <!-- PRODUCTS -->  <script src="js/products.js"></script>  <!-- HOME SCRIPT -->  <script>
 
     document.addEventListener("DOMContentLoaded", () => {
 
@@ -235,51 +225,70 @@ content="Leo Store — Top up game cepat, mudah, dan praktis."
 
 
       /*
-       * ========================================
+       * ==========================================
        * GAME CARD
-       * ========================================
+       * ==========================================
        */
 
       function createGameCard(product) {
 
-        const card = document.createElement("a");
+        const card =
+          document.createElement("a");
 
-        card.className = "home-game-card";
+        card.className =
+          "home-game-card";
 
         card.href =
-          `checkout.html?game=${encodeURIComponent(
+          "checkout.html?game=" +
+          encodeURIComponent(
             product.slug || product.id
-          )}`;
+          );
 
 
         const image =
-          product.image ||
-          product.icon ||
-          "";
+          product.image || "";
+
+
+        let imageHTML = "";
+
+
+        if (image) {
+
+          imageHTML = `
+            <img
+              src="${image}"
+              alt="${product.name || "Game"}"
+              loading="lazy"
+              onerror="
+                this.style.display='none';
+                this.nextElementSibling.style.display='flex';
+              "
+            >
+
+            <span
+              class="home-game-fallback"
+              style="display:none;"
+            >
+              ${product.icon || "🎮"}
+            </span>
+          `;
+
+        } else {
+
+          imageHTML = `
+            <span class="home-game-fallback">
+              ${product.icon || "🎮"}
+            </span>
+          `;
+
+        }
 
 
         card.innerHTML = `
 
           <div class="home-game-image">
-
-            ${
-              image.includes(".")
-                ? `
-                  <img
-                    src="${image}"
-                    alt="${product.name || "Game"}"
-                    loading="lazy"
-                  >
-                `
-                : `
-                  <span class="home-game-fallback">
-                    ${image || "🎮"}
-                  </span>
-                `
-            }
-
+            ${imageHTML}
           </div>
-
 
           <div class="home-game-info">
 
@@ -288,7 +297,7 @@ content="Leo Store — Top up game cepat, mudah, dan praktis."
             </strong>
 
             <span>
-              ${product.publisher || product.company || ""}
+              ${product.publisher || product.company || "Top Up Game"}
             </span>
 
           </div>
@@ -302,14 +311,10 @@ content="Leo Store — Top up game cepat, mudah, dan praktis."
 
 
       /*
-       * ========================================
+       * ==========================================
        * TRENDING
-       * ========================================
+       * ==========================================
        */
-
-      const trending =
-        products.slice(0, 6);
-
 
       const trendingContainer =
         document.getElementById("trendingGames");
@@ -319,26 +324,25 @@ content="Leo Store — Top up game cepat, mudah, dan praktis."
 
         trendingContainer.innerHTML = "";
 
-        trending.forEach(product => {
 
-          trendingContainer.appendChild(
-            createGameCard(product)
-          );
+        products
+          .slice(0, 6)
+          .forEach(product => {
 
-        });
+            trendingContainer.appendChild(
+              createGameCard(product)
+            );
+
+          });
 
       }
 
 
       /*
-       * ========================================
+       * ==========================================
        * ALL GAMES
-       * ========================================
+       * ==========================================
        */
-
-      const allGames =
-        products.slice(0, 12);
-
 
       const allGamesContainer =
         document.getElementById("allGames");
@@ -348,34 +352,45 @@ content="Leo Store — Top up game cepat, mudah, dan praktis."
 
         allGamesContainer.innerHTML = "";
 
-        allGames.forEach(product => {
 
-          allGamesContainer.appendChild(
-            createGameCard(product)
-          );
+        products
+          .slice(0, 12)
+          .forEach(product => {
 
-        });
+            allGamesContainer.appendChild(
+              createGameCard(product)
+            );
+
+          });
 
       }
 
 
       /*
-       * ========================================
-       * BANNER DATA
-       * ========================================
+       * ==========================================
+       * BANNER
+       * ==========================================
        */
 
       const banners =
         products
-          .filter(product => product.banner || product.image)
+          .filter(product =>
+            product.banner ||
+            product.image
+          )
           .slice(0, 8);
 
 
       const track =
-        document.getElementById("homeBannerTrack");
+        document.getElementById(
+          "homeBannerTrack"
+        );
+
 
       const dots =
-        document.getElementById("bannerDots");
+        document.getElementById(
+          "bannerDots"
+        );
 
 
       let currentBanner = 0;
@@ -385,20 +400,25 @@ content="Leo Store — Top up game cepat, mudah, dan praktis."
 
         if (!track) return;
 
+
         track.innerHTML = "";
 
-        banners.forEach((product, index) => {
+
+        banners.forEach(product => {
 
           const slide =
             document.createElement("a");
 
+
           slide.className =
             "home-banner-slide";
 
+
           slide.href =
-            `checkout.html?game=${encodeURIComponent(
+            "checkout.html?game=" +
+            encodeURIComponent(
               product.slug || product.id
-            )}`;
+            );
 
 
           const bannerImage =
@@ -412,6 +432,10 @@ content="Leo Store — Top up game cepat, mudah, dan praktis."
               src="${bannerImage}"
               alt="${product.name || "Leo Store"}"
               draggable="false"
+              onerror="
+                this.style.display='none';
+                this.parentElement.style.background='linear-gradient(135deg,#171321,#0b0b12)';
+              "
             >
 
             <div class="home-banner-overlay">
@@ -446,16 +470,22 @@ content="Leo Store — Top up game cepat, mudah, dan praktis."
 
           dots.innerHTML = "";
 
+
           banners.forEach((_, index) => {
 
             const dot =
               document.createElement("button");
 
+
             dot.type = "button";
 
             dot.className =
               "banner-dot" +
-              (index === 0 ? " active" : "");
+              (
+                index === 0
+                  ? " active"
+                  : ""
+              );
 
 
             dot.addEventListener(
@@ -476,12 +506,26 @@ content="Leo Store — Top up game cepat, mudah, dan praktis."
       }
 
 
+      /*
+       * ==========================================
+       * BANNER POSITION
+       * ==========================================
+       */
+
       function updateBanner() {
 
-        if (!track || !banners.length) return;
+        if (
+          !track ||
+          !banners.length
+        ) {
+          return;
+        }
+
 
         track.style.transform =
-          `translateX(-${currentBanner * 100}%)`;
+          "translateX(-" +
+          (currentBanner * 100) +
+          "%)";
 
 
         document
@@ -502,20 +546,34 @@ content="Leo Store — Top up game cepat, mudah, dan praktis."
 
         if (!banners.length) return;
 
+
         currentBanner =
-          (index + banners.length) %
+          (
+            index +
+            banners.length
+          ) %
           banners.length;
+
 
         updateBanner();
 
       }
 
 
+      /*
+       * ==========================================
+       * ARROWS
+       * ==========================================
+       */
+
       document
         .getElementById("bannerPrev")
         ?.addEventListener(
           "click",
-          () => goToBanner(currentBanner - 1)
+          () =>
+            goToBanner(
+              currentBanner - 1
+            )
         );
 
 
@@ -523,28 +581,41 @@ content="Leo Store — Top up game cepat, mudah, dan praktis."
         .getElementById("bannerNext")
         ?.addEventListener(
           "click",
-          () => goToBanner(currentBanner + 1)
+          () =>
+            goToBanner(
+              currentBanner + 1
+            )
         );
 
 
       /*
+       * ==========================================
        * AUTO SLIDE
+       * ==========================================
        */
 
       let bannerTimer =
         setInterval(
-          () => goToBanner(currentBanner + 1),
+          () =>
+            goToBanner(
+              currentBanner + 1
+            ),
           5000
         );
 
 
       const carousel =
-        document.querySelector(".banner-carousel");
+        document.querySelector(
+          ".banner-carousel"
+        );
 
 
       carousel?.addEventListener(
         "mouseenter",
-        () => clearInterval(bannerTimer)
+        () =>
+          clearInterval(
+            bannerTimer
+          )
       );
 
 
@@ -554,7 +625,10 @@ content="Leo Store — Top up game cepat, mudah, dan praktis."
 
           bannerTimer =
             setInterval(
-              () => goToBanner(currentBanner + 1),
+              () =>
+                goToBanner(
+                  currentBanner + 1
+                ),
               5000
             );
 
@@ -563,7 +637,9 @@ content="Leo Store — Top up game cepat, mudah, dan praktis."
 
 
       /*
+       * ==========================================
        * TOUCH SWIPE
+       * ==========================================
        */
 
       let touchStartX = 0;
@@ -577,7 +653,9 @@ content="Leo Store — Top up game cepat, mudah, dan praktis."
             event.changedTouches[0].clientX;
 
         },
-        { passive: true }
+        {
+          passive: true
+        }
       );
 
 
@@ -588,32 +666,49 @@ content="Leo Store — Top up game cepat, mudah, dan praktis."
           const touchEndX =
             event.changedTouches[0].clientX;
 
+
           const distance =
-            touchEndX - touchStartX;
+            touchEndX -
+            touchStartX;
 
 
-          if (Math.abs(distance) < 50) {
+          if (
+            Math.abs(distance) < 50
+          ) {
             return;
           }
 
 
           if (distance < 0) {
 
-            goToBanner(currentBanner + 1);
+            goToBanner(
+              currentBanner + 1
+            );
 
           } else {
 
-            goToBanner(currentBanner - 1);
+            goToBanner(
+              currentBanner - 1
+            );
 
           }
 
         },
-        { passive: true }
+        {
+          passive: true
+        }
       );
 
+
+      /*
+       * ==========================================
+       * START
+       * ==========================================
+       */
 
       renderBanners();
 
     });
 
-  </script></body></html>
+  </script></body>
+</html>
