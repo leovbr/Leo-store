@@ -1,585 +1,323 @@
-/* =========================================
-   LEO STORE
-   CHECKOUT ENGINE
-   ========================================= */
+/* =========================================================
+   LEO STORE — CHECKOUT
+   ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const gameId = params.get("game");
 
-  const form =
-    document.getElementById("checkoutForm");
+  const product = getProduct(gameId);
 
-  if (!form) return;
+  const gameNameEl = document.getElementById("gameName");
+  const playerIdInput = document.getElementById("playerId");
+  const serverInput = document.getElementById("server");
+  const paymentSelect = document.getElementById("paymentMethod");
+  const denominationContainer =
+    document.getElementById("denominationList");
 
+  const submitButton =
+    document.getElementById("checkoutButton");
 
-  /* =========================================
-     ELEMENT
-     ========================================= */
+  if (!product) {
+    if (denominationContainer) {
+      denominationContainer.innerHTML = `
+        <div class="checkout-error">
+          Game tidak ditemukan.
+        </div>
+      `;
+    }
 
-  const gameSelect =
-    document.getElementById("game");
+    return;
+  }
 
-  const playerInput =
-    document.getElementById("playerId");
+  if (gameNameEl) {
+    gameNameEl.textContent = product.name;
+  }
 
-  const serverInput =
-    document.getElementById("server");
+  let selectedDenomination = null;
 
-  const nominalSelect =
-    document.getElementById("nominal");
+  /* =======================================================
+     ESCAPE
+     ======================================================= */
 
-  const paymentSelect =
-    document.getElementById("payment");
+  function escapeHTML(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
 
+  /* =======================================================
+     GROUP DENOMINATIONS
+     ======================================================= */
 
-  /* =========================================
-     URL PARAMETER
-     ========================================= */
+  function groupDenominations(items) {
+    return items.reduce((groups, item) => {
+      const category =
+        item.category || "✨ Pilih Nominal";
 
-  const params =
-    new URLSearchParams(
-      window.location.search
+      if (!groups[category]) {
+        groups[category] = [];
+      }
+
+      groups[category].push(item);
+
+      return groups;
+    }, {});
+  }
+
+  /* =======================================================
+     RENDER NOMINAL
+     ======================================================= */
+
+  function renderDenominations() {
+    if (!denominationContainer) return;
+
+    const groups = groupDenominations(
+      product.denominations || []
     );
 
-  let gameSlug =
-    params.get("game");
+    const categories = Object.keys(groups);
 
-
-  /* =========================================
-     LOAD GAME
-     ========================================= */
-
-  function loadGame() {
-
-    if (!gameSlug) {
-      return;
-    }
-
-
-    const product =
-      getProduct(gameSlug);
-
-
-    if (!product) {
-
-      alert(
-        "Game tidak ditemukan."
-      );
+    if (categories.length === 0) {
+      denominationContainer.innerHTML = `
+        <div class="checkout-error">
+          Belum ada nominal tersedia.
+        </div>
+      `;
 
       return;
-
     }
 
+    denominationContainer.innerHTML = categories.map(category => {
+      const items = groups[category];
 
-    /* pilih game */
+      return `
+        <section class="denomination-section">
 
-    if (gameSelect) {
+          <div class="denomination-section-header">
+            <h3>${escapeHTML(category)}</h3>
+            <span>Select a variant</span>
+          </div>
 
-      gameSelect.value =
-        gameSlug;
+          <div class="denomination-list">
 
-    }
+            ${items.map(item => `
+              <button
+                type="button"
+                class="denomination-option"
+                data-denomination-id="${escapeHTML(item.id)}"
+              >
 
+                <div class="denomination-main">
 
-    /* =====================================
-       NOMINAL
-       ===================================== */
+                  <strong>
+                    ${escapeHTML(item.amount)}
+                  </strong>
 
-    if (nominalSelect) {
+                  <span>
+                    ${escapeHTML(product.name)}
+                    - ${escapeHTML(item.amount)}
+                  </span>
 
-      nominalSelect.innerHTML =
-        `<option value="">
-          Pilih Nominal
-        </option>`;
+                </div>
 
+                <div class="denomination-price">
+                  ${formatRupiah(item.price)}
+                </div>
 
-      product.denominations.forEach(
-        item => {
+              </button>
+            `).join("")}
 
-          const option =
-            document.createElement(
-              "option"
+          </div>
+        </section>
+      `;
+    }).join("");
+
+    document
+      .querySelectorAll(".denomination-option")
+      .forEach(button => {
+
+        button.addEventListener("click", () => {
+
+          const denominationId =
+            button.dataset.denominationId;
+
+          selectedDenomination =
+            getDenomination(
+              product.id,
+              denominationId
             );
 
+          document
+            .querySelectorAll(".denomination-option")
+            .forEach(item => {
+              item.classList.remove("selected");
+            });
 
-          option.value =
-            item.id;
+          button.classList.add("selected");
 
-
-          option.textContent =
-            `${item.amount} — ${formatPrice(item.price)}`;
-
-
-          nominalSelect.appendChild(
-            option
-          );
-
-        }
-      );
-
-    }
-
-
-    /* =====================================
-       SERVER / ZONE
-       ===================================== */
-
-    updateServerField(
-      product
-    );
-
+          updateSummary();
+        });
+      });
   }
 
+  /* =======================================================
+     SUMMARY
+     ======================================================= */
 
-  /* =========================================
-     SERVER FIELD
-     ========================================= */
+  function updateSummary() {
+    const summaryName =
+      document.getElementById("summaryName");
 
-  function updateServerField(
-    product
-  ) {
+    const summaryPrice =
+      document.getElementById("summaryPrice");
 
-    if (!serverInput) {
+    const summaryBox =
+      document.getElementById("checkoutSummary");
+
+    if (!selectedDenomination) {
+      if (summaryBox) {
+        summaryBox.classList.remove("visible");
+      }
+
       return;
     }
 
-
-    const serverLabel =
-      document.querySelector(
-        'label[for="server"]'
-      );
-
-
-    if (product.requiresServer) {
-
-      serverInput.required =
-        true;
-
-
-      serverInput.placeholder =
-        "Masukkan Server / Zone";
-
-
-      if (serverLabel) {
-
-        serverLabel.textContent =
-          "Server / Zone";
-
-      }
-
-    } else {
-
-      serverInput.required =
-        false;
-
-
-      serverInput.placeholder =
-        "Tidak diperlukan";
-
-
-      if (serverLabel) {
-
-        serverLabel.textContent =
-          "Server / Zone (Opsional)";
-
-      }
-
+    if (summaryName) {
+      summaryName.textContent =
+        selectedDenomination.amount;
     }
 
+    if (summaryPrice) {
+      summaryPrice.textContent =
+        formatRupiah(selectedDenomination.price);
+    }
+
+    if (summaryBox) {
+      summaryBox.classList.add("visible");
+    }
   }
 
+  /* =======================================================
+     VALIDATION
+     ======================================================= */
 
-  /* =========================================
-     GAME SELECT CHANGE
-     ========================================= */
+  function validateForm() {
+    if (!selectedDenomination) {
+      alert("Pilih nominal terlebih dahulu.");
+      return false;
+    }
 
-  if (gameSelect) {
+    if (!playerIdInput || !playerIdInput.value.trim()) {
+      alert("Masukkan Player ID.");
+      playerIdInput?.focus();
+      return false;
+    }
 
-    gameSelect.addEventListener(
-      "change",
-      () => {
+    if (
+      serverInput &&
+      serverInput.required &&
+      !serverInput.value.trim()
+    ) {
+      alert("Masukkan Server ID.");
+      serverInput.focus();
+      return false;
+    }
 
-        gameSlug =
-          gameSelect.value;
+    if (
+      paymentSelect &&
+      paymentSelect.required &&
+      !paymentSelect.value
+    ) {
+      alert("Pilih metode pembayaran.");
+      paymentSelect.focus();
+      return false;
+    }
 
+    return true;
+  }
 
-        const product =
-          getProduct(gameSlug);
+  /* =======================================================
+     CREATE ORDER
+     ======================================================= */
 
+  function createOrder() {
+    const orderId =
+      "LEO-" +
+      Date.now().toString(36).toUpperCase();
 
-        if (!product) {
-          return;
-        }
+    const order = {
+      orderId,
 
+      game: product.slug,
+      gameName: product.name,
 
-        updateServerField(
-          product
-        );
+      playerId:
+        playerIdInput?.value.trim() || "",
 
+      server:
+        serverInput?.value.trim() || "",
 
-        if (nominalSelect) {
+      denominationId:
+        selectedDenomination.id,
 
-          nominalSelect.innerHTML =
-            `<option value="">
-              Pilih Nominal
-            </option>`;
+      denomination:
+        selectedDenomination.amount,
 
+      amount:
+        selectedDenomination.amount,
 
-          product.denominations.forEach(
-            item => {
+      price:
+        selectedDenomination.price,
 
-              const option =
-                document.createElement(
-                  "option"
-                );
+      payment:
+        paymentSelect?.value || "",
 
+      status: "Menunggu Pembayaran",
 
-              option.value =
-                item.id;
+      createdAt:
+        new Date().toISOString()
+    };
 
+    const existingOrders =
+      JSON.parse(
+        localStorage.getItem("fidelis_orders") || "[]"
+      );
 
-              option.textContent =
-                `${item.amount} — ${formatPrice(item.price)}`;
+    existingOrders.unshift(order);
 
-
-              nominalSelect.appendChild(
-                option
-              );
-
-            }
-          );
-
-        }
-
-
-        const pricePreview =
-          document.getElementById(
-            "pricePreview"
-          );
-
-
-        if (pricePreview) {
-
-          pricePreview.textContent =
-            "";
-
-        }
-
-      }
+    localStorage.setItem(
+      "fidelis_orders",
+      JSON.stringify(existingOrders)
     );
 
-  }
-
-
-  /* =========================================
-     PRICE PREVIEW
-     ========================================= */
-
-  function updatePrice() {
-
-    const selectedId =
-      nominalSelect.value;
-
-
-    const product =
-      getProduct(gameSlug);
-
-
-    if (!product || !selectedId) {
-
-      const pricePreview =
-        document.getElementById(
-          "pricePreview"
-        );
-
-
-      if (pricePreview) {
-        pricePreview.textContent =
-          "";
-      }
-
-
-      return;
-
-    }
-
-
-    const denomination =
-      getDenomination(
-        gameSlug,
-        selectedId
-      );
-
-
-    if (!denomination) {
-      return;
-    }
-
-
-    const priceElement =
-      document.getElementById(
-        "pricePreview"
-      );
-
-
-    if (priceElement) {
-
-      priceElement.textContent =
-        formatPrice(
-          denomination.price
-        );
-
-    }
-
-  }
-
-
-  if (nominalSelect) {
-
-    nominalSelect.addEventListener(
-      "change",
-      updatePrice
+    localStorage.setItem(
+      "fidelis_last_order",
+      JSON.stringify(order)
     );
 
+    return order;
   }
 
-
-  /* =========================================
+  /* =======================================================
      SUBMIT
-     ========================================= */
+     ======================================================= */
 
-  form.addEventListener(
-    "submit",
-    event => {
-
+  if (submitButton) {
+    submitButton.addEventListener("click", event => {
       event.preventDefault();
 
+      if (!validateForm()) return;
 
-      /* =====================================
-         VALIDATE GAME
-         ===================================== */
-
-      const product =
-        getProduct(gameSlug);
-
-
-      if (!product) {
-
-        alert(
-          "Silakan pilih game."
-        );
-
-        return;
-
-      }
-
-
-      /* =====================================
-         GET DATA
-         ===================================== */
-
-      const playerId =
-        playerInput.value.trim();
-
-
-      const server =
-        serverInput.value.trim();
-
-
-      const denominationId =
-        nominalSelect.value;
-
-
-      const payment =
-        paymentSelect.value;
-
-
-      /* =====================================
-         VALIDATION
-         ===================================== */
-
-      if (!playerId) {
-
-        alert(
-          "Masukkan User ID / Username."
-        );
-
-        playerInput.focus();
-
-        return;
-
-      }
-
-
-      if (
-        product.requiresServer &&
-        !server
-      ) {
-
-        alert(
-          "Masukkan Server / Zone."
-        );
-
-        serverInput.focus();
-
-        return;
-
-      }
-
-
-      if (!denominationId) {
-
-        alert(
-          "Pilih nominal top up."
-        );
-
-        nominalSelect.focus();
-
-        return;
-
-      }
-
-
-      if (!payment) {
-
-        alert(
-          "Pilih metode pembayaran."
-        );
-
-        paymentSelect.focus();
-
-        return;
-
-      }
-
-
-      /* =====================================
-         GET DENOMINATION
-         ===================================== */
-
-      const denomination =
-        getDenomination(
-          gameSlug,
-          denominationId
-        );
-
-
-      if (!denomination) {
-
-        alert(
-          "Nominal tidak valid."
-        );
-
-        return;
-
-      }
-
-
-      /* =====================================
-         GENERATE ORDER ID
-         ===================================== */
-
-      const random =
-        Math.floor(
-          1000 +
-          Math.random() * 9000
-        );
-
-
-      const orderId =
-        `LEO-${Date.now()
-          .toString()
-          .slice(-6)}-${random}`;
-
-
-      /* =====================================
-         CREATE ORDER
-         ===================================== */
-
-      const order = {
-
-        orderId,
-
-        game:
-          gameSlug,
-
-        gameName:
-          product.name,
-
-        playerId,
-
-        server,
-
-        denominationId,
-
-        amount:
-          denomination.amount,
-
-        price:
-          denomination.price,
-
-        payment,
-
-        status:
-          "Menunggu Pembayaran",
-
-        createdAt:
-          new Date().toISOString()
-
-      };
-
-
-      /* =====================================
-         SAVE LAST ORDER
-         ===================================== */
-
-      localStorage.setItem(
-        "fidelis_last_order",
-        JSON.stringify(order)
-      );
-
-
-      /* =====================================
-         SAVE ORDER HISTORY
-         ===================================== */
-
-      const existingOrders =
-        JSON.parse(
-          localStorage.getItem(
-            "fidelis_orders"
-          )
-        ) || [];
-
-
-      existingOrders.push(
-        order
-      );
-
-
-      localStorage.setItem(
-        "fidelis_orders",
-        JSON.stringify(
-          existingOrders
-        )
-      );
-
-
-      /* =====================================
-         GO TO PAYMENT
-         ===================================== */
+      const order = createOrder();
 
       window.location.href =
-        `payment.html?id=${encodeURIComponent(
-          orderId
-        )}`;
+        `payment.html?id=${encodeURIComponent(order.orderId)}`;
+    });
+  }
 
-    }
-  );
-
-
-  /* =========================================
-     INITIALIZE
-     ========================================= */
-
-  loadGame();
-
+  renderDenominations();
 });
