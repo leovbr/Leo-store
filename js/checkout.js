@@ -1125,9 +1125,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   const initialGame =
-    gameSelect.value
-      ? getProduct(gameSelect.value)
-      : products[0];
+  gameSelect.value
+    ? getProduct(gameSelect.value)
+    : PRODUCTS[0];
 
 
   if (initialGame) {
