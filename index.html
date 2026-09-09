@@ -1,301 +1,230 @@
-<!DOCTYPE html>
-<html lang="id">
-
-<head>
+<!DOCTYPE html><html lang="id"><head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Leo Store — Top Up Game</title><meta
+name="description"
+content="Leo Store — Top up game cepat, mudah, dan praktis."
 
-  <title>Leo Store — Top Up Game</title>
-
-  <meta
-    name="description"
-    content="Leo Store — Top up game cepat, mudah, dan praktis."
-  >
+«»
 
   <link rel="stylesheet" href="css/style.css">
-</head>
-
-<body class="home-page">
-
-  <!-- ================================
+</head><body class="home-page">  <!-- ================================
        HEADER
-  ================================= -->
+  ================================= -->  <header class="site-header home-header"><div class="container">
 
-  <header class="site-header home-header">
+  <a href="index.html" class="logo">
+    Leo Store
+  </a>
 
-    <div class="container">
+  <nav class="main-nav">
 
-      <a href="index.html" class="logo">
-        Leo Store
+    <a href="index.html" class="active">
+      Home
+    </a>
+
+    <a href="shop.html">
+      Top Up
+    </a>
+
+    <a href="order.html">
+      Cek Pesanan
+    </a>
+
+  </nav>
+
+</div>
+
+  </header>  <main><!-- ================================
+     BRAND INTRO
+================================= -->
+
+<section class="brand-intro">
+
+  <div class="brand-intro-inner">
+
+    <div class="brand-animation">
+
+      <div class="brand-logo-placeholder">
+        LOGO GW NANTI
+      </div>
+
+      <div class="brand-word">
+        LEOOSTORE
+      </div>
+
+    </div>
+
+    <p class="brand-tagline">
+      TOP UP CEPAT • AMAN • PRAKTIS
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- ================================
+     GAME / EVENT BANNER
+================================= -->
+
+<section class="home-banner-section">
+
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        EVENT & PROMO
+      </span>
+
+      <h1>
+        Top Up Lebih Mudah
+      </h1>
+
+      <p>
+        Pilih game favoritmu dan mulai top up sekarang.
+      </p>
+
+    </div>
+
+
+    <div class="banner-carousel">
+
+      <div
+        class="banner-track"
+        id="homeBannerTrack"
+      ></div>
+
+      <button
+        type="button"
+        class="banner-arrow banner-arrow-left"
+        id="bannerPrev"
+        aria-label="Banner sebelumnya"
+      >
+        ‹
+      </button>
+
+      <button
+        type="button"
+        class="banner-arrow banner-arrow-right"
+        id="bannerNext"
+        aria-label="Banner berikutnya"
+      >
+        ›
+      </button>
+
+      <div
+        class="banner-dots"
+        id="bannerDots"
+      ></div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================================
+     TRENDING
+================================= -->
+
+<section class="home-games-section">
+
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        TRENDING
+      </span>
+
+      <h2>
+        Game Populer
+      </h2>
+
+      <p>
+        Berikut adalah beberapa game yang paling populer saat ini.
+      </p>
+
+    </div>
+
+
+    <div
+      class="home-game-grid"
+      id="trendingGames"
+    ></div>
+
+  </div>
+
+</section>
+
+
+<!-- ================================
+     ALL GAMES
+================================= -->
+
+<section class="home-games-section all-games-section">
+
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        TOP UP
+      </span>
+
+      <h2>
+        Semua Game
+      </h2>
+
+      <p>
+        Pilih game dan lanjutkan ke halaman top up.
+      </p>
+
+    </div>
+
+
+    <div
+      class="home-game-grid"
+      id="allGames"
+    ></div>
+
+
+    <div class="home-more-wrapper">
+
+      <a
+        href="shop.html"
+        class="home-more-button"
+      >
+        Tampilkan Semua Game
+        <span>→</span>
       </a>
 
-      <nav class="main-nav">
-
-        <a href="index.html" class="active">
-          Home
-        </a>
-
-        <a href="shop.html">
-          Top Up
-        </a>
-
-        <a href="order.html">
-          Cek Pesanan
-        </a>
-
-      </nav>
-
     </div>
 
-  </header>
+  </div>
 
+</section>
 
-  <main>
-
-    <!-- ================================
-         BRAND INTRO
-    ================================= -->
-
-    <section class="brand-intro">
-
-      <div class="brand-intro-inner">
-
-        <div class="brand-animation">
-
-          <div class="brand-logo-placeholder">
-            LOGO GW NANTI
-          </div>
-
-          <div class="brand-word">
-            LEOOSTORE
-          </div>
-
-        </div>
-
-        <p class="brand-tagline">
-          TOP UP CEPAT • AMAN • PRAKTIS
-        </p>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================================
-         GAME / EVENT BANNER
-    ================================= -->
-
-    <section class="home-banner-section">
-
-      <div class="container">
-
-        <div class="section-heading">
-
-          <span class="eyebrow">
-            EVENT & PROMO
-          </span>
-
-          <h1>
-            Top Up Lebih Mudah
-          </h1>
-
-          <p>
-            Pilih game favoritmu dan mulai top up sekarang.
-          </p>
-
-        </div>
-
-
-        <div class="banner-carousel">
-
-          <div
-            class="banner-track"
-            id="homeBannerTrack"
-          ></div>
-
-          <button
-            type="button"
-            class="banner-arrow banner-arrow-left"
-            id="bannerPrev"
-            aria-label="Banner sebelumnya"
-          >
-            ‹
-          </button>
-
-          <button
-            type="button"
-            class="banner-arrow banner-arrow-right"
-            id="bannerNext"
-            aria-label="Banner berikutnya"
-          >
-            ›
-          </button>
-
-          <div
-            class="banner-dots"
-            id="bannerDots"
-          ></div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================================
-         TRENDING
-    ================================= -->
-
-    <section class="home-games-section">
-
-      <div class="container">
-
-        <div class="section-heading">
-
-          <span class="eyebrow">
-            TRENDING
-          </span>
-
-          <h2>
-            Game Populer
-          </h2>
-
-          <p>
-            Berikut adalah beberapa game yang paling populer saat ini.
-          </p>
-
-        </div>
-
-
-        <div
-          class="home-game-grid"
-          id="trendingGames"
-        ></div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================================
-         ALL GAMES
-    ================================= -->
-
-    <section class="home-games-section all-games-section">
-
-      <div class="container">
-
-        <div class="section-heading">
-
-          <span class="eyebrow">
-            TOP UP
-          </span>
-
-          <h2>
-            Semua Game
-          </h2>
-
-          <p>
-            Pilih game dan lanjutkan ke halaman top up.
-          </p>
-
-        </div>
-
-
-        <div
-          class="home-game-grid"
-          id="allGames"
-        ></div>
-
-
-        <div class="home-more-wrapper">
-
-          <a
-            href="shop.html"
-            class="home-more-button"
-          >
-            Tampilkan Semua Game
-            <span>→</span>
-          </a>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================================
-         RESELLER
-    ================================= -->
-
-    <section class="reseller-section">
-
-      <div class="container">
-
-        <div class="reseller-card">
-
-          <div>
-
-            <span class="eyebrow">
-              RESELLER
-            </span>
-
-            <h2>
-              Mau Jualan Top Up?
-            </h2>
-
-            <p>
-              Bangun bisnis top up game kamu bersama Leo Store.
-            </p>
-
-          </div>
-
-          <a
-            href="shop.html"
-            class="reseller-button"
-          >
-            Mulai Sekarang
-          </a>
-
-        </div>
-
-      </div>
-
-    </section>
-
-  </main>
-
-
-  <!-- ================================
+  </main>  <!-- ================================
        FOOTER
-  ================================= -->
+  ================================= -->  <footer class="site-footer"><div class="container">
 
-  <footer class="site-footer">
+  <div>
 
-    <div class="container">
+    <strong>
+      Leo Store
+    </strong>
 
-      <div>
+    <span>
+      © 2026 Leo Store
+    </span>
 
-        <strong>
-          Leo Store
-        </strong>
+  </div>
 
-        <span>
-          © 2026 Leo Store
-        </span>
+</div>
 
-      </div>
-
-    </div>
-
-  </footer>
-
-
-  <script src="js/products.js"></script>
-
-  <script>
+  </footer>  <script src="js/products.js"></script>  <script>
 
     document.addEventListener("DOMContentLoaded", () => {
 
@@ -687,8 +616,4 @@
 
     });
 
-  </script>
-
-</body>
-
-</html>
+  </script></body></html>
