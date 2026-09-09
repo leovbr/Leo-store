@@ -9,7 +9,7 @@
 
   <meta
     name="description"
-    content="Checkout top up game di Leo Store."
+    content="Top up game cepat dan mudah di Leo Store."
   >
 
   <link rel="stylesheet" href="css/style.css">
@@ -60,7 +60,54 @@
 
       <div class="container">
 
-        <!-- HEADING -->
+
+        <!-- =================================================
+             GAME HERO
+             ================================================= -->
+
+        <section
+          class="game-hero"
+          id="gameHero"
+        >
+
+          <!-- BANNER -->
+
+          <div
+            class="game-hero-banner"
+            id="gameHeroBanner"
+          ></div>
+
+
+          <!-- DARK OVERLAY -->
+
+          <div class="game-hero-overlay"></div>
+
+
+          <!-- GAME LOGO -->
+
+          <div class="game-hero-icon">
+
+            <img
+              id="gameImage"
+              src=""
+              alt=""
+            >
+
+            <div
+              id="gameIconFallback"
+              class="game-icon-fallback"
+            >
+              🎮
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =================================================
+             HEADING
+             ================================================= -->
 
         <div class="checkout-heading">
 
@@ -68,48 +115,27 @@
             LEO STORE
           </span>
 
-          <h1>
-            Checkout
+          <h1 id="gameName">
+            Pilih Game
           </h1>
 
-          <p>
-            Lengkapi data pesanan kamu.
+          <p id="gameDescription">
+            Pilih game untuk melihat produk.
           </p>
 
         </div>
 
 
-        <!-- FORM -->
+        <!-- =================================================
+             FORM
+             ================================================= -->
 
-        <form id="checkoutForm" class="checkout-form">
+        <form id="checkoutForm">
 
 
-          <!-- =================================================
-               PRODUK
-               ================================================= -->
+          <!-- GAME -->
 
-          <section class="checkout-section">
-
-            <div class="checkout-section-heading">
-
-              <span class="checkout-step">
-                01
-              </span>
-
-              <div>
-
-                <h2>
-                  Produk
-                </h2>
-
-                <p>
-                  Pilih game yang ingin kamu top up.
-                </p>
-
-              </div>
-
-            </div>
-
+          <section class="checkout-section compact">
 
             <label for="game">
               Game
@@ -142,6 +168,74 @@
               </option>
 
             </select>
+
+          </section>
+
+
+          <!-- =================================================
+               PLAYER DATA
+               ================================================= -->
+
+          <section class="checkout-section">
+
+            <div class="checkout-section-heading">
+
+              <span class="checkout-step">
+                01
+              </span>
+
+              <div>
+
+                <h2>
+                  Data Player
+                </h2>
+
+                <p>
+                  Masukkan informasi akun tujuan top up.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div class="player-grid">
+
+              <div class="form-group">
+
+                <label for="playerId">
+                  User ID / Username
+                </label>
+
+                <input
+                  type="text"
+                  id="playerId"
+                  name="playerId"
+                  placeholder="Masukkan ID / username"
+                  autocomplete="off"
+                  required
+                >
+
+              </div>
+
+
+              <div class="form-group">
+
+                <label for="server">
+                  Server / Zone
+                </label>
+
+                <input
+                  type="text"
+                  id="server"
+                  name="server"
+                  placeholder="Opsional jika tidak diperlukan"
+                  autocomplete="off"
+                >
+
+              </div>
+
+            </div>
 
           </section>
 
@@ -180,7 +274,7 @@
 
               <div class="checkout-empty">
 
-                <div>
+                <div class="checkout-empty-icon">
                   🎮
                 </div>
 
@@ -197,8 +291,6 @@
             </div>
 
 
-            <!-- Hidden field used by checkout.js -->
-
             <input
               type="hidden"
               id="nominal"
@@ -211,14 +303,13 @@
             <div
               id="pricePreview"
               class="checkout-price-preview"
-            >
-            </div>
+            ></div>
 
           </section>
 
 
           <!-- =================================================
-               DATA PLAYER
+               PAYMENT
                ================================================= -->
 
           <section class="checkout-section">
@@ -227,70 +318,6 @@
 
               <span class="checkout-step">
                 03
-              </span>
-
-              <div>
-
-                <h2>
-                  Data Player
-                </h2>
-
-                <p>
-                  Masukkan data akun tujuan top up.
-                </p>
-
-              </div>
-
-            </div>
-
-
-            <div class="form-group">
-
-              <label for="playerId">
-                User ID / Username
-              </label>
-
-              <input
-                type="text"
-                id="playerId"
-                name="playerId"
-                placeholder="Masukkan ID / username"
-                autocomplete="off"
-                required
-              >
-
-            </div>
-
-
-            <div class="form-group">
-
-              <label for="server">
-                Server / Zone
-              </label>
-
-              <input
-                type="text"
-                id="server"
-                name="server"
-                placeholder="Opsional jika tidak diperlukan"
-                autocomplete="off"
-              >
-
-            </div>
-
-          </section>
-
-
-          <!-- =================================================
-               PEMBAYARAN
-               ================================================= -->
-
-          <section class="checkout-section">
-
-            <div class="checkout-section-heading">
-
-              <span class="checkout-step">
-                04
               </span>
 
               <div>
@@ -385,9 +412,7 @@
           </section>
 
 
-          <!-- =================================================
-               SUBMIT
-               ================================================= -->
+          <!-- SUBMIT -->
 
           <button
             type="submit"
@@ -427,10 +452,6 @@
 
   </footer>
 
-
-  <!-- =====================================================
-       JAVASCRIPT
-       ===================================================== -->
 
   <script src="js/products.js"></script>
   <script src="js/checkout.js"></script>
