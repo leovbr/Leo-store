@@ -2693,8 +2693,263 @@ body {
   overflow-x: hidden;
 }
 
-/* ... */
+/* =========================================================
+   CHECKOUT MOBILE
+   ========================================================= */
+
+@media (max-width: 720px) {
+
+  .checkout-page {
+    padding-top: 25px;
+  }
+
+  .checkout-section {
+    padding: 17px;
+    border-radius: 17px;
+  }
+
+  .checkout-section.compact {
+    padding: 15px 17px;
+  }
+
+  .checkout-section-heading {
+    gap: 10px;
+  }
+
+  .checkout-section-heading h2 {
+    font-size: 16px;
+  }
+
+  .checkout-section-heading p {
+    font-size: 12px;
+  }
+
+  .checkout-step {
+    width: 32px;
+    height: 32px;
+    flex: 0 0 32px;
+    border-radius: 9px;
+    font-size: 10px;
+  }
+
+  .player-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .checkout-denomination-list {
+    max-height: none;
+    overflow-y: visible;
+    padding-right: 0;
+  }
+
+  .denomination-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .denomination-option {
+    min-height: 88px;
+    padding: 12px;
+  }
+
+  .denomination-main strong {
+    font-size: 14px;
+  }
+
+  .denomination-price {
+    font-size: 13px;
+  }
+
+  .checkout-price-preview {
+    padding: 12px 13px;
+    font-size: 12px;
+  }
+
+  .checkout-price-preview strong {
+    font-size: 15px;
+  }
+
+  .checkout-summary {
+    padding: 15px 16px;
+  }
+
+  .checkout-summary-row {
+    font-size: 12px;
+  }
+
+  .checkout-summary-row.total strong {
+    font-size: 18px;
+  }
+
+  .checkout-submit {
+    min-height: 50px;
+  }
+}
+
+/* =========================================================
+   SMALL PHONE
+   ========================================================= */
 
 @media (max-width: 420px) {
-  ...
+
+  .header-inner {
+    width: min(100% - 20px, var(--container));
+  }
+
+  .checkout-page {
+    width: min(100% - 20px, var(--container));
+  }
+
+  .checkout-section {
+    padding: 15px;
+    border-radius: 16px;
+  }
+
+  .checkout-section-heading {
+    margin-bottom: 14px;
+  }
+
+  .checkout-section-heading h2 {
+    font-size: 15px;
+  }
+
+  .checkout-section-heading p {
+    font-size: 11px;
+  }
+
+  .denomination-list {
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+  }
+
+  .denomination-option {
+    min-height: 84px;
+    padding: 10px;
+    border-radius: 13px;
+  }
+
+  .denomination-option.selected::after {
+    top: 7px;
+    right: 7px;
+    width: 19px;
+    height: 19px;
+    font-size: 10px;
+  }
+
+  .denomination-main strong {
+    font-size: 13px;
+  }
+
+  .denomination-main span {
+    font-size: 10px;
+  }
+
+  .denomination-price {
+    font-size: 12px;
+  }
+
+  .checkout-price-preview {
+    gap: 10px;
+    padding: 11px 12px;
+  }
+
+  .checkout-summary {
+    padding: 13px 14px;
+  }
+
+  .checkout-summary-row {
+    gap: 12px;
+    font-size: 11px;
+  }
+
+  .checkout-summary-row.total strong {
+    font-size: 17px;
+  }
+}
+
+/* =========================================================
+   HOME LAYOUT FIX
+   ========================================================= */
+
+.home-page .container {
+  width: min(100% - 32px, var(--container));
+  max-width: var(--container);
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+.home-page .home-header .container {
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.home-page .home-banner-section,
+.home-page .home-games-section {
+  width: 100%;
+  overflow: hidden;
+}
+
+.home-page .section-heading {
+  max-width: 760px;
+}
+
+.home-page .home-game-grid {
+  width: 100%;
+  min-width: 0;
+}
+
+.home-page .banner-carousel {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* =========================================================
+   HOME MOBILE
+   ========================================================= */
+
+@media (max-width: 720px) {
+
+  .home-page .container {
+    width: calc(100% - 32px);
+    max-width: none;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .home-page .home-header .container {
+    width: calc(100% - 24px);
+    gap: 10px;
+  }
+
+  .home-page .section-heading {
+    max-width: 100%;
+  }
+
+  .home-page .section-heading h1,
+  .home-page .section-heading h2,
+  .home-page .section-heading p {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .home-page .home-game-grid {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+/* =========================================================
+   CHECKOUT VARIABLE COMPATIBILITY
+   ========================================================= */
+
+.checkout-page,
+.checkout-page * {
+  --muted: var(--text-muted);
 }
