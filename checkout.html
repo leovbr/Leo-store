@@ -1,11 +1,8 @@
-                <!DOCTYPE html><html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Checkout — Leo Store</title>
-  <meta
-    name="description"
-    content="Checkout top up game Leo Store"
-  >  <link rel="stylesheet" href="css/style.css">
+  <meta name="description" content="Checkout top up game Leo Store">  <link rel="stylesheet" href="css/style.css">
 </head><body>  <!-- HEADER -->  <header class="site-header">
     <div class="header-inner">  <a href="index.html" class="brand">
     <span class="brand-mark">L</span>
@@ -20,8 +17,7 @@
 
 </div>
 
-  </header>  <!-- MAIN -->  <main class="checkout-page"><!-- HERO -->
-<section class="checkout-hero">
+  </header>  <!-- MAIN -->  <main class="checkout-page"><section class="checkout-hero">
   <div class="container">
 
     <span class="eyebrow">CHECKOUT</span>
@@ -36,19 +32,17 @@
 </section>
 
 
-<!-- CHECKOUT -->
 <section class="checkout-section">
 
   <div class="container">
 
     <form id="checkoutForm">
 
+
       <!-- GAME -->
       <div class="checkout-section">
 
         <div class="section-heading">
-          <span class="section-number">01</span>
-
           <div>
             <h2>Pilih Game</h2>
             <p>Pilih game yang ingin kamu top up.</p>
@@ -57,9 +51,7 @@
 
         <div class="form-group">
 
-          <label for="game">
-            Game
-          </label>
+          <label for="game">Game</label>
 
           <select id="game" name="game" required>
             <option value="">Memuat game...</option>
@@ -70,26 +62,21 @@
       </div>
 
 
-      <!-- PLAYER DATA -->
+      <!-- PLAYER -->
       <div class="checkout-section">
 
         <div class="section-heading">
-          <span class="section-number">02</span>
-
           <div>
             <h2>Data Player</h2>
             <p>Masukkan ID akun dengan benar.</p>
           </div>
         </div>
 
-
         <div class="player-grid">
 
           <div class="form-group">
 
-            <label for="playerId">
-              Player ID
-            </label>
+            <label for="playerId">Player ID</label>
 
             <input
               type="text"
@@ -105,9 +92,7 @@
 
           <div class="form-group">
 
-            <label for="server">
-              Server
-            </label>
+            <label for="server">Server</label>
 
             <input
               type="text"
@@ -124,32 +109,24 @@
       </div>
 
 
-      <!-- DENOMINATION -->
+      <!-- NOMINAL -->
       <div class="checkout-section">
 
         <div class="section-heading">
-
-          <span class="section-number">03</span>
-
           <div>
             <h2>Pilih Nominal</h2>
             <p>Pilih produk yang ingin kamu beli.</p>
           </div>
-
         </div>
 
+        <div id="denominationList" class="denomination-list">
 
-        <div
-          id="denominationList"
-          class="denomination-list"
-        >
           <div class="empty-state">
             Memuat nominal...
           </div>
+
         </div>
 
-
-        <!-- Hidden value used by checkout.js -->
         <input
           type="hidden"
           id="nominal"
@@ -163,16 +140,11 @@
       <div class="checkout-section">
 
         <div class="section-heading">
-
-          <span class="section-number">04</span>
-
           <div>
             <h2>Jumlah</h2>
             <p>Tentukan jumlah pembelian.</p>
           </div>
-
         </div>
-
 
         <div class="quantity-control">
 
@@ -211,16 +183,11 @@
       <div class="checkout-section">
 
         <div class="section-heading">
-
-          <span class="section-number">05</span>
-
           <div>
             <h2>Metode Pembayaran</h2>
             <p>Pilih metode pembayaran yang tersedia.</p>
           </div>
-
         </div>
-
 
         <input
           type="hidden"
@@ -236,15 +203,9 @@
             type="button"
             class="payment-category-header"
           >
-            <span>
-              QRIS
-            </span>
-
-            <span>
-              +
-            </span>
+            <span>QRIS</span>
+            <span>+</span>
           </button>
-
 
           <div class="payment-category-content">
 
@@ -277,15 +238,9 @@
             type="button"
             class="payment-category-header"
           >
-            <span>
-              E-Wallet
-            </span>
-
-            <span>
-              +
-            </span>
+            <span>E-Wallet</span>
+            <span>+</span>
           </button>
-
 
           <div class="payment-category-content">
 
@@ -297,13 +252,8 @@
               data-fee="1500"
               data-fee-type="fixed"
             >
-              <span class="payment-option-name">
-                DANA
-              </span>
-
-              <span class="payment-option-fee">
-                + Rp1.500
-              </span>
+              <span class="payment-option-name">DANA</span>
+              <span class="payment-option-fee">+ Rp1.500</span>
             </button>
 
 
@@ -315,13 +265,8 @@
               data-fee="1500"
               data-fee-type="fixed"
             >
-              <span class="payment-option-name">
-                OVO
-              </span>
-
-              <span class="payment-option-fee">
-                + Rp1.500
-              </span>
+              <span class="payment-option-name">OVO</span>
+              <span class="payment-option-fee">+ Rp1.500</span>
             </button>
 
 
@@ -333,13 +278,8 @@
               data-fee="1500"
               data-fee-type="fixed"
             >
-              <span class="payment-option-name">
-                ShopeePay
-              </span>
-
-              <span class="payment-option-fee">
-                + Rp1.500
-              </span>
+              <span class="payment-option-name">ShopeePay</span>
+              <span class="payment-option-fee">+ Rp1.500</span>
             </button>
 
 
@@ -351,13 +291,8 @@
               data-fee="1500"
               data-fee-type="fixed"
             >
-              <span class="payment-option-name">
-                LinkAja
-              </span>
-
-              <span class="payment-option-fee">
-                + Rp1.500
-              </span>
+              <span class="payment-option-name">LinkAja</span>
+              <span class="payment-option-fee">+ Rp1.500</span>
             </button>
 
           </div>
@@ -372,15 +307,9 @@
             type="button"
             class="payment-category-header"
           >
-            <span>
-              Virtual Account
-            </span>
-
-            <span>
-              +
-            </span>
+            <span>Virtual Account</span>
+            <span>+</span>
           </button>
-
 
           <div class="payment-category-content">
 
@@ -395,7 +324,6 @@
               <span class="payment-option-name">
                 BNI Virtual Account
               </span>
-
               <span class="payment-option-fee">
                 + Rp15.000
               </span>
@@ -413,7 +341,6 @@
               <span class="payment-option-name">
                 Maybank Virtual Account
               </span>
-
               <span class="payment-option-fee">
                 + Rp15.000
               </span>
@@ -431,7 +358,6 @@
               <span class="payment-option-name">
                 Danamon Virtual Account
               </span>
-
               <span class="payment-option-fee">
                 + Rp15.000
               </span>
@@ -449,7 +375,6 @@
               <span class="payment-option-name">
                 Mandiri Virtual Account
               </span>
-
               <span class="payment-option-fee">
                 + Rp15.000
               </span>
@@ -467,7 +392,6 @@
               <span class="payment-option-name">
                 BTN Virtual Account
               </span>
-
               <span class="payment-option-fee">
                 + Rp15.000
               </span>
@@ -485,7 +409,6 @@
               <span class="payment-option-name">
                 DOKU Virtual Account
               </span>
-
               <span class="payment-option-fee">
                 + Rp15.000
               </span>
@@ -503,7 +426,6 @@
               <span class="payment-option-name">
                 CIMB Niaga Virtual Account
               </span>
-
               <span class="payment-option-fee">
                 + Rp18.536
               </span>
@@ -520,16 +442,11 @@
       <div class="checkout-section">
 
         <div class="section-heading">
-
-          <span class="section-number">06</span>
-
           <div>
             <h2>Kontak</h2>
             <p>Gunakan kontak aktif untuk menerima informasi pesanan.</p>
           </div>
-
         </div>
-
 
         <div class="player-grid">
 
@@ -544,6 +461,7 @@
               id="contactEmail"
               name="contactEmail"
               placeholder="email@example.com"
+              autocomplete="email"
               required
             >
 
@@ -556,13 +474,73 @@
               WhatsApp
             </label>
 
-            <input
-              type="tel"
-              id="contactWhatsapp"
-              name="contactWhatsapp"
-              placeholder="08xxxxxxxxxx"
-              required
-            >
+            <div class="whatsapp-input">
+
+              <select
+                id="countryCode"
+                aria-label="Kode negara"
+              >
+                <option value="+62" selected>
+                  🇮🇩 +62
+                </option>
+
+                <option value="+60">
+                  🇲🇾 +60
+                </option>
+
+                <option value="+65">
+                  🇸🇬 +65
+                </option>
+
+                <option value="+63">
+                  🇵🇭 +63
+                </option>
+
+                <option value="+66">
+                  🇹🇭 +66
+                </option>
+
+                <option value="+84">
+                  🇻🇳 +84
+                </option>
+
+                <option value="+91">
+                  🇮🇳 +91
+                </option>
+
+                <option value="+81">
+                  🇯🇵 +81
+                </option>
+
+                <option value="+82">
+                  🇰🇷 +82
+                </option>
+
+                <option value="+86">
+                  🇨🇳 +86
+                </option>
+
+                <option value="+1">
+                  🇺🇸 +1
+                </option>
+
+                <option value="+44">
+                  🇬🇧 +44
+                </option>
+              </select>
+
+
+              <input
+                type="tel"
+                id="contactWhatsapp"
+                name="contactWhatsapp"
+                placeholder="81234567890"
+                inputmode="numeric"
+                autocomplete="tel"
+                required
+              >
+
+            </div>
 
           </div>
 
@@ -575,16 +553,11 @@
       <div class="checkout-section">
 
         <div class="section-heading">
-
-          <span class="section-number">07</span>
-
           <div>
             <h2>Kode Promo</h2>
             <p>Punya kode promo? Masukkan di sini.</p>
           </div>
-
         </div>
-
 
         <div class="promo-row">
 
@@ -605,7 +578,6 @@
 
         </div>
 
-
         <div
           id="promoMessage"
           class="promo-message"
@@ -618,8 +590,6 @@
       <div class="checkout-summary">
 
         <div class="section-heading">
-
-          <span class="section-number">08</span>
 
           <div>
             <h2>Ringkasan Pesanan</h2>
@@ -678,11 +648,12 @@
 
       </div>
 
+
     </form>
 
   </div>
 
 </section>
 
-  </main>  <!-- SCRIPTS -->  <!-- products.js HARUS dimuat lebih dulu -->  <script src="js/products.js"></script>  <!-- checkout.js dijalankan setelah PRODUCTS tersedia -->  <script src="js/checkout.js"></script></body>
-                </html>
+  </main>  <!-- SCRIPTS -->  <script src="js/products.js"></script>  <script src="js/checkout.js"></script></body>
+</html>
