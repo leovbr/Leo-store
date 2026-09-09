@@ -4,22 +4,57 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const checkoutForm = document.getElementById("checkoutForm");
+  const checkoutForm =
+    document.getElementById("checkoutForm");
 
-  const gameSelect = document.getElementById("game");
-  const playerIdInput = document.getElementById("playerId");
-  const serverInput = document.getElementById("server");
+  const gameSelect =
+    document.getElementById("game");
 
-  const nominalInput = document.getElementById("nominal");
-  const denominationList = document.getElementById("denominationList");
-  const pricePreview = document.getElementById("pricePreview");
+  const playerIdInput =
+    document.getElementById("playerId");
 
-  const paymentSelect = document.getElementById("payment");
-  const checkoutButton = document.getElementById("checkoutButton");
+  const serverInput =
+    document.getElementById("server");
 
-  const summaryName = document.getElementById("summaryName");
-  const summaryDenomination = document.getElementById("summaryDenomination");
-  const summaryPrice = document.getElementById("summaryPrice");
+  const nominalInput =
+    document.getElementById("nominal");
+
+  const denominationList =
+    document.getElementById("denominationList");
+
+  const pricePreview =
+    document.getElementById("pricePreview");
+
+  const paymentSelect =
+    document.getElementById("payment");
+
+  const checkoutButton =
+    document.getElementById("checkoutButton");
+
+  const summaryName =
+    document.getElementById("summaryName");
+
+  const summaryDenomination =
+    document.getElementById("summaryDenomination");
+
+  const summaryPrice =
+    document.getElementById("summaryPrice");
+
+  const gameHeroBanner =
+    document.getElementById("gameHeroBanner");
+
+  const gameImage =
+    document.getElementById("gameImage");
+
+  const gameIconFallback =
+    document.getElementById("gameIconFallback");
+
+  const gameName =
+    document.getElementById("gameName");
+
+  const gameDescription =
+    document.getElementById("gameDescription");
+
 
   let selectedProduct = null;
   let selectedDenomination = null;
@@ -44,13 +79,17 @@ document.addEventListener("DOMContentLoaded", () => {
   function rupiah(value) {
 
     if (typeof formatRupiah === "function") {
+
       return formatRupiah(value);
+
     }
 
     return new Intl.NumberFormat("id-ID", {
+
       style: "currency",
       currency: "IDR",
       maximumFractionDigits: 0
+
     }).format(value);
 
   }
@@ -59,11 +98,15 @@ document.addEventListener("DOMContentLoaded", () => {
   function getAllProducts() {
 
     if (typeof getProducts === "function") {
+
       return getProducts();
+
     }
 
     if (typeof PRODUCTS !== "undefined") {
+
       return PRODUCTS;
+
     }
 
     return [];
@@ -83,20 +126,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  function getCategoryName(category) {
-
-    return category || "Pilihan Nominal";
-
-  }
-
-
-  /* =======================================================
-     URL GAME
-     ======================================================= */
-
   function getGameFromURL() {
 
-    const params = new URLSearchParams(window.location.search);
+    const params =
+      new URLSearchParams(window.location.search);
 
     return params.get("game");
 
@@ -104,27 +137,149 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =======================================================
-     RESET CHECKOUT
+     RESET
      ======================================================= */
 
   function resetSelection() {
 
     selectedDenomination = null;
 
+
     if (nominalInput) {
       nominalInput.value = "";
     }
+
 
     if (pricePreview) {
       pricePreview.innerHTML = "";
     }
 
+
     if (summaryDenomination) {
       summaryDenomination.textContent = "-";
     }
 
+
     if (summaryPrice) {
       summaryPrice.textContent = "Rp 0";
+    }
+
+  }
+
+
+  /* =======================================================
+     GAME HERO
+     ======================================================= */
+
+  function updateGameHero(product) {
+
+    if (!product) {
+
+      if (gameName) {
+        gameName.textContent = "Pilih Game";
+      }
+
+      if (gameDescription) {
+        gameDescription.textContent =
+          "Pilih game untuk melihat produk.";
+      }
+
+      if (gameHeroBanner) {
+        gameHeroBanner.style.backgroundImage = "none";
+      }
+
+      if (gameImage) {
+        gameImage.style.display = "none";
+      }
+
+      if (gameIconFallback) {
+        gameIconFallback.style.display = "flex";
+        gameIconFallback.textContent = "🎮";
+      }
+
+      return;
+    }
+
+
+    /* GAME NAME */
+
+    if (gameName) {
+
+      gameName.textContent =
+        product.name || "Game";
+
+    }
+
+
+    /* DESCRIPTION */
+
+    if (gameDescription) {
+
+      gameDescription.textContent =
+        product.description ||
+        `Top up ${product.name || "game"} di Leo Store.`;
+
+    }
+
+
+    /* =====================================================
+       LOGO
+       ===================================================== */
+
+    if (product.image && gameImage) {
+
+      gameImage.src = product.image;
+      gameImage.alt =
+        product.name || "Game";
+
+      gameImage.style.display = "block";
+
+
+      if (gameIconFallback) {
+        gameIconFallback.style.display = "none";
+      }
+
+    } else {
+
+      if (gameImage) {
+        gameImage.style.display = "none";
+      }
+
+      if (gameIconFallback) {
+
+        gameIconFallback.style.display = "flex";
+
+        gameIconFallback.textContent =
+          product.icon || "🎮";
+
+      }
+
+    }
+
+
+    /* =====================================================
+       BANNER
+       ===================================================== */
+
+    if (gameHeroBanner) {
+
+      const banner =
+        product.banner ||
+        product.image ||
+        "";
+
+      if (banner) {
+
+        gameHeroBanner.style.backgroundImage =
+          `url("${banner}")`;
+
+      } else {
+
+        gameHeroBanner.style.backgroundImage =
+          "none";
+
+      }
+
     }
 
   }
@@ -139,6 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!denominationList) return;
 
     denominationList.innerHTML = `
+
       <div class="checkout-empty">
 
         <div class="checkout-empty-icon">
@@ -154,13 +310,14 @@ document.addEventListener("DOMContentLoaded", () => {
         </p>
 
       </div>
+
     `;
 
   }
 
 
   /* =======================================================
-     RENDER NOMINAL
+     RENDER DENOMINATIONS
      ======================================================= */
 
   function renderDenominations(product) {
@@ -168,6 +325,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!denominationList) return;
 
     resetSelection();
+
 
     if (!product) {
 
@@ -177,12 +335,14 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       return;
+
     }
 
 
-    const denominations = Array.isArray(product.denominations)
-      ? product.denominations
-      : [];
+    const denominations =
+      Array.isArray(product.denominations)
+        ? product.denominations
+        : [];
 
 
     if (!denominations.length) {
@@ -193,114 +353,134 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       return;
+
     }
 
 
-    /* -------------------------------------------------------
+    /* =====================================================
        GROUP BY CATEGORY
-       ------------------------------------------------------- */
+       ===================================================== */
 
     const grouped = {};
 
+
     denominations.forEach(item => {
 
-      const category = getCategoryName(item.category);
+      const category =
+        item.category ||
+        "Pilihan Nominal";
+
 
       if (!grouped[category]) {
         grouped[category] = [];
       }
+
 
       grouped[category].push(item);
 
     });
 
 
-    /* -------------------------------------------------------
-       BUILD HTML
-       ------------------------------------------------------- */
+    /* =====================================================
+       BUILD
+       ===================================================== */
 
     let html = "";
 
 
-    Object.entries(grouped).forEach(([category, items]) => {
+    Object.entries(grouped)
+      .forEach(([category, items]) => {
 
-      html += `
-        <section class="denomination-section">
+        html += `
 
-          <div class="denomination-section-header">
+          <section class="denomination-section">
 
-            <div>
+            <div class="denomination-section-header">
 
-              <h3>
-                ${escapeHTML(category)}
-              </h3>
+              <div>
 
-              <span>
-                Select a variant
-              </span>
+                <h3>
+                  ${escapeHTML(category)}
+                </h3>
+
+                <span>
+                  Select a variant
+                </span>
+
+              </div>
 
             </div>
 
-          </div>
+
+            <div class="denomination-list">
+
+              ${items.map(item => {
+
+                const itemId =
+                  item.id || "";
+
+                const amount =
+                  item.amount || "";
+
+                const price =
+                  Number(item.price || 0);
 
 
-          <div class="denomination-list">
+                return `
 
-            ${items.map(item => {
+                  <button
+                    type="button"
+                    class="denomination-option"
+                    data-denomination-id="${escapeHTML(itemId)}"
+                  >
 
-              const itemId = item.id || "";
-              const amount = item.amount || "";
-              const price = Number(item.price || 0);
+                    <div class="denomination-main">
 
-              return `
-                <button
-                  type="button"
-                  class="denomination-option"
-                  data-denomination-id="${escapeHTML(itemId)}"
-                >
+                      <strong>
+                        ${escapeHTML(amount)}
+                      </strong>
 
-                  <div class="denomination-main">
+                      <span>
+                        ${escapeHTML(product.name)}
+                        -
+                        ${escapeHTML(amount)}
+                      </span>
 
-                    <strong>
-                      ${escapeHTML(amount)}
-                    </strong>
-
-                    <span>
-                      ${escapeHTML(product.name)} - ${escapeHTML(amount)}
-                    </span>
-
-                  </div>
+                    </div>
 
 
-                  <div class="denomination-price">
+                    <div class="denomination-price">
 
-                    ${escapeHTML(rupiah(price))}
+                      ${escapeHTML(rupiah(price))}
 
-                  </div>
+                    </div>
 
-                </button>
-              `;
+                  </button>
 
-            }).join("")}
+                `;
 
-          </div>
+              }).join("")}
 
-        </section>
-      `;
+            </div>
 
-    });
+          </section>
+
+        `;
+
+      });
 
 
     denominationList.innerHTML = html;
 
 
-    /* -------------------------------------------------------
-       CLICK HANDLER
-       ------------------------------------------------------- */
+    /* =====================================================
+       CLICK NOMINAL
+       ===================================================== */
 
-    const options = denominationList.querySelectorAll(
-      ".denomination-option"
-    );
+    const options =
+      denominationList.querySelectorAll(
+        ".denomination-option"
+      );
 
 
     options.forEach(option => {
@@ -313,44 +493,54 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const denomination =
           denominations.find(item =>
-            String(item.id) === String(denominationId)
+            String(item.id) ===
+            String(denominationId)
           );
 
 
         if (!denomination) return;
 
 
-        /* Remove old selection */
-
         options.forEach(item => {
+
           item.classList.remove("selected");
+
         });
 
-
-        /* Select current */
 
         option.classList.add("selected");
 
 
-        selectedDenomination = denomination;
+        selectedDenomination =
+          denomination;
 
 
         /* Hidden input */
 
         if (nominalInput) {
-          nominalInput.value = denomination.id;
+
+          nominalInput.value =
+            denomination.id;
+
         }
 
 
-        /* Price preview */
+        /* Price */
 
         if (pricePreview) {
 
           pricePreview.innerHTML = `
-            <span>Total pembayaran</span>
+
+            <span>
+              Total pembayaran
+            </span>
+
             <strong>
-              ${escapeHTML(rupiah(denomination.price))}
+              ${escapeHTML(
+                rupiah(denomination.price)
+              )}
             </strong>
+
           `;
 
         }
@@ -359,17 +549,26 @@ document.addEventListener("DOMContentLoaded", () => {
         /* Summary */
 
         if (summaryName) {
-          summaryName.textContent = product.name;
+
+          summaryName.textContent =
+            product.name;
+
         }
+
 
         if (summaryDenomination) {
+
           summaryDenomination.textContent =
             denomination.amount;
+
         }
 
+
         if (summaryPrice) {
+
           summaryPrice.textContent =
             rupiah(denomination.price);
+
         }
 
       });
@@ -385,34 +584,46 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function loadGame(gameId) {
 
-    selectedProduct = findProduct(gameId);
+    selectedProduct =
+      findProduct(gameId);
 
 
     if (!selectedProduct) {
 
-      gameSelect.value = "";
+      updateGameHero(null);
 
       renderDenominations(null);
+
 
       if (summaryName) {
         summaryName.textContent = "-";
       }
 
+
       return;
+
     }
 
 
     gameSelect.value =
-      selectedProduct.slug || selectedProduct.id;
+      selectedProduct.slug ||
+      selectedProduct.id;
+
+
+    updateGameHero(selectedProduct);
 
 
     if (summaryName) {
+
       summaryName.textContent =
         selectedProduct.name;
+
     }
 
 
-    renderDenominations(selectedProduct);
+    renderDenominations(
+      selectedProduct
+    );
 
   }
 
@@ -423,13 +634,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (gameSelect) {
 
-    gameSelect.addEventListener("change", () => {
+    gameSelect.addEventListener(
+      "change",
+      () => {
 
-      const gameId = gameSelect.value;
+        loadGame(
+          gameSelect.value
+        );
 
-      loadGame(gameId);
-
-    });
+      }
+    );
 
   }
 
@@ -440,236 +654,251 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (checkoutForm) {
 
-    checkoutForm.addEventListener("submit", event => {
+    checkoutForm.addEventListener(
+      "submit",
+      event => {
 
-      event.preventDefault();
+        event.preventDefault();
 
 
-      /* -----------------------------------------------
-         GAME
-         ----------------------------------------------- */
+        /* GAME */
 
-      const gameId =
-        gameSelect?.value?.trim() || "";
+        const gameId =
+          gameSelect?.value?.trim() || "";
 
 
-      if (!gameId) {
+        if (!gameId) {
 
-        alert("Silakan pilih game terlebih dahulu.");
+          alert(
+            "Silakan pilih game terlebih dahulu."
+          );
 
-        gameSelect?.focus();
+          gameSelect?.focus();
 
-        return;
-      }
+          return;
 
-
-      selectedProduct =
-        findProduct(gameId);
-
-
-      if (!selectedProduct) {
-
-        alert("Produk game tidak ditemukan.");
-
-        return;
-      }
-
-
-      /* -----------------------------------------------
-         NOMINAL
-         ----------------------------------------------- */
-
-      if (!selectedDenomination) {
-
-        alert("Silakan pilih nominal terlebih dahulu.");
-
-        denominationList?.scrollIntoView({
-          behavior: "smooth",
-          block: "center"
-        });
-
-        return;
-      }
-
-
-      /* -----------------------------------------------
-         PLAYER ID
-         ----------------------------------------------- */
-
-      const playerId =
-        playerIdInput?.value?.trim() || "";
-
-
-      if (!playerId) {
-
-        alert("Silakan masukkan User ID / Username.");
-
-        playerIdInput?.focus();
-
-        return;
-      }
-
-
-      /* -----------------------------------------------
-         SERVER
-         ----------------------------------------------- */
-
-      const server =
-        serverInput?.value?.trim() || "";
-
-
-      /* -----------------------------------------------
-         PAYMENT
-         ----------------------------------------------- */
-
-      const payment =
-        paymentSelect?.value?.trim() || "";
-
-
-      if (!payment) {
-
-        alert("Silakan pilih metode pembayaran.");
-
-        paymentSelect?.focus();
-
-        return;
-      }
-
-
-      /* -----------------------------------------------
-         ORDER ID
-         ----------------------------------------------- */
-
-      const timestamp =
-        Date.now().toString().slice(-8);
-
-
-      const random =
-        Math.floor(100 + Math.random() * 900);
-
-
-      const orderId =
-        `LS-${timestamp}-${random}`;
-
-
-      /* -----------------------------------------------
-         ORDER OBJECT
-         ----------------------------------------------- */
-
-      const order = {
-
-        orderId,
-
-        game:
-          selectedProduct.slug ||
-          selectedProduct.id,
-
-        gameName:
-          selectedProduct.name,
-
-        playerId,
-
-        server,
-
-        denominationId:
-          selectedDenomination.id,
-
-        denomination:
-          selectedDenomination.amount,
-
-        amount:
-          selectedDenomination.amount,
-
-        price:
-          Number(selectedDenomination.price || 0),
-
-        payment,
-
-        status:
-          "Menunggu Pembayaran",
-
-        createdAt:
-          new Date().toISOString()
-
-      };
-
-
-      /* -----------------------------------------------
-         SAVE LAST ORDER
-         ----------------------------------------------- */
-
-      localStorage.setItem(
-        "fidelis_last_order",
-        JSON.stringify(order)
-      );
-
-
-      /* -----------------------------------------------
-         SAVE ORDER HISTORY
-         ----------------------------------------------- */
-
-      let orders = [];
-
-
-      try {
-
-        orders =
-          JSON.parse(
-            localStorage.getItem("fidelis_orders")
-          ) || [];
-
-        if (!Array.isArray(orders)) {
-          orders = [];
         }
 
-      } catch (error) {
 
-        orders = [];
+        selectedProduct =
+          findProduct(gameId);
+
+
+        if (!selectedProduct) {
+
+          alert(
+            "Produk game tidak ditemukan."
+          );
+
+          return;
+
+        }
+
+
+        /* NOMINAL */
+
+        if (!selectedDenomination) {
+
+          alert(
+            "Silakan pilih nominal terlebih dahulu."
+          );
+
+
+          denominationList?.scrollIntoView({
+
+            behavior: "smooth",
+            block: "center"
+
+          });
+
+
+          return;
+
+        }
+
+
+        /* PLAYER ID */
+
+        const playerId =
+          playerIdInput?.value?.trim() || "";
+
+
+        if (!playerId) {
+
+          alert(
+            "Silakan masukkan User ID / Username."
+          );
+
+          playerIdInput?.focus();
+
+          return;
+
+        }
+
+
+        /* SERVER */
+
+        const server =
+          serverInput?.value?.trim() || "";
+
+
+        /* PAYMENT */
+
+        const payment =
+          paymentSelect?.value?.trim() || "";
+
+
+        if (!payment) {
+
+          alert(
+            "Silakan pilih metode pembayaran."
+          );
+
+          paymentSelect?.focus();
+
+          return;
+
+        }
+
+
+        /* ORDER ID */
+
+        const timestamp =
+          Date.now()
+            .toString()
+            .slice(-8);
+
+
+        const random =
+          Math.floor(
+            100 +
+            Math.random() * 900
+          );
+
+
+        const orderId =
+          `LS-${timestamp}-${random}`;
+
+
+        /* ORDER */
+
+        const order = {
+
+          orderId,
+
+          game:
+            selectedProduct.slug ||
+            selectedProduct.id,
+
+          gameName:
+            selectedProduct.name,
+
+          playerId,
+
+          server,
+
+          denominationId:
+            selectedDenomination.id,
+
+          denomination:
+            selectedDenomination.amount,
+
+          amount:
+            selectedDenomination.amount,
+
+          price:
+            Number(
+              selectedDenomination.price || 0
+            ),
+
+          payment,
+
+          status:
+            "Menunggu Pembayaran",
+
+          createdAt:
+            new Date().toISOString()
+
+        };
+
+
+        /* SAVE LAST ORDER */
+
+        localStorage.setItem(
+          "fidelis_last_order",
+          JSON.stringify(order)
+        );
+
+
+        /* ORDER HISTORY */
+
+        let orders = [];
+
+
+        try {
+
+          orders =
+            JSON.parse(
+              localStorage.getItem(
+                "fidelis_orders"
+              )
+            ) || [];
+
+
+          if (!Array.isArray(orders)) {
+
+            orders = [];
+
+          }
+
+        } catch (error) {
+
+          orders = [];
+
+        }
+
+
+        orders.push(order);
+
+
+        localStorage.setItem(
+          "fidelis_orders",
+          JSON.stringify(orders)
+        );
+
+
+        /* BUTTON */
+
+        if (checkoutButton) {
+
+          checkoutButton.disabled =
+            true;
+
+          checkoutButton.textContent =
+            "Membuat Pesanan...";
+
+        }
+
+
+        /* REDIRECT */
+
+        setTimeout(() => {
+
+          window.location.href =
+            `payment.html?id=${
+              encodeURIComponent(orderId)
+            }`;
+
+        }, 300);
 
       }
-
-
-      orders.push(order);
-
-
-      localStorage.setItem(
-        "fidelis_orders",
-        JSON.stringify(orders)
-      );
-
-
-      /* -----------------------------------------------
-         BUTTON STATE
-         ----------------------------------------------- */
-
-      if (checkoutButton) {
-
-        checkoutButton.disabled = true;
-
-        checkoutButton.textContent =
-          "Membuat Pesanan...";
-
-      }
-
-
-      /* -----------------------------------------------
-         REDIRECT
-         ----------------------------------------------- */
-
-      setTimeout(() => {
-
-        window.location.href =
-          `payment.html?id=${encodeURIComponent(orderId)}`;
-
-      }, 300);
-
-    });
+    );
 
   }
 
 
   /* =======================================================
-     INITIAL LOAD
+     INITIAL
      ======================================================= */
 
   const initialGame =
@@ -681,6 +910,8 @@ document.addEventListener("DOMContentLoaded", () => {
     loadGame(initialGame);
 
   } else {
+
+    updateGameHero(null);
 
     renderDenominations(null);
 
