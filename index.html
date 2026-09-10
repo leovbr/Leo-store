@@ -791,6 +791,143 @@
 
     });
   </script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
+  const menuButton = document.getElementById("menuButton");
+  const menuClose = document.getElementById("menuClose");
+  const sideMenu = document.getElementById("sideMenu");
+  const menuOverlay = document.getElementById("menuOverlay");
+
+  const searchButton = document.getElementById("searchButton");
+  const searchPanel = document.getElementById("searchPanel");
+  const searchClose = document.getElementById("searchClose");
+  const siteSearch = document.getElementById("siteSearch");
+
+
+  /* =========================
+     SIDE MENU
+  ========================== */
+
+  function openMenu() {
+
+    sideMenu.classList.add("active");
+    menuOverlay.classList.add("active");
+
+    sideMenu.setAttribute(
+      "aria-hidden",
+      "false"
+    );
+
+    menuButton.setAttribute(
+      "aria-expanded",
+      "true"
+    );
+
+    document.body.style.overflow = "hidden";
+  }
+
+
+  function closeMenu() {
+
+    sideMenu.classList.remove("active");
+    menuOverlay.classList.remove("active");
+
+    sideMenu.setAttribute(
+      "aria-hidden",
+      "true"
+    );
+
+    menuButton.setAttribute(
+      "aria-expanded",
+      "false"
+    );
+
+    document.body.style.overflow = "";
+  }
+
+
+  menuButton?.addEventListener(
+    "click",
+    openMenu
+  );
+
+  menuClose?.addEventListener(
+    "click",
+    closeMenu
+  );
+
+  menuOverlay?.addEventListener(
+    "click",
+    closeMenu
+  );
+
+
+  /* ESC = CLOSE */
+
+  document.addEventListener(
+    "keydown",
+    function (event) {
+
+      if (event.key === "Escape") {
+
+        closeMenu();
+
+        searchPanel?.classList.remove(
+          "active"
+        );
+
+      }
+
+    }
+  );
+
+
+  /* =========================
+     SEARCH
+  ========================== */
+
+  searchButton?.addEventListener(
+    "click",
+    function () {
+
+      searchPanel.classList.toggle(
+        "active"
+      );
+
+      if (
+        searchPanel.classList.contains(
+          "active"
+        )
+      ) {
+        setTimeout(
+          function () {
+            siteSearch?.focus();
+          },
+          200
+        );
+      }
+
+    }
+  );
+
+
+  searchClose?.addEventListener(
+    "click",
+    function () {
+
+      searchPanel.classList.remove(
+        "active"
+      );
+
+      if (siteSearch) {
+        siteSearch.value = "";
+      }
+
+    }
+  );
+
+});
+</script>
 </body>
 </html>
