@@ -1,59 +1,85 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
+<!DOCTYPE html><html lang="id"><head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Cek Pesanan — LEOOSTORE</title>  <link rel="stylesheet" href="css/style.css">
+</head><body>  <header class="site-header"><div class="container">
 
-  <title>Cek Pesanan — Leo Store</title>
+  <a href="index.html" class="logo">
+    LEOOSTORE
+  </a>
 
-  <link rel="stylesheet" href="css/style.css">
-</head>
+  <nav class="main-nav">
 
-<body>
+    <a href="index.html">
+      Home
+    </a>
 
-  <header>
+    <a href="shop.html">
+      Top Up
+    </a>
 
-    <h1>Leo Store</h1>
-
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="shop.html">Top Up</a>
-      <a href="order.html">Cek Pesanan</a>
-    </nav>
-
-  </header>
-
-
-  <main>
-
-    <h2>
+    <a href="order.html" class="active">
       Cek Pesanan
-    </h2>
+    </a>
 
+  </nav>
 
-    <div id="orderContainer">
+</div>
+
+  </header>  <main><section class="shop-page">
+
+  <div class="container">
+
+    <div class="shop-heading">
+
+      <span class="eyebrow">
+        LEOOSTORE
+      </span>
+
+      <h1>
+        Cek Pesanan
+      </h1>
 
       <p>
-        Memuat pesanan...
+        Lihat status dan detail pesanan kamu.
       </p>
 
     </div>
 
-  </main>
 
+    <div id="orderContainer">
 
-  <footer>
+      <div class="shop-empty">
 
-    <p>
-      © 2026 Leo Store
-    </p>
+        <div class="shop-empty-icon">
+          ⏳
+        </div>
 
-  </footer>
+        <h3>
+          Memuat pesanan...
+        </h3>
 
+        <p>
+          Tunggu sebentar.
+        </p>
 
-  <script src="js/products.js"></script>
-  <script src="js/order.js"></script>
-  <script src="js/app.js"></script>
+      </div>
 
-</body>
-</html>
+    </div>
+
+  </div>
+
+</section>
+
+  </main>  <footer class="site-footer"><div class="container">
+
+  <p>
+    LEOOSTORE
+  </p>
+
+  <span>
+    © 2026 LEOOSTORE
+  </span>
+
+</div>
+
+  </footer>  <script src="js/products.js"></script>  <script src="js/order.js"></script>  <script src="js/app.js"></script></body></html>
