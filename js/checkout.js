@@ -1,16 +1,13 @@
+/* =========================================================
+   LEOOSTORE — CHECKOUT ENGINE
+   ========================================================= */
+
 document.addEventListener("DOMContentLoaded", () => {
 
-  const checkoutForm =
-    document.getElementById("checkoutForm");
-
-  const gameSelect =
-    document.getElementById("game");
-
-  const playerIdInput =
-    document.getElementById("playerId");
-
-  const serverInput =
-    document.getElementById("server");
+  const checkoutForm = document.getElementById("checkoutForm");
+  const gameSelect = document.getElementById("game");
+  const playerIdInput = document.getElementById("playerId");
+  const serverInput = document.getElementById("server");
 
   const denominationList =
     document.getElementById("denominationList");
@@ -63,6 +60,28 @@ document.addEventListener("DOMContentLoaded", () => {
   const gameIconFallback =
     document.getElementById("gameIconFallback");
 
+  const promoButton =
+    document.getElementById("promoButton");
+
+  const promoInput =
+    document.getElementById("promoCode");
+
+  const promoMessage =
+    document.getElementById("promoMessage");
+
+  const contactEmail =
+    document.getElementById("contactEmail");
+
+  const contactWhatsapp =
+    document.getElementById("contactWhatsapp");
+
+  const countryCode =
+    document.getElementById("countryCode");
+
+
+  const ORDERS_KEY = "fidelis_orders";
+  const LAST_ORDER_KEY = "fidelis_last_order";
+
 
   const products =
     typeof getProducts === "function"
@@ -73,22 +92,21 @@ document.addEventListener("DOMContentLoaded", () => {
   let selectedProduct = null;
   let selectedDenomination = null;
   let selectedPayment = null;
+  let promoApplied = false;
 
 
-  /*
-   * ========================================
-   * HELPERS
-   * ========================================
-   */
+  /* =========================================================
+     HELPERS
+  ========================================================= */
 
-  function escapeHtml(value) {
+  function escapeHTML(value) {
 
     return String(value ?? "")
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
 
   }
 
@@ -129,11 +147,75 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  /*
-   * ========================================
-   * GAME SELECT
-   * ========================================
-   */
+  function getQuantity() {
+
+    const value =
+      Number(quantityInput?.value || 1);
+
+    return Math.max(
+      1,
+      Math.min(99, value)
+    );
+
+  }
+
+
+  function getPaymentFee() {
+
+    if (!selectedDenomination || !selectedPayment) {
+      return 0;
+    }
+
+    const base =
+      Number(selectedDenomination.price || 0) *
+      getQuantity();
+
+    const fee =
+      Number(selectedPayment.fee || 0);
+
+    if (
+      selectedPayment.feeType ===
+      "percent"
+    ) {
+
+      return Math.round(
+        base * fee
+      );
+
+    }
+
+    return fee;
+
+  }
+
+
+  function getBaseTotal() {
+
+    if (!selectedDenomination) {
+      return 0;
+    }
+
+    return (
+      Number(selectedDenomination.price || 0) *
+      getQuantity()
+    );
+
+  }
+
+
+  function getTotal() {
+
+    return (
+      getBaseTotal() +
+      getPaymentFee()
+    );
+
+  }
+
+
+  /* =========================================================
+     GAME SELECT
+  ========================================================= */
 
   function populateGames() {
 
@@ -144,7 +226,6 @@ document.addEventListener("DOMContentLoaded", () => {
         Pilih Game
       </option>
     `;
-
 
     products.forEach(product => {
 
@@ -164,15 +245,22 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  /*
-   * ========================================
-   * HERO
-   * ========================================
-   */
-
   function updateHero(product) {
 
-    if (!product) return;
+    if (!product) {
+
+      if (gameName) {
+        gameName.textContent = "Pilih Game";
+      }
+
+      if (gameDescription) {
+        gameDescription.textContent =
+          "Pilih game yang ingin kamu top up.";
+      }
+
+      return;
+
+    }
 
 
     if (gameName) {
@@ -226,6 +314,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (gameIconFallback) {
 
+      gameIconFallback.textContent =
+        product.icon || "🎮";
+
       gameIconFallback.style.display =
         product.image
           ? "none"
@@ -236,23 +327,26 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  /*
-   * ========================================
-   * DENOMINATION
-   * ========================================
-   */
+  /* =========================================================
+     DENOMINATIONS
+  ========================================================= */
 
   function renderDenominations(product) {
 
     if (!denominationList) return;
 
-
     selectedDenomination = null;
 
-    nominalInput.value = "";
+    if (nominalInput) {
+      nominalInput.value = "";
+    }
 
 
-    if (!product || !product.denominations?.length) {
+    if (
+      !product ||
+      !Array.isArray(product.denominations) ||
+      !product.denominations.length
+    ) {
 
       denominationList.innerHTML = `
         <div class="checkout-loading">
@@ -260,6 +354,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       `;
 
+      updateSummary();
       return;
 
     }
@@ -271,14 +366,11 @@ document.addEventListener("DOMContentLoaded", () => {
     product.denominations.forEach(item => {
 
       const category =
-        item.category ||
-        "✨ Top Up";
-
+        item.category || "✨ Top Up";
 
       if (!groups[category]) {
         groups[category] = [];
       }
-
 
       groups[category].push(item);
 
@@ -297,15 +389,12 @@ document.addEventListener("DOMContentLoaded", () => {
         group.className =
           "denomination-group";
 
-
         group.innerHTML = `
-
           <div class="denomination-category-title">
-            ${escapeHtml(category)}
+            ${escapeHTML(category)}
           </div>
 
           <div class="denomination-group-grid"></div>
-
         `;
 
 
@@ -331,20 +420,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
           button.innerHTML = `
-
             <div class="denomination-main">
 
               <div class="denomination-title">
-                ${escapeHtml(item.amount)}
+                ${escapeHTML(item.amount)}
               </div>
 
               <div class="denomination-price-box">
-
-                <img
-                  src="assets/ui/diamond.webp"
-                  alt=""
-                  class="denomination-price-icon"
-                >
 
                 <span>
                   ${rupiah(item.price)}
@@ -360,12 +442,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             <div class="denomination-delivery">
 
-              <img
-                src="assets/ui/lightning.webp"
-                alt=""
-                class="denomination-delivery-icon"
-              >
-
               <div class="denomination-delivery-text">
 
                 <span>
@@ -379,22 +455,7 @@ document.addEventListener("DOMContentLoaded", () => {
               </div>
 
             </div>
-
           `;
-
-
-          button
-            .querySelectorAll("img")
-            .forEach(image => {
-
-              image.addEventListener(
-                "error",
-                () => {
-                  image.style.display = "none";
-                }
-              );
-
-            });
 
 
           button.addEventListener(
@@ -405,12 +466,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 .querySelectorAll(
                   ".denomination-option"
                 )
-                .forEach(
-                  option =>
-                    option.classList.remove(
-                      "selected"
-                    )
-                );
+                .forEach(option => {
+
+                  option.classList.remove(
+                    "selected"
+                  );
+
+                });
 
 
               button.classList.add(
@@ -422,8 +484,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 item;
 
 
-              nominalInput.value =
-                item.id;
+              if (nominalInput) {
+
+                nominalInput.value =
+                  item.id;
+
+              }
 
 
               updateSummary();
@@ -442,27 +508,15 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     );
 
-  }
 
-
-  /*
-   * ========================================
-   * QUANTITY
-   * ========================================
-   */
-
-  function getQuantity() {
-
-    const value =
-      Number(quantityInput?.value || 1);
-
-    return Math.max(
-      1,
-      Math.min(99, value)
-    );
+    updateSummary();
 
   }
 
+
+  /* =========================================================
+     QUANTITY
+  ========================================================= */
 
   function updateQuantity(value) {
 
@@ -479,14 +533,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (quantityInput) {
 
       quantityInput.value =
-        quantity;
-
-    }
-
-
-    if (summaryQuantity) {
-
-      summaryQuantity.textContent =
         quantity;
 
     }
@@ -521,11 +567,21 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
 
-  /*
-   * ========================================
-   * PAYMENT ACCORDION
-   * ========================================
-   */
+  quantityInput?.addEventListener(
+    "change",
+    () => {
+
+      updateQuantity(
+        quantityInput.value
+      );
+
+    }
+  );
+
+
+  /* =========================================================
+     PAYMENT ACCORDION
+  ========================================================= */
 
   document
     .querySelectorAll(
@@ -541,6 +597,8 @@ document.addEventListener("DOMContentLoaded", () => {
             header.closest(
               ".payment-category"
             );
+
+          if (!category) return;
 
 
           const isOpen =
@@ -576,11 +634,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-  /*
-   * ========================================
-   * PAYMENT SELECTION
-   * ========================================
-   */
+  /* =========================================================
+     PAYMENT SELECTION
+  ========================================================= */
 
   document
     .querySelectorAll(
@@ -610,34 +666,34 @@ document.addEventListener("DOMContentLoaded", () => {
           );
 
 
-          const fee =
-            Number(
-              option.dataset.fee || 0
-            );
-
-
-          const feeType =
-            option.dataset.feeType ||
-            "fixed";
-
-
           selectedPayment = {
 
             id:
-              option.dataset.paymentId,
+              option.dataset.paymentId ||
+              "",
 
             name:
-              option.dataset.paymentName,
+              option.dataset.paymentName ||
+              option.textContent.trim(),
 
-            fee,
+            fee:
+              Number(
+                option.dataset.fee || 0
+              ),
 
-            feeType
+            feeType:
+              option.dataset.feeType ||
+              "fixed"
 
           };
 
 
-          paymentInput.value =
-            selectedPayment.id;
+          if (paymentInput) {
+
+            paymentInput.value =
+              selectedPayment.id;
+
+          }
 
 
           updateSummary();
@@ -648,115 +704,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-  /*
-   * ========================================
-   * PAYMENT FEE
-   * ========================================
-   */
-
-  function calculatePaymentTotal() {
-
-    if (!selectedDenomination) {
-
-      return {
-        baseTotal: 0,
-        fee: 0,
-        total: 0
-      };
-
-    }
-
-
-    const quantity =
-      getQuantity();
-
-
-    const baseTotal =
-      Number(
-        selectedDenomination.price || 0
-      ) * quantity;
-
-
-    if (!selectedPayment) {
-
-      return {
-        baseTotal,
-        fee: 0,
-        total: baseTotal
-      };
-
-    }
-
-
-    let fee = 0;
-
-
-    if (
-      selectedPayment.feeType ===
-      "percent"
-    ) {
-
-      fee =
-        Math.round(
-          baseTotal *
-          selectedPayment.fee
-        );
-
-    } else {
-
-      fee =
-        Number(
-          selectedPayment.fee || 0
-        );
-
-    }
-
-
-    return {
-
-      baseTotal,
-      fee,
-      total:
-        baseTotal + fee
-
-    };
-
-  }
-
-
-  /*
-   * ========================================
-   * SUMMARY
-   * ========================================
-   */
+  /* =========================================================
+     SUMMARY
+  ========================================================= */
 
   function updateSummary() {
-
-    if (!selectedDenomination) {
-
-      if (summaryName) {
-        summaryName.textContent =
-          selectedProduct?.name || "—";
-      }
-
-      if (summaryDenomination) {
-        summaryDenomination.textContent =
-          "—";
-      }
-
-      if (summaryPrice) {
-        summaryPrice.textContent =
-          rupiah(0);
-      }
-
-      return;
-
-    }
-
-
-    const payment =
-      calculatePaymentTotal();
-
 
     if (summaryName) {
 
@@ -769,7 +721,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (summaryDenomination) {
 
       summaryDenomination.textContent =
-        selectedDenomination.amount || "—";
+        selectedDenomination?.amount || "—";
 
     }
 
@@ -793,7 +745,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (summaryFee) {
 
       summaryFee.textContent =
-        rupiah(payment.fee);
+        rupiah(getPaymentFee());
 
     }
 
@@ -801,18 +753,16 @@ document.addEventListener("DOMContentLoaded", () => {
     if (summaryPrice) {
 
       summaryPrice.textContent =
-        rupiah(payment.total);
+        rupiah(getTotal());
 
     }
 
   }
 
 
-  /*
-   * ========================================
-   * GAME CHANGE
-   * ========================================
-   */
+  /* =========================================================
+     GAME CHANGE
+  ========================================================= */
 
   gameSelect?.addEventListener(
     "change",
@@ -827,6 +777,26 @@ document.addEventListener("DOMContentLoaded", () => {
       selectedProduct =
         product || null;
 
+      selectedPayment = null;
+
+
+      if (paymentInput) {
+        paymentInput.value = "";
+      }
+
+
+      document
+        .querySelectorAll(
+          ".payment-option"
+        )
+        .forEach(option => {
+
+          option.classList.remove(
+            "selected"
+          );
+
+        });
+
 
       updateHero(product);
 
@@ -838,71 +808,66 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
 
-  /*
-   * ========================================
-   * PROMO
-   * ========================================
-   */
-
-  const promoButton =
-    document.getElementById(
-      "promoButton"
-    );
-
-  const promoInput =
-    document.getElementById(
-      "promoCode"
-    );
-
-  const promoMessage =
-    document.getElementById(
-      "promoMessage"
-    );
-
+  /* =========================================================
+     PROMO
+  ========================================================= */
 
   promoButton?.addEventListener(
     "click",
     () => {
 
       const code =
-        promoInput.value
+        promoInput?.value
           .trim()
           .toUpperCase();
 
 
       if (!code) {
 
-        promoMessage.textContent =
-          "Masukkan kode promo terlebih dahulu.";
+        promoApplied = false;
 
-        promoMessage.className =
-          "promo-message error";
+        if (promoMessage) {
+
+          promoMessage.textContent =
+            "Masukkan kode promo terlebih dahulu.";
+
+          promoMessage.className =
+            "promo-message error";
+
+        }
 
         return;
 
       }
 
 
-      /*
-       * Temporary frontend promo.
-       * Nanti diganti API/backend.
-       */
-
       if (code === "LEO10") {
 
-        promoMessage.textContent =
-          "Promo berhasil digunakan.";
+        promoApplied = true;
 
-        promoMessage.className =
-          "promo-message success";
+        if (promoMessage) {
+
+          promoMessage.textContent =
+            "Promo berhasil digunakan.";
+
+          promoMessage.className =
+            "promo-message success";
+
+        }
 
       } else {
 
-        promoMessage.textContent =
-          "Kode promo belum tersedia.";
+        promoApplied = false;
 
-        promoMessage.className =
-          "promo-message error";
+        if (promoMessage) {
+
+          promoMessage.textContent =
+            "Kode promo belum tersedia.";
+
+          promoMessage.className =
+            "promo-message error";
+
+        }
 
       }
 
@@ -910,28 +875,9 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
 
-  /*
-   * ========================================
-   * CONTACT
-   * ========================================
-   */
-
-  const contactEmail =
-    document.getElementById(
-      "contactEmail"
-    );
-
-  const contactWhatsapp =
-    document.getElementById(
-      "contactWhatsapp"
-    );
-
-
-  /*
-   * ========================================
-   * FORM SUBMIT
-   * ========================================
-   */
+  /* =========================================================
+     SUBMIT ORDER
+  ========================================================= */
 
   checkoutForm?.addEventListener(
     "submit",
@@ -942,23 +888,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!selectedProduct) {
 
-        alert(
-          "Silakan pilih game terlebih dahulu."
-        );
-
-        return;
-
-      }
-
-
-      if (!playerIdInput.value.trim()) {
-
-        alert(
-          "Masukkan User ID / Username."
-        );
-
-        playerIdInput.focus();
-
+        alert("Silakan pilih game terlebih dahulu.");
         return;
 
       }
@@ -966,10 +896,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!selectedDenomination) {
 
-        alert(
-          "Pilih nominal terlebih dahulu."
-        );
-
+        alert("Silakan pilih nominal top up.");
         return;
 
       }
@@ -977,26 +904,65 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!selectedPayment) {
 
-        alert(
-          "Pilih metode pembayaran terlebih dahulu."
-        );
-
+        alert("Silakan pilih metode pembayaran.");
         return;
 
       }
 
 
-      const payment =
-        calculatePaymentTotal();
+      const playerId =
+        playerIdInput?.value.trim() || "";
+
+
+      if (!playerId) {
+
+        alert("Player ID wajib diisi.");
+        playerIdInput?.focus();
+        return;
+
+      }
+
+
+      const email =
+        contactEmail?.value.trim() || "";
+
+
+      const whatsapp =
+        contactWhatsapp?.value.trim() || "";
+
+
+      const server =
+        serverInput?.value.trim() || "";
+
+
+      const quantity =
+        getQuantity();
+
+
+      const baseTotal =
+        getBaseTotal();
+
+
+      const paymentFee =
+        getPaymentFee();
+
+
+      const total =
+        getTotal();
+
+
+      const now =
+        new Date();
 
 
       const orderId =
         "LEO-" +
-        Date.now().toString(36).toUpperCase() +
+        now.getTime().toString().slice(-8) +
         "-" +
-        Math.floor(
-          100 + Math.random() * 900
-        );
+        Math.random()
+          .toString(36)
+          .substring(2, 6)
+          .toUpperCase();
 
 
       const order = {
@@ -1010,32 +976,17 @@ document.addEventListener("DOMContentLoaded", () => {
         gameName:
           selectedProduct.name,
 
-        playerId:
-          playerIdInput.value.trim(),
+        playerId,
 
-        server:
-          serverInput.value.trim(),
-
-        denominationId:
-          selectedDenomination.id,
-
-        denomination:
-          selectedDenomination.amount,
+        server,
 
         amount:
           selectedDenomination.amount,
 
-        quantity:
-          getQuantity(),
+        denominationId:
+          selectedDenomination.id,
 
-        basePrice:
-          payment.baseTotal,
-
-        paymentFee:
-          payment.fee,
-
-        price:
-          payment.total,
+        quantity,
 
         payment:
           selectedPayment.id,
@@ -1043,56 +994,85 @@ document.addEventListener("DOMContentLoaded", () => {
         paymentName:
           selectedPayment.name,
 
-        contactEmail:
-          contactEmail?.value.trim() || "",
+        price:
+          total,
 
-        contactWhatsapp:
-          contactWhatsapp?.value.trim() || "",
+        basePrice:
+          baseTotal,
+
+        paymentFee,
 
         promoCode:
-          promoInput?.value.trim().toUpperCase() || "",
+          promoApplied
+            ? "LEO10"
+            : "",
+
+        contactEmail:
+          email,
+
+        countryCode:
+          countryCode?.value ||
+          "+62",
+
+        contactWhatsapp:
+          whatsapp,
 
         status:
           "Menunggu Pembayaran",
 
         createdAt:
-          new Date().toISOString()
+          now.toISOString(),
+
+        paidAt:
+          null,
+
+        processingAt:
+          null,
+
+        completedAt:
+          null
 
       };
 
 
-      /*
-       * PRESERVE EXISTING STORAGE KEYS
-       */
+      let orders = [];
+
+
+      try {
+
+        orders =
+          JSON.parse(
+            localStorage.getItem(
+              ORDERS_KEY
+            )
+          ) || [];
+
+      } catch (error) {
+
+        orders = [];
+
+      }
+
+
+      if (!Array.isArray(orders)) {
+        orders = [];
+      }
+
+
+      orders.push(order);
+
 
       localStorage.setItem(
-        "fidelis_last_order",
+        ORDERS_KEY,
+        JSON.stringify(orders)
+      );
+
+
+      localStorage.setItem(
+        LAST_ORDER_KEY,
         JSON.stringify(order)
       );
 
-
-      const existingOrders =
-        JSON.parse(
-          localStorage.getItem(
-            "fidelis_orders"
-          ) || "[]"
-        );
-
-
-      existingOrders.unshift(order);
-
-
-      localStorage.setItem(
-        "fidelis_orders",
-        JSON.stringify(
-          existingOrders
-        )
-      );
-
-
-      /*
-       * PAYMENT PAGE
-       */
 
       window.location.href =
         `payment.html?id=${encodeURIComponent(
@@ -1103,11 +1083,9 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
 
-  /*
-   * ========================================
-   * INITIALIZE
-   * ========================================
-   */
+  /* =========================================================
+     INITIALIZE
+  ========================================================= */
 
   populateGames();
 
@@ -1118,43 +1096,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (queryGame) {
 
-    gameSelect.value =
-      queryGame;
-
-  }
+    const product =
+      getProduct(queryGame);
 
 
-  const initialGame =
-  gameSelect.value
-    ? getProduct(gameSelect.value)
-    : PRODUCTS[0];
+    if (product && gameSelect) {
 
+      gameSelect.value =
+        product.slug ||
+        product.id;
 
-  if (initialGame) {
+      selectedProduct =
+        product;
 
-    selectedProduct =
-      initialGame;
+      updateHero(product);
 
+      renderDenominations(product);
 
-    gameSelect.value =
-      initialGame.slug ||
-      initialGame.id;
-
-
-    updateHero(
-      initialGame
-    );
-
-
-    renderDenominations(
-      initialGame
-    );
+    }
 
   }
 
 
   updateQuantity(1);
-
-  updateSummary();
 
 });
