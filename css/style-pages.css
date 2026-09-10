@@ -1225,3 +1225,529 @@
     width: min(calc(100% - 22px), 900px);
   }
 }
+/* =========================================================
+   LEOOSTORE — FINAL FRONTEND LAYOUT PATCH
+   Home / Shop / Checkout
+   ========================================================= */
+
+
+/* =========================================================
+   HOME — 3 KOTAK SEJAJAR
+   ========================================================= */
+
+.home-game-grid {
+  display: grid !important;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+
+  gap: 18px !important;
+
+  width: 100%;
+}
+
+.home-game-card {
+  position: relative;
+
+  width: 100%;
+  min-width: 0;
+
+  aspect-ratio: 1 / 1;
+
+  min-height: 0;
+
+  overflow: hidden;
+
+  border-radius: var(--radius-lg);
+}
+
+.home-game-image {
+  position: absolute !important;
+
+  inset: 0 !important;
+
+  width: 100%;
+  height: 100%;
+}
+
+.home-game-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.home-game-info {
+  position: absolute !important;
+
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  z-index: 3;
+
+  padding: 20px 18px 18px;
+
+  background:
+    linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.88),
+      rgba(0, 0, 0, 0.35),
+      transparent
+    );
+}
+
+.home-game-info strong {
+  display: block;
+
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.home-game-info span {
+  display: block;
+
+  margin-top: 4px;
+
+  color: rgba(255, 255, 255, 0.72);
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   SHOP — PRODUCT GRID
+   ========================================================= */
+
+.product-grid,
+.product-list {
+  display: grid !important;
+
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+
+  gap: 18px !important;
+
+  width: 100%;
+}
+
+.product-card {
+  min-width: 0;
+
+  overflow: hidden;
+
+  background: var(--card);
+
+  border: 1px solid var(--border);
+
+  border-radius: var(--radius-lg);
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-3px);
+
+  background: var(--card-hover);
+
+  border-color: var(--border-strong);
+}
+
+.product-image-wrap {
+  position: relative;
+
+  width: 100%;
+
+  aspect-ratio: 1 / 1;
+
+  overflow: hidden;
+
+  background: var(--card-2);
+}
+
+.product-game-image {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.product-icon {
+  position: absolute;
+
+  left: 12px;
+  bottom: 12px;
+
+  width: 48px;
+  height: 48px;
+
+  overflow: hidden;
+
+  border: 2px solid rgba(255, 255, 255, 0.85);
+
+  border-radius: 13px;
+
+  box-shadow:
+    0 8px 22px rgba(0, 0, 0, 0.35);
+}
+
+.product-icon img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.product-info {
+  min-width: 0;
+
+  padding: 15px;
+}
+
+.product-info h3 {
+  margin: 0;
+
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+.product-price {
+  margin-top: 7px;
+
+  color: var(--primary);
+
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.product-minimum {
+  margin-top: 4px;
+
+  color: var(--text-muted);
+
+  font-size: 12px;
+}
+
+.product-btn {
+  width: 100%;
+
+  margin-top: 13px;
+}
+
+.product-denominations {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 5px;
+
+  margin-top: 10px;
+}
+
+.denomination-chip {
+  padding: 4px 7px;
+
+  color: var(--text-soft);
+
+  background: var(--bg-soft);
+
+  border: 1px solid var(--border);
+
+  border-radius: 999px;
+
+  font-size: 10px;
+}
+
+
+/* =========================================================
+   CHECKOUT — HILANGKAN NOMOR STEP
+   ========================================================= */
+
+.checkout-step {
+  display: none !important;
+}
+
+
+/* =========================================================
+   CHECKOUT — NOMINAL 2 KOLOM
+   ========================================================= */
+
+.denomination-group-grid {
+  display: grid !important;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr)) !important;
+
+  gap: 12px !important;
+}
+
+.denomination-option {
+  position: relative;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 92px;
+
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+
+  padding: 14px !important;
+
+  overflow: hidden;
+}
+
+.denomination-main {
+  width: 100%;
+
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+
+  gap: 10px;
+}
+
+.denomination-title {
+  min-width: 0;
+
+  color: var(--text);
+
+  line-height: 1.35;
+
+  overflow: visible;
+
+  text-overflow: unset;
+
+  white-space: normal;
+}
+
+.denomination-price-box {
+  flex-shrink: 0;
+
+  color: var(--primary);
+
+  line-height: 1.35;
+
+  text-align: right;
+
+  white-space: nowrap;
+}
+
+.denomination-divider {
+  flex-shrink: 0;
+
+  width: 100%;
+  height: 1px;
+
+  margin: 10px 0;
+
+  background: var(--border);
+}
+
+.denomination-delivery {
+  width: 100%;
+}
+
+.denomination-delivery-text {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 8px;
+
+  color: var(--text-soft);
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   PAYMENT — TANPA ROTASI
+   ========================================================= */
+
+.payment-category-header span:last-child {
+  transform: none !important;
+
+  transition: none !important;
+
+  animation: none !important;
+}
+
+.payment-category.open .payment-category-header span:last-child {
+  transform: none !important;
+
+  animation: none !important;
+}
+
+.payment-category-body {
+  display: none !important;
+
+  opacity: 1 !important;
+
+  transform: none !important;
+
+  animation: none !important;
+
+  transition: none !important;
+}
+
+.payment-category.open .payment-category-body {
+  display: grid !important;
+
+  opacity: 1 !important;
+
+  transform: none !important;
+
+  animation: none !important;
+}
+
+.payment-option {
+  transform: none !important;
+
+  animation: none !important;
+}
+
+.payment-option:hover {
+  transform: none !important;
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .home-game-grid {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr)) !important;
+
+    gap: 12px !important;
+  }
+
+  .product-grid,
+  .product-list {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr)) !important;
+
+    gap: 12px !important;
+  }
+
+  .home-game-info {
+    padding: 15px 13px 13px;
+  }
+
+  .home-game-info strong {
+    font-size: 15px;
+  }
+
+  .home-game-info span {
+    font-size: 11px;
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  /* HOME TETAP 3 KOTAK */
+  .home-game-grid {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr)) !important;
+
+    gap: 8px !important;
+  }
+
+  .home-game-card {
+    aspect-ratio: 1 / 1;
+  }
+
+  .home-game-info {
+    padding: 10px 8px 8px;
+  }
+
+  .home-game-info strong {
+    font-size: 12px;
+  }
+
+  .home-game-info span {
+    margin-top: 2px;
+
+    font-size: 9px;
+  }
+
+
+  /* SHOP 2 KOLOM */
+  .product-grid,
+  .product-list {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr)) !important;
+
+    gap: 9px !important;
+  }
+
+  .product-info {
+    padding: 11px;
+  }
+
+  .product-info h3 {
+    font-size: 14px;
+  }
+
+  .product-price {
+    font-size: 13px;
+  }
+
+  .product-icon {
+    width: 40px;
+    height: 40px;
+
+    left: 8px;
+    bottom: 8px;
+  }
+
+
+  /* CHECKOUT 2 KOLOM */
+  .denomination-group-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr)) !important;
+
+    gap: 9px !important;
+  }
+
+  .denomination-option {
+    min-height: 100px;
+
+    padding: 11px !important;
+  }
+
+  .denomination-main {
+    flex-direction: column !important;
+
+    gap: 5px !important;
+  }
+
+  .denomination-price-box {
+    text-align: left;
+
+    font-size: 12px;
+  }
+
+  .denomination-title {
+    font-size: 13px;
+  }
+
+  .denomination-delivery-text {
+    font-size: 10px;
+  }
+
+
+  /* PAYMENT */
+  .payment-category.open .payment-category-body {
+    grid-template-columns: 1fr !important;
+  }
+}
