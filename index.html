@@ -17,32 +17,198 @@
 
 <body class="home-page">
 
-  <!-- =========================
-       HEADER
-  ========================== -->
-  <header class="site-header home-header">
-    <div class="container">
+<!-- =========================
+     HEADER
+========================== -->
+<header class="site-header home-header">
+  <div class="container header-inner">
 
-      <a href="index.html" class="logo">
+    <!-- LOGO -->
+    <a href="index.html" class="header-brand">
+      <img
+        src="assets/logo-1.webp"
+        alt="LEOOSTORE"
+        class="header-logo"
+      >
+
+      <span class="header-brand-text">
         LEOOSTORE
-      </a>
+      </span>
+    </a>
 
-      <nav class="nav">
-        <a href="index.html" class="active">
-          Home
-        </a>
 
-        <a href="shop.html">
-          Top Up
-        </a>
+    <!-- HEADER ACTIONS -->
+    <div class="header-actions">
 
-        <a href="order.html">
-          Cek Pesanan
-        </a>
-      </nav>
+      <!-- SEARCH -->
+      <button
+        type="button"
+        class="header-action search-button"
+        id="searchButton"
+        aria-label="Cari"
+      >
+        <span class="header-icon">⌕</span>
+      </button>
+
+
+      <!-- COUNTRY / CURRENCY -->
+      <button
+        type="button"
+        class="currency-selector"
+        id="currencySelector"
+      >
+        <span class="country-flag">🇮🇩</span>
+        <span>ID / IDR</span>
+      </button>
+
+
+      <!-- MENU -->
+      <button
+        type="button"
+        class="header-action menu-button"
+        id="menuButton"
+        aria-label="Buka menu"
+        aria-expanded="false"
+      >
+        <span class="menu-icon">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
 
     </div>
-  </header>
+
+  </div>
+</header>
+
+
+<!-- =========================
+     SEARCH PANEL
+========================== -->
+<div class="search-panel" id="searchPanel">
+
+  <div class="search-panel-inner">
+
+    <input
+      type="search"
+      id="siteSearch"
+      placeholder="Cari game..."
+      autocomplete="off"
+    >
+
+    <button
+      type="button"
+      id="searchClose"
+      aria-label="Tutup pencarian"
+    >
+      ×
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     MENU OVERLAY
+========================== -->
+<div
+  class="menu-overlay"
+  id="menuOverlay"
+></div>
+
+
+<!-- =========================
+     SIDE MENU
+========================== -->
+<aside
+  class="side-menu"
+  id="sideMenu"
+  aria-hidden="true"
+>
+
+  <!-- MENU HEADER -->
+  <div class="side-menu-header">
+
+    <a href="index.html" class="side-menu-brand">
+      LEOOSTORE
+    </a>
+
+    <button
+      type="button"
+      class="side-menu-close"
+      id="menuClose"
+      aria-label="Tutup menu"
+    >
+      ×
+    </button>
+
+  </div>
+
+
+  <div class="side-menu-divider"></div>
+
+
+  <!-- MENU ITEMS -->
+  <nav class="side-menu-nav">
+
+    <a
+      href="shop.html"
+      class="side-menu-item"
+    >
+      <span>Top Up</span>
+      <span class="side-menu-icon">🛒</span>
+    </a>
+
+
+    <a
+      href="order.html"
+      class="side-menu-item"
+    >
+      <span>Cek Transaksi</span>
+      <span class="side-menu-icon">✓</span>
+    </a>
+
+
+    <a
+      href="#"
+      class="side-menu-item"
+    >
+      <span>Leaderboard</span>
+      <span class="side-menu-icon">🏆</span>
+    </a>
+
+
+    <a
+      href="#"
+      class="side-menu-item"
+    >
+      <span>Artikel</span>
+      <span class="side-menu-icon">📰</span>
+    </a>
+
+
+    <a
+      href="#"
+      class="side-menu-item"
+    >
+      <span>Kalkulator</span>
+      <span class="side-menu-arrow">→</span>
+    </a>
+
+
+    <a
+      href="#"
+      class="side-menu-item side-menu-login"
+    >
+      <span>Masuk</span>
+      <span class="side-menu-icon">⇥</span>
+    </a>
+
+  </nav>
+
+</aside>
 
 
   <main>
