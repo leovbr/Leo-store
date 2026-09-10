@@ -1,150 +1,228 @@
-/* =========================================
-   LEO STORE
-   ORDER TRACKING + HISTORY + SEARCH
-   ========================================= */
+/* =========================================================
+   LEOOSTORE — ORDER TRACKING
+   ========================================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
 
-  const container =
-    document.getElementById("orderContainer");
-
-  if (!container) return;
-
-
-  const params =
-    new URLSearchParams(
-      window.location.search
-    );
-
-  const requestedId =
-    params.get("id");
-
-
-  let orders =
-    getOrders();
-
-  const lastOrder =
-    getLastOrder();
-
-
-  /*
-   * ========================================
-   * SINGLE ORDER DETAIL
-   * ========================================
-   */
-
-  if (requestedId) {
-
-    let order =
-      orders.find(
-        item =>
-          item.orderId === requestedId
+    const container =
+      document.getElementById(
+        "orderContainer"
       );
 
 
-    if (
-      !order &&
-      lastOrder &&
-      lastOrder.orderId === requestedId
-    ) {
-
-      order =
-        lastOrder;
-
-    }
+    if (!container) return;
 
 
-    if (!order) {
+    const ORDERS_KEY =
+      "fidelis_orders";
 
-      renderEmpty(
+    const LAST_ORDER_KEY =
+      "fidelis_last_order";
+
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+
+    const requestedId =
+      params.get("id");
+
+
+    let orders =
+      getOrders();
+
+
+    const lastOrder =
+      getLastOrder();
+
+
+    /* =====================================================
+       DETAIL MODE
+    ===================================================== */
+
+    if (requestedId) {
+
+      let order =
+        orders.find(
+          item =>
+            String(item.orderId) ===
+            String(requestedId)
+        );
+
+
+      if (
+        !order &&
+        lastOrder &&
+        String(lastOrder.orderId) ===
+        String(requestedId)
+      ) {
+
+        order =
+          lastOrder;
+
+      }
+
+
+      if (!order) {
+
+        renderEmpty(
+          container,
+          "Pesanan tidak ditemukan."
+        );
+
+        return;
+
+      }
+
+
+      renderOrder(
         container,
-        "Pesanan tidak ditemukan."
+        order
       );
+
+
+      handleProcessing(
+        order
+      );
+
 
       return;
 
     }
 
 
-    renderOrder(
-      container,
-      order
-    );
+    /* =====================================================
+       HISTORY MODE
+    ===================================================== */
 
-
-    handleProcessing(
-      order
-    );
-
-
-    return;
-
-  }
-
-
-  /*
-   * ========================================
-   * HISTORY MODE
-   * ========================================
-   */
-
-  if (
-    !orders.length &&
-    lastOrder
-  ) {
-
-    orders = [
+    if (
+      !orders.length &&
       lastOrder
-    ];
+    ) {
 
-  }
-
-
-  renderHistoryPage(
-    container,
-    orders
-  );
-
-
-  /*
-   * Check transaksi berjalan.
-   */
-
-  orders.forEach(
-    order => {
-
-      if (
-        order.status ===
-        "Pembayaran Berhasil"
-      ) {
-
-        startProcessing(
-          order.orderId
-        );
-
-      }
-
-      else if (
-        order.status ===
-        "Pesanan Diproses"
-      ) {
-
-        continueProcessing(
-          order.orderId,
-          order.processingAt
-        );
-
-      }
+      orders = [
+        lastOrder
+      ];
 
     }
+
+
+    renderHistoryPage(
+      container,
+      orders
+    );
+
+
+    orders.forEach(
+      order => {
+
+        if (
+          order.status ===
+          "Pembayaran Berhasil"
+        ) {
+
+          startProcessing(
+            order.orderId
+          );
+
+        }
+
+        else if (
+          order.status ===
+          "Pesanan Diproses"
+        ) {
+
+          continueProcessing(
+            order.orderId,
+            order.processingAt
+          );
+
+        }
+
+      }
+    );
+
+  }
+);
+
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+function getOrders() {
+
+  try {
+
+    const orders =
+      JSON.parse(
+        localStorage.getItem(
+          "fidelis_orders"
+        )
+      ) || [];
+
+
+    return Array.isArray(
+      orders
+    )
+      ? orders
+      : [];
+
+  } catch (error) {
+
+    return [];
+
+  }
+
+}
+
+
+function getLastOrder() {
+
+  try {
+
+    return JSON.parse(
+      localStorage.getItem(
+        "fidelis_last_order"
+      )
+    );
+
+  } catch (error) {
+
+    return null;
+
+  }
+
+}
+
+
+function saveOrders(orders) {
+
+  localStorage.setItem(
+    "fidelis_orders",
+    JSON.stringify(orders)
   );
 
-});
+}
 
 
-/* =========================================
-   PROCESSING HANDLER
-   ========================================= */
+function saveLastOrder(order) {
+
+  localStorage.setItem(
+    "fidelis_last_order",
+    JSON.stringify(order)
+  );
+
+}
+
+
+/* =========================================================
+   PROCESSING
+========================================================= */
 
 function handleProcessing(order) {
 
@@ -174,10 +252,6 @@ function handleProcessing(order) {
 }
 
 
-/* =========================================
-   START PROCESSING
-   ========================================= */
-
 function startProcessing(orderId) {
 
   const orders =
@@ -187,7 +261,8 @@ function startProcessing(orderId) {
   const index =
     orders.findIndex(
       item =>
-        item.orderId === orderId
+        item.orderId ===
+        orderId
     );
 
 
@@ -244,10 +319,6 @@ function startProcessing(orderId) {
 }
 
 
-/* =========================================
-   CONTINUE PROCESSING
-   ========================================= */
-
 function continueProcessing(
   orderId,
   processingAt
@@ -272,12 +343,12 @@ function continueProcessing(
     started;
 
 
-  const processingDuration =
+  const duration =
     4000;
 
 
   const remaining =
-    processingDuration -
+    duration -
     elapsed;
 
 
@@ -308,11 +379,9 @@ function continueProcessing(
 }
 
 
-/* =========================================
-   COMPLETE TRANSACTION
-   ========================================= */
-
-function completeTransaction(orderId) {
+function completeTransaction(
+  orderId
+) {
 
   const orders =
     getOrders();
@@ -321,7 +390,8 @@ function completeTransaction(orderId) {
   const index =
     orders.findIndex(
       item =>
-        item.orderId === orderId
+        item.orderId ===
+        orderId
     );
 
 
@@ -372,9 +442,9 @@ function completeTransaction(orderId) {
 }
 
 
-/* =========================================
-   RENDER CURRENT ORDER
-   ========================================= */
+/* =========================================================
+   CURRENT PAGE
+========================================================= */
 
 function renderCurrentPage(order) {
 
@@ -384,9 +454,7 @@ function renderCurrentPage(order) {
     );
 
 
-  if (!container) {
-    return;
-  }
+  if (!container) return;
 
 
   renderOrder(
@@ -397,20 +465,14 @@ function renderCurrentPage(order) {
 }
 
 
-/* =========================================
+/* =========================================================
    ORDER DETAIL
-   ========================================= */
+========================================================= */
 
 function renderOrder(
   container,
   order
 ) {
-
-  const dateText =
-    formatDate(
-      order.createdAt
-    );
-
 
   const status =
     order.status ||
@@ -449,15 +511,13 @@ function renderOrder(
 
     paymentButton = `
 
-      <br>
-
       <a
         href="payment.html?id=${encodeURIComponent(
           order.orderId
         )}"
       >
 
-        <button>
+        <button type="button">
           Lanjut Pembayaran
         </button>
 
@@ -470,165 +530,187 @@ function renderOrder(
 
   container.innerHTML = `
 
-    <div class="order-header">
+    <div class="order-card">
 
-      <p>
-        Order ID
-      </p>
 
-      <h3>
-        ${escapeHTML(
-          order.orderId
-        )}
-      </h3>
+      <div class="order-header">
 
-      <p>
-        ${escapeHTML(
-          dateText
-        )}
-      </p>
+        <p>
+          Order ID
+        </p>
 
-    </div>
+        <h1>
+          ${escapeHTML(
+            order.orderId
+          )}
+        </h1>
 
-    <hr>
+        <span>
+          ${escapeHTML(
+            formatDate(
+              order.createdAt
+            )
+          )}
+        </span>
 
-    <div class="order-info">
+      </div>
 
-      <p>
-        <strong>Game:</strong>
-        ${escapeHTML(
-          order.gameName ||
-          order.game
-        )}
-      </p>
 
-      <p>
-        <strong>Player:</strong>
-        ${escapeHTML(
-          order.playerId
-        )}
-      </p>
+      <hr>
 
-      ${
-        order.server
-          ? `
-            <p>
-              <strong>Server:</strong>
-              ${escapeHTML(
-                order.server
-              )}
-            </p>
-          `
-          : ""
-      }
 
-      <p>
-        <strong>Produk:</strong>
-        ${escapeHTML(
-          order.amount
-        )}
-      </p>
+      <div class="order-info">
 
-      <p>
-        <strong>Total:</strong>
-        ${formatPrice(
-          Number(order.price)
-        )}
-      </p>
+        <p>
+          <strong>Game:</strong>
+          ${escapeHTML(
+            order.gameName ||
+            order.game
+          )}
+        </p>
 
-      <p>
-        <strong>Pembayaran:</strong>
-        ${escapeHTML(
-          getPaymentName(
-            order.payment
-          )
-        )}
-      </p>
+        <p>
+          <strong>Player ID:</strong>
+          ${escapeHTML(
+            order.playerId
+          )}
+        </p>
 
-    </div>
-
-    <hr>
-
-    <div class="order-status">
-
-      <h3>
-        Status Pesanan
-      </h3>
-
-      <p>
-        ${escapeHTML(
-          status
-        )}
-      </p>
-
-    </div>
-
-    <div class="order-progress">
-
-      <ol>
-
-        <li class="active">
-          Pesanan dibuat
-        </li>
-
-        <li class="${
-          paymentDone
-            ? "active"
+        ${
+          order.server
+            ? `
+              <p>
+                <strong>Server:</strong>
+                ${escapeHTML(
+                  order.server
+                )}
+              </p>
+            `
             : ""
-        }">
-          Pembayaran
-        </li>
+        }
 
-        <li class="${
-          processing
-            ? "active"
-            : ""
-        }">
-          Pesanan diproses
-        </li>
+        <p>
+          <strong>Produk:</strong>
+          ${escapeHTML(
+            order.amount
+          )}
+        </p>
 
-        <li class="${
-          success
-            ? "active"
-            : ""
-        }">
-          Top Up berhasil
-        </li>
+        <p>
+          <strong>Jumlah:</strong>
+          ${Number(
+            order.quantity || 1
+          )}
+        </p>
 
-      </ol>
+        <p>
+          <strong>Pembayaran:</strong>
+          ${escapeHTML(
+            order.paymentName ||
+            getPaymentName(
+              order.payment
+            )
+          )}
+        </p>
+
+        <p>
+          <strong>Total:</strong>
+          ${formatPrice(
+            order.price
+          )}
+        </p>
+
+      </div>
+
+
+      <hr>
+
+
+      <div class="order-status">
+
+        <h3>
+          Status Pesanan
+        </h3>
+
+        <p>
+          ${escapeHTML(
+            status
+          )}
+        </p>
+
+      </div>
+
+
+      <div class="order-progress">
+
+        <ol>
+
+          <li class="active">
+            Pesanan dibuat
+          </li>
+
+          <li class="${
+            paymentDone
+              ? "active"
+              : ""
+          }">
+            Pembayaran
+          </li>
+
+          <li class="${
+            processing
+              ? "active"
+              : ""
+          }">
+            Pesanan diproses
+          </li>
+
+          <li class="${
+            success
+              ? "active"
+              : ""
+          }">
+            Top Up berhasil
+          </li>
+
+        </ol>
+
+      </div>
+
+
+      ${paymentButton}
+
+
+      <a href="order.html">
+
+        <button
+          type="button"
+          class="secondary-button"
+        >
+          ← Riwayat Pesanan
+        </button>
+
+      </a>
+
+
+      <a href="shop.html">
+
+        <button type="button">
+          Top Up Lagi
+        </button>
+
+      </a>
 
     </div>
-
-    ${paymentButton}
-
-    <br>
-
-    <a href="order.html">
-
-      <button>
-        ← Riwayat Pesanan
-      </button>
-
-    </a>
-
-    <br><br>
-
-    <a href="shop.html">
-
-      <button>
-        Top Up Lagi
-      </button>
-
-    </a>
 
   `;
 
 }
 
 
-/* =========================================
-   HISTORY PAGE
-   ========================================= */
+/* =========================================================
+   HISTORY
+========================================================= */
 
 function renderHistoryPage(
   container,
@@ -637,18 +719,13 @@ function renderHistoryPage(
 
   const sortedOrders =
     [...orders].sort(
-      (a, b) => {
-
-        return (
-          new Date(
-            b.createdAt || 0
-          ) -
-          new Date(
-            a.createdAt || 0
-          )
-        );
-
-      }
+      (a, b) =>
+        new Date(
+          b.createdAt || 0
+        ) -
+        new Date(
+          a.createdAt || 0
+        )
     );
 
 
@@ -656,27 +733,20 @@ function renderHistoryPage(
 
     <div class="history-page">
 
-      <div
-        class="history-section-header"
-      >
+      <div class="history-section-header">
 
         <div>
 
-          <h3>
+          <h2>
             Riwayat Pesanan
-          </h3>
+          </h2>
 
-          <p
-            style="
-              margin: 4px 0 0;
-              opacity: .5;
-              font-size: 12px;
-            "
-          >
+          <p>
             Kelola dan cari transaksi kamu
           </p>
 
         </div>
+
 
         <span
           class="history-count"
@@ -688,13 +758,9 @@ function renderHistoryPage(
       </div>
 
 
-      <div
-        class="history-tools"
-      >
+      <div class="history-tools">
 
-        <div
-          class="history-search"
-        >
+        <div class="history-search">
 
           <span>
             🔎
@@ -740,21 +806,22 @@ function renderHistoryPage(
       </div>
 
 
-      <div
-        id="historyList"
-      ></div>
+      <div id="historyList"></div>
 
     </div>
 
-    <br>
 
-    <a href="shop.html">
+    <div class="history-actions">
 
-      <button>
-        + Top Up Lagi
-      </button>
+      <a href="shop.html">
 
-    </a>
+        <button type="button">
+          + Top Up Lagi
+        </button>
+
+      </a>
+
+    </div>
 
   `;
 
@@ -763,6 +830,7 @@ function renderHistoryPage(
     document.getElementById(
       "orderSearch"
     );
+
 
   const statusFilter =
     document.getElementById(
@@ -798,7 +866,7 @@ function renderHistoryPage(
             ).toLowerCase();
 
 
-          const gameName =
+          const game =
             String(
               order.gameName ||
               order.game ||
@@ -814,18 +882,20 @@ function renderHistoryPage(
             playerId.includes(
               keyword
             ) ||
-            gameName.includes(
+            game.includes(
               keyword
             );
+
+
+          const status =
+            order.status ||
+            "Menunggu Pembayaran";
 
 
           const matchesStatus =
             selectedStatus ===
               "all" ||
-            (
-              order.status ||
-              "Menunggu Pembayaran"
-            ) ===
+            status ===
               selectedStatus;
 
 
@@ -859,13 +929,13 @@ function renderHistoryPage(
   }
 
 
-  searchInput.addEventListener(
+  searchInput?.addEventListener(
     "input",
     updateHistory
   );
 
 
-  statusFilter.addEventListener(
+  statusFilter?.addEventListener(
     "change",
     updateHistory
   );
@@ -876,9 +946,9 @@ function renderHistoryPage(
 }
 
 
-/* =========================================
+/* =========================================================
    HISTORY LIST
-   ========================================= */
+========================================================= */
 
 function renderHistoryList(
   orders
@@ -890,18 +960,14 @@ function renderHistoryList(
     );
 
 
-  if (!list) {
-    return;
-  }
+  if (!list) return;
 
 
   if (!orders.length) {
 
     list.innerHTML = `
 
-      <div
-        class="history-no-result"
-      >
+      <div class="history-no-result">
 
         <div>
           🔎
@@ -912,8 +978,7 @@ function renderHistoryList(
         </h3>
 
         <p>
-          Coba gunakan Order ID,
-          Player ID, atau filter lain.
+          Belum ada transaksi yang sesuai.
         </p>
 
       </div>
@@ -925,247 +990,224 @@ function renderHistoryList(
   }
 
 
-  let html = "";
+  list.innerHTML =
+    orders.map(
+      order => {
+
+        const status =
+          order.status ||
+          "Menunggu Pembayaran";
 
 
-  orders.forEach(
-    order => {
-
-      const status =
-        order.status ||
-        "Menunggu Pembayaran";
+        let statusClass =
+          "waiting";
 
 
-      let statusClass =
-        "waiting";
+        if (
+          status ===
+          "Pesanan Diproses"
+        ) {
+
+          statusClass =
+            "processing";
+
+        }
 
 
-      if (
-        status ===
-        "Pesanan Diproses"
-      ) {
+        if (
+          status ===
+          "Top Up Berhasil"
+        ) {
 
-        statusClass =
-          "processing";
+          statusClass =
+            "success";
 
-      }
-
-
-      if (
-        status ===
-        "Top Up Berhasil"
-      ) {
-
-        statusClass =
-          "success";
-
-      }
+        }
 
 
-      const gameIcon =
-        getGameIcon(
-          order.game
-        );
+        if (
+          status ===
+          "Pembayaran Berhasil"
+        ) {
+
+          statusClass =
+            "paid";
+
+        }
 
 
-      html += `
+        return `
 
-        <article
-          class="order-history-card"
-        >
-
-          <div
-            class="history-top"
+          <article
+            class="order-history-card"
           >
 
-            <div
-              class="history-game"
-            >
+            <div class="history-top">
 
-              <div
-                class="history-game-icon"
-              >
-                ${gameIcon}
+              <div class="history-game">
+
+                <div
+                  class="history-game-icon"
+                >
+                  ${getGameIcon(
+                    order.game
+                  )}
+                </div>
+
+
+                <div>
+
+                  <h3
+                    class="history-game-name"
+                  >
+                    ${escapeHTML(
+                      order.gameName ||
+                      order.game
+                    )}
+                  </h3>
+
+                  <p>
+                    ${escapeHTML(
+                      order.amount
+                    )}
+                  </p>
+
+                </div>
+
               </div>
+
+
+              <span
+                class="order-status-badge ${statusClass}"
+              >
+                ${escapeHTML(
+                  status
+                )}
+              </span>
+
+            </div>
+
+
+            <div class="history-details">
 
               <div>
 
-                <h4
-                  class="history-game-name"
-                >
-                  ${escapeHTML(
-                    order.gameName ||
-                    order.game
-                  )}
-                </h4>
+                <span>
+                  Order ID
+                </span>
 
-                <p
-                  class="history-game-type"
-                >
+                <strong>
                   ${escapeHTML(
-                    order.amount
+                    order.orderId
                   )}
-                </p>
+                </strong>
+
+              </div>
+
+
+              <div>
+
+                <span>
+                  Player ID
+                </span>
+
+                <strong>
+                  ${escapeHTML(
+                    order.playerId
+                  )}
+                </strong>
+
+              </div>
+
+
+              <div>
+
+                <span>
+                  Total
+                </span>
+
+                <strong>
+                  ${formatPrice(
+                    order.price
+                  )}
+                </strong>
 
               </div>
 
             </div>
 
 
-            <span
-              class="
-                history-status
-                ${statusClass}
-              "
-            >
-              ${escapeHTML(
-                status
-              )}
-            </span>
+            <div class="history-actions">
 
-          </div>
-
-
-          <div
-            class="history-body"
-          >
-
-            <div
-              class="history-info"
-            >
-
-              <span
-                class="history-label"
+              <a
+                href="order.html?id=${encodeURIComponent(
+                  order.orderId
+                )}"
               >
-                Player
-              </span>
 
-              <span
-                class="history-value"
-              >
-                ${escapeHTML(
-                  order.playerId
-                )}
-              </span>
+                <button type="button">
+                  Lihat Detail
+                </button>
+
+              </a>
 
             </div>
 
+          </article>
 
-            <div
-              class="history-info"
-            >
+        `;
 
-              <span
-                class="history-label"
-              >
-                Total
-              </span>
-
-              <span
-                class="history-value"
-              >
-                ${formatPrice(
-                  Number(order.price)
-                )}
-              </span>
-
-            </div>
-
-
-            <div
-              class="history-info"
-            >
-
-              <span
-                class="history-label"
-              >
-                Pembayaran
-              </span>
-
-              <span
-                class="history-value"
-              >
-                ${escapeHTML(
-                  getPaymentName(
-                    order.payment
-                  )
-                )}
-              </span>
-
-            </div>
-
-
-            <div
-              class="history-info"
-            >
-
-              <span
-                class="history-label"
-              >
-                Tanggal
-              </span>
-
-              <span
-                class="history-value"
-              >
-                ${escapeHTML(
-                  formatDate(
-                    order.createdAt
-                  )
-                )}
-              </span>
-
-            </div>
-
-          </div>
-
-
-          <div
-            class="history-bottom"
-          >
-
-            <span
-              class="history-order-id"
-            >
-
-              ID:
-              ${escapeHTML(
-                order.orderId
-              )}
-
-            </span>
-
-
-            <a
-              class="history-detail-btn"
-              href="order.html?id=${encodeURIComponent(
-                order.orderId
-              )}"
-            >
-
-              Lihat Detail →
-
-            </a>
-
-          </div>
-
-        </article>
-
-      `;
-
-    }
-  );
-
-
-  list.innerHTML =
-    html;
+      }
+    ).join("");
 
 }
 
 
-/* =========================================
+/* =========================================================
+   EMPTY
+========================================================= */
+
+function renderEmpty(
+  container,
+  message
+) {
+
+  container.innerHTML = `
+
+    <div class="order-empty">
+
+      <div>
+        📦
+      </div>
+
+      <h3>
+        ${escapeHTML(
+          message
+        )}
+      </h3>
+
+      <p>
+        Periksa kembali Order ID kamu.
+      </p>
+
+      <a href="shop.html">
+
+        <button type="button">
+          Kembali ke Top Up
+        </button>
+
+      </a>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
    GAME ICON
-   ========================================= */
+========================================================= */
 
 function getGameIcon(game) {
 
@@ -1181,7 +1223,7 @@ function getGameIcon(game) {
       "🧱",
 
     "pubg-mobile":
-      "🎯"
+      "🔫"
 
   };
 
@@ -1194,190 +1236,53 @@ function getGameIcon(game) {
 }
 
 
-/* =========================================
-   EMPTY STATE
-   ========================================= */
-
-function renderEmpty(
-  container,
-  message
-) {
-
-  container.innerHTML = `
-
-    <div
-      class="order-empty"
-    >
-
-      <div
-        style="
-          font-size: 42px;
-          margin-bottom: 12px;
-        "
-      >
-        📦
-      </div>
-
-      <h3>
-        Belum Ada Pesanan
-      </h3>
-
-      <p>
-        ${escapeHTML(
-          message
-        )}
-      </p>
-
-      <br>
-
-      <a href="shop.html">
-
-        <button>
-          Mulai Top Up
-        </button>
-
-      </a>
-
-    </div>
-
-  `;
-
-}
-
-
-/* =========================================
+/* =========================================================
    PAYMENT NAME
-   ========================================= */
+========================================================= */
 
 function getPaymentName(payment) {
 
-  if (
-    payment === "qris"
-  ) {
-    return "QRIS";
-  }
+  const names = {
+
+    qris: "QRIS",
+
+    dana: "DANA",
+
+    ovo: "OVO",
+
+    shopeepay: "ShopeePay",
+
+    linkaja: "LinkAja",
+
+    "bni-va": "BNI VA",
+
+    "maybank-va": "Maybank VA",
+
+    "danamon-va": "Danamon VA",
+
+    "mandiri-va": "Mandiri VA",
+
+    "btn-va": "BTN VA",
+
+    "doku-va": "DOKU VA",
+
+    "cimb-va": "CIMB Niaga VA"
+
+  };
 
 
-  if (
-    payment === "ewallet"
-  ) {
-    return "E-Wallet";
-  }
-
-
-  if (
-    payment === "bank"
-  ) {
-    return "Virtual Account";
-  }
-
-
-  return payment || "-";
-
-}
-
-
-/* =========================================
-   FORMAT DATE
-   ========================================= */
-
-function formatDate(date) {
-
-  if (!date) {
-    return "-";
-  }
-
-
-  try {
-
-    return new Date(
-      date
-    ).toLocaleString(
-      "id-ID",
-      {
-        dateStyle: "medium",
-        timeStyle: "short"
-      }
-    );
-
-  } catch (error) {
-
-    return "-";
-
-  }
-
-}
-
-
-/* =========================================
-   STORAGE
-   ========================================= */
-
-function getOrders() {
-
-  try {
-
-    return JSON.parse(
-      localStorage.getItem(
-        "fidelis_orders"
-      )
-    ) || [];
-
-  } catch (error) {
-
-    return [];
-
-  }
-
-}
-
-
-function getLastOrder() {
-
-  try {
-
-    return JSON.parse(
-      localStorage.getItem(
-        "fidelis_last_order"
-      )
-    );
-
-  } catch (error) {
-
-    return null;
-
-  }
-
-}
-
-
-function saveOrders(orders) {
-
-  localStorage.setItem(
-    "fidelis_orders",
-    JSON.stringify(
-      orders
-    )
+  return (
+    names[payment] ||
+    payment ||
+    "Pembayaran"
   );
 
 }
 
 
-function saveLastOrder(order) {
-
-  localStorage.setItem(
-    "fidelis_last_order",
-    JSON.stringify(
-      order
-    )
-  );
-
-}
-
-
-/* =========================================
-   FORMAT PRICE
-   ========================================= */
+/* =========================================================
+   FORMAT
+========================================================= */
 
 function formatPrice(price) {
 
@@ -1388,39 +1293,57 @@ function formatPrice(price) {
       currency: "IDR",
       minimumFractionDigits: 0
     }
-  ).format(price);
+  ).format(
+    Number(price || 0)
+  );
 
 }
 
 
-/* =========================================
+function formatDate(date) {
+
+  if (!date) {
+    return "Tanggal tidak tersedia";
+  }
+
+
+  const parsed =
+    new Date(date);
+
+
+  if (
+    Number.isNaN(
+      parsed.getTime()
+    )
+  ) {
+
+    return "Tanggal tidak tersedia";
+
+  }
+
+
+  return new Intl.DateTimeFormat(
+    "id-ID",
+    {
+      dateStyle: "medium",
+      timeStyle: "short"
+    }
+  ).format(parsed);
+
+}
+
+
+/* =========================================================
    SECURITY
-   ========================================= */
+========================================================= */
 
 function escapeHTML(value) {
 
-  return String(
-    value ?? ""
-  )
-    .replaceAll(
-      "&",
-      "&amp;"
-    )
-    .replaceAll(
-      "<",
-      "&lt;"
-    )
-    .replaceAll(
-      ">",
-      "&gt;"
-    )
-    .replaceAll(
-      '"',
-      "&quot;"
-    )
-    .replaceAll(
-      "'",
-      "&#039;"
-    );
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 
-}
+           }
