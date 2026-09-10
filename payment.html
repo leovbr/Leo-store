@@ -1,91 +1,124 @@
-<!DOCTYPE html><html lang="id"><head>  <meta charset="UTF-8"><meta
-name="viewport"
-content="width=device-width, initial-scale=1.0"
+<!DOCTYPE html>
+<html lang="id">
 
-«»
+<head>
 
-  <title>Pembayaran — LEOOSTORE</title>  <link
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Pembayaran — LEOOSTORE</title>
+
+  <meta
+    name="description"
+    content="Selesaikan pembayaran pesanan LEOOSTORE."
+  >
+
+  <link
     rel="stylesheet"
     href="css/style.css"
-  ></head><body>  <header class="site-header"><div class="container">
+  >
 
-  <a href="index.html" class="logo">
-    LEOOSTORE
-  </a>
+</head>
 
-  <nav class="main-nav">
 
-    <a href="index.html">
-      Home
-    </a>
+<body class="payment-page">
 
-    <a href="shop.html">
-      Top Up
-    </a>
 
-    <a href="order.html">
-      Cek Pesanan
-    </a>
+  <header class="site-header">
 
-  </nav>
+    <div class="container">
 
-</div>
-
-  </header>  <main><section class="shop-page">
-
-  <div class="container">
-
-    <div class="shop-heading">
-
-      <span class="eyebrow">
+      <a
+        href="index.html"
+        class="logo"
+      >
         LEOOSTORE
-      </span>
+      </a>
 
-      <h1>
-        Pembayaran
-      </h1>
 
-      <p>
-        Selesaikan pembayaran pesanan kamu.
-      </p>
+      <nav class="nav">
+
+        <a href="index.html">
+          Home
+        </a>
+
+        <a href="shop.html">
+          Top Up
+        </a>
+
+        <a
+          href="order.html"
+          class="active"
+        >
+          Cek Pesanan
+        </a>
+
+      </nav>
 
     </div>
 
+  </header>
 
-    <div id="paymentContainer">
 
-      <div class="shop-empty">
+  <main>
 
-        <div class="shop-empty-icon">
-          ⏳
+    <section class="order-section">
+
+      <div class="container">
+
+        <div
+          id="paymentContainer"
+          class="payment-container"
+        >
+
+          <div class="checkout-loading">
+
+            <strong>
+              Memuat pembayaran...
+            </strong>
+
+            <span>
+              Tunggu sebentar.
+            </span>
+
+          </div>
+
         </div>
 
-        <h3>
-          Memuat pembayaran...
-        </h3>
+      </div>
 
-        <p>
-          Tunggu sebentar.
-        </p>
+    </section>
+
+  </main>
+
+
+  <footer class="site-footer">
+
+    <div class="container">
+
+      <div>
+
+        <strong>
+          LEOOSTORE
+        </strong>
+
+        <span>
+          © 2026 LEOOSTORE
+        </span>
 
       </div>
 
     </div>
 
-  </div>
+  </footer>
 
-</section>
 
-  </main>  <footer class="site-footer"><div class="container">
+  <script src="js/payment.js"></script>
 
-  <p>
-    LEOOSTORE
-  </p>
+</body>
 
-  <span>
-    © 2026 LEOOSTORE
-  </span>
-
-</div>
-
-  </footer>  <script src="js/products.js"></script>  <script src="js/payment.js"></script>  <script src="js/app.js"></script></body></html>
+</html>
