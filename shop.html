@@ -1,98 +1,186 @@
-<!DOCTYPE html><html lang="id"><head>
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Top Up Game — LEOOSTORE</title><meta
-name="description"
-content="Top up game cepat, mudah, dan praktis di LEOOSTORE."
 
-«»
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-  <link rel="stylesheet" href="css/style.css">
-</head><body>  <header class="site-header">
-    <div class="container">  <a href="index.html" class="logo">
-    LEOOSTORE
-  </a>
+  <title>Top Up Game — LEOOSTORE</title>
 
-  <nav class="main-nav">
-    <a href="index.html">Home</a>
-    <a href="shop.html" class="active">Top Up</a>
-    <a href="order.html">Cek Pesanan</a>
-  </nav>
+  <meta
+    name="description"
+    content="Pilih game dan nominal top up di LEOOSTORE."
+  >
 
-</div>
+  <link
+    rel="stylesheet"
+    href="css/style.css"
+  >
 
-  </header>  <main><section class="shop-page">
-
-  <div class="container">
-
-    <div class="shop-heading">
-
-      <span class="eyebrow">
-        LEOOSTORE
-      </span>
-
-      <h1>
-        Top Up Game
-      </h1>
-
-      <p>
-        Pilih game yang ingin kamu top up.
-      </p>
-
-    </div>
+</head>
 
 
-    <div class="shop-search">
+<body class="shop-page">
 
-      <span>🔎</span>
 
-      <input
-        type="search"
-        id="shopSearch"
-        placeholder="Cari game..."
-        autocomplete="off"
+  <!-- =========================
+       HEADER
+  ========================== -->
+
+  <header class="site-header">
+
+    <div class="container">
+
+      <a
+        href="index.html"
+        class="logo"
       >
+        LEOOSTORE
+      </a>
+
+
+      <nav class="nav">
+
+        <a href="index.html">
+          Home
+        </a>
+
+        <a
+          href="shop.html"
+          class="active"
+        >
+          Top Up
+        </a>
+
+        <a href="order.html">
+          Cek Pesanan
+        </a>
+
+      </nav>
 
     </div>
 
+  </header>
 
-    <section
-      id="productList"
-      class="product-list"
-      aria-live="polite"
-    >
 
-      <div class="shop-empty">
+  <!-- =========================
+       MAIN
+  ========================== -->
 
-        <div class="shop-empty-icon">
-          ⏳
+  <main>
+
+    <section class="shop-section">
+
+      <div class="container">
+
+
+        <div class="section-heading">
+
+          <span class="eyebrow">
+            LEOOSTORE
+          </span>
+
+          <h1>
+            Top Up Game
+          </h1>
+
+          <p>
+            Pilih game favoritmu untuk melanjutkan top up.
+          </p>
+
         </div>
 
-        <h3>
-          Memuat produk...
-        </h3>
 
-        <p>
-          Tunggu sebentar.
-        </p>
+        <!-- SEARCH -->
+
+        <div class="shop-search-wrap">
+
+          <label
+            for="shopSearch"
+            class="sr-only"
+          >
+            Cari game
+          </label>
+
+          <input
+            type="search"
+            id="shopSearch"
+            class="shop-search"
+            placeholder="Cari nama game..."
+            autocomplete="off"
+          >
+
+        </div>
+
+
+        <!-- PRODUCT LIST -->
+
+        <div
+          id="productList"
+          class="product-grid"
+        >
+
+          <div class="empty-state">
+
+            <strong>
+              Memuat game...
+            </strong>
+
+            <span>
+              Tunggu sebentar.
+            </span>
+
+          </div>
+
+        </div>
+
 
       </div>
 
     </section>
 
-  </div>
+  </main>
 
-</section>
 
-  </main>  <footer class="site-footer"><div class="container">
+  <!-- =========================
+       FOOTER
+  ========================== -->
 
-  <p>
-    LEOOSTORE
-  </p>
+  <footer class="site-footer">
 
-  <span>
-    © 2026 LEOOSTORE
-  </span>
+    <div class="container">
 
-</div>
+      <div>
 
-  </footer>  <script src="js/products.js"></script>  <script src="js/shop.js"></script></body></html>
+        <strong>
+          LEOOSTORE
+        </strong>
+
+        <span>
+          © 2026 LEOOSTORE
+        </span>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <!-- =========================
+       DATA + SHOP
+  ========================== -->
+
+  <script src="js/products.js"></script>
+
+  <script src="js/shop.js"></script>
+
+
+</body>
+
+</html>
