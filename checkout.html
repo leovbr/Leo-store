@@ -1,544 +1,125 @@
-<!DOCTYPE html><html lang="id">
+<!DOCTYPE html>
+<html lang="id">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Checkout — Leo Store</title>
-  <meta name="description" content="Checkout top up game Leo Store">  <link rel="stylesheet" href="css/style.css">
-</head><body>  <!-- HEADER -->  <header class="site-header">
-    <div class="header-inner">  <a href="index.html" class="brand">
-    <span class="brand-mark">L</span>
-    <span class="brand-text">LEO STORE</span>
-  </a>
 
-  <nav class="nav">
-    <a href="index.html">Home</a>
-    <a href="topup.html" class="active">Top Up</a>
-    <a href="orders.html">Cek Pesanan</a>
-  </nav>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-</div>
+  <title>Checkout — LEOOSTORE</title>
 
-  </header>  <!-- MAIN -->  <main class="checkout-page"><section class="checkout-hero">
-  <div class="container">
+  <meta
+    name="description"
+    content="Checkout top up game LEOOSTORE."
+  >
 
-    <span class="eyebrow">CHECKOUT</span>
+  <link
+    rel="stylesheet"
+    href="css/style.css"
+  >
 
-    <h1>Lengkapi Pesanan</h1>
-
-    <p>
-      Masukkan data akun, pilih nominal, lalu pilih metode pembayaran.
-    </p>
-
-  </div>
-</section>
+</head>
 
 
-<section class="checkout-section">
-
-  <div class="container">
-
-    <form id="checkoutForm">
+<body class="checkout-page">
 
 
-      <!-- GAME -->
-      <div class="checkout-section">
+  <!-- =========================
+       HEADER
+  ========================== -->
 
-        <div class="section-heading">
-          <div>
-            <h2>Pilih Game</h2>
-            <p>Pilih game yang ingin kamu top up.</p>
-          </div>
-        </div>
+  <header class="site-header">
 
-        <div class="form-group">
+    <div class="container">
 
-          <label for="game">Game</label>
-
-          <select id="game" name="game" required>
-            <option value="">Memuat game...</option>
-          </select>
-
-        </div>
-
-      </div>
+      <a
+        href="index.html"
+        class="logo"
+      >
+        LEOOSTORE
+      </a>
 
 
-      <!-- PLAYER -->
-      <div class="checkout-section">
+      <nav class="nav">
 
-        <div class="section-heading">
-          <div>
-            <h2>Data Player</h2>
-            <p>Masukkan ID akun dengan benar.</p>
-          </div>
-        </div>
+        <a href="index.html">
+          Home
+        </a>
 
-        <div class="player-grid">
+        <a
+          href="shop.html"
+          class="active"
+        >
+          Top Up
+        </a>
 
-          <div class="form-group">
+        <a href="order.html">
+          Cek Pesanan
+        </a>
 
-            <label for="playerId">Player ID</label>
+      </nav>
 
-            <input
-              type="text"
-              id="playerId"
-              name="playerId"
-              placeholder="Masukkan Player ID"
-              autocomplete="off"
-              required
-            >
+    </div>
 
-          </div>
+  </header>
 
 
-          <div class="form-group">
+  <!-- =========================
+       MAIN
+  ========================== -->
 
-            <label for="server">Server</label>
+  <main>
 
-            <input
-              type="text"
-              id="server"
-              name="server"
-              placeholder="Contoh: 1234"
-              autocomplete="off"
-            >
+    <section class="checkout-section">
 
-          </div>
-
-        </div>
-
-      </div>
+      <div class="container">
 
 
-      <!-- NOMINAL -->
-      <div class="checkout-section">
+        <!-- GAME HERO -->
 
-        <div class="section-heading">
-          <div>
-            <h2>Pilih Nominal</h2>
-            <p>Pilih produk yang ingin kamu beli.</p>
-          </div>
-        </div>
-
-        <div id="denominationList" class="denomination-list">
-
-          <div class="empty-state">
-            Memuat nominal...
-          </div>
-
-        </div>
-
-        <input
-          type="hidden"
-          id="nominal"
-          name="nominal"
+        <div
+          class="game-hero"
+          id="gameHeroBanner"
         >
 
-      </div>
+          <div class="game-hero-overlay">
 
+            <div class="game-hero-content">
 
-      <!-- QUANTITY -->
-      <div class="checkout-section">
+              <div class="game-hero-icon">
 
-        <div class="section-heading">
-          <div>
-            <h2>Jumlah</h2>
-            <p>Tentukan jumlah pembelian.</p>
-          </div>
-        </div>
+                <img
+                  id="gameImage"
+                  src=""
+                  alt="Game"
+                >
 
-        <div class="quantity-control">
+                <div
+                  id="gameIconFallback"
+                  class="game-icon-fallback"
+                  style="display:none;"
+                >
+                  🎮
+                </div>
 
-          <button
-            type="button"
-            id="quantityMinus"
-            aria-label="Kurangi jumlah"
-          >
-            −
-          </button>
+              </div>
 
-          <input
-            type="number"
-            id="quantity"
-            name="quantity"
-            value="1"
-            min="1"
-            max="99"
-            readonly
-          >
 
-          <button
-            type="button"
-            id="quantityPlus"
-            aria-label="Tambah jumlah"
-          >
-            +
-          </button>
+              <div>
 
-        </div>
+                <h1 id="gameName">
+                  Pilih Game
+                </h1>
 
-      </div>
+                <p id="gameDescription">
+                  Pilih game yang ingin kamu top up.
+                </p>
 
-
-      <!-- PAYMENT -->
-      <div class="checkout-section">
-
-        <div class="section-heading">
-          <div>
-            <h2>Metode Pembayaran</h2>
-            <p>Pilih metode pembayaran yang tersedia.</p>
-          </div>
-        </div>
-
-        <input
-          type="hidden"
-          id="payment"
-          name="payment"
-        >
-
-
-        <!-- QRIS -->
-        <div class="payment-category">
-
-          <button
-            type="button"
-            class="payment-category-header"
-          >
-            <span>QRIS</span>
-            <span>+</span>
-          </button>
-
-          <div class="payment-category-content">
-
-            <button
-              type="button"
-              class="payment-option"
-              data-payment-id="qris"
-              data-payment-name="QRIS"
-              data-fee="2500"
-              data-fee-type="fixed"
-            >
-              <span class="payment-option-name">
-                QRIS
-              </span>
-
-              <span class="payment-option-fee">
-                + Rp2.500
-              </span>
-            </button>
-
-          </div>
-
-        </div>
-
-
-        <!-- E-WALLET -->
-        <div class="payment-category">
-
-          <button
-            type="button"
-            class="payment-category-header"
-          >
-            <span>E-Wallet</span>
-            <span>+</span>
-          </button>
-
-          <div class="payment-category-content">
-
-            <button
-              type="button"
-              class="payment-option"
-              data-payment-id="dana"
-              data-payment-name="DANA"
-              data-fee="1500"
-              data-fee-type="fixed"
-            >
-              <span class="payment-option-name">DANA</span>
-              <span class="payment-option-fee">+ Rp1.500</span>
-            </button>
-
-
-            <button
-              type="button"
-              class="payment-option"
-              data-payment-id="ovo"
-              data-payment-name="OVO"
-              data-fee="1500"
-              data-fee-type="fixed"
-            >
-              <span class="payment-option-name">OVO</span>
-              <span class="payment-option-fee">+ Rp1.500</span>
-            </button>
-
-
-            <button
-              type="button"
-              class="payment-option"
-              data-payment-id="shopeepay"
-              data-payment-name="ShopeePay"
-              data-fee="1500"
-              data-fee-type="fixed"
-            >
-              <span class="payment-option-name">ShopeePay</span>
-              <span class="payment-option-fee">+ Rp1.500</span>
-            </button>
-
-
-            <button
-              type="button"
-              class="payment-option"
-              data-payment-id="linkaja"
-              data-payment-name="LinkAja"
-              data-fee="1500"
-              data-fee-type="fixed"
-            >
-              <span class="payment-option-name">LinkAja</span>
-              <span class="payment-option-fee">+ Rp1.500</span>
-            </button>
-
-          </div>
-
-        </div>
-
-
-        <!-- VIRTUAL ACCOUNT -->
-        <div class="payment-category">
-
-          <button
-            type="button"
-            class="payment-category-header"
-          >
-            <span>Virtual Account</span>
-            <span>+</span>
-          </button>
-
-          <div class="payment-category-content">
-
-            <button
-              type="button"
-              class="payment-option"
-              data-payment-id="bni-va"
-              data-payment-name="BNI Virtual Account"
-              data-fee="15000"
-              data-fee-type="fixed"
-            >
-              <span class="payment-option-name">
-                BNI Virtual Account
-              </span>
-              <span class="payment-option-fee">
-                + Rp15.000
-              </span>
-            </button>
-
-
-            <button
-              type="button"
-              class="payment-option"
-              data-payment-id="maybank-va"
-              data-payment-name="Maybank Virtual Account"
-              data-fee="15000"
-              data-fee-type="fixed"
-            >
-              <span class="payment-option-name">
-                Maybank Virtual Account
-              </span>
-              <span class="payment-option-fee">
-                + Rp15.000
-              </span>
-            </button>
-
-
-            <button
-              type="button"
-              class="payment-option"
-              data-payment-id="danamon-va"
-              data-payment-name="Danamon Virtual Account"
-              data-fee="15000"
-              data-fee-type="fixed"
-            >
-              <span class="payment-option-name">
-                Danamon Virtual Account
-              </span>
-              <span class="payment-option-fee">
-                + Rp15.000
-              </span>
-            </button>
-
-
-            <button
-              type="button"
-              class="payment-option"
-              data-payment-id="mandiri-va"
-              data-payment-name="Mandiri Virtual Account"
-              data-fee="15000"
-              data-fee-type="fixed"
-            >
-              <span class="payment-option-name">
-                Mandiri Virtual Account
-              </span>
-              <span class="payment-option-fee">
-                + Rp15.000
-              </span>
-            </button>
-
-
-            <button
-              type="button"
-              class="payment-option"
-              data-payment-id="btn-va"
-              data-payment-name="BTN Virtual Account"
-              data-fee="15000"
-              data-fee-type="fixed"
-            >
-              <span class="payment-option-name">
-                BTN Virtual Account
-              </span>
-              <span class="payment-option-fee">
-                + Rp15.000
-              </span>
-            </button>
-
-
-            <button
-              type="button"
-              class="payment-option"
-              data-payment-id="doku-va"
-              data-payment-name="DOKU Virtual Account"
-              data-fee="15000"
-              data-fee-type="fixed"
-            >
-              <span class="payment-option-name">
-                DOKU Virtual Account
-              </span>
-              <span class="payment-option-fee">
-                + Rp15.000
-              </span>
-            </button>
-
-
-            <button
-              type="button"
-              class="payment-option"
-              data-payment-id="cimb-va"
-              data-payment-name="CIMB Niaga Virtual Account"
-              data-fee="18536"
-              data-fee-type="fixed"
-            >
-              <span class="payment-option-name">
-                CIMB Niaga Virtual Account
-              </span>
-              <span class="payment-option-fee">
-                + Rp18.536
-              </span>
-            </button>
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <!-- CONTACT -->
-      <div class="checkout-section">
-
-        <div class="section-heading">
-          <div>
-            <h2>Kontak</h2>
-            <p>Gunakan kontak aktif untuk menerima informasi pesanan.</p>
-          </div>
-        </div>
-
-        <div class="player-grid">
-
-          <div class="form-group">
-
-            <label for="contactEmail">
-              Email
-            </label>
-
-            <input
-              type="email"
-              id="contactEmail"
-              name="contactEmail"
-              placeholder="email@example.com"
-              autocomplete="email"
-              required
-            >
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label for="contactWhatsapp">
-              WhatsApp
-            </label>
-
-            <div class="whatsapp-input">
-
-              <select
-                id="countryCode"
-                aria-label="Kode negara"
-              >
-                <option value="+62" selected>
-                  🇮🇩 +62
-                </option>
-
-                <option value="+60">
-                  🇲🇾 +60
-                </option>
-
-                <option value="+65">
-                  🇸🇬 +65
-                </option>
-
-                <option value="+63">
-                  🇵🇭 +63
-                </option>
-
-                <option value="+66">
-                  🇹🇭 +66
-                </option>
-
-                <option value="+84">
-                  🇻🇳 +84
-                </option>
-
-                <option value="+91">
-                  🇮🇳 +91
-                </option>
-
-                <option value="+81">
-                  🇯🇵 +81
-                </option>
-
-                <option value="+82">
-                  🇰🇷 +82
-                </option>
-
-                <option value="+86">
-                  🇨🇳 +86
-                </option>
-
-                <option value="+1">
-                  🇺🇸 +1
-                </option>
-
-                <option value="+44">
-                  🇬🇧 +44
-                </option>
-              </select>
-
-
-              <input
-                type="tel"
-                id="contactWhatsapp"
-                name="contactWhatsapp"
-                placeholder="81234567890"
-                inputmode="numeric"
-                autocomplete="tel"
-                required
-              >
+              </div>
 
             </div>
 
@@ -546,114 +127,845 @@
 
         </div>
 
+
+        <!-- CHECKOUT GRID -->
+
+        <div class="checkout-layout">
+
+
+          <!-- =====================
+               LEFT
+          ====================== -->
+
+          <div class="checkout-main">
+
+
+            <!-- GAME -->
+
+            <section class="checkout-card">
+
+              <div class="checkout-card-header">
+
+                <span class="checkout-step">
+                  1
+                </span>
+
+                <div>
+
+                  <h2>
+                    Pilih Game
+                  </h2>
+
+                  <p>
+                    Pilih game yang ingin kamu top up.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="form-group">
+
+                <label for="game">
+                  Game
+                </label>
+
+                <select
+                  id="game"
+                  name="game"
+                >
+
+                  <option value="">
+                    Pilih Game
+                  </option>
+
+                </select>
+
+              </div>
+
+            </section>
+
+
+            <!-- PLAYER -->
+
+            <section class="checkout-card">
+
+              <div class="checkout-card-header">
+
+                <span class="checkout-step">
+                  2
+                </span>
+
+                <div>
+
+                  <h2>
+                    Data Akun
+                  </h2>
+
+                  <p>
+                    Masukkan data akun game kamu.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="form-grid">
+
+
+                <div class="form-group">
+
+                  <label for="playerId">
+                    Player ID
+                  </label>
+
+                  <input
+                    type="text"
+                    id="playerId"
+                    name="playerId"
+                    placeholder="Masukkan Player ID"
+                    autocomplete="off"
+                  >
+
+                </div>
+
+
+                <div class="form-group">
+
+                  <label for="server">
+                    Server
+                  </label>
+
+                  <input
+                    type="text"
+                    id="server"
+                    name="server"
+                    placeholder="Masukkan Server"
+                    autocomplete="off"
+                  >
+
+                </div>
+
+
+              </div>
+
+            </section>
+
+
+            <!-- NOMINAL -->
+
+            <section class="checkout-card">
+
+              <div class="checkout-card-header">
+
+                <span class="checkout-step">
+                  3
+                </span>
+
+                <div>
+
+                  <h2>
+                    Pilih Nominal
+                  </h2>
+
+                  <p>
+                    Pilih nominal top up yang tersedia.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <input
+                type="hidden"
+                id="nominal"
+                name="nominal"
+              >
+
+
+              <div
+                id="denominationList"
+                class="denomination-list"
+              >
+
+                <div class="checkout-loading">
+                  Pilih game terlebih dahulu.
+                </div>
+
+              </div>
+
+            </section>
+
+
+            <!-- QUANTITY -->
+
+            <section class="checkout-card">
+
+              <div class="checkout-card-header">
+
+                <span class="checkout-step">
+                  4
+                </span>
+
+                <div>
+
+                  <h2>
+                    Jumlah
+                  </h2>
+
+                  <p>
+                    Tentukan jumlah pembelian.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="quantity-control">
+
+                <button
+                  type="button"
+                  id="quantityMinus"
+                  aria-label="Kurangi jumlah"
+                >
+                  −
+                </button>
+
+
+                <input
+                  type="number"
+                  id="quantity"
+                  name="quantity"
+                  value="1"
+                  min="1"
+                  max="99"
+                  inputmode="numeric"
+                >
+
+
+                <button
+                  type="button"
+                  id="quantityPlus"
+                  aria-label="Tambah jumlah"
+                >
+                  +
+                </button>
+
+              </div>
+
+            </section>
+
+
+            <!-- PAYMENT -->
+
+            <section class="checkout-card">
+
+              <div class="checkout-card-header">
+
+                <span class="checkout-step">
+                  5
+                </span>
+
+                <div>
+
+                  <h2>
+                    Metode Pembayaran
+                  </h2>
+
+                  <p>
+                    Pilih metode pembayaran yang tersedia.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <input
+                type="hidden"
+                id="payment"
+                name="payment"
+              >
+
+
+              <div class="payment-list">
+
+
+                <!-- QRIS -->
+
+                <div class="payment-category open">
+
+                  <button
+                    type="button"
+                    class="payment-category-header"
+                  >
+
+                    <span>
+                      QRIS
+                    </span>
+
+                    <span>
+                      +
+                    </span>
+
+                  </button>
+
+
+                  <div class="payment-category-body">
+
+                    <button
+                      type="button"
+                      class="payment-option"
+                      data-payment-id="qris"
+                      data-payment-name="QRIS"
+                      data-fee="0"
+                      data-fee-type="fixed"
+                    >
+
+                      <span>
+                        QRIS
+                      </span>
+
+                      <small>
+                        Scan & bayar
+                      </small>
+
+                    </button>
+
+                  </div>
+
+                </div>
+
+
+                <!-- E-WALLET -->
+
+                <div class="payment-category">
+
+                  <button
+                    type="button"
+                    class="payment-category-header"
+                  >
+
+                    <span>
+                      E-Wallet
+                    </span>
+
+                    <span>
+                      +
+                    </span>
+
+                  </button>
+
+
+                  <div class="payment-category-body">
+
+                    <button
+                      type="button"
+                      class="payment-option"
+                      data-payment-id="dana"
+                      data-payment-name="DANA"
+                      data-fee="0"
+                      data-fee-type="fixed"
+                    >
+
+                      <span>
+                        DANA
+                      </span>
+
+                    </button>
+
+
+                    <button
+                      type="button"
+                      class="payment-option"
+                      data-payment-id="ovo"
+                      data-payment-name="OVO"
+                      data-fee="0"
+                      data-fee-type="fixed"
+                    >
+
+                      <span>
+                        OVO
+                      </span>
+
+                    </button>
+
+
+                    <button
+                      type="button"
+                      class="payment-option"
+                      data-payment-id="shopeepay"
+                      data-payment-name="ShopeePay"
+                      data-fee="0"
+                      data-fee-type="fixed"
+                    >
+
+                      <span>
+                        ShopeePay
+                      </span>
+
+                    </button>
+
+
+                    <button
+                      type="button"
+                      class="payment-option"
+                      data-payment-id="linkaja"
+                      data-payment-name="LinkAja"
+                      data-fee="0"
+                      data-fee-type="fixed"
+                    >
+
+                      <span>
+                        LinkAja
+                      </span>
+
+                    </button>
+
+                  </div>
+
+                </div>
+
+
+                <!-- VIRTUAL ACCOUNT -->
+
+                <div class="payment-category">
+
+                  <button
+                    type="button"
+                    class="payment-category-header"
+                  >
+
+                    <span>
+                      Virtual Account
+                    </span>
+
+                    <span>
+                      +
+                    </span>
+
+                  </button>
+
+
+                  <div class="payment-category-body">
+
+
+                    <button
+                      type="button"
+                      class="payment-option"
+                      data-payment-id="bni-va"
+                      data-payment-name="BNI VA"
+                      data-fee="0"
+                      data-fee-type="fixed"
+                    >
+                      <span>
+                        BNI VA
+                      </span>
+                    </button>
+
+
+                    <button
+                      type="button"
+                      class="payment-option"
+                      data-payment-id="maybank-va"
+                      data-payment-name="Maybank VA"
+                      data-fee="0"
+                      data-fee-type="fixed"
+                    >
+                      <span>
+                        Maybank VA
+                      </span>
+                    </button>
+
+
+                    <button
+                      type="button"
+                      class="payment-option"
+                      data-payment-id="danamon-va"
+                      data-payment-name="Danamon VA"
+                      data-fee="0"
+                      data-fee-type="fixed"
+                    >
+                      <span>
+                        Danamon VA
+                      </span>
+                    </button>
+
+
+                    <button
+                      type="button"
+                      class="payment-option"
+                      data-payment-id="mandiri-va"
+                      data-payment-name="Mandiri VA"
+                      data-fee="0"
+                      data-fee-type="fixed"
+                    >
+                      <span>
+                        Mandiri VA
+                      </span>
+                    </button>
+
+
+                    <button
+                      type="button"
+                      class="payment-option"
+                      data-payment-id="btn-va"
+                      data-payment-name="BTN VA"
+                      data-fee="0"
+                      data-fee-type="fixed"
+                    >
+                      <span>
+                        BTN VA
+                      </span>
+                    </button>
+
+
+                    <button
+                      type="button"
+                      class="payment-option"
+                      data-payment-id="doku-va"
+                      data-payment-name="DOKU VA"
+                      data-fee="0"
+                      data-fee-type="fixed"
+                    >
+                      <span>
+                        DOKU VA
+                      </span>
+                    </button>
+
+
+                    <button
+                      type="button"
+                      class="payment-option"
+                      data-payment-id="cimb-va"
+                      data-payment-name="CIMB Niaga VA"
+                      data-fee="0"
+                      data-fee-type="fixed"
+                    >
+                      <span>
+                        CIMB Niaga VA
+                      </span>
+                    </button>
+
+                  </div>
+
+                </div>
+
+
+              </div>
+
+            </section>
+
+
+            <!-- CONTACT -->
+
+            <section class="checkout-card">
+
+              <div class="checkout-card-header">
+
+                <span class="checkout-step">
+                  6
+                </span>
+
+                <div>
+
+                  <h2>
+                    Kontak
+                  </h2>
+
+                  <p>
+                    Digunakan untuk informasi pesanan.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="form-group">
+
+                <label for="contactEmail">
+                  Email
+                </label>
+
+                <input
+                  type="email"
+                  id="contactEmail"
+                  name="contactEmail"
+                  placeholder="nama@email.com"
+                  autocomplete="email"
+                >
+
+              </div>
+
+
+              <div class="form-group">
+
+                <label for="contactWhatsapp">
+                  WhatsApp
+                </label>
+
+
+                <div class="whatsapp-input">
+
+                  <select
+                    id="countryCode"
+                    name="countryCode"
+                  >
+
+                    <option value="+62">
+                      +62
+                    </option>
+
+                  </select>
+
+
+                  <input
+                    type="tel"
+                    id="contactWhatsapp"
+                    name="contactWhatsapp"
+                    placeholder="81234567890"
+                    autocomplete="tel"
+                  >
+
+                </div>
+
+              </div>
+
+            </section>
+
+
+            <!-- PROMO -->
+
+            <section class="checkout-card">
+
+              <div class="checkout-card-header">
+
+                <span class="checkout-step">
+                  7
+                </span>
+
+                <div>
+
+                  <h2>
+                    Kode Promo
+                  </h2>
+
+                  <p>
+                    Punya kode promo? Masukkan di sini.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="promo-form">
+
+                <input
+                  type="text"
+                  id="promoCode"
+                  name="promoCode"
+                  placeholder="Masukkan kode promo"
+                  autocomplete="off"
+                >
+
+
+                <button
+                  type="button"
+                  id="promoButton"
+                >
+                  Gunakan
+                </button>
+
+              </div>
+
+
+              <div
+                id="promoMessage"
+                class="promo-message"
+              ></div>
+
+            </section>
+
+
+          </div>
+
+
+          <!-- =====================
+               RIGHT SUMMARY
+          ====================== -->
+
+          <aside class="checkout-sidebar">
+
+            <div class="checkout-summary">
+
+              <div class="checkout-summary-header">
+
+                <span class="eyebrow">
+                  RINGKASAN
+                </span>
+
+                <h2>
+                  Pesanan Kamu
+                </h2>
+
+              </div>
+
+
+              <div class="summary-list">
+
+
+                <div class="summary-row">
+
+                  <span>
+                    Game
+                  </span>
+
+                  <strong id="summaryName">
+                    —
+                  </strong>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                  <span>
+                    Nominal
+                  </span>
+
+                  <strong id="summaryDenomination">
+                    —
+                  </strong>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                  <span>
+                    Jumlah
+                  </span>
+
+                  <strong id="summaryQuantity">
+                    1
+                  </strong>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                  <span>
+                    Pembayaran
+                  </span>
+
+                  <strong id="summaryPayment">
+                    —
+                  </strong>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                  <span>
+                    Biaya
+                  </span>
+
+                  <strong id="summaryFee">
+                    Rp0
+                  </strong>
+
+                </div>
+
+
+              </div>
+
+
+              <div class="summary-total">
+
+                <span>
+                  Total
+                </span>
+
+                <strong id="summaryPrice">
+                  Rp0
+                </strong>
+
+              </div>
+
+
+              <form id="checkoutForm">
+
+                <button
+                  type="submit"
+                  class="checkout-submit"
+                >
+                  Lanjutkan Pembayaran
+                </button>
+
+              </form>
+
+
+              <p class="checkout-note">
+                Pastikan Player ID, server, nominal,
+                dan metode pembayaran sudah benar.
+              </p>
+
+            </div>
+
+          </aside>
+
+
+        </div>
+
       </div>
 
+    </section>
 
-      <!-- PROMO -->
-      <div class="checkout-section">
+  </main>
 
-        <div class="section-heading">
-          <div>
-            <h2>Kode Promo</h2>
-            <p>Punya kode promo? Masukkan di sini.</p>
-          </div>
-        </div>
 
-        <div class="promo-row">
+  <!-- =========================
+       FOOTER
+  ========================== -->
 
-          <input
-            type="text"
-            id="promoCode"
-            name="promoCode"
-            placeholder="Masukkan kode promo"
-            autocomplete="off"
-          >
+  <footer class="site-footer">
 
-          <button
-            type="button"
-            id="promoButton"
-          >
-            Gunakan
-          </button>
+    <div class="container">
 
-        </div>
+      <div>
 
-        <div
-          id="promoMessage"
-          class="promo-message"
-        ></div>
+        <strong>
+          LEOOSTORE
+        </strong>
+
+        <span>
+          © 2026 LEOOSTORE
+        </span>
 
       </div>
 
+    </div>
 
-      <!-- SUMMARY -->
-      <div class="checkout-summary">
-
-        <div class="section-heading">
-
-          <div>
-            <h2>Ringkasan Pesanan</h2>
-            <p>Periksa kembali pesanan sebelum membayar.</p>
-          </div>
-
-        </div>
+  </footer>
 
 
-        <div class="summary-list">
+  <!-- =========================
+       SCRIPTS
+  ========================== -->
 
-          <div class="summary-row">
-            <span>Game</span>
-            <strong id="summaryName">-</strong>
-          </div>
+  <script src="js/products.js"></script>
 
-
-          <div class="summary-row">
-            <span>Nominal</span>
-            <strong id="summaryDenomination">-</strong>
-          </div>
+  <script src="js/checkout.js"></script>
 
 
-          <div class="summary-row">
-            <span>Jumlah</span>
-            <strong id="summaryQuantity">1</strong>
-          </div>
+</body>
 
-
-          <div class="summary-row">
-            <span>Pembayaran</span>
-            <strong id="summaryPayment">-</strong>
-          </div>
-
-
-          <div class="summary-row">
-            <span>Biaya</span>
-            <strong id="summaryFee">Rp0</strong>
-          </div>
-
-
-          <div class="summary-row summary-total">
-            <span>Total</span>
-            <strong id="summaryPrice">Rp0</strong>
-          </div>
-
-        </div>
-
-
-        <button
-          type="submit"
-          class="btn btn-primary checkout-submit"
-        >
-          Lanjut ke Pembayaran
-        </button>
-
-      </div>
-
-
-    </form>
-
-  </div>
-
-</section>
-
-  </main>  <!-- SCRIPTS -->  <script src="js/products.js"></script>  <script src="js/checkout.js"></script></body>
 </html>
