@@ -4075,3 +4075,40 @@ body.order-page .order-container {
   margin-left: auto !important;
   margin-right: auto !important;
 }
+/* =========================================================
+   LEOOSTORE — FOOTER CENTER
+   ========================================================= */
+
+.site-footer {
+  width: 100% !important;
+  text-align: center !important;
+}
+
+.site-footer .container {
+  width: 100% !important;
+  max-width: 100% !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-direction: column !important;
+
+  text-align: center !important;
+}
+
+.site-footer .footer-brand-line {
+  width: 100% !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  flex-wrap: wrap !important;
+
+  text-align: center !important;
+}
+
+.site-footer .footer-tagline {
+  margin: 0 !important;
+  opacity: 0.6 !important;
+}
