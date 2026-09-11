@@ -2534,3 +2534,224 @@ span:last-child {
     font-size: 9px !important;
   }
 }
+/* =========================================================
+   LEOOSTORE — CHECKOUT RENOVATION
+   ========================================================= */
+
+/* 1. HILANGKAN CARD "PILIH GAME"
+   Select #game tetap ada di DOM supaya checkout.js tetap bekerja.
+*/
+.checkout-main > .checkout-card:first-child {
+  display: none !important;
+}
+
+
+/* 2. DATA AKUN — PLAYER ID & SERVER SATU BARIS */
+.checkout-main > .checkout-card:nth-child(2) .form-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+}
+
+.checkout-main > .checkout-card:nth-child(2) .form-group {
+  min-width: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+
+/* 3. DELIVERY — COMPACT DI POJOK KANAN BAWAH CARD NOMINAL */
+.denomination-option {
+  overflow: hidden !important;
+}
+
+.denomination-delivery {
+  width: auto !important;
+  min-width: 0 !important;
+  margin-left: auto !important;
+
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+
+  color: var(--text-soft) !important;
+}
+
+.denomination-delivery-text {
+  width: max-content !important;
+  max-width: 105px !important;
+
+  display: grid !important;
+  grid-template-columns: 25px auto !important;
+  align-items: center !important;
+
+  gap: 6px !important;
+
+  color: var(--text-soft) !important;
+  font-size: 9px !important;
+  line-height: 1.05 !important;
+  text-align: left !important;
+}
+
+/* Logo petir */
+.denomination-delivery-text::before {
+  content: "ᯓ⚡︎" !important;
+
+  width: 25px !important;
+  min-width: 25px !important;
+  height: 28px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  color: var(--primary) !important;
+
+  font-size: 20px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+}
+
+/* Pengiriman */
+.denomination-delivery-text span {
+  display: block !important;
+
+  color: var(--text-muted) !important;
+
+  font-size: 8px !important;
+  line-height: 1.05 !important;
+}
+
+/* Cepat */
+.denomination-delivery-text strong {
+  display: block !important;
+
+  margin-top: 2px !important;
+
+  color: var(--primary) !important;
+
+  font-size: 9px !important;
+  line-height: 1.05 !important;
+}
+
+
+/* =========================================================
+   4. PAYMENT ACCORDION
+   ========================================================= */
+
+/* Header tetap diam */
+.payment-category-header span:last-child,
+.payment-category.open .payment-category-header span:last-child {
+  transform: none !important;
+  transition: none !important;
+  animation: none !important;
+}
+
+/* Tidak ada animasi buka/tutup */
+.payment-category-body,
+.payment-category.open .payment-category-body {
+  transform: none !important;
+  opacity: 1 !important;
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Default: tertutup */
+.payment-category-body {
+  display: none !important;
+}
+
+/* Saat dibuka: langsung muncul */
+.payment-category.open .payment-category-body {
+  display: grid !important;
+}
+
+
+/* =========================================================
+   5. QRIS — 1 KOLOM
+   ========================================================= */
+
+.payment-category:first-child .payment-category-body {
+  grid-template-columns: 1fr !important;
+}
+
+
+/* =========================================================
+   6. E-WALLET — 2 KOLOM × 2 BARIS
+   ========================================================= */
+
+.payment-category:nth-child(2) .payment-category-body {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+}
+
+
+/* =========================================================
+   7. VIRTUAL ACCOUNT — 2 KOLOM
+   ========================================================= */
+
+.payment-category:nth-child(3) .payment-category-body {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+}
+
+
+/* Payment option lebih rapi */
+.payment-option {
+  min-width: 0 !important;
+  min-height: 48px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+
+  padding: 12px !important;
+
+  transition: none !important;
+}
+
+
+/* =========================================================
+   8. MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  /* Player ID | Server tetap kanan-kiri */
+  .checkout-main > .checkout-card:nth-child(2) .form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+
+  /* E-Wallet tetap 2 kolom */
+  .payment-category:nth-child(2) .payment-category-body,
+  .payment-category:nth-child(3) .payment-category-body {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+
+  .payment-option {
+    padding: 11px 10px !important;
+    font-size: 12px !important;
+  }
+
+  .denomination-delivery-text {
+    max-width: 95px !important;
+    grid-template-columns: 22px auto !important;
+    gap: 5px !important;
+    font-size: 8px !important;
+  }
+
+  .denomination-delivery-text::before {
+    width: 22px !important;
+    min-width: 22px !important;
+    font-size: 18px !important;
+  }
+
+  .denomination-delivery-text span {
+    font-size: 7px !important;
+  }
+
+  .denomination-delivery-text strong {
+    font-size: 8px !important;
+  }
+}
