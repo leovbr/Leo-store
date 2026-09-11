@@ -1,609 +1,701 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>LEOOSTORE — Top Up Game</title><meta
+name="description"
+content="LEOOSTORE — Top up game cepat, aman, dan praktis."
 
-  <title>LEOOSTORE — Top Up Game</title>
-
-  <meta
-    name="description"
-    content="LEOOSTORE — Top up game cepat, aman, dan praktis."
-  >
+«»
 
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/style-pages.css">
-</head>
-
-<body class="home-page">
-
-<!-- =========================
+</head><body class="home-page"><!-- =========================
      HEADER
-========================== -->
-<header class="site-header home-header">
-  <div class="container header-inner">
+========================== --><header class="site-header home-header">
+  <div class="container header-inner"><a href="index.html" class="header-brand">
+  <img
+    src="assets/logo-1.webp"
+    alt="LEOOSTORE"
+    class="header-logo"
+  >
 
-    <!-- LOGO -->
-    <a href="index.html" class="header-brand">
-      <img
-        src="assets/logo-1.webp"
-        alt="LEOOSTORE"
-        class="header-logo"
-      >
+  <span class="header-brand-text">
+    LEOOSTORE
+  </span>
+</a>
 
-      <span class="header-brand-text">
-        LEOOSTORE
-      </span>
-    </a>
+<div class="header-actions">
 
+  <button
+    type="button"
+    class="header-action search-button"
+    id="searchButton"
+    aria-label="Cari"
+  >
+    <span class="header-icon">⌕</span>
+  </button>
 
-    <!-- HEADER ACTIONS -->
-    <div class="header-actions">
+  <button
+    type="button"
+    class="currency-selector"
+    id="currencySelector"
+  >
+    <span class="country-flag">🇮🇩</span>
+    <span>ID / IDR</span>
+  </button>
 
-      <!-- SEARCH -->
-      <button
-        type="button"
-        class="header-action search-button"
-        id="searchButton"
-        aria-label="Cari"
-      >
-        <span class="header-icon">⌕</span>
-      </button>
-
-
-      <!-- COUNTRY / CURRENCY -->
-      <button
-        type="button"
-        class="currency-selector"
-        id="currencySelector"
-      >
-        <span class="country-flag">🇮🇩</span>
-        <span>ID / IDR</span>
-      </button>
-
-
-      <!-- MENU -->
-      <button
-        type="button"
-        class="header-action menu-button"
-        id="menuButton"
-        aria-label="Buka menu"
-        aria-expanded="false"
-      >
-        <span class="menu-icon">
-          <span></span>
-          <span></span>
-          <span></span>
-        </span>
-      </button>
-
-    </div>
-
-  </div>
-</header>
-
-
-<!-- =========================
-     SEARCH PANEL
-========================== -->
-<div class="search-panel" id="searchPanel">
-
-  <div class="search-panel-inner">
-
-    <input
-      type="search"
-      id="siteSearch"
-      placeholder="Cari game..."
-      autocomplete="off"
-    >
-
-    <button
-      type="button"
-      id="searchClose"
-      aria-label="Tutup pencarian"
-    >
-      ×
-    </button>
-
-  </div>
+  <button
+    type="button"
+    class="header-action menu-button"
+    id="menuButton"
+    aria-label="Buka menu"
+    aria-expanded="false"
+  >
+    <span class="menu-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </span>
+  </button>
 
 </div>
 
+  </div>
+</header><!-- =========================
+     SEARCH PANEL
+========================== --><div class="search-panel" id="searchPanel">  <div class="search-panel-inner"><input
+  type="search"
+  id="siteSearch"
+  placeholder="Cari game..."
+  autocomplete="off"
+>
 
-<!-- =========================
+<button
+  type="button"
+  id="searchClose"
+  aria-label="Tutup pencarian"
+>
+  ×
+</button>
+
+  </div></div><!-- =========================
      MENU OVERLAY
-========================== -->
-<div
+========================== --><div
   class="menu-overlay"
   id="menuOverlay"
-></div>
-
-
-<!-- =========================
+></div><!-- =========================
      SIDE MENU
-========================== -->
-<aside
+========================== --><aside
   class="side-menu"
   id="sideMenu"
   aria-hidden="true"
+>  <div class="side-menu-header"><a href="index.html" class="side-menu-brand">
+  LEOOSTORE
+</a>
+
+<button
+  type="button"
+  class="side-menu-close"
+  id="menuClose"
+  aria-label="Tutup menu"
 >
+  ×
+</button>
 
-  <!-- MENU HEADER -->
-  <div class="side-menu-header">
+  </div>  <div class="side-menu-divider"></div>  <nav class="side-menu-nav"><a
+  href="shop.html"
+  class="side-menu-item"
+>
+  <span>Top Up</span>
+  <span class="side-menu-icon">🛒</span>
+</a>
 
-    <a href="index.html" class="side-menu-brand">
-      LEOOSTORE
-    </a>
+<a
+  href="order.html"
+  class="side-menu-item"
+>
+  <span>Cek Transaksi</span>
+  <span class="side-menu-icon">✓</span>
+</a>
 
-    <button
-      type="button"
-      class="side-menu-close"
-      id="menuClose"
-      aria-label="Tutup menu"
-    >
-      ×
-    </button>
+<a
+  href="#"
+  class="side-menu-item"
+>
+  <span>Leaderboard</span>
+  <span class="side-menu-icon">🏆</span>
+</a>
+
+<a
+  href="#"
+  class="side-menu-item"
+>
+  <span>Artikel</span>
+  <span class="side-menu-icon">📰</span>
+</a>
+
+<a
+  href="#"
+  class="side-menu-item"
+>
+  <span>Kalkulator</span>
+  <span class="side-menu-arrow">→</span>
+</a>
+
+<a
+  href="#"
+  class="side-menu-item side-menu-login"
+>
+  <span>Masuk</span>
+  <span class="side-menu-icon">⇥</span>
+</a>
+
+  </nav></aside><main>  <!-- =========================
+       PROMO / BANNER
+  ========================== -->  <section class="home-banner-section"><div class="container">
+
+  <div class="section-heading">
+
+    <span class="eyebrow">
+      EVENT & PROMO
+    </span>
+
+    <h1>
+      Top Up Lebih Mudah
+    </h1>
+
+    <p>
+      Pilih game favoritmu dan mulai top up sekarang.
+    </p>
 
   </div>
 
 
-  <div class="side-menu-divider"></div>
-
-
-  <!-- MENU ITEMS -->
-  <nav class="side-menu-nav">
-
-    <a
-      href="shop.html"
-      class="side-menu-item"
-    >
-      <span>Top Up</span>
-      <span class="side-menu-icon">🛒</span>
-    </a>
-
-
-    <a
-      href="order.html"
-      class="side-menu-item"
-    >
-      <span>Cek Transaksi</span>
-      <span class="side-menu-icon">✓</span>
-    </a>
-
-
-    <a
-      href="#"
-      class="side-menu-item"
-    >
-      <span>Leaderboard</span>
-      <span class="side-menu-icon">🏆</span>
-    </a>
-
-
-    <a
-      href="#"
-      class="side-menu-item"
-    >
-      <span>Artikel</span>
-      <span class="side-menu-icon">📰</span>
-    </a>
-
-
-    <a
-      href="#"
-      class="side-menu-item"
-    >
-      <span>Kalkulator</span>
-      <span class="side-menu-arrow">→</span>
-    </a>
-
-
-    <a
-      href="#"
-      class="side-menu-item side-menu-login"
-    >
-      <span>Masuk</span>
-      <span class="side-menu-icon">⇥</span>
-    </a>
-
-  </nav>
-
-</aside>
-
-
-  <main>
-
-    
-
-
-    <!-- =========================
-         PROMO / BANNER
-    ========================== -->
-    <section class="home-banner-section">
-
-      <div class="container">
-
-        <div class="section-heading">
-
-          <span class="eyebrow">
-            EVENT & PROMO
-          </span>
-
-          <h1>
-            Top Up Lebih Mudah
-          </h1>
-
-          <p>
-            Pilih game favoritmu dan mulai top up sekarang.
-          </p>
-
-        </div>
-
-
-        <div class="banner-carousel">
-
-          <div class="banner-track">
-
-            <!-- MOBILE LEGENDS -->
-            <a
-              href="checkout.html?game=mobile-legends"
-              class="home-banner-slide"
-            >
-
-              <img
-                src="assets/icons/mobile-legends.webp"
-                alt="Mobile Legends"
-              >
-
-              <div class="home-banner-overlay">
-
-                <div>
-                  <span>
-                    TOP UP SEKARANG
-                  </span>
-
-                  <strong>
-                    Mobile Legends
-                  </strong>
-                </div>
-
-                <b>→</b>
-
-              </div>
-
-            </a>
-
-
-            <!-- FREE FIRE -->
-            <a
-              href="checkout.html?game=free-fire"
-              class="home-banner-slide"
-            >
-
-              <img
-                src="assets/icons/free-fire.webp"
-                alt="Free Fire"
-              >
-
-              <div class="home-banner-overlay">
-
-                <div>
-                  <span>
-                    TOP UP SEKARANG
-                  </span>
-
-                  <strong>
-                    Free Fire
-                  </strong>
-                </div>
-
-                <b>→</b>
-
-              </div>
-
-            </a>
-
-
-            <!-- ROBLOX -->
-            <a
-              href="checkout.html?game=roblox"
-              class="home-banner-slide"
-            >
-
-              <img
-                src="assets/icons/roblox.webp"
-                alt="Roblox"
-              >
-
-              <div class="home-banner-overlay">
-
-                <div>
-                  <span>
-                    TOP UP SEKARANG
-                  </span>
-
-                  <strong>
-                    Roblox
-                  </strong>
-                </div>
-
-                <b>→</b>
-
-              </div>
-
-            </a>
-
-
-            <!-- PUBG MOBILE -->
-            <a
-              href="checkout.html?game=pubg-mobile"
-              class="home-banner-slide"
-            >
-
-              <img
-                src="assets/icons/pubg-mobile.webp"
-                alt="PUBG Mobile"
-              >
-
-              <div class="home-banner-overlay">
-
-                <div>
-                  <span>
-                    TOP UP SEKARANG
-                  </span>
-
-                  <strong>
-                    PUBG Mobile
-                  </strong>
-                </div>
-
-                <b>→</b>
-
-              </div>
-
-            </a>
-
+  <div class="banner-carousel">
+
+    <div class="banner-track">
+
+      <!-- MOBILE LEGENDS -->
+      <a
+        href="checkout.html?game=mobile-legends"
+        class="home-banner-slide"
+      >
+
+        <img
+          src="assets/icons/mobile-legends.webp"
+          alt="Mobile Legends"
+        >
+
+        <div class="home-banner-overlay">
+
+          <div>
+            <span>
+              TOP UP SEKARANG
+            </span>
+
+            <strong>
+              Mobile Legends
+            </strong>
           </div>
 
-
-          <button
-            type="button"
-            class="banner-arrow banner-arrow-left"
-            id="bannerPrev"
-            aria-label="Banner sebelumnya"
-          >
-            ‹
-          </button>
-
-
-          <button
-            type="button"
-            class="banner-arrow banner-arrow-right"
-            id="bannerNext"
-            aria-label="Banner berikutnya"
-          >
-            ›
-          </button>
-
-
-          <div
-            class="banner-dots"
-            id="bannerDots"
-          ></div>
+          <b>→</b>
 
         </div>
 
+      </a>
+
+
+      <!-- FREE FIRE -->
+      <a
+        href="checkout.html?game=free-fire"
+        class="home-banner-slide"
+      >
+
+        <img
+          src="assets/icons/free-fire.webp"
+          alt="Free Fire"
+        >
+
+        <div class="home-banner-overlay">
+
+          <div>
+            <span>
+              TOP UP SEKARANG
+            </span>
+
+            <strong>
+              Free Fire
+            </strong>
+          </div>
+
+          <b>→</b>
+
+        </div>
+
+      </a>
+
+
+      <!-- ROBLOX -->
+      <a
+        href="checkout.html?game=roblox"
+        class="home-banner-slide"
+      >
+
+        <img
+          src="assets/icons/roblox.webp"
+          alt="Roblox"
+        >
+
+        <div class="home-banner-overlay">
+
+          <div>
+            <span>
+              TOP UP SEKARANG
+            </span>
+
+            <strong>
+              Roblox
+            </strong>
+          </div>
+
+          <b>→</b>
+
+        </div>
+
+      </a>
+
+
+      <!-- PUBG MOBILE -->
+      <a
+        href="checkout.html?game=pubg-mobile"
+        class="home-banner-slide"
+      >
+
+        <img
+          src="assets/icons/pubg-mobile.webp"
+          alt="PUBG Mobile"
+        >
+
+        <div class="home-banner-overlay">
+
+          <div>
+            <span>
+              TOP UP SEKARANG
+            </span>
+
+            <strong>
+              PUBG Mobile
+            </strong>
+          </div>
+
+          <b>→</b>
+
+        </div>
+
+      </a>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="banner-arrow banner-arrow-left"
+      id="bannerPrev"
+      aria-label="Banner sebelumnya"
+    >
+      ‹
+    </button>
+
+
+    <button
+      type="button"
+      class="banner-arrow banner-arrow-right"
+      id="bannerNext"
+      aria-label="Banner berikutnya"
+    >
+      ›
+    </button>
+
+
+    <div
+      class="banner-dots"
+      id="bannerDots"
+    ></div>
+
+  </div>
+
+</div>
+
+  </section>  <!-- =========================
+       TRENDING
+  ========================== -->  <section class="home-games-section"><div class="container">
+
+  <div class="section-heading">
+
+    <span class="eyebrow">
+      PILIHAN TERATAS
+    </span>
+
+    <h2>
+      Trending
+    </h2>
+
+    <p>
+      Game yang paling banyak dicari dan dimainkan.
+    </p>
+
+  </div>
+
+
+  <div class="home-game-grid">
+
+    <!-- MOBILE LEGENDS -->
+    <a
+      href="checkout.html?game=mobile-legends"
+      class="home-game-card"
+    >
+
+      <div class="home-game-image">
+        <img
+          src="assets/icons/mobile-legends.webp"
+          alt="Mobile Legends"
+          loading="lazy"
+        >
       </div>
 
-    </section>
-
-
-    <!-- =========================
-         TRENDING
-    ========================== -->
-<div class="home-game-grid">
-  <a href="checkout.html?game=mobile-legends" class="home-game-card">
-    <div class="home-game-image">
-      <img src="assets/icons/mobile-legends.webp" alt="Mobile Legends" loading="lazy">
-    </div>
-    <div class="home-game-info">
-      <strong>Mobile Legends</strong>
-      <span>Moonton</span>
-    </div>
-  </a>
-
-  <a href="checkout.html?game=free-fire" class="home-game-card">
-    <div class="home-game-image">
-      <img src="assets/icons/free-fire.webp" alt="Free Fire" loading="lazy">
-    </div>
-    <div class="home-game-info">
-      <strong>Free Fire</strong>
-      <span>Garena</span>
-    </div>
-  </a>
-
-  <a href="checkout.html?game=roblox" class="home-game-card">
-    <div class="home-game-image">
-      <img src="assets/icons/roblox.webp" alt="Roblox" loading="lazy">
-    </div>
-    <div class="home-game-info">
-      <strong>Roblox</strong>
-      <span>Roblox Corporation</span>
-    </div>
-  </a>
-</div>
-
-
-    <!-- =========================
-         ALL GAMES
-    ========================== -->
-<div class="home-game-grid">
-  <a href="checkout.html?game=mobile-legends" class="home-game-card">
-    <div class="home-game-image">
-      <img src="assets/icons/mobile-legends.webp" alt="Mobile Legends" loading="lazy">
-    </div>
-    <div class="home-game-info">
-      <strong>Mobile Legends</strong>
-      <span>Moonton</span>
-    </div>
-  </a>
-
-  <a href="checkout.html?game=free-fire" class="home-game-card">
-    <div class="home-game-image">
-      <img src="assets/icons/free-fire.webp" alt="Free Fire" loading="lazy">
-    </div>
-    <div class="home-game-info">
-      <strong>Free Fire</strong>
-      <span>Garena</span>
-    </div>
-  </a>
-
-  <a href="checkout.html?game=roblox" class="home-game-card">
-    <div class="home-game-image">
-      <img src="assets/icons/roblox.webp" alt="Roblox" loading="lazy">
-    </div>
-    <div class="home-game-info">
-      <strong>Roblox</strong>
-      <span>Roblox Corporation</span>
-    </div>
-  </a>
-
-  <a href="checkout.html?game=pubg-mobile" class="home-game-card">
-    <div class="home-game-image">
-      <img src="assets/icons/pubg-mobile.webp" alt="PUBG Mobile" loading="lazy">
-    </div>
-    <div class="home-game-info">
-      <strong>PUBG Mobile</strong>
-      <span>Tencent Games</span>
-    </div>
-  </a>
-</div>
-    
-  <!-- =========================
-       FOOTER
-  ========================== -->
-  <footer class="site-footer">
-
-    <div class="container">
-
-      <div>
-
+      <div class="home-game-info">
         <strong>
-          LEOOSTORE
+          Mobile Legends
         </strong>
 
         <span>
-          © 2026 LEOOSTORE
+          Moonton
         </span>
-
       </div>
 
-    </div>
-
-  </footer>
+    </a>
 
 
-  <!-- =========================
-       BANNER SCRIPT
-  ========================== -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    <!-- FREE FIRE -->
+    <a
+      href="checkout.html?game=free-fire"
+      class="home-game-card"
+    >
 
-      const track = document.querySelector(".banner-track");
-      const slides = document.querySelectorAll(".home-banner-slide");
-      const dots = document.getElementById("bannerDots");
-      const prev = document.getElementById("bannerPrev");
-      const next = document.getElementById("bannerNext");
+      <div class="home-game-image">
+        <img
+          src="assets/icons/free-fire.webp"
+          alt="Free Fire"
+          loading="lazy"
+        >
+      </div>
 
-      if (!track || slides.length === 0) {
-        return;
-      }
+      <div class="home-game-info">
+        <strong>
+          Free Fire
+        </strong>
 
-      let current = 0;
+        <span>
+          Garena
+        </span>
+      </div>
 
-      function update() {
+    </a>
 
-        track.style.transform =
-          "translateX(-" + (current * 100) + "%)";
 
-        document
-          .querySelectorAll(".banner-dot")
-          .forEach(function (dot, index) {
+    <!-- ROBLOX -->
+    <a
+      href="checkout.html?game=roblox"
+      class="home-game-card"
+    >
 
-            dot.classList.toggle(
-              "active",
-              index === current
-            );
+      <div class="home-game-image">
+        <img
+          src="assets/icons/roblox.webp"
+          alt="Roblox"
+          loading="lazy"
+        >
+      </div>
 
-          });
+      <div class="home-game-info">
+        <strong>
+          Roblox
+        </strong>
 
-      }
+        <span>
+          Roblox Corporation
+        </span>
+      </div>
 
-      if (dots) {
+    </a>
 
-        slides.forEach(function (_, index) {
+  </div>
 
-          const dot = document.createElement("button");
+</div>
 
-          dot.type = "button";
+  </section>  <!-- =========================
+       ALL GAMES
+  ========================== -->  <section class="home-games-section all-games-section"><div class="container">
 
-          dot.className =
-            "banner-dot" +
-            (index === 0 ? " active" : "");
+  <div class="section-heading">
 
-          dot.setAttribute(
-            "aria-label",
-            "Buka banner " + (index + 1)
+    <span class="eyebrow">
+      KOLEKSI GAME
+    </span>
+
+    <h2>
+      All Games
+    </h2>
+
+    <p>
+      Temukan game favoritmu dan mulai top up.
+    </p>
+
+  </div>
+
+
+  <div class="home-game-grid">
+
+    <!-- MOBILE LEGENDS -->
+    <a
+      href="checkout.html?game=mobile-legends"
+      class="home-game-card"
+    >
+
+      <div class="home-game-image">
+        <img
+          src="assets/icons/mobile-legends.webp"
+          alt="Mobile Legends"
+          loading="lazy"
+        >
+      </div>
+
+      <div class="home-game-info">
+        <strong>
+          Mobile Legends
+        </strong>
+
+        <span>
+          Moonton
+        </span>
+      </div>
+
+    </a>
+
+
+    <!-- FREE FIRE -->
+    <a
+      href="checkout.html?game=free-fire"
+      class="home-game-card"
+    >
+
+      <div class="home-game-image">
+        <img
+          src="assets/icons/free-fire.webp"
+          alt="Free Fire"
+          loading="lazy"
+        >
+      </div>
+
+      <div class="home-game-info">
+        <strong>
+          Free Fire
+        </strong>
+
+        <span>
+          Garena
+        </span>
+      </div>
+
+    </a>
+
+
+    <!-- ROBLOX -->
+    <a
+      href="checkout.html?game=roblox"
+      class="home-game-card"
+    >
+
+      <div class="home-game-image">
+        <img
+          src="assets/icons/roblox.webp"
+          alt="Roblox"
+          loading="lazy"
+        >
+      </div>
+
+      <div class="home-game-info">
+        <strong>
+          Roblox
+        </strong>
+
+        <span>
+          Roblox Corporation
+        </span>
+      </div>
+
+    </a>
+
+
+    <!-- PUBG MOBILE -->
+    <a
+      href="checkout.html?game=pubg-mobile"
+      class="home-game-card"
+    >
+
+      <div class="home-game-image">
+        <img
+          src="assets/icons/pubg-mobile.webp"
+          alt="PUBG Mobile"
+          loading="lazy"
+        >
+      </div>
+
+      <div class="home-game-info">
+        <strong>
+          PUBG Mobile
+        </strong>
+
+        <span>
+          Tencent Games
+        </span>
+      </div>
+
+    </a>
+
+  </div>
+
+
+  <!-- MORE GAMES -->
+  <div class="home-more-wrapper">
+
+    <a
+      href="shop.html"
+      class="home-more-link"
+    >
+      Tampilkan Semua Game
+      <span>→</span>
+    </a>
+
+  </div>
+
+</div>
+
+  </section></main><!-- =========================
+     FOOTER
+========================== --><footer class="site-footer">  <div class="container"><div>
+
+  <strong>
+    LEOOSTORE
+  </strong>
+
+  <span>
+    © 2026 LEOOSTORE
+  </span>
+
+</div>
+
+  </div></footer><!-- =========================
+     BANNER SCRIPT
+========================== --><script>
+  document.addEventListener("DOMContentLoaded", function () {
+
+    const track = document.querySelector(".banner-track");
+    const slides = document.querySelectorAll(".home-banner-slide");
+    const dots = document.getElementById("bannerDots");
+    const prev = document.getElementById("bannerPrev");
+    const next = document.getElementById("bannerNext");
+
+    if (!track || slides.length === 0) {
+      return;
+    }
+
+    let current = 0;
+
+    function update() {
+
+      track.style.transform =
+        "translateX(-" + (current * 100) + "%)";
+
+      document
+        .querySelectorAll(".banner-dot")
+        .forEach(function (dot, index) {
+
+          dot.classList.toggle(
+            "active",
+            index === current
           );
-
-          dot.addEventListener("click", function () {
-
-            current = index;
-            update();
-
-          });
-
-          dots.appendChild(dot);
 
         });
 
-      }
+    }
 
-      prev?.addEventListener("click", function () {
+    if (dots) {
 
-        current =
-          (current - 1 + slides.length) %
-          slides.length;
+      slides.forEach(function (_, index) {
 
-        update();
+        const dot = document.createElement("button");
+
+        dot.type = "button";
+
+        dot.className =
+          "banner-dot" +
+          (index === 0 ? " active" : "");
+
+        dot.setAttribute(
+          "aria-label",
+          "Buka banner " + (index + 1)
+        );
+
+        dot.addEventListener("click", function () {
+
+          current = index;
+          update();
+
+        });
+
+        dots.appendChild(dot);
 
       });
 
-      next?.addEventListener("click", function () {
+    }
 
-        current =
-          (current + 1) %
-          slides.length;
+    prev?.addEventListener("click", function () {
 
-        update();
-
-      });
-
-      setInterval(function () {
-
-        current =
-          (current + 1) %
-          slides.length;
-
-        update();
-
-      }, 5000);
+      current =
+        (current - 1 + slides.length) %
+        slides.length;
 
       update();
 
     });
-  </script>
-<script>
+
+    next?.addEventListener("click", function () {
+
+      current =
+        (current + 1) %
+        slides.length;
+
+      update();
+
+    });
+
+    setInterval(function () {
+
+      current =
+        (current + 1) %
+        slides.length;
+
+      update();
+
+    }, 5000);
+
+    update();
+
+  });
+</script><!-- =========================
+     MENU + SEARCH SCRIPT
+========================== --><script>
 document.addEventListener("DOMContentLoaded", function () {
 
   const menuButton = document.getElementById("menuButton");
@@ -712,12 +804,16 @@ document.addEventListener("DOMContentLoaded", function () {
           "active"
         )
       ) {
+
         setTimeout(
           function () {
+
             siteSearch?.focus();
+
           },
           200
         );
+
       }
 
     }
@@ -740,6 +836,5 @@ document.addEventListener("DOMContentLoaded", function () {
   );
 
 });
-</script>
-</body>
+</script></body>
 </html>
