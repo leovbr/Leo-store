@@ -2825,103 +2825,203 @@ span:last-child {
   }
 }
 /* =========================================================
-   LEOOSTORE — PAYMENT + DELIVERY FINAL OVERRIDE
+   LEOOSTORE — CHECKOUT FINAL FIX v2
    ========================================================= */
 
-/* =========================
-   PAYMENT — NO ROTATION
-   ========================= */
 
-.payment-category-header,
-.payment-category-header span,
-.payment-category-header span:last-child,
-.payment-category.open .payment-category-header,
-.payment-category.open .payment-category-header span,
-.payment-category.open .payment-category-header span:last-child {
-  animation: none !important;
-  transition: none !important;
-  transform: none !important;
-  rotate: none !important;
+/* =========================================================
+   GAME SELECT — HIDDEN, JS TETAP BISA PAKAI #game
+   ========================================================= */
+
+.checkout-card:has(#game) {
+  display: none !important;
 }
 
-/* Simbol + tetap + */
-.payment-category-header span:last-child {
+
+/* =========================================================
+   PLAYER ID + SERVER — 2 KOLOM
+   ========================================================= */
+
+.form-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+
+/* =========================================================
+   PAYMENT ACCORDION — BENAR-BENAR STATIC
+   ========================================================= */
+
+/* Header tidak punya animasi */
+.payment-category-header,
+.payment-category-header > *,
+.payment-category.open .payment-category-header,
+.payment-category.open .payment-category-header > * {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* SEMUA span header tidak boleh rotate */
+.payment-category-header span,
+.payment-category-header > span,
+.payment-category.open .payment-category-header span,
+.payment-category.open .payment-category-header > span {
+  transform: none !important;
+  rotate: 0deg !important;
+  scale: 1 !important;
+  translate: none !important;
+
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Simbol + */
+.payment-category-header span:last-child,
+.payment-category-header > span:last-child,
+.payment-category.open .payment-category-header span:last-child,
+.payment-category.open .payment-category-header > span:last-child {
   display: inline-flex !important;
+
   align-items: center !important;
   justify-content: center !important;
 
-  transform: none !important;
-  rotate: 0deg !important;
+  width: auto !important;
+  height: auto !important;
 
   color: var(--primary) !important;
+
+  transform: none !important;
+  rotate: 0deg !important;
+  scale: 1 !important;
+
+  animation: none !important;
+  transition: none !important;
 }
 
-/* =========================
-   PAYMENT — NO ANIMATION
-   ========================= */
-
+/* Body langsung buka/tutup tanpa animasi */
 .payment-category-body,
 .payment-category.open .payment-category-body {
   animation: none !important;
   transition: none !important;
   transform: none !important;
+  opacity: 1 !important;
 }
 
-/* Tutup */
+/* CLOSED */
 .payment-category-body {
   display: none !important;
 }
 
-/* Buka */
+/* OPEN */
 .payment-category.open .payment-category-body {
   display: grid !important;
 }
 
 
-/* =========================
-   QRIS
-   ========================= */
+/* =========================================================
+   PAYMENT GRID
+   ========================================================= */
 
+/* QRIS — 1 kolom */
 .payment-category:first-child .payment-category-body {
   grid-template-columns: 1fr !important;
+  gap: 10px !important;
 }
 
-
-/* =========================
-   E-WALLET
-   ========================= */
-
+/* E-WALLET — 2 kolom */
 .payment-category:nth-child(2) .payment-category-body {
-  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr)) !important;
+
   gap: 10px !important;
 }
 
-
-/* =========================
-   VIRTUAL ACCOUNT
-   ========================= */
-
+/* VIRTUAL ACCOUNT — 2 kolom */
 .payment-category:nth-child(3) .payment-category-body {
-  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr)) !important;
+
   gap: 10px !important;
 }
 
 
-/* =========================
-   DELIVERY BOX
-   ========================= */
+/* =========================================================
+   PAYMENT OPTION — NO ANIMATION
+   ========================================================= */
 
-.denomination-delivery {
-  width: auto !important;
+.payment-option {
   min-width: 0 !important;
 
-  margin-left: auto !important;
+  transition: none !important;
+  animation: none !important;
+  transform: none !important;
+}
+
+.payment-option:hover {
+  transition: none !important;
+  animation: none !important;
+  transform: none !important;
+}
+
+
+/* =========================================================
+   NOMINAL CARD
+   ========================================================= */
+
+.denomination-option {
+  position: relative !important;
+
+  min-width: 0 !important;
 
   display: flex !important;
+  flex-direction: column !important;
+
+  min-height: 118px !important;
+
+  padding: 13px !important;
+
+  overflow: hidden !important;
+}
+
+.denomination-main {
+  width: 100% !important;
+
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+
+  gap: 10px !important;
+}
+
+.denomination-divider {
+  width: 100% !important;
+  height: 1px !important;
+
+  margin: 9px 0 !important;
+
+  flex-shrink: 0 !important;
+}
+
+
+/* =========================================================
+   DELIVERY BOX — KANAN BAWAH
+   ========================================================= */
+
+.denomination-delivery {
+  width: 100% !important;
+
+  min-width: 0 !important;
+  min-height: 34px !important;
+
+  margin-left: 0 !important;
+
+  display: flex !important;
+
   justify-content: flex-end !important;
   align-items: center !important;
 }
 
+
+/* BOX */
 .denomination-delivery-text {
   width: 108px !important;
   min-width: 108px !important;
@@ -2931,10 +3031,10 @@ span:last-child {
 
   box-sizing: border-box !important;
 
-  display: grid !important;
-  grid-template-columns: 25px minmax(0, 1fr) !important;
+  display: flex !important;
 
   align-items: center !important;
+
   gap: 6px !important;
 
   padding: 5px 7px !important;
@@ -2942,24 +3042,28 @@ span:last-child {
   background: var(--primary-soft) !important;
 
   border: 1px solid rgba(124, 92, 255, 0.20) !important;
+
   border-radius: 8px !important;
 
+  color: var(--text-soft) !important;
+
   font-size: 8px !important;
+
   line-height: 1 !important;
+
+  overflow: hidden !important;
 }
 
 
-/* =========================
-   PETIR KUNING
-   ========================= */
+/* PETIR */
+.denomination-delivery-text .delivery-icon {
+  flex: 0 0 24px !important;
 
-.denomination-delivery-text::before {
-  content: "⚡" !important;
-
-  width: 25px !important;
-  height: 28px !important;
+  width: 24px !important;
+  height: 26px !important;
 
   display: flex !important;
+
   align-items: center !important;
   justify-content: center !important;
 
@@ -2972,11 +3076,20 @@ span:last-child {
 }
 
 
-/* =========================
-   PENGIRIMAN
-   ========================= */
+/* TEXT WRAPPER */
+.denomination-delivery-text .delivery-copy {
+  min-width: 0 !important;
 
-.denomination-delivery-text span {
+  display: flex !important;
+
+  flex-direction: column !important;
+
+  justify-content: center !important;
+}
+
+
+/* PENGIRIMAN */
+.denomination-delivery-text .delivery-copy > span {
   display: block !important;
 
   margin: 0 !important;
@@ -2984,15 +3097,15 @@ span:last-child {
   color: var(--text-muted) !important;
 
   font-size: 7px !important;
+
   line-height: 1.1 !important;
+
+  white-space: nowrap !important;
 }
 
 
-/* =========================
-   CEPAT
-   ========================= */
-
-.denomination-delivery-text strong {
+/* CEPAT */
+.denomination-delivery-text .delivery-copy > strong {
   display: block !important;
 
   margin: 2px 0 0 !important;
@@ -3002,45 +3115,68 @@ span:last-child {
   font-size: 8px !important;
 
   line-height: 1.1 !important;
+
+  white-space: nowrap !important;
 }
 
 
-/* =========================
+/* =========================================================
    MOBILE
-   ========================= */
+   ========================================================= */
 
 @media (max-width: 600px) {
 
+  /* Payment tetap 2 kolom */
   .payment-category:nth-child(2) .payment-category-body,
   .payment-category:nth-child(3) .payment-category-body {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr)) !important;
+
     gap: 8px !important;
   }
 
+  /* Player ID + Server tetap 2 kolom */
+  .form-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr)) !important;
+
+    gap: 8px !important;
+  }
+
+  /* Nominal */
+  .denomination-option {
+    min-height: 115px !important;
+
+    padding: 11px !important;
+  }
+
+  /* Delivery */
   .denomination-delivery-text {
     width: 96px !important;
     min-width: 96px !important;
     max-width: 96px !important;
 
-    grid-template-columns: 22px minmax(0, 1fr) !important;
+    min-height: 32px !important;
 
     gap: 5px !important;
 
     padding: 4px 6px !important;
   }
 
-  .denomination-delivery-text::before {
-    width: 22px !important;
-    height: 26px !important;
+  .denomination-delivery-text .delivery-icon {
+    flex-basis: 21px !important;
+
+    width: 21px !important;
+    height: 25px !important;
 
     font-size: 16px !important;
   }
 
-  .denomination-delivery-text span {
+  .denomination-delivery-text .delivery-copy > span {
     font-size: 6.5px !important;
   }
 
-  .denomination-delivery-text strong {
+  .denomination-delivery-text .delivery-copy > strong {
     font-size: 7.5px !important;
   }
 }
