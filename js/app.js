@@ -1,15 +1,14 @@
 /* =========================================
-   FIDELIS TOPUP
+   LEOOSTORE
    GLOBAL APP
    ========================================= */
-
 document.addEventListener(
   "DOMContentLoaded",
   () => {
 
     console.log(
-      "Fidelis TopUp initialized."
-    );
+  "LEOOSTORE initialized."
+);
 
 
     /* =====================================
@@ -153,7 +152,7 @@ function removeData(key) {
    ========================================= */
 
 function generateId(
-  prefix = "FDL"
+  prefix = "LEO"
 ) {
 
   const timestamp =
