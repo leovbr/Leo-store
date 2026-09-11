@@ -3729,3 +3729,254 @@ body.order-page .order-container {
   }
 
 }
+/* =========================================================
+   LEOOSTORE — TRANSACTION TABLE RESPONSIVE
+   NO HORIZONTAL SCROLL
+   ========================================================= */
+
+.order-table-wrap {
+  width: 100% !important;
+  max-width: 100% !important;
+
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+}
+
+.order-table {
+  width: 100% !important;
+  max-width: 100% !important;
+
+  overflow: hidden !important;
+}
+
+/* HEADER */
+
+.order-table-head {
+  width: 100% !important;
+
+  display: grid !important;
+
+  grid-template-columns:
+    minmax(70px, 0.9fr)
+    minmax(100px, 1.25fr)
+    minmax(82px, 1fr)
+    minmax(72px, 0.9fr)
+    minmax(90px, 1fr) !important;
+
+  gap: 8px !important;
+
+  align-items: center !important;
+
+  font-size: 11px !important;
+
+  line-height: 1.2 !important;
+}
+
+/* ROW */
+
+.order-table-row {
+  width: 100% !important;
+  max-width: 100% !important;
+
+  display: grid !important;
+
+  grid-template-columns:
+    minmax(70px, 0.9fr)
+    minmax(100px, 1.25fr)
+    minmax(82px, 1fr)
+    minmax(72px, 0.9fr)
+    minmax(90px, 1fr) !important;
+
+  gap: 8px !important;
+
+  align-items: center !important;
+
+  min-width: 0 !important;
+
+  overflow: hidden !important;
+}
+
+/* SEMUA CELL */
+
+.order-table-row > div,
+.order-table-head > div {
+  min-width: 0 !important;
+  max-width: 100% !important;
+
+  overflow: hidden !important;
+
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+}
+
+/* TANGGAL */
+
+.order-table-date {
+  font-size: 10px !important;
+
+  line-height: 1.25 !important;
+
+  white-space: normal !important;
+}
+
+/* ORDER ID */
+
+.order-table-id {
+  min-width: 0 !important;
+
+  font-size: 10px !important;
+
+  line-height: 1.25 !important;
+
+  white-space: normal !important;
+
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+}
+
+.order-table-id a {
+  display: block !important;
+
+  max-width: 100% !important;
+
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+
+  white-space: normal !important;
+}
+
+/* PHONE */
+
+.order-table-phone {
+  font-size: 10px !important;
+
+  line-height: 1.25 !important;
+
+  white-space: normal !important;
+
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+}
+
+/* PRICE */
+
+.order-table-price {
+  font-size: 10px !important;
+
+  line-height: 1.25 !important;
+
+  white-space: normal !important;
+
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+}
+
+/* STATUS */
+
+.order-table-status {
+  min-width: 0 !important;
+
+  display: flex !important;
+
+  align-items: center !important;
+}
+
+.order-table-status-badge {
+  max-width: 100% !important;
+
+  display: inline-flex !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  text-align: center !important;
+
+  font-size: 9px !important;
+
+  line-height: 1.15 !important;
+
+  white-space: normal !important;
+
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+
+  padding: 5px 6px !important;
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .order-table-head,
+  .order-table-row {
+
+    grid-template-columns:
+      minmax(58px, 0.8fr)
+      minmax(82px, 1.15fr)
+      minmax(68px, 0.9fr)
+      minmax(62px, 0.8fr)
+      minmax(76px, 1fr) !important;
+
+    gap: 5px !important;
+
+  }
+
+  .order-table-head {
+    font-size: 9px !important;
+
+    letter-spacing: -0.01em !important;
+  }
+
+  .order-table-row > div {
+    font-size: 9px !important;
+
+    line-height: 1.2 !important;
+  }
+
+  .order-table-status-badge {
+    font-size: 8px !important;
+
+    padding: 4px 5px !important;
+
+    border-radius: 6px !important;
+  }
+
+}
+
+/* =========================================================
+   EXTRA SMALL PHONE
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+  .order-table-head,
+  .order-table-row {
+
+    grid-template-columns:
+      minmax(50px, 0.75fr)
+      minmax(72px, 1.1fr)
+      minmax(60px, 0.9fr)
+      minmax(55px, 0.8fr)
+      minmax(68px, 0.95fr) !important;
+
+    gap: 4px !important;
+
+  }
+
+  .order-table-head {
+    font-size: 8px !important;
+  }
+
+  .order-table-row > div {
+    font-size: 8px !important;
+  }
+
+  .order-table-status-badge {
+    font-size: 7px !important;
+
+    padding: 3px 4px !important;
+  }
+
+}
