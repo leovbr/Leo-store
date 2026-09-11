@@ -79,9 +79,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("countryCode");
 
 
-  const ORDERS_KEY = "fidelis_orders";
-  const LAST_ORDER_KEY = "fidelis_last_order";
-
+  const ORDERS_KEY = "LEOOSTORE_orders";
+const LAST_ORDER_KEY = "LEOOSTORE_last_orders";
 
   const products =
     typeof getProducts === "function"
