@@ -419,43 +419,48 @@ document.addEventListener("DOMContentLoaded", () => {
             item.id;
 
 
-          button.innerHTML = `
-            <div class="denomination-main">
+button.innerHTML = `
+  <div class="denomination-main">
 
-              <div class="denomination-title">
-                ${escapeHTML(item.amount)}
-              </div>
+    <div class="denomination-title">
+      ${escapeHTML(item.amount)}
+    </div>
 
-              <div class="denomination-price-box">
+    <div class="denomination-price-box">
+      <span>
+        ${rupiah(item.price)}
+      </span>
+    </div>
 
-                <span>
-                  ${rupiah(item.price)}
-                </span>
+  </div>
 
-              </div>
+  <div class="denomination-divider"></div>
 
-            </div>
+  <div class="denomination-delivery">
 
+    <div class="denomination-delivery-text">
 
-            <div class="denomination-divider"></div>
+      <span
+        class="delivery-icon"
+        aria-hidden="true"
+      >⚡</span>
 
+      <div class="delivery-copy">
 
-            <div class="denomination-delivery">
+        <span>
+          Pengiriman
+        </span>
 
-              <div class="denomination-delivery-text">
+        <strong>
+          CEPAT
+        </strong>
 
-                <span>
-                  Pengiriman
-                </span>
+      </div>
 
-                <strong>
-                  CEPAT
-                </strong>
+    </div>
 
-              </div>
-
-            </div>
-          `;
+  </div>
+`;
 
 
           button.addEventListener(
