@@ -14,10 +14,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   const ORDERS_KEY =
-    "fidelis_orders";
+  "LEOOSTORE_orders";
 
-  const LAST_ORDER_KEY =
-    "fidelis_last_order";
+const LAST_ORDER_KEY =
+  "LEOOSTORE_last_orders";
 
 
   const params =
@@ -454,10 +454,10 @@ function renderAlreadyPaid(
 function saveOrder(order) {
 
   const ORDERS_KEY =
-    "fidelis_orders";
+    "LEOOSTORE_orders";
 
   const LAST_ORDER_KEY =
-    "fidelis_last_order";
+    "LEOOSTORE_last_orders";
 
 
   let orders = [];
