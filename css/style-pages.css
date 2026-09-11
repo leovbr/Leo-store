@@ -2737,8 +2737,7 @@ span:last-child {
   align-items: center !important;
   justify-content: center !important;
 
-  color: var(--primary) !important;
-
+  color: #FFD43B !important;
   font-size: 18px !important;
   font-weight: 900 !important;
 
