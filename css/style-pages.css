@@ -1887,3 +1887,93 @@ body.home-page .all-games-section .home-game-info span {
     grid-template-columns: 1fr !important;
   }
 }
+/* =========================================
+   LEOOSTORE — HOME GAME CARD COMPACT
+   ========================================= */
+
+/* TRENDING — 2 kolom */
+body.home-page .home-games-section:not(.all-games-section) .home-game-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+}
+
+body.home-page .home-games-section:not(.all-games-section) .home-game-card {
+  min-height: 110px !important;
+  padding: 10px !important;
+  gap: 10px !important;
+}
+
+body.home-page .home-games-section:not(.all-games-section) .home-game-image {
+  width: 90px !important;
+  height: 90px !important;
+  flex: 0 0 90px !important;
+}
+
+body.home-page .home-games-section:not(.all-games-section) .home-game-info {
+  height: 90px !important;
+  margin-left: 0 !important;
+}
+
+body.home-page .home-games-section:not(.all-games-section) .home-game-info strong {
+  font-size: 15px !important;
+}
+
+body.home-page .home-games-section:not(.all-games-section) .home-game-info span {
+  font-size: 11px !important;
+}
+
+
+/* ALL GAMES — 3 kolom */
+body.home-page .all-games-section .home-game-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+}
+
+body.home-page .all-games-section .home-game-card {
+  padding: 8px !important;
+}
+
+body.home-page .all-games-section .home-game-image {
+  width: 100% !important;
+  aspect-ratio: 1 / 1 !important;
+}
+
+body.home-page .all-games-section .home-game-info {
+  padding: 8px 4px 4px !important;
+}
+
+body.home-page .all-games-section .home-game-info strong {
+  font-size: 14px !important;
+}
+
+body.home-page .all-games-section .home-game-info span {
+  font-size: 10px !important;
+}
+
+
+/* MOBILE */
+@media (max-width: 600px) {
+  body.home-page .home-games-section:not(.all-games-section) .home-game-card {
+    min-height: 96px !important;
+    padding: 8px !important;
+    gap: 8px !important;
+  }
+
+  body.home-page .home-games-section:not(.all-games-section) .home-game-image {
+    width: 76px !important;
+    height: 76px !important;
+    flex-basis: 76px !important;
+  }
+
+  body.home-page .home-games-section:not(.all-games-section) .home-game-info {
+    height: 76px !important;
+  }
+
+  body.home-page .home-games-section:not(.all-games-section) .home-game-info strong {
+    font-size: 13px !important;
+  }
+
+  body.home-page .home-games-section:not(.all-games-section) .home-game-info span {
+    font-size: 10px !important;
+  }
+}
