@@ -3980,3 +3980,20 @@ body.order-page .order-container {
   }
 
 }
+/* =========================================================
+   LEOOSTORE — EMPTY DATA
+   ========================================================= */
+
+.empty-state,
+.no-data,
+.order-empty,
+.empty-orders {
+  width: 100% !important;
+  text-align: center !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
