@@ -2824,3 +2824,223 @@ span:last-child {
     font-size: 7.5px !important;
   }
 }
+/* =========================================================
+   LEOOSTORE — PAYMENT + DELIVERY FINAL OVERRIDE
+   ========================================================= */
+
+/* =========================
+   PAYMENT — NO ROTATION
+   ========================= */
+
+.payment-category-header,
+.payment-category-header span,
+.payment-category-header span:last-child,
+.payment-category.open .payment-category-header,
+.payment-category.open .payment-category-header span,
+.payment-category.open .payment-category-header span:last-child {
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+  rotate: none !important;
+}
+
+/* Simbol + tetap + */
+.payment-category-header span:last-child {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  transform: none !important;
+  rotate: 0deg !important;
+
+  color: var(--primary) !important;
+}
+
+/* =========================
+   PAYMENT — NO ANIMATION
+   ========================= */
+
+.payment-category-body,
+.payment-category.open .payment-category-body {
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+}
+
+/* Tutup */
+.payment-category-body {
+  display: none !important;
+}
+
+/* Buka */
+.payment-category.open .payment-category-body {
+  display: grid !important;
+}
+
+
+/* =========================
+   QRIS
+   ========================= */
+
+.payment-category:first-child .payment-category-body {
+  grid-template-columns: 1fr !important;
+}
+
+
+/* =========================
+   E-WALLET
+   ========================= */
+
+.payment-category:nth-child(2) .payment-category-body {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+}
+
+
+/* =========================
+   VIRTUAL ACCOUNT
+   ========================= */
+
+.payment-category:nth-child(3) .payment-category-body {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+}
+
+
+/* =========================
+   DELIVERY BOX
+   ========================= */
+
+.denomination-delivery {
+  width: auto !important;
+  min-width: 0 !important;
+
+  margin-left: auto !important;
+
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+}
+
+.denomination-delivery-text {
+  width: 108px !important;
+  min-width: 108px !important;
+  max-width: 108px !important;
+
+  min-height: 34px !important;
+
+  box-sizing: border-box !important;
+
+  display: grid !important;
+  grid-template-columns: 25px minmax(0, 1fr) !important;
+
+  align-items: center !important;
+  gap: 6px !important;
+
+  padding: 5px 7px !important;
+
+  background: var(--primary-soft) !important;
+
+  border: 1px solid rgba(124, 92, 255, 0.20) !important;
+  border-radius: 8px !important;
+
+  font-size: 8px !important;
+  line-height: 1 !important;
+}
+
+
+/* =========================
+   PETIR KUNING
+   ========================= */
+
+.denomination-delivery-text::before {
+  content: "⚡" !important;
+
+  width: 25px !important;
+  height: 28px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  color: #FFD43B !important;
+
+  font-size: 18px !important;
+  font-weight: 900 !important;
+
+  line-height: 1 !important;
+}
+
+
+/* =========================
+   PENGIRIMAN
+   ========================= */
+
+.denomination-delivery-text span {
+  display: block !important;
+
+  margin: 0 !important;
+
+  color: var(--text-muted) !important;
+
+  font-size: 7px !important;
+  line-height: 1.1 !important;
+}
+
+
+/* =========================
+   CEPAT
+   ========================= */
+
+.denomination-delivery-text strong {
+  display: block !important;
+
+  margin: 2px 0 0 !important;
+
+  color: var(--primary) !important;
+
+  font-size: 8px !important;
+
+  line-height: 1.1 !important;
+}
+
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 600px) {
+
+  .payment-category:nth-child(2) .payment-category-body,
+  .payment-category:nth-child(3) .payment-category-body {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+
+  .denomination-delivery-text {
+    width: 96px !important;
+    min-width: 96px !important;
+    max-width: 96px !important;
+
+    grid-template-columns: 22px minmax(0, 1fr) !important;
+
+    gap: 5px !important;
+
+    padding: 4px 6px !important;
+  }
+
+  .denomination-delivery-text::before {
+    width: 22px !important;
+    height: 26px !important;
+
+    font-size: 16px !important;
+  }
+
+  .denomination-delivery-text span {
+    font-size: 6.5px !important;
+  }
+
+  .denomination-delivery-text strong {
+    font-size: 7.5px !important;
+  }
+}
