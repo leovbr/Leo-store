@@ -3997,3 +3997,42 @@ body.order-page .order-container {
   margin-left: auto !important;
   margin-right: auto !important;
 }
+/* =========================================================
+   LEOOSTORE — EMPTY HISTORY CENTER
+   ========================================================= */
+
+#historyList {
+  width: 100%;
+}
+
+#historyList .order-empty-state {
+  width: 100% !important;
+  min-height: 180px !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  text-align: center !important;
+
+  margin: 0 auto !important;
+  padding: 30px 20px !important;
+
+  box-sizing: border-box !important;
+}
+
+#historyList .order-empty-icon {
+  margin: 0 auto 10px !important;
+}
+
+#historyList .order-empty-state h3,
+#historyList .order-empty-state p {
+  width: 100% !important;
+
+  text-align: center !important;
+
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
