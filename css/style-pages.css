@@ -1817,33 +1817,6 @@ body.home-page .all-games-section .home-game-info span {
 
 @media (max-width: 600px) {
 
-  /* HOME TETAP 3 KOTAK */
-  .home-game-grid {
-    grid-template-columns:
-      repeat(3, minmax(0, 1fr)) !important;
-
-    gap: 8px !important;
-  }
-
-  .home-game-card {
-    aspect-ratio: 1 / 1;
-  }
-
-  .home-game-info {
-    padding: 10px 8px 8px;
-  }
-
-  .home-game-info strong {
-    font-size: 12px;
-  }
-
-  .home-game-info span {
-    margin-top: 2px;
-
-    font-size: 9px;
-  }
-
-
   /* SHOP 2 KOLOM */
   .product-grid,
   .product-list {
