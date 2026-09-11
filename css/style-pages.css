@@ -2825,12 +2825,12 @@ span:last-child {
   }
 }
 /* =========================================================
-   LEOOSTORE — CHECKOUT FINAL FIX v2
+   LEOOSTORE — CHECKOUT FINAL FIX v3
    ========================================================= */
 
 
 /* =========================================================
-   GAME SELECT — HIDDEN, JS TETAP BISA PAKAI #game
+   GAME SELECT — HIDDEN
    ========================================================= */
 
 .checkout-card:has(#game) {
@@ -2843,15 +2843,15 @@ span:last-child {
    ========================================================= */
 
 .form-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr)) !important;
 }
 
 
 /* =========================================================
-   PAYMENT ACCORDION — BENAR-BENAR STATIC
+   PAYMENT ACCORDION — STATIC
    ========================================================= */
 
-/* Header tidak punya animasi */
 .payment-category-header,
 .payment-category-header > *,
 .payment-category.open .payment-category-header,
@@ -2860,7 +2860,6 @@ span:last-child {
   transition: none !important;
 }
 
-/* SEMUA span header tidak boleh rotate */
 .payment-category-header span,
 .payment-category-header > span,
 .payment-category.open .payment-category-header span,
@@ -2874,7 +2873,6 @@ span:last-child {
   transition: none !important;
 }
 
-/* Simbol + */
 .payment-category-header span:last-child,
 .payment-category-header > span:last-child,
 .payment-category.open .payment-category-header span:last-child,
@@ -2897,7 +2895,6 @@ span:last-child {
   transition: none !important;
 }
 
-/* Body langsung buka/tutup tanpa animasi */
 .payment-category-body,
 .payment-category.open .payment-category-body {
   animation: none !important;
@@ -2906,12 +2903,10 @@ span:last-child {
   opacity: 1 !important;
 }
 
-/* CLOSED */
 .payment-category-body {
   display: none !important;
 }
 
-/* OPEN */
 .payment-category.open .payment-category-body {
   display: grid !important;
 }
@@ -2921,13 +2916,13 @@ span:last-child {
    PAYMENT GRID
    ========================================================= */
 
-/* QRIS — 1 kolom */
+/* QRIS — 1 KOLOM */
 .payment-category:first-child .payment-category-body {
   grid-template-columns: 1fr !important;
   gap: 10px !important;
 }
 
-/* E-WALLET — 2 kolom */
+/* E-WALLET — 2 KOLOM */
 .payment-category:nth-child(2) .payment-category-body {
   grid-template-columns:
     repeat(2, minmax(0, 1fr)) !important;
@@ -2935,7 +2930,7 @@ span:last-child {
   gap: 10px !important;
 }
 
-/* VIRTUAL ACCOUNT — 2 kolom */
+/* VIRTUAL ACCOUNT — 2 KOLOM */
 .payment-category:nth-child(3) .payment-category-body {
   grid-template-columns:
     repeat(2, minmax(0, 1fr)) !important;
@@ -3003,14 +2998,14 @@ span:last-child {
 
 
 /* =========================================================
-   DELIVERY BOX — KANAN BAWAH
+   DELIVERY — BOX KECIL DI KANAN BAWAH
    ========================================================= */
 
 .denomination-delivery {
   width: 100% !important;
 
   min-width: 0 !important;
-  min-height: 34px !important;
+  min-height: 28px !important;
 
   margin-left: 0 !important;
 
@@ -3021,33 +3016,45 @@ span:last-child {
 }
 
 
-/* BOX */
-.denomination-delivery-text {
-  width: 108px !important;
-  min-width: 108px !important;
-  max-width: 108px !important;
+/* HAPUS PETIR GARIS / PSEUDO ELEMENT LAMA */
+.denomination-delivery::before,
+.denomination-delivery::after,
+.denomination-delivery-text::before,
+.denomination-delivery-text::after {
+  content: none !important;
+  display: none !important;
+}
 
-  min-height: 34px !important;
+
+/* BOX LUAR DIPERKECIL */
+.denomination-delivery-text {
+  width: 82px !important;
+  min-width: 82px !important;
+  max-width: 82px !important;
+
+  min-height: 27px !important;
+  height: 27px !important;
 
   box-sizing: border-box !important;
 
   display: flex !important;
 
   align-items: center !important;
+  justify-content: flex-start !important;
 
-  gap: 6px !important;
+  gap: 4px !important;
 
-  padding: 5px 7px !important;
+  padding: 3px 5px !important;
 
   background: var(--primary-soft) !important;
 
   border: 1px solid rgba(124, 92, 255, 0.20) !important;
 
-  border-radius: 8px !important;
+  border-radius: 7px !important;
 
   color: var(--text-soft) !important;
 
-  font-size: 8px !important;
+  font-size: 7px !important;
 
   line-height: 1 !important;
 
@@ -3055,12 +3062,15 @@ span:last-child {
 }
 
 
-/* PETIR */
-.denomination-delivery-text .delivery-icon {
-  flex: 0 0 24px !important;
+/* =========================================================
+   PETIR — CUMA 1 INI
+   ========================================================= */
 
-  width: 24px !important;
-  height: 26px !important;
+.denomination-delivery-text .delivery-icon {
+  flex: 0 0 17px !important;
+
+  width: 17px !important;
+  height: 20px !important;
 
   display: flex !important;
 
@@ -3069,14 +3079,17 @@ span:last-child {
 
   color: #FFD43B !important;
 
-  font-size: 18px !important;
+  font-size: 14px !important;
   font-weight: 900 !important;
 
   line-height: 1 !important;
 }
 
 
-/* TEXT WRAPPER */
+/* =========================================================
+   TEXT DELIVERY
+   ========================================================= */
+
 .denomination-delivery-text .delivery-copy {
   min-width: 0 !important;
 
@@ -3087,8 +3100,6 @@ span:last-child {
   justify-content: center !important;
 }
 
-
-/* PENGIRIMAN */
 .denomination-delivery-text .delivery-copy > span {
   display: block !important;
 
@@ -3096,23 +3107,21 @@ span:last-child {
 
   color: var(--text-muted) !important;
 
-  font-size: 7px !important;
+  font-size: 6px !important;
 
   line-height: 1.1 !important;
 
   white-space: nowrap !important;
 }
 
-
-/* CEPAT */
 .denomination-delivery-text .delivery-copy > strong {
   display: block !important;
 
-  margin: 2px 0 0 !important;
+  margin: 1px 0 0 !important;
 
   color: var(--primary) !important;
 
-  font-size: 8px !important;
+  font-size: 7px !important;
 
   line-height: 1.1 !important;
 
@@ -3126,7 +3135,6 @@ span:last-child {
 
 @media (max-width: 600px) {
 
-  /* Payment tetap 2 kolom */
   .payment-category:nth-child(2) .payment-category-body,
   .payment-category:nth-child(3) .payment-category-body {
     grid-template-columns:
@@ -3135,7 +3143,6 @@ span:last-child {
     gap: 8px !important;
   }
 
-  /* Player ID + Server tetap 2 kolom */
   .form-grid {
     grid-template-columns:
       repeat(2, minmax(0, 1fr)) !important;
@@ -3143,40 +3150,40 @@ span:last-child {
     gap: 8px !important;
   }
 
-  /* Nominal */
+  /* KARTU NOMINAL TETAP BESAR */
   .denomination-option {
     min-height: 115px !important;
-
     padding: 11px !important;
   }
 
-  /* Delivery */
+  /* BOX DELIVERY LEBIH KECIL */
   .denomination-delivery-text {
-    width: 96px !important;
-    min-width: 96px !important;
-    max-width: 96px !important;
+    width: 78px !important;
+    min-width: 78px !important;
+    max-width: 78px !important;
 
-    min-height: 32px !important;
+    min-height: 25px !important;
+    height: 25px !important;
 
-    gap: 5px !important;
+    gap: 3px !important;
 
-    padding: 4px 6px !important;
+    padding: 3px 4px !important;
   }
 
   .denomination-delivery-text .delivery-icon {
-    flex-basis: 21px !important;
+    flex-basis: 16px !important;
 
-    width: 21px !important;
-    height: 25px !important;
+    width: 16px !important;
+    height: 19px !important;
 
-    font-size: 16px !important;
+    font-size: 13px !important;
   }
 
   .denomination-delivery-text .delivery-copy > span {
-    font-size: 6.5px !important;
+    font-size: 5.5px !important;
   }
 
   .denomination-delivery-text .delivery-copy > strong {
-    font-size: 7.5px !important;
+    font-size: 6.5px !important;
   }
 }
