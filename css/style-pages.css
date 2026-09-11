@@ -2118,3 +2118,419 @@ body.home-page .home-more-wrapper {
   }
 
 }
+/* =========================================================
+   LEOOSTORE — PAYMENT / CHECKOUT FINAL VISUAL FIX
+   Signature Color: #7c5cff
+   Tempel blok ini PALING BAWAH style-pages.css
+   ========================================================= */
+
+
+/* =========================================================
+   CHECKOUT — LANJUTKAN PEMBAYARAN
+   ========================================================= */
+
+.checkout-submit {
+  width: 100% !important;
+  min-height: 50px !important;
+  padding: 0 18px !important;
+
+  color: #fff !important;
+  background: var(--primary) !important;
+
+  border: 1px solid var(--primary) !important;
+  border-radius: 13px !important;
+
+  font-weight: 800 !important;
+
+  box-shadow:
+    0 10px 24px rgba(124, 92, 255, 0.22) !important;
+
+  transition:
+    background 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.15s ease !important;
+}
+
+.checkout-submit:hover {
+  background: var(--primary-hover) !important;
+
+  box-shadow:
+    0 12px 28px rgba(124, 92, 255, 0.28) !important;
+
+  transform: translateY(-1px) !important;
+}
+
+.checkout-submit:active {
+  transform: translateY(0) !important;
+}
+
+
+/* =========================================================
+   CHECKOUT — KODE PROMO
+   ========================================================= */
+
+#promoCode {
+  border-color: rgba(124, 92, 255, 0.42) !important;
+}
+
+#promoCode:focus {
+  border-color: var(--primary) !important;
+
+  box-shadow:
+    0 0 0 3px rgba(124, 92, 255, 0.14) !important;
+}
+
+#promoButton {
+  min-width: 110px !important;
+  min-height: 46px !important;
+
+  color: #fff !important;
+
+  background: var(--primary) !important;
+
+  border: 1px solid var(--primary) !important;
+
+  border-radius: 12px !important;
+
+  font-weight: 800 !important;
+}
+
+#promoButton:hover {
+  background: var(--primary-hover) !important;
+}
+
+
+/* =========================================================
+   CHECKOUT — PENGIRIMAN CEPAT
+   ========================================================= */
+
+.denomination-option {
+  overflow: hidden !important;
+}
+
+.denomination-delivery {
+  width: 100% !important;
+  min-height: 30px !important;
+
+  display: grid !important;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(110px, 1fr) !important;
+
+  align-items: center !important;
+}
+
+.denomination-delivery-text {
+  grid-column: 2 !important;
+
+  min-width: 0 !important;
+
+  display: grid !important;
+
+  grid-template-columns:
+    27px
+    minmax(0, 1fr) !important;
+
+  align-items: center !important;
+
+  gap: 6px !important;
+
+  color: var(--text-soft) !important;
+
+  font-size: 10px !important;
+
+  line-height: 1.05 !important;
+
+  text-align: left !important;
+}
+
+
+/* ICON PETIR */
+.denomination-delivery-text::before {
+  content: "ᯓ⚡︎";
+
+  display: flex !important;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 27px;
+  min-width: 27px;
+
+  height: 30px;
+
+  color: var(--primary);
+
+  font-size: 23px;
+
+  line-height: 1;
+
+  font-weight: 900;
+}
+
+
+/* TEXT PENGIRIMAN */
+.denomination-delivery-text span {
+  display: block !important;
+
+  color: var(--text-muted) !important;
+
+  font-size: 9px !important;
+
+  line-height: 1.05 !important;
+}
+
+
+/* TEXT CEPAT */
+.denomination-delivery-text strong {
+  display: block !important;
+
+  margin-top: 2px !important;
+
+  color: var(--primary) !important;
+
+  font-size: 10px !important;
+
+  line-height: 1.05 !important;
+
+  letter-spacing: 0.02em;
+}
+
+
+/* GARIS TETAP DI ATAS */
+.denomination-divider {
+  margin: 9px 0 !important;
+}
+
+
+/* =========================================================
+   CHECKOUT — PAYMENT CATEGORY
+   ========================================================= */
+
+/* Header tetap normal */
+.payment-category-header {
+  color: var(--text) !important;
+
+  border-color: transparent !important;
+}
+
+
+/* Icon + tidak muter */
+.payment-category-header span:last-child {
+  color: var(--primary) !important;
+
+  transform: none !important;
+
+  transition: none !important;
+
+  animation: none !important;
+}
+
+
+/* Saat OPEN juga tidak muter */
+.payment-category.open
+.payment-category-header
+span:last-child {
+  color: var(--primary) !important;
+
+  transform: none !important;
+
+  transition: none !important;
+
+  animation: none !important;
+}
+
+
+/* Hilangkan animasi kemunculan */
+.payment-category-body {
+  animation: none !important;
+
+  transition: none !important;
+
+  transform: none !important;
+}
+
+
+/* Tetap muncul/hilang berdasarkan .open */
+.payment-category.open .payment-category-body {
+  animation: none !important;
+
+  transition: none !important;
+
+  transform: none !important;
+}
+
+
+/* Payment option */
+.payment-option {
+  transition:
+    border-color 0.12s ease,
+    background 0.12s ease !important;
+}
+
+
+/* Payment terpilih */
+.payment-option.selected,
+.payment-option.active {
+  background: var(--primary-soft) !important;
+
+  border-color: var(--primary) !important;
+}
+
+
+/* =========================================================
+   PAYMENT PAGE — BUTTON
+   ========================================================= */
+
+.payment-box #paidButton,
+.payment-box > a > button:not(.secondary-button),
+.payment-box .secondary-button {
+  min-height: 48px !important;
+
+  padding: 0 18px !important;
+
+  border-radius: 12px !important;
+
+  font-weight: 800 !important;
+}
+
+
+/* SAYA SUDAH BAYAR */
+.payment-box #paidButton {
+  color: #fff !important;
+
+  background: var(--primary) !important;
+
+  border: 1px solid var(--primary) !important;
+
+  box-shadow:
+    0 9px 22px rgba(124, 92, 255, 0.22) !important;
+}
+
+.payment-box #paidButton:hover {
+  background: var(--primary-hover) !important;
+}
+
+
+/* KEMBALI KE PESANAN */
+.payment-box .secondary-button {
+  color: var(--primary) !important;
+
+  background: var(--primary-soft) !important;
+
+  border: 1px solid rgba(124, 92, 255, 0.45) !important;
+}
+
+.payment-box .secondary-button:hover {
+  background: rgba(124, 92, 255, 0.20) !important;
+
+  border-color: var(--primary) !important;
+}
+
+
+/* =========================================================
+   PAYMENT PAGE — DESKTOP 2 KOLOM
+   ========================================================= */
+
+.payment-box > a {
+  display: block;
+
+  margin-top: 10px;
+}
+
+.payment-box > a > .secondary-button {
+  width: 100%;
+}
+
+
+@media (min-width: 560px) {
+
+  .payment-box {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    gap: 10px;
+  }
+
+
+  .payment-box #paidButton,
+  .payment-box > a {
+    width: calc(50% - 5px);
+  }
+
+
+  .payment-box > a {
+    margin-top: 0;
+  }
+
+
+  .payment-box > p,
+  .payment-box > h2,
+  .payment-box > .fake-qris,
+  .payment-box > .payment-method-info {
+    flex-basis: 100%;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 559px) {
+
+  .payment-box #paidButton,
+  .payment-box > a {
+    width: 100%;
+  }
+}
+
+
+@media (max-width: 600px) {
+
+  /* -----------------------------------------
+     PENGIRIMAN CEPAT — MOBILE
+     ----------------------------------------- */
+
+  .denomination-delivery {
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(82px, 1fr) !important;
+  }
+
+
+  .denomination-delivery-text {
+    grid-template-columns:
+      24px
+      minmax(0, 1fr) !important;
+
+    gap: 4px !important;
+
+    font-size: 9px !important;
+  }
+
+
+  .denomination-delivery-text::before {
+    width: 24px;
+
+    min-width: 24px;
+
+    height: 28px;
+
+    font-size: 20px;
+  }
+
+
+  .denomination-delivery-text span {
+    font-size: 8px !important;
+  }
+
+
+  .denomination-delivery-text strong {
+    font-size: 9px !important;
+  }
+}
