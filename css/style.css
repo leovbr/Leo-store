@@ -1957,3 +1957,103 @@ header {
     min-height: 60px;
   }
 }
+/* =========================================================
+   LEOOSTORE — GLOBAL HEADER BRAND
+   ========================================================= */
+
+.header-brand {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 9px !important;
+
+  min-width: 0;
+
+  color: var(--text) !important;
+
+  transition:
+    transform 0.25s ease,
+    filter 0.25s ease;
+}
+
+.header-brand:hover {
+  transform: translateY(-1px);
+  filter:
+    drop-shadow(0 0 8px rgba(124, 92, 255, 0.45));
+}
+
+.header-logo {
+  width: 34px !important;
+  height: 34px !important;
+
+  object-fit: contain !important;
+
+  border-radius: 9px;
+
+  transition:
+    transform 0.35s ease,
+    filter 0.35s ease;
+}
+
+.header-brand:hover .header-logo {
+  transform: rotate(-4deg) scale(1.08);
+
+  filter:
+    drop-shadow(0 0 7px rgba(124, 92, 255, 0.65));
+}
+
+.header-brand-text {
+  font-size: 18px !important;
+  font-weight: 900 !important;
+
+  letter-spacing: -0.045em !important;
+
+  white-space: nowrap;
+
+  background:
+    linear-gradient(
+      90deg,
+      #ffffff 0%,
+      #ffffff 48%,
+      #9b87ff 75%,
+      #ffffff 100%
+    );
+
+  background-size: 220% auto;
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+
+  animation:
+    leoostore-shine 4s linear infinite;
+}
+
+@keyframes leoostore-shine {
+
+  0% {
+    background-position: 200% center;
+  }
+
+  100% {
+    background-position: -20% center;
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .header-logo {
+    width: 31px !important;
+    height: 31px !important;
+  }
+
+  .header-brand-text {
+    font-size: 17px !important;
+  }
+
+  .header-brand {
+    gap: 8px !important;
+  }
+
+}
