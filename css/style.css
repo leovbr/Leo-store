@@ -2057,3 +2057,31 @@ header {
   }
 
 }
+/* =========================================================
+   LEOOSTORE — FOOTER BRAND
+   ========================================================= */
+
+.footer-brand {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+.footer-brand strong {
+  font-weight: 900 !important;
+}
+
+.footer-brand span {
+  opacity: 0.6;
+}
+
+.footer-tagline {
+  margin: 5px 0 0 !important;
+
+  font-size: 11px !important;
+  font-weight: 600 !important;
+
+  letter-spacing: 0.04em !important;
+
+  opacity: 0.55;
+}
