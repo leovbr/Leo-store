@@ -582,25 +582,40 @@ header {
    ========================================================= */
 
 .home-games-section {
-  padding: 42px 0 80px;
+  padding: 38px 0 70px;
 }
+
+
+/* =========================================================
+   GAME GRID — TRENDING
+   ========================================================= */
 
 .home-game-grid {
   display: grid;
 
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 
-  gap: 18px;
+  gap: 16px;
 
   width: 100%;
   max-width: 100%;
 }
 
+
+/* =========================================================
+   TRENDING CARD
+   ========================================================= */
+
 .home-game-card {
   position: relative;
 
+  display: flex;
+  align-items: center;
+
   min-width: 0;
-  min-height: 220px;
+  min-height: 150px;
+
+  padding: 14px;
 
   overflow: hidden;
 
@@ -609,81 +624,150 @@ header {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
 
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+
   transition:
-    transform 0.2s ease,
-    border-color 0.2s ease,
-    background 0.2s ease;
+    transform 0.22s ease,
+    border-color 0.22s ease,
+    background 0.22s ease,
+    box-shadow 0.22s ease;
 }
 
 .home-game-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
 
   background: var(--card-hover);
 
-  border-color: var(--border-strong);
+  border-color: rgba(124, 92, 255, 0.35);
+
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.28);
 }
 
+
+/* =========================================================
+   FOTO GAME — 1:1
+   ========================================================= */
+
 .home-game-image {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
+  position: relative;
+
+  flex: 0 0 118px;
+
+  width: 118px;
+  height: 118px;
+
+  overflow: hidden;
+
+  border-radius: 14px;
+
+  background: var(--card-2);
 }
 
 .home-game-image img,
 .home-game-image .home-game-bg {
+  display: block;
+
   width: 100%;
   height: 100%;
 
   object-fit: cover;
+
+  transition: transform 0.3s ease;
 }
 
-.home-game-card::after {
-  content: "";
-
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-
-  background:
-    linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.88),
-      rgba(0, 0, 0, 0.15) 65%,
-      transparent
-    );
+.home-game-card:hover .home-game-image img,
+.home-game-card:hover .home-game-image .home-game-bg {
+  transform: scale(1.04);
 }
+
+
+/* =========================================================
+   INFO TRENDING
+   ========================================================= */
 
 .home-game-info {
-  position: absolute;
+  position: relative;
 
-  right: 0;
-  bottom: 0;
-  left: 0;
+  flex: 1;
 
-  z-index: 2;
+  min-width: 0;
+  height: 118px;
 
-  padding: 22px 18px 18px;
+  margin-left: 16px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  padding-top: 13px;
 }
+
+
+/* NAMA GAME */
 
 .home-game-info strong {
   display: block;
 
-  font-size: 18px;
+  width: 100%;
+  min-width: 0;
+
+  color: var(--text);
+
+  font-size: 17px;
   font-weight: 800;
+  line-height: 1.25;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
+
+/* GARIS DI BAWAH NAMA GAME */
+
+.home-game-info strong::after {
+  content: "";
+
+  display: block;
+
+  width: 100%;
+  height: 1px;
+
+  margin-top: 9px;
+
+  background: var(--border-strong);
+}
+
+
+/* NAMA PERUSAHAAN */
 
 .home-game-info span {
   display: block;
 
-  margin-top: 4px;
+  width: 100%;
+  min-width: 0;
 
-  color: rgba(255, 255, 255, 0.72);
+  margin-top: 8px;
 
-  font-size: 13px;
+  color: var(--text-soft);
+
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.3;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
+
+/* =========================================================
+   CARD CONTENT
+   ========================================================= */
 
 .home-game-card-content {
   position: relative;
+
   z-index: 2;
 
   padding: 16px;
@@ -704,12 +788,243 @@ header {
   font-size: 14px;
 }
 
+
+/* =========================================================
+   SEMUA GAME
+   ========================================================= */
+
+.all-games-section {
+  padding-top: 10px;
+}
+
+.all-games-section .home-game-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+.all-games-section .home-game-card {
+  display: block;
+
+  min-height: 0;
+
+  padding: 0;
+
+  border-radius: var(--radius-lg);
+}
+
+.all-games-section .home-game-image {
+  width: 100%;
+  height: auto;
+
+  aspect-ratio: 1 / 1;
+
+  border-radius: 0;
+}
+
+.all-games-section .home-game-info {
+  height: auto;
+
+  margin-left: 0;
+
+  padding: 14px 15px 16px;
+}
+
+.all-games-section .home-game-info strong {
+  font-size: 16px;
+}
+
+.all-games-section .home-game-info strong::after {
+  display: none;
+}
+
+.all-games-section .home-game-info span {
+  margin-top: 5px;
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   TAMPILKAN SEMUA GAME
+   ========================================================= */
+
 .home-more-wrapper {
   display: flex;
   justify-content: center;
 
   margin-top: 24px;
 }
+
+.home-more-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 44px;
+
+  padding: 0 20px;
+
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+
+  background: var(--card);
+
+  color: var(--text);
+
+  font-size: 13px;
+  font-weight: 700;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.home-more-button:hover {
+  background: var(--card-hover);
+
+  border-color: rgba(124, 92, 255, 0.4);
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .home-game-card {
+    min-height: 140px;
+
+    padding: 12px;
+  }
+
+  .home-game-image {
+    flex-basis: 105px;
+
+    width: 105px;
+    height: 105px;
+  }
+
+  .home-game-info {
+    height: 105px;
+
+    margin-left: 13px;
+
+    padding-top: 10px;
+  }
+
+  .home-game-info strong {
+    font-size: 15px;
+  }
+
+  .all-games-section .home-game-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .home-games-section {
+    padding: 30px 0 52px;
+  }
+
+  /* TRENDING TETAP 2 KOLOM */
+
+  .home-game-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+  }
+
+  .home-game-card {
+    min-height: 112px;
+
+    padding: 9px;
+
+    border-radius: 15px;
+  }
+
+  .home-game-image {
+    flex: 0 0 76px;
+
+    width: 76px;
+    height: 76px;
+
+    border-radius: 11px;
+  }
+
+  .home-game-info {
+    height: 76px;
+
+    margin-left: 9px;
+
+    padding-top: 5px;
+  }
+
+  .home-game-info strong {
+    font-size: 13px;
+
+    line-height: 1.2;
+  }
+
+  .home-game-info strong::after {
+    margin-top: 7px;
+  }
+
+  .home-game-info span {
+    margin-top: 6px;
+
+    font-size: 9.5px;
+  }
+
+
+  /* SEMUA GAME — 3 KOLOM */
+
+  .all-games-section .home-game-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 9px;
+  }
+
+  .all-games-section .home-game-card {
+    border-radius: 14px;
+  }
+
+  .all-games-section .home-game-info {
+    padding: 10px 9px 12px;
+  }
+
+  .all-games-section .home-game-info strong {
+    font-size: 12px;
+  }
+
+  .all-games-section .home-game-info span {
+    margin-top: 4px;
+
+    font-size: 9px;
+  }
+
+  .home-more-wrapper {
+    margin-top: 18px;
+  }
+
+  .home-more-button {
+    min-height: 40px;
+
+    padding: 0 16px;
+
+    font-size: 12px;
+  }
+   }
 
 
 /* =========================================================
