@@ -1232,85 +1232,248 @@
 
 
 /* =========================================================
-   HOME — 3 KOTAK SEJAJAR
+   HOME — TRENDING + ALL GAMES
    ========================================================= */
 
-.home-game-grid {
+/* ---------- TRENDING ---------- */
+
+body.home-page .home-games-section:not(.all-games-section) .home-game-grid {
   display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 16px !important;
+  width: 100% !important;
+}
 
+body.home-page .home-games-section:not(.all-games-section) .home-game-card {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  min-width: 0 !important;
+  min-height: 150px !important;
+  padding: 14px !important;
+  overflow: hidden !important;
+  border-radius: var(--radius-lg) !important;
+}
+
+body.home-page .home-games-section:not(.all-games-section) .home-game-image {
+  position: relative !important;
+  flex: 0 0 118px !important;
+  width: 118px !important;
+  height: 118px !important;
+  overflow: hidden !important;
+  border-radius: 14px !important;
+}
+
+body.home-page .home-games-section:not(.all-games-section) .home-game-image img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+body.home-page .home-games-section:not(.all-games-section) .home-game-info {
+  position: relative !important;
+  inset: auto !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  width: auto !important;
+  height: 118px !important;
+  margin: 0 0 0 16px !important;
+  padding: 13px 0 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+}
+
+body.home-page .home-games-section:not(.all-games-section) .home-game-info strong {
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  font-size: 17px !important;
+  font-weight: 800 !important;
+  line-height: 1.25 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+body.home-page .home-games-section:not(.all-games-section) .home-game-info strong::after {
+  content: "" !important;
+  display: block !important;
+  width: 100% !important;
+  height: 1px !important;
+  margin-top: 9px !important;
+  background: var(--border-strong) !important;
+}
+
+body.home-page .home-games-section:not(.all-games-section) .home-game-info span {
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  margin-top: 8px !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  line-height: 1.3 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+
+/* ---------- ALL GAMES ---------- */
+
+body.home-page .all-games-section .home-game-grid {
+  display: grid !important;
   grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-
   gap: 18px !important;
-
-  width: 100%;
+  width: 100% !important;
 }
 
-.home-game-card {
-  position: relative;
-
-  width: 100%;
-  min-width: 0;
-
-  aspect-ratio: 1 / 1;
-
-  min-height: 0;
-
-  overflow: hidden;
-
-  border-radius: var(--radius-lg);
+body.home-page .all-games-section .home-game-card {
+  position: relative !important;
+  display: block !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  border-radius: var(--radius-lg) !important;
 }
 
-.home-game-image {
-  position: absolute !important;
-
-  inset: 0 !important;
-
-  width: 100%;
-  height: 100%;
+body.home-page .all-games-section .home-game-image {
+  position: relative !important;
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 1 / 1 !important;
+  overflow: hidden !important;
+  border-radius: 0 !important;
 }
 
-.home-game-image img {
-  width: 100%;
-  height: 100%;
-
-  object-fit: cover;
+body.home-page .all-games-section .home-game-image img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
 }
 
-.home-game-info {
-  position: absolute !important;
-
-  right: 0;
-  bottom: 0;
-  left: 0;
-
-  z-index: 3;
-
-  padding: 20px 18px 18px;
-
-  background:
-    linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.88),
-      rgba(0, 0, 0, 0.35),
-      transparent
-    );
+body.home-page .all-games-section .home-game-info {
+  position: relative !important;
+  inset: auto !important;
+  width: 100% !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 14px 15px 16px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
 }
 
-.home-game-info strong {
-  display: block;
-
-  font-size: 18px;
-  line-height: 1.2;
+body.home-page .all-games-section .home-game-info strong {
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  line-height: 1.25 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
 }
 
-.home-game-info span {
-  display: block;
+body.home-page .all-games-section .home-game-info span {
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  margin-top: 5px !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  line-height: 1.3 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
 
-  margin-top: 4px;
 
-  color: rgba(255, 255, 255, 0.72);
+/* ---------- RESPONSIVE ---------- */
 
-  font-size: 13px;
+@media (max-width: 900px) {
+
+  body.home-page .home-games-section:not(.all-games-section) .home-game-card {
+    min-height: 140px !important;
+  }
+
+  body.home-page .home-games-section:not(.all-games-section) .home-game-image {
+    flex-basis: 105px !important;
+    width: 105px !important;
+    height: 105px !important;
+  }
+
+  body.home-page .home-games-section:not(.all-games-section) .home-game-info {
+    height: 105px !important;
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  /* Trending tetap 2 kolom */
+  body.home-page .home-games-section:not(.all-games-section) .home-game-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+
+  body.home-page .home-games-section:not(.all-games-section) .home-game-card {
+    min-height: 112px !important;
+    padding: 10px !important;
+  }
+
+  body.home-page .home-games-section:not(.all-games-section) .home-game-image {
+    flex: 0 0 76px !important;
+    width: 76px !important;
+    height: 76px !important;
+    border-radius: 11px !important;
+  }
+
+  body.home-page .home-games-section:not(.all-games-section) .home-game-info {
+    width: auto !important;
+    height: 76px !important;
+    margin-left: 10px !important;
+    padding-top: 6px !important;
+  }
+
+  body.home-page .home-games-section:not(.all-games-section) .home-game-info strong {
+    font-size: 13px !important;
+  }
+
+  body.home-page .home-games-section:not(.all-games-section) .home-game-info strong::after {
+    margin-top: 6px !important;
+  }
+
+  body.home-page .home-games-section:not(.all-games-section) .home-game-info span {
+    margin-top: 6px !important;
+    font-size: 9px !important;
+  }
+
+
+  /* All Games tetap 3 kolom */
+  body.home-page .all-games-section .home-game-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+
+  body.home-page .all-games-section .home-game-info {
+    padding: 9px 8px 11px !important;
+  }
+
+  body.home-page .all-games-section .home-game-info strong {
+    font-size: 12px !important;
+  }
+
+  body.home-page .all-games-section .home-game-info span {
+    margin-top: 4px !important;
+    font-size: 9px !important;
+  }
+
 }
 
 
