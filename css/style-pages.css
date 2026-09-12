@@ -1058,15 +1058,6 @@
    ORDER EMPTY STATE
    ========================================================= */
 
-#historyList {
-  width: 100%;
-  min-width: 0;
-
-  display: block;
-
-  box-sizing: border-box;
-}
-
 .order-empty-state {
   width: 100%;
   min-width: 0;
@@ -1238,10 +1229,37 @@
 }
 
 #historyList {
+  width: 100%;
+  min-width: 0;
+
   display: flex;
   flex-direction: column;
 
   gap: 12px;
+
+  box-sizing: border-box;
+}
+
+#historyList > .order-empty-state {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  box-sizing: border-box;
+}
+
+#historyList > .order-empty-state > * {
+  margin-left: auto;
+  margin-right: auto;
+
+  text-align: center;
 }
 
 .history-actions {
