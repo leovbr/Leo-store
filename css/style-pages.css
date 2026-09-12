@@ -4112,3 +4112,35 @@ body.order-page .order-container {
   margin: 0 !important;
   opacity: 0.6 !important;
 }
+#historyList {
+  display: block !important;
+  width: 100% !important;
+}
+
+#historyList .order-empty-state {
+  position: relative !important;
+
+  width: 100% !important;
+  box-sizing: border-box !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  text-align: center !important;
+
+  margin: 0 !important;
+  padding: 40px 20px !important;
+
+  left: auto !important;
+  right: auto !important;
+  transform: none !important;
+}
+
+#historyList .order-empty-state > * {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
