@@ -427,7 +427,10 @@ header {
 .home-banner-section {
   padding: 26px 0 30px;
 }
-
+.home-banner-section .section-heading .eyebrow {
+  display: inline-block;
+  margin-top: 12px;
+}
 .banner-carousel {
   position: relative;
 
