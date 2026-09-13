@@ -381,14 +381,13 @@ const LAST_ORDER_KEY = "LEOOSTORE_last_orders";
 
 
 button.innerHTML = `
-  <span
+  <button
+    type="button"
     class="denom-info-btn"
-    role="button"
-    tabindex="0"
     aria-label="Informasi nominal"
   >
     ⓘ
-  </span>
+  </button>
 
   <div class="denomination-main">
 
@@ -445,12 +444,15 @@ if (
     "click",
     (event) => {
 
+      event.preventDefault();
       event.stopPropagation();
 
       showRobloxDenominationInfo();
 
     }
   );
+
+}
 
   infoButton?.addEventListener(
     "keydown",
@@ -1645,22 +1647,28 @@ if (
 
     if (product && gameSelect) {
 
-      gameSelect.value =
-        product.slug ||
-        product.id;
+  gameSelect.value =
+    product.slug ||
+    product.id;
 
-      selectedProduct =
-        product;
+  selectedProduct =
+    product;
 
-      updateHero(product);
+  updateHero(product);
 
-      renderDenominations(product);
+  updateAccountFields(product);
 
-    }
+  renderDenominations(product);
 
+  updateSummary();
+
+  if (
+    product.id ===
+    "roblox-via-login"
+  ) {
+    setTimeout(() => {
+      showRobloxLoginNotice();
+    }, 500);
   }
 
-
-  updateQuantity(1);
-
-});
+    }
