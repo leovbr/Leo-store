@@ -84,11 +84,210 @@
   position: absolute;
   inset: 0;
   z-index: 3;
-
   display: flex;
   align-items: flex-end;
-
   padding: 30px;
+}
+
+.game-hero-main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.game-hero-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  min-width: 0;
+}
+
+.game-hero-text {
+  min-width: 0;
+}
+
+.game-hero-text h1 {
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(25px, 4vw, 42px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+}
+
+.game-hero-text p {
+  margin: 7px 0 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* =========================================================
+   HERO BENEFITS
+   ========================================================= */
+
+.game-hero-benefits {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  padding: 11px 12px;
+
+  background: rgba(0, 0, 0, 0.30);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 14px;
+
+  backdrop-filter: blur(10px);
+}
+
+.hero-benefit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-width: 0;
+
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.hero-benefit-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: center;
+}
+
+.game-hero-divider {
+  width: 1px;
+  min-height: 18px;
+  align-self: center;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* =========================================================
+   HERO ICON ANIMATIONS
+   ========================================================= */
+
+@keyframes heroFastPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0 rgba(255, 210, 0, 0));
+  }
+
+  50% {
+    transform: scale(1.16);
+    filter: drop-shadow(0 0 7px rgba(255, 210, 0, 0.65));
+  }
+}
+
+@keyframes heroChatFloat {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+
+  50% {
+    transform: translateY(-4px) rotate(-4deg);
+  }
+}
+
+@keyframes heroSafePulse {
+  0%,
+  100% {
+    transform: scale(1) rotate(0);
+  }
+
+  45% {
+    transform: scale(1.08) rotate(-5deg);
+  }
+
+  55% {
+    transform: scale(1.08) rotate(5deg);
+  }
+}
+
+.hero-benefit-fast .hero-benefit-icon {
+  animation: heroFastPulse 1.7s ease-in-out infinite;
+}
+
+.hero-benefit-chat .hero-benefit-icon {
+  animation: heroChatFloat 2.4s ease-in-out infinite;
+}
+
+.hero-benefit-safe .hero-benefit-icon {
+  animation: heroSafePulse 2.8s ease-in-out infinite;
+}
+
+/* =========================================================
+   ACCOUNT FIELDS
+   ========================================================= */
+
+.account-fields input,
+.account-fields select {
+  min-height: 42px;
+  height: 42px;
+  padding: 0 11px;
+  font-size: 13px;
+}
+
+.account-fields .form-group {
+  margin-bottom: 0;
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 640px) {
+
+  .game-hero-overlay {
+    padding: 20px;
+  }
+
+  .game-hero-main {
+    gap: 18px;
+  }
+
+  .game-hero-content {
+    gap: 12px;
+  }
+
+  .game-hero-icon {
+    width: 76px;
+    height: 76px;
+    flex-basis: 76px;
+    border-radius: 16px;
+  }
+
+  .game-hero-benefits {
+    gap: 4px;
+    padding: 9px 5px;
+  }
+
+  .hero-benefit {
+    gap: 4px;
+    font-size: 10px;
+  }
+
+  .game-hero-divider {
+    min-height: 16px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .hero-benefit-icon {
+    animation: none !important;
+  }
 }
 
 .game-hero-content {
