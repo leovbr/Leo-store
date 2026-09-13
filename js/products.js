@@ -10,7 +10,7 @@ const PRODUCTS = [
     icon: "⚔️",
     image: "assets/icons/mobile-legends.webp",
     description: "Top Up Diamonds Mobile Legends",
-
+publisher: "Moonton",
     denominations: [
       /* =========================
          FIRST TOP UP
@@ -271,6 +271,7 @@ const PRODUCTS = [
     icon: "🔥",
     image: "assets/icons/free-fire.webp",
     description: "Top Up Diamonds Free Fire",
+publisher: "Garena",
 
     denominations: [
       { id: "ff-5", amount: "5 Diamonds", shortAmount: "5 Diamonds", category: "💎 Top Up Diamonds", price: 1000 },
@@ -290,21 +291,176 @@ const PRODUCTS = [
      ROBLOX
      ========================================================= */
 
-  {
+    {
     id: "roblox",
     name: "Roblox",
     slug: "roblox",
     icon: "🧱",
     image: "assets/icons/roblox.webp",
     description: "Robux Roblox",
+    publisher: "Roblox Corporation",
 
     denominations: [
-      { id: "rbx-80", amount: "80 Robux", shortAmount: "80 Robux", category: "✨ Top Up Robux", price: 15000 },
-      { id: "rbx-160", amount: "160 Robux", shortAmount: "160 Robux", category: "✨ Top Up Robux", price: 29000 },
-      { id: "rbx-240", amount: "240 Robux", shortAmount: "240 Robux", category: "✨ Top Up Robux", price: 42000 },
-      { id: "rbx-400", amount: "400 Robux", shortAmount: "400 Robux", category: "✨ Top Up Robux", price: 68000 },
-      { id: "rbx-800", amount: "800 Robux", shortAmount: "800 Robux", category: "✨ Top Up Robux", price: 135000 },
-      { id: "rbx-1700", amount: "1700 Robux", shortAmount: "1700 Robux", category: "✨ Top Up Robux", price: 270000 }
+      {
+        id: "rbx-80",
+        amount: "80 Robux",
+        shortAmount: "80 Robux",
+        category: "✨ Top Up Robux",
+        price: 15000
+      },
+      {
+        id: "rbx-160",
+        amount: "160 Robux",
+        shortAmount: "160 Robux",
+        category: "✨ Top Up Robux",
+        price: 29000
+      },
+      {
+        id: "rbx-240",
+        amount: "240 Robux",
+        shortAmount: "240 Robux",
+        category: "✨ Top Up Robux",
+        price: 42000
+      },
+      {
+        id: "rbx-400",
+        amount: "400 Robux",
+        shortAmount: "400 Robux",
+        category: "✨ Top Up Robux",
+        price: 68000
+      },
+      {
+        id: "rbx-800",
+        amount: "800 Robux",
+        shortAmount: "800 Robux",
+        category: "✨ Top Up Robux",
+        price: 135000
+      },
+      {
+        id: "rbx-1700",
+        amount: "1700 Robux",
+        shortAmount: "1700 Robux",
+        category: "✨ Top Up Robux",
+        price: 270000
+      }
+    ]
+  },
+
+  /* =========================================================
+     ROBLOX VIA LOGIN
+     ========================================================= */
+
+  {
+    id: "roblox-via-login",
+    name: "ROBLOX VIA LOGIN",
+    slug: "roblox-via-login",
+    icon: "🧱",
+    image: "assets/icons/roblox.webp",
+    description: "Robux Roblox via Login",
+    publisher: "Roblox Corporation",
+
+    denominations: [
+      {
+        id: "rbx-80-login",
+        amount: "80 Robux",
+        shortAmount: "80 Robux",
+        category: "✨ Top Up Robux",
+        price: 15000
+      },
+      {
+        id: "rbx-160-login",
+        amount: "160 Robux",
+        shortAmount: "160 Robux",
+        category: "✨ Top Up Robux",
+        price: 29000
+      },
+      {
+        id: "rbx-240-login",
+        amount: "240 Robux",
+        shortAmount: "240 Robux",
+        category: "✨ Top Up Robux",
+        price: 42000
+      },
+      {
+        id: "rbx-400-login",
+        amount: "400 Robux",
+        shortAmount: "400 Robux",
+        category: "✨ Top Up Robux",
+        price: 68000
+      },
+      {
+        id: "rbx-800-login",
+        amount: "800 Robux",
+        shortAmount: "800 Robux",
+        category: "✨ Top Up Robux",
+        price: 135000
+      },
+      {
+        id: "rbx-1700-login",
+        amount: "1700 Robux",
+        shortAmount: "1700 Robux",
+        category: "✨ Top Up Robux",
+        price: 270000
+      }
+    ]
+  },
+
+  /* =========================================================
+     ROBLOX VIA USERNAME
+     ========================================================= */
+
+  {
+    id: "roblox-via-username",
+    name: "ROBLOX VIA USERNAME",
+    slug: "roblox-via-username",
+    icon: "🧱",
+    image: "assets/icons/roblox.webp",
+    description: "Robux Roblox via Username",
+    publisher: "Roblox Corporation",
+
+    denominations: [
+      {
+        id: "rbx-80-username",
+        amount: "80 Robux (Wajib 18+ & Aktif V2L)",
+        shortAmount: "80 Robux",
+        category: "✨ Top Up Robux",
+        price: 15000
+      },
+      {
+        id: "rbx-160-username",
+        amount: "160 Robux (Wajib 18+ & Aktif V2L)",
+        shortAmount: "160 Robux",
+        category: "✨ Top Up Robux",
+        price: 29000
+      },
+      {
+        id: "rbx-240-username",
+        amount: "240 Robux (Wajib 18+ & Aktif V2L)",
+        shortAmount: "240 Robux",
+        category: "✨ Top Up Robux",
+        price: 42000
+      },
+      {
+        id: "rbx-400-username",
+        amount: "400 Robux (Wajib 18+ & Aktif V2L)",
+        shortAmount: "400 Robux",
+        category: "✨ Top Up Robux",
+        price: 68000
+      },
+      {
+        id: "rbx-800-username",
+        amount: "800 Robux (Wajib 18+ & Aktif V2L)",
+        shortAmount: "800 Robux",
+        category: "✨ Top Up Robux",
+        price: 135000
+      },
+      {
+        id: "rbx-1700-username",
+        amount: "1700 Robux (Wajib 18+ & Aktif V2L)",
+        shortAmount: "1700 Robux",
+        category: "✨ Top Up Robux",
+        price: 270000
+      }
     ]
   },
 
@@ -319,6 +475,7 @@ const PRODUCTS = [
     icon: "🎯",
     image: "assets/icons/pubg-mobile.webp",
     description: "Top Up UC PUBG Mobile",
+publisher: "Tencent Games",
 
     denominations: [
       { id: "pubg-60", amount: "60 UC", shortAmount: "60 UC", category: "🎯 Top Up UC", price: 15000 },
