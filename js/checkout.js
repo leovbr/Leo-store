@@ -245,86 +245,48 @@ const LAST_ORDER_KEY = "LEOOSTORE_last_orders";
 
 
   function updateHero(product) {
-
-    if (!product) {
-
-      if (gameName) {
-        gameName.textContent = "Pilih Game";
-      }
-
-      if (gameDescription) {
-        gameDescription.textContent =
-          "Pilih game yang ingin kamu top up.";
-      }
-
-      return;
-
-    }
-
-
+  if (!product) {
     if (gameName) {
-
-      gameName.textContent =
-        product.name || "Game";
-
+      gameName.textContent = "Pilih Game";
     }
-
 
     if (gameDescription) {
-
-      gameDescription.textContent =
-        product.description ||
-        `Top Up ${product.name || "Game"}`;
-
+      gameDescription.textContent = "Pilih publisher";
     }
 
-
-    const banner =
-      product.banner ||
-      product.image ||
-      "";
-
-
-    if (gameHeroBanner) {
-
-      gameHeroBanner.style.backgroundImage =
-        banner
-          ? `url("${banner}")`
-          : "";
-
-    }
-
-
-    if (gameImage) {
-
-      gameImage.src =
-        product.image || "";
-
-      gameImage.alt =
-        product.name || "Game";
-
-      gameImage.style.display =
-        product.image
-          ? "block"
-          : "none";
-
-    }
-
-
-    if (gameIconFallback) {
-
-      gameIconFallback.textContent =
-        product.icon || "🎮";
-
-      gameIconFallback.style.display =
-        product.image
-          ? "none"
-          : "flex";
-
-    }
-
+    return;
   }
 
+  if (gameName) {
+    gameName.textContent = product.name || "Game";
+  }
+
+  if (gameDescription) {
+    gameDescription.textContent =
+      product.publisher || "Publisher";
+  }
+
+  const banner = product.banner || product.image || "";
+
+  if (gameHeroBanner) {
+    gameHeroBanner.style.backgroundImage =
+      banner ? `url("${banner}")` : "";
+  }
+
+  if (gameImage) {
+    gameImage.src = product.image || "";
+    gameImage.alt = product.name || "Game";
+    gameImage.style.display = product.image ? "block" : "none";
+  }
+
+  if (gameIconFallback) {
+    gameIconFallback.textContent =
+      product.icon || "🎮";
+
+    gameIconFallback.style.display =
+      product.image ? "none" : "flex";
+  }
+}
 
   /* =========================================================
      DENOMINATIONS
@@ -762,7 +724,124 @@ button.innerHTML = `
     }
 
   }
+/* =========================================================
+   ACCOUNT FIELDS
+========================================================= */
 
+function updateAccountFields(product) {
+
+  const accountFields =
+    document.querySelector(".account-fields");
+
+  if (!accountFields) return;
+
+  const groups =
+    accountFields.querySelectorAll(".form-group");
+
+  const playerGroup =
+    groups[0];
+
+  const serverGroup =
+    groups[1];
+
+  const playerLabel =
+    playerGroup?.querySelector("label");
+
+  const serverLabel =
+    serverGroup?.querySelector("label");
+
+  const playerInput =
+    playerGroup?.querySelector("input");
+
+  const serverInputEl =
+    serverGroup?.querySelector("input, select");
+
+  if (!playerGroup || !serverGroup) return;
+
+
+  /* =======================================================
+     DEFAULT
+  ======================================================= */
+
+  playerGroup.style.display = "";
+  serverGroup.style.display = "";
+
+  if (playerLabel) {
+    playerLabel.textContent =
+      "Player ID";
+  }
+
+  if (playerInput) {
+    playerInput.placeholder =
+      "Masukkan Player ID";
+  }
+
+
+  /* =======================================================
+     ROBLOX VIA LOGIN
+  ======================================================= */
+
+  if (
+    product?.id ===
+    "roblox-via-login"
+  ) {
+
+    playerGroup.style.display = "";
+
+    if (playerLabel) {
+      playerLabel.textContent =
+        "Username Roblox";
+    }
+
+    if (playerInput) {
+      playerInput.placeholder =
+        "Masukkan username Roblox";
+    }
+
+    serverGroup.style.display =
+      "none";
+
+    if (serverInputEl) {
+      serverInputEl.value = "";
+    }
+
+    return;
+  }
+
+
+  /* =======================================================
+     ROBLOX VIA USERNAME
+  ======================================================= */
+
+  if (
+    product?.id ===
+    "roblox-via-username"
+  ) {
+
+    if (playerLabel) {
+      playerLabel.textContent =
+        "@Username";
+    }
+
+    if (playerInput) {
+      playerInput.placeholder =
+        "Masukkan @username";
+    }
+
+    if (serverLabel) {
+      serverLabel.textContent =
+        "Display Name";
+    }
+
+    if (serverInputEl) {
+      serverInputEl.placeholder =
+        "Masukkan display name";
+    }
+
+    return;
+  }
+
+  }
 
   /* =========================================================
      GAME CHANGE
@@ -804,9 +883,11 @@ button.innerHTML = `
 
       updateHero(product);
 
-      renderDenominations(product);
+updateAccountFields(product);
 
-      updateSummary();
+renderDenominations(product);
+
+updateSummary();
 
     }
   );
