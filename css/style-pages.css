@@ -4998,3 +4998,18 @@ body.order-page .order-container {
   }
 
 }
+/* =========================================================
+   ROBLOX DENOMINATION TEXT
+   ========================================================= */
+
+.denomination-title {
+  font-size: 13px;
+  line-height: 1.25;
+}
+
+@media (max-width: 640px) {
+  .denomination-title {
+    font-size: 11px;
+    line-height: 1.2;
+  }
+}
