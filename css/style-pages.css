@@ -4439,3 +4439,83 @@ body.order-page .order-container {
 
   text-align: center;
 }
+/* =========================================================
+   ORDER HISTORY — MOBILE EMPTY STATE FINAL
+   ========================================================= */
+
+@media (max-width: 680px) {
+
+  body.order-page #orderContainer {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  body.order-page .order-history-page {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  body.order-page .order-transactions-section {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  body.order-page .order-table-wrap {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  body.order-page .order-table {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  body.order-page #historyList {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    margin: 0;
+    padding: 0;
+  }
+
+  body.order-page #historyList > .order-empty-state {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+
+    margin: 0;
+    padding: 40px 16px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    box-sizing: border-box;
+  }
+
+  body.order-page #historyList > .order-empty-state > * {
+    width: auto;
+    max-width: 100%;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    text-align: center;
+  }
+
+}
