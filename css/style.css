@@ -2191,3 +2191,44 @@ header {
     font-size: 9px;
   }
 }
+/* =========================================================
+   LEOOSTORE — SHOP HEADER
+   Samakan header shop.html dengan order.html
+   ========================================================= */
+
+.shop-page .site-header {
+  width: 100%;
+}
+
+.shop-page .site-header > .container {
+  width: min(100% - 40px, 1180px);
+  max-width: 1180px;
+  margin-inline: auto;
+  padding-inline: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.shop-page .header-brand {
+  flex-shrink: 0;
+}
+
+.shop-page .nav {
+  flex-shrink: 0;
+}
+
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 900px) {
+
+  .shop-page .site-header > .container {
+    width: calc(100% - 28px);
+    max-width: none;
+  }
+
+}
