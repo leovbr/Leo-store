@@ -2085,3 +2085,109 @@ header {
 
   opacity: 0.55;
 }
+/* =========================================================
+   LEOOSTORE — SHOP MOBILE CARD FIX
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .shop-page .product-grid {
+    width: min(100%, 520px);
+    max-width: 520px;
+
+    margin-inline: auto;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .shop-page .product-card-content,
+  .shop-page .product-info {
+    padding: 12px;
+  }
+
+  .shop-page .product-card h3,
+  .shop-page .product-info h3 {
+    font-size: 15px;
+    line-height: 1.25;
+  }
+
+  .shop-page .product-card p {
+    margin: 5px 0 10px;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .shop-page .product-denominations {
+    gap: 5px;
+    margin-top: 9px;
+  }
+
+  .shop-page .denomination-chip {
+    min-height: 26px;
+    padding: 0 7px;
+    font-size: 10px;
+  }
+
+  .shop-page .product-price {
+    font-size: 13px;
+  }
+
+  .shop-page .product-minimum {
+    font-size: 10px;
+  }
+
+  .shop-page .product-btn {
+    margin-top: 10px;
+  }
+}
+
+
+/* =========================================================
+   SMALL PHONE
+   ========================================================= */
+
+@media (max-width: 680px) {
+
+  .shop-page .product-grid {
+    width: 100%;
+    max-width: 100%;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .shop-page .product-card-content,
+  .shop-page .product-info {
+    padding: 10px;
+  }
+
+  .shop-page .product-card h3,
+  .shop-page .product-info h3 {
+    font-size: 13px;
+  }
+
+  .shop-page .product-card p {
+    margin: 4px 0 8px;
+    font-size: 11px;
+  }
+
+  .shop-page .product-denominations {
+    gap: 4px;
+    margin-top: 7px;
+  }
+
+  .shop-page .denomination-chip {
+    min-height: 24px;
+    padding: 0 6px;
+    font-size: 9px;
+  }
+
+  .shop-page .product-price {
+    font-size: 12px;
+  }
+
+  .shop-page .product-minimum {
+    font-size: 9px;
+  }
+}
