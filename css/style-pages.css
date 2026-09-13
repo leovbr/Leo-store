@@ -4777,3 +4777,202 @@ body.order-page .order-container {
   }
 
 }
+/* =========================================================
+   ROBLOX INFO BUTTONS
+   ========================================================= */
+
+.account-field-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.field-info-btn,
+.denom-info-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 19px;
+  height: 19px;
+
+  padding: 0;
+
+  border: 1px solid var(--border);
+  border-radius: 50%;
+
+  background: var(--bg-soft);
+  color: var(--text);
+
+  font-size: 11px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.field-info-btn:hover,
+.denom-info-btn:hover {
+  background: var(--card-2);
+  border-color: var(--border-strong);
+  transform: scale(1.05);
+}
+
+
+/* =========================================================
+   ROBLOX DENOMINATION INFO
+   ========================================================= */
+
+.denom-info-btn {
+  position: absolute;
+
+  top: 9px;
+  right: 9px;
+
+  z-index: 2;
+
+  background: var(--card);
+}
+
+
+/* =========================================================
+   ROBLOX MODALS
+   ========================================================= */
+
+.leo-modal-backdrop {
+  position: fixed;
+  inset: 0;
+
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 18px;
+
+  background: rgba(0, 0, 0, 0.68);
+
+  backdrop-filter: blur(7px);
+}
+
+.leo-modal {
+  position: relative;
+
+  width: min(520px, 100%);
+  max-height: min(82vh, 720px);
+
+  overflow: auto;
+
+  padding: 23px;
+
+  background: var(--card);
+
+  border: 1px solid var(--border);
+  border-radius: 18px;
+
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.38);
+}
+
+.leo-modal-close {
+  position: absolute;
+
+  top: 10px;
+  right: 11px;
+
+  width: 34px;
+  height: 34px;
+
+  border: 0;
+  border-radius: 10px;
+
+  background: var(--bg-soft);
+  color: var(--text);
+
+  font-size: 22px;
+
+  cursor: pointer;
+}
+
+.leo-modal h3 {
+  margin: 0 42px 10px 0;
+
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.leo-modal p {
+  margin: 0;
+
+  color: var(--text-soft);
+
+  font-size: 13px;
+  line-height: 1.65;
+
+  white-space: pre-line;
+}
+
+.leo-modal .modal-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  gap: 8px;
+
+  margin-top: 18px;
+}
+
+.leo-modal .modal-actions button {
+  min-height: 40px;
+
+  padding: 0 14px;
+
+  border-radius: 10px;
+
+  border: 1px solid var(--border);
+
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+.leo-modal .modal-primary {
+  background: var(--primary);
+  color: #ffffff;
+
+  border-color: var(--primary);
+}
+
+.leo-modal .modal-black {
+  background: #090909;
+  color: #ffffff;
+
+  border-color: #090909;
+}
+
+
+/* =========================================================
+   ROBLOX LOGIN NOTICE
+   ========================================================= */
+
+.login-notice-check {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-top: 16px;
+
+  color: var(--text-muted);
+
+  font-size: 12px;
+}
+
+.login-notice-check input {
+  width: 16px;
+  height: 16px;
+}
