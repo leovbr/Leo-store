@@ -1672,3 +1672,9 @@ if (
   }
 
     }
+    }
+  }
+
+  updateQuantity(1);
+
+});
