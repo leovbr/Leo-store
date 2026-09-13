@@ -1031,13 +1031,8 @@ header {
    SHOP
    ========================================================= */
 
-.shop-page,
 .shop-section {
-  width: min(calc(100% - 32px), var(--container));
-
-  margin-inline: auto;
-
-  padding: 54px 0 80px;
+  padding: 14px 0 80px;
 }
 
 .shop-header {
@@ -1380,11 +1375,8 @@ header {
     grid-template-columns: 1fr;
   }
 
-  .shop-page,
   .shop-section {
-    width: min(calc(100% - 22px), var(--container));
-
-    padding-top: 38px;
+  padding-top: 14px;
   }
 
   .footer-inner {
