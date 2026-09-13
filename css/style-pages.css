@@ -21,7 +21,7 @@
 }
 
 .checkout-section {
-  padding: 34px 0 80px;
+  padding: 14px 0 80px;
 }
 
 
@@ -33,17 +33,17 @@
   position: relative;
 
   width: 100%;
-
-  aspect-ratio: 2.4 / 1;
+  min-height: 270px;
 
   overflow: hidden;
 
   background: #0c0f15;
 
   border: 1px solid var(--border);
-  border-radius: 24px;
+  border-radius: 22px;
 
-  box-shadow: var(--shadow);
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.24);
 }
 
 .game-hero::after {
@@ -56,14 +56,14 @@
   background:
     linear-gradient(
       90deg,
-      rgba(0, 0, 0, 0.80),
-      rgba(0, 0, 0, 0.28),
-      rgba(0, 0, 0, 0.08)
+      rgba(0, 0, 0, 0.78),
+      rgba(0, 0, 0, 0.42),
+      rgba(0, 0, 0, 0.12)
     ),
     linear-gradient(
       0deg,
-      rgba(0, 0, 0, 0.68),
-      transparent 60%
+      rgba(0, 0, 0, 0.72),
+      transparent 65%
     );
 }
 
@@ -75,7 +75,9 @@
   background-size: cover;
   background-repeat: no-repeat;
 
-  opacity: 0.82;
+  opacity: 0.9;
+
+  transform: scale(1.01);
 }
 
 .game-hero-overlay {
@@ -86,7 +88,7 @@
   display: flex;
   align-items: flex-end;
 
-  padding: clamp(22px, 4vw, 42px);
+  padding: 30px;
 }
 
 .game-hero-content {
@@ -95,25 +97,28 @@
 
   gap: 18px;
 
+  width: 100%;
   min-width: 0;
 }
 
 .game-hero-icon {
   position: relative;
 
-  width: 82px;
-  height: 82px;
+  width: 92px;
+  height: 92px;
 
-  flex: 0 0 82px;
+  flex: 0 0 92px;
 
   overflow: hidden;
 
-  border-radius: 18px;
+  background: var(--card);
 
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 2px solid rgba(255, 255, 255, 0.18);
+
+  border-radius: 20px;
 
   box-shadow:
-    0 12px 30px rgba(0, 0, 0, 0.35);
+    0 14px 35px rgba(0, 0, 0, 0.42);
 }
 
 .game-hero-icon img {
@@ -131,20 +136,50 @@
 .game-hero-title {
   margin: 0;
 
-  font-size: clamp(28px, 5vw, 46px);
+  color: #ffffff;
 
-  line-height: 1;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 800;
 
-  letter-spacing: -0.04em;
+  line-height: 1.05;
+
+  letter-spacing: -0.035em;
 }
 
 .game-hero-text p,
 .game-hero-description {
   margin: 8px 0 0;
 
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(255, 255, 255, 0.76);
+
+  font-size: 14px;
+  font-weight: 500;
 }
 
+.game-hero-text::after {
+  content: "Top Up Game";
+
+  display: inline-flex;
+
+  margin-top: 12px;
+
+  padding: 5px 10px;
+
+  color: rgba(255, 255, 255, 0.86);
+
+  background: rgba(255, 255, 255, 0.08);
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 0.02em;
+
+  backdrop-filter: blur(8px);
+}
 
 /* =========================================================
    CHECKOUT LAYOUT
@@ -2070,6 +2105,30 @@ body.home-page .all-games-section .home-game-info span {
    ========================================================= */
 
 @media (max-width: 600px) {
+ .game-hero {
+  min-height: 230px;
+}
+
+.game-hero-overlay {
+  padding: 22px;
+}
+
+.game-hero-icon {
+  width: 72px;
+  height: 72px;
+  flex-basis: 72px;
+
+  border-radius: 16px;
+}
+
+.game-hero-content {
+  gap: 14px;
+}
+
+.game-hero-text h1,
+.game-hero-title {
+  font-size: 28px;
+}  
 
   /* SHOP 2 KOLOM */
   .product-grid,
