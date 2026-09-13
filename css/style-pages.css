@@ -37,7 +37,10 @@
 
   overflow: hidden;
 
-  background: #0c0f15;
+  background-color: #0c0f15;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 
   border: 1px solid var(--border);
   border-radius: 22px;
@@ -65,19 +68,6 @@
       rgba(0, 0, 0, 0.72),
       transparent 65%
     );
-}
-
-.game-hero-banner {
-  position: absolute;
-  inset: 0;
-
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-
-  opacity: 0.9;
-
-  transform: scale(1.01);
 }
 
 .game-hero-overlay {
