@@ -381,6 +381,15 @@ const LAST_ORDER_KEY = "LEOOSTORE_last_orders";
 
 
 button.innerHTML = `
+  <span
+    class="denom-info-btn"
+    role="button"
+    tabindex="0"
+    aria-label="Informasi nominal"
+  >
+    ⓘ
+  </span>
+
   <div class="denomination-main">
 
     <div class="denomination-title">
@@ -422,8 +431,47 @@ button.innerHTML = `
 
   </div>
 `;
+const infoButton =
+  button.querySelector(
+    ".denom-info-btn"
+  );
 
+if (
+  product?.id ===
+  "roblox-via-username"
+) {
 
+  infoButton?.addEventListener(
+    "click",
+    (event) => {
+
+      event.stopPropagation();
+
+      showRobloxDenominationInfo();
+
+    }
+  );
+
+  infoButton?.addEventListener(
+    "keydown",
+    (event) => {
+
+      if (
+        event.key === "Enter" ||
+        event.key === " "
+      ) {
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        showRobloxDenominationInfo();
+
+      }
+
+    }
+  );
+
+}
           button.addEventListener(
             "click",
             () => {
@@ -767,6 +815,136 @@ function updateAccountFields(product) {
   serverGroup.style.display = "";
 
   if (playerLabel) {
+
+    playerLabel.textContent =
+      "Player ID";
+
+  }
+
+  if (playerInput) {
+
+    playerInput.placeholder =
+      "Masukkan Player ID";
+
+  }
+
+
+  /* =======================================================
+     ROBLOX VIA LOGIN
+  ======================================================= */
+
+  if (
+    product?.id ===
+    "roblox-via-login"
+  ) {
+
+    playerGroup.style.display =
+      "";
+
+    if (playerLabel) {
+
+      playerLabel.textContent =
+        "Username Roblox";
+
+    }
+
+    if (playerInput) {
+
+      playerInput.placeholder =
+        "Masukkan username Roblox";
+
+    }
+
+    serverGroup.style.display =
+      "none";
+
+    if (serverInputEl) {
+
+      serverInputEl.value = "";
+
+    }
+
+    return;
+  }
+
+
+  /* =======================================================
+     ROBLOX VIA USERNAME
+  ======================================================= */
+
+  if (
+    product?.id ===
+    "roblox-via-username"
+  ) {
+
+    if (playerLabel) {
+
+      playerLabel.innerHTML = `
+        <span class="account-field-label">
+          @Username
+
+          <button
+            type="button"
+            class="field-info-btn"
+            id="robloxUsernameInfoBtn"
+            aria-label="Informasi username"
+          >
+            ⓘ
+          </button>
+        </span>
+      `;
+
+    }
+
+    if (playerInput) {
+
+      playerInput.placeholder =
+        "Masukkan @username";
+
+    }
+
+    if (serverLabel) {
+
+      serverLabel.textContent =
+        "Display Name";
+
+    }
+
+    if (serverInputEl) {
+
+      serverInputEl.placeholder =
+        "Masukkan display name";
+
+    }
+
+    setTimeout(() => {
+
+      const infoButton =
+        document.getElementById(
+          "robloxUsernameInfoBtn"
+        );
+
+      infoButton?.addEventListener(
+        "click",
+        showRobloxUsernameInfo
+      );
+
+    }, 0);
+
+    return;
+  }
+
+}
+
+
+  /* =======================================================
+     DEFAULT
+  ======================================================= */
+
+  playerGroup.style.display = "";
+  serverGroup.style.display = "";
+
+  if (playerLabel) {
     playerLabel.textContent =
       "Player ID";
   }
@@ -842,7 +1020,363 @@ function updateAccountFields(product) {
   }
 
   }
+/* =========================================================
+   ROBLOX LOGIN NOTICE
+========================================================= */
 
+function showRobloxLoginNotice() {
+
+  const noticeKey =
+    "LEOOSTORE_roblox_login_notice_v1";
+
+  if (
+    localStorage.getItem(noticeKey) ===
+    "true"
+  ) {
+    return;
+  }
+
+  const existing =
+    document.getElementById(
+      "robloxLoginNotice"
+    );
+
+  if (existing) {
+    existing.remove();
+  }
+
+
+  const backdrop =
+    document.createElement("div");
+
+  backdrop.id =
+    "robloxLoginNotice";
+
+  backdrop.className =
+    "leo-modal-backdrop";
+
+  backdrop.innerHTML = `
+    <div
+      class="leo-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="robloxLoginNoticeTitle"
+    >
+
+      <button
+        type="button"
+        class="leo-modal-close"
+        aria-label="Tutup"
+      >
+        ×
+      </button>
+
+      <h3 id="robloxLoginNoticeTitle">
+        INFORMASI PENTING DAN HARAP DIBACA
+      </h3>
+
+      <p>
+        INFORMASI PENTING DAN
+        HARAP DIBACA, AGAR PESANAN KAMU CEPAT TERPROSES, OKEEE.
+
+        ✅ OPEN 24 JAM
+
+        ✅ Setelah pembayaran, harap langsung konfirmasi pesanan kamu ke WhatsApp Admin LEOOSTORE.
+
+        ✅ Nomor Whatsapp Admin LEOOSTORE 👉 0XXXXXXXX
+
+        ✅ Contoh Format Chat :
+        Halo min, Saya sudah order dengan Username : XXXXXXXXX
+        (tidak harus sama persis)
+
+        ⚠️ PESANAN KAMU AKAN TERPROSES SEDIKIT LEBIH LAMA JIKA TIDAK KONFIRMASI PESANAN SETELAH PEMBAYARAN, JADI HARAP CHAT ADMIN SETELAH MELAKUKAN PEMBAYARAN, OKEEE 👌
+      </p>
+
+      <label class="login-notice-check">
+        <input
+          type="checkbox"
+          id="robloxLoginNoticeDontShow"
+        >
+
+        <span>
+          Jangan tampilkan lagi
+        </span>
+      </label>
+
+      <div class="modal-actions">
+
+        <button
+          type="button"
+          class="modal-primary"
+          id="robloxLoginNoticeContinue"
+        >
+          Lanjut
+        </button>
+
+      </div>
+
+    </div>
+  `;
+
+  document.body.appendChild(
+    backdrop
+  );
+
+
+  const closeButton =
+    backdrop.querySelector(
+      ".leo-modal-close"
+    );
+
+  const continueButton =
+    backdrop.querySelector(
+      "#robloxLoginNoticeContinue"
+    );
+
+  const dontShow =
+    backdrop.querySelector(
+      "#robloxLoginNoticeDontShow"
+    );
+
+
+  function closeNotice() {
+
+    if (
+      dontShow &&
+      dontShow.checked
+    ) {
+      localStorage.setItem(
+        noticeKey,
+        "true"
+      );
+    }
+
+    backdrop.remove();
+  }
+
+
+  closeButton?.addEventListener(
+    "click",
+    closeNotice
+  );
+
+  continueButton?.addEventListener(
+    "click",
+    closeNotice
+  );
+
+}
+   /* =========================================================
+   ROBLOX USERNAME INFO
+========================================================= */
+
+function showRobloxUsernameInfo() {
+
+  const existing =
+    document.getElementById(
+      "robloxUsernameInfo"
+    );
+
+  if (existing) {
+    existing.remove();
+  }
+
+  const backdrop =
+    document.createElement("div");
+
+  backdrop.id =
+    "robloxUsernameInfo";
+
+  backdrop.className =
+    "leo-modal-backdrop";
+
+  backdrop.innerHTML = `
+    <div
+      class="leo-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="robloxUsernameInfoTitle"
+    >
+
+      <button
+        type="button"
+        class="leo-modal-close"
+        aria-label="Tutup"
+      >
+        ×
+      </button>
+
+      <h3 id="robloxUsernameInfoTitle">
+        Panduan
+      </h3>
+
+      <p>
+        HARAP DI BACA SEBELUM ORDER!
+
+        Produk ini diproses VIA USERNAME,
+        Harap masukan @Username dan DisplayName
+      </p>
+
+      <div class="modal-actions">
+
+        <button
+          type="button"
+          class="modal-primary"
+          id="robloxUsernameInfoOk"
+        >
+          OK
+        </button>
+
+      </div>
+
+    </div>
+  `;
+
+  document.body.appendChild(
+    backdrop
+  );
+
+  const closeButton =
+    backdrop.querySelector(
+      ".leo-modal-close"
+    );
+
+  const okButton =
+    backdrop.querySelector(
+      "#robloxUsernameInfoOk"
+    );
+
+  function closeInfo() {
+    backdrop.remove();
+  }
+
+  closeButton?.addEventListener(
+    "click",
+    closeInfo
+  );
+
+  okButton?.addEventListener(
+    "click",
+    closeInfo
+  );
+}
+/* =========================================================
+   ROBLOX DENOMINATION INFO
+========================================================= */
+
+function showRobloxDenominationInfo() {
+
+  const existing =
+    document.getElementById(
+      "robloxDenominationInfo"
+    );
+
+  if (existing) {
+    existing.remove();
+  }
+
+  const backdrop =
+    document.createElement("div");
+
+  backdrop.id =
+    "robloxDenominationInfo";
+
+  backdrop.className =
+    "leo-modal-backdrop";
+
+  backdrop.innerHTML = `
+    <div
+      class="leo-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="robloxDenominationInfoTitle"
+    >
+
+      <button
+        type="button"
+        class="leo-modal-close"
+        aria-label="Tutup"
+      >
+        ×
+      </button>
+
+      <h3 id="robloxDenominationInfoTitle">
+        PERHATIAN!!
+      </h3>
+
+      <p>
+        - Pastikan Akun Kamu Ber Usia Minimal 18 Tahun Dan Usia Sudah Di Verifikasi ✅
+
+        - WAJIB Aktivkan Verifikasi 2 Langkah ✅
+
+        Robux ini INSTANT langsung masuk! Tidak perlu nunggu berhari-hari
+
+        Jangan beli produk ini Jika usia akun dibawah 18 Tahun!
+
+        Kami tidak bertanggungjawab jika akun kamu belum 18+ tapi tetap memaksa membeli produk ini!
+      </p>
+
+      <div class="modal-actions">
+
+        <button
+          type="button"
+          class="modal-black"
+          id="robloxDenominationCancel"
+        >
+          Batal
+        </button>
+
+        <button
+          type="button"
+          class="modal-primary"
+          id="robloxDenominationOk"
+        >
+          OK, Saya Mengerti
+        </button>
+
+      </div>
+
+    </div>
+  `;
+
+  document.body.appendChild(
+    backdrop
+  );
+
+  const closeButton =
+    backdrop.querySelector(
+      ".leo-modal-close"
+    );
+
+  const cancelButton =
+    backdrop.querySelector(
+      "#robloxDenominationCancel"
+    );
+
+  const okButton =
+    backdrop.querySelector(
+      "#robloxDenominationOk"
+    );
+
+  function closeInfo() {
+    backdrop.remove();
+  }
+
+  closeButton?.addEventListener(
+    "click",
+    closeInfo
+  );
+
+  cancelButton?.addEventListener(
+    "click",
+    closeInfo
+  );
+
+  okButton?.addEventListener(
+    "click",
+    closeInfo
+  );
+}
   /* =========================================================
      GAME CHANGE
   ========================================================= */
@@ -888,7 +1422,14 @@ updateAccountFields(product);
 renderDenominations(product);
 
 updateSummary();
-
+if (
+  product?.id ===
+  "roblox-via-login"
+) {
+  setTimeout(() => {
+    showRobloxLoginNotice();
+  }, 1300);
+}
     }
   );
 
