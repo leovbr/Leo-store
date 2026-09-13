@@ -4941,3 +4941,60 @@ body.order-page .order-container {
   width: 16px;
   height: 16px;
 }
+/* =========================================================
+   CLEAN GAME HERO
+   ========================================================= */
+
+.game-hero {
+  box-shadow: none !important;
+}
+
+.game-hero::after {
+  display: none !important;
+}
+
+.game-hero-overlay {
+  padding: 0 !important;
+  align-items: flex-end;
+}
+
+.game-hero-main {
+  gap: 0 !important;
+}
+
+.game-hero-content {
+  padding: 28px 28px 22px;
+}
+
+.game-hero-benefits {
+  width: 100%;
+  margin: 0 !important;
+
+  padding: 12px 18px !important;
+
+  background: transparent !important;
+  border: 0 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-radius: 0 !important;
+
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+
+  box-shadow: none !important;
+}
+
+.game-hero-divider {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+@media (max-width: 640px) {
+
+  .game-hero-content {
+    padding: 22px 20px 18px;
+  }
+
+  .game-hero-benefits {
+    padding: 11px 8px !important;
+  }
+
+}
