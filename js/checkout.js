@@ -294,245 +294,241 @@ const LAST_ORDER_KEY = "LEOOSTORE_last_orders";
 
   function renderDenominations(product) {
 
-    if (!denominationList) return;
+  if (!denominationList) return;
 
-    selectedDenomination = null;
+  selectedDenomination = null;
 
-    if (nominalInput) {
-      nominalInput.value = "";
-    }
-
-
-    if (
-      !product ||
-      !Array.isArray(product.denominations) ||
-      !product.denominations.length
-    ) {
-
-      denominationList.innerHTML = `
-        <div class="checkout-loading">
-          Nominal belum tersedia.
-        </div>
-      `;
-
-      updateSummary();
-      return;
-
-    }
-
-
-    const groups = {};
-
-
-    product.denominations.forEach(item => {
-
-      const category =
-        item.category || "✨ Top Up";
-
-      if (!groups[category]) {
-        groups[category] = [];
-      }
-
-      groups[category].push(item);
-
-    });
-
-
-    denominationList.innerHTML = "";
-
-
-    Object.entries(groups).forEach(
-      ([category, items]) => {
-
-        const group =
-          document.createElement("div");
-
-        group.className =
-          "denomination-group";
-
-        group.innerHTML = `
-          <div class="denomination-category-title">
-            ${escapeHTML(category)}
-          </div>
-
-          <div class="denomination-group-grid"></div>
-        `;
-
-
-        const grid =
-          group.querySelector(
-            ".denomination-group-grid"
-          );
-
-
-        items.forEach(item => {
-
-          const button =
-            document.createElement("button");
-
-          button.type = "button";
-
-          button.className =
-            "denomination-option";
-
-
-          button.dataset.id =
-            item.id;
-
-
-button.innerHTML = `
-  <button
-    type="button"
-    class="denom-info-btn"
-    aria-label="Informasi nominal"
-  >
-    ⓘ
-  </button>
-
-  <div class="denomination-main">
-
-    <div class="denomination-title">
-      ${escapeHTML(item.amount)}
-    </div>
-
-    <div class="denomination-price-box">
-      <span>
-        ${rupiah(item.price)}
-      </span>
-    </div>
-
-  </div>
-
-  <div class="denomination-divider"></div>
-
-  <div class="denomination-delivery">
-
-    <div class="denomination-delivery-text">
-
-      <span
-        class="delivery-icon"
-        aria-hidden="true"
-      >⚡</span>
-
-      <div class="delivery-copy">
-
-        <span>
-          Pengiriman
-        </span>
-
-        <strong>
-          CEPAT
-        </strong>
-
-      </div>
-
-    </div>
-
-  </div>
-`;
-const infoButton =
-  button.querySelector(
-    ".denom-info-btn"
-  );
-
-if (
-  product?.id ===
-  "roblox-via-username"
-) {
-
-  infoButton?.addEventListener(
-    "click",
-    (event) => {
-
-      event.preventDefault();
-      event.stopPropagation();
-
-      showRobloxDenominationInfo();
-
-    }
-  );
-
-}
-
-  infoButton?.addEventListener(
-    "keydown",
-    (event) => {
-
-      if (
-        event.key === "Enter" ||
-        event.key === " "
-      ) {
-
-        event.preventDefault();
-        event.stopPropagation();
-
-        showRobloxDenominationInfo();
-
-      }
-
-    }
-  );
-
-}
-          button.addEventListener(
-            "click",
-            () => {
-
-              document
-                .querySelectorAll(
-                  ".denomination-option"
-                )
-                .forEach(option => {
-
-                  option.classList.remove(
-                    "selected"
-                  );
-
-                });
-
-
-              button.classList.add(
-                "selected"
-              );
-
-
-              selectedDenomination =
-                item;
-
-
-              if (nominalInput) {
-
-                nominalInput.value =
-                  item.id;
-
-              }
-
-
-              updateSummary();
-
-            }
-          );
-
-
-          grid.appendChild(button);
-
-        });
-
-
-        denominationList.appendChild(group);
-
-      }
-    );
-
-
-    updateSummary();
-
+  if (nominalInput) {
+    nominalInput.value = "";
   }
 
+  if (
+    !product ||
+    !Array.isArray(product.denominations) ||
+    !product.denominations.length
+  ) {
 
-  /* =========================================================
+    denominationList.innerHTML = `
+      <div class="checkout-loading">
+        Pilih game terlebih dahulu.
+      </div>
+    `;
+
+    updateSummary();
+    return;
+  }
+
+  const groups = {};
+
+  product.denominations.forEach(item => {
+
+    const category =
+      item.category || "✨ Top Up";
+
+    if (!groups[category]) {
+      groups[category] = [];
+    }
+
+    groups[category].push(item);
+
+  });
+
+  denominationList.innerHTML = "";
+
+  Object.entries(groups).forEach(
+    ([category, items]) => {
+
+      const group =
+        document.createElement("div");
+
+      group.className =
+        "denomination-group";
+
+      group.innerHTML = `
+        <div class="denomination-category-title">
+          ${escapeHTML(category)}
+        </div>
+
+        <div class="denomination-group-grid"></div>
+      `;
+
+      const grid =
+        group.querySelector(
+          ".denomination-group-grid"
+        );
+
+      items.forEach(item => {
+
+        const option =
+          document.createElement("div");
+
+        option.className =
+          "denomination-option";
+
+        option.dataset.id =
+          item.id;
+
+        option.setAttribute(
+          "role",
+          "button"
+        );
+
+        option.setAttribute(
+          "tabindex",
+          "0"
+        );
+
+        option.innerHTML = `
+          ${
+            product.id ===
+            "roblox-via-username"
+              ? `
+                <button
+                  type="button"
+                  class="denom-info-btn"
+                  aria-label="Informasi nominal"
+                >
+                  ⓘ
+                </button>
+              `
+              : ""
+          }
+
+          <div class="denomination-main">
+
+            <div class="denomination-title">
+              ${escapeHTML(item.amount)}
+            </div>
+
+            <div class="denomination-price-box">
+              <span>
+                ${rupiah(item.price)}
+              </span>
+            </div>
+
+          </div>
+
+          <div class="denomination-divider"></div>
+
+          <div class="denomination-delivery">
+
+            <div class="denomination-delivery-text">
+
+              <span
+                class="delivery-icon"
+                aria-hidden="true"
+              >
+                ⚡
+              </span>
+
+              <div class="delivery-copy">
+
+                <span>
+                  Pengiriman
+                </span>
+
+                <strong>
+                  CEPAT
+                </strong>
+
+              </div>
+
+            </div>
+
+          </div>
+        `;
+
+        const infoButton =
+          option.querySelector(
+            ".denom-info-btn"
+          );
+
+        infoButton?.addEventListener(
+          "click",
+          event => {
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            showRobloxDenominationInfo();
+
+          }
+        );
+
+        const selectDenomination =
+          () => {
+
+            document
+              .querySelectorAll(
+                ".denomination-option"
+              )
+              .forEach(itemEl => {
+
+                itemEl.classList.remove(
+                  "selected"
+                );
+
+              });
+
+            option.classList.add(
+              "selected"
+            );
+
+            selectedDenomination =
+              item;
+
+            if (nominalInput) {
+
+              nominalInput.value =
+                item.id;
+
+            }
+
+            updateSummary();
+
+          };
+
+        option.addEventListener(
+          "click",
+          selectDenomination
+        );
+
+        option.addEventListener(
+          "keydown",
+          event => {
+
+            if (
+              event.key === "Enter" ||
+              event.key === " "
+            ) {
+
+              event.preventDefault();
+
+              selectDenomination();
+
+            }
+
+          }
+        );
+
+        grid.appendChild(option);
+
+      });
+
+      denominationList.appendChild(
+        group
+      );
+
+    }
+  );
+
+  updateSummary();
+
+}
+   
+/* =========================================================
      QUANTITY
-  ========================================================= */
+========================================================= */
 
   function updateQuantity(value) {
 
