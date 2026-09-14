@@ -5013,3 +5013,130 @@ body.order-page .order-container {
     line-height: 1.2;
   }
 }
+/* =========================================================
+   CHECKOUT HERO FINAL
+   ========================================================= */
+
+.checkout-page .game-hero {
+  min-height: 250px;
+  box-shadow: none;
+}
+
+.checkout-page .game-hero::after {
+  display: none;
+}
+
+.checkout-page .game-hero-overlay {
+  padding: 0;
+  align-items: flex-end;
+}
+
+.checkout-page .game-hero-main {
+  width: 100%;
+  gap: 0;
+}
+
+.checkout-page .game-hero-content {
+  padding: 28px 28px 22px;
+  gap: 18px;
+}
+
+.checkout-page .game-hero-text {
+  min-width: 0;
+  flex: 1;
+}
+
+.checkout-page .game-hero-text h1 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(26px, 5vw, 42px);
+  line-height: 1.05;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.checkout-page .game-hero-text p {
+  margin: 7px 0 0;
+  color: rgba(255,255,255,.72);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.checkout-page .game-hero-benefits {
+  width: 100%;
+  margin: 0;
+  padding: 12px 18px;
+
+  display: grid;
+  grid-template-columns:
+    1fr
+    1px
+    1fr
+    1px
+    1fr;
+
+  align-items: center;
+  gap: 8px;
+
+  background: transparent;
+  border: 0;
+  border-top: 1px solid rgba(255,255,255,.16);
+  border-radius: 0;
+
+  backdrop-filter: none;
+  box-shadow: none;
+}
+
+.checkout-page .hero-benefit {
+  justify-content: center;
+  gap: 6px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.checkout-page .game-hero-divider {
+  width: 1px;
+  height: 20px;
+  min-height: 20px;
+  background: rgba(255,255,255,.16);
+}
+
+@media (max-width: 640px) {
+
+  .checkout-page .game-hero {
+    min-height: 235px;
+  }
+
+  .checkout-page .game-hero-content {
+    padding: 25px 20px 20px;
+    gap: 14px;
+  }
+
+  .checkout-page .game-hero-icon {
+    width: 72px;
+    height: 72px;
+    flex-basis: 72px;
+  }
+
+  .checkout-page .game-hero-text h1 {
+    font-size: 25px;
+    line-height: 1.08;
+  }
+
+  .checkout-page .game-hero-text p {
+    font-size: 12px;
+  }
+
+  .checkout-page .game-hero-benefits {
+    padding: 11px 7px;
+    gap: 4px;
+  }
+
+  .checkout-page .hero-benefit {
+    gap: 4px;
+    font-size: 10px;
+  }
+
+}
