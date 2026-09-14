@@ -287,64 +287,6 @@ publisher: "Garena",
     ]
   },
 
-  /* =========================================================
-     ROBLOX
-     ========================================================= */
-
-    {
-    id: "roblox",
-    name: "Roblox",
-    slug: "roblox",
-    icon: "🧱",
-    image: "assets/icons/roblox.webp",
-    description: "Robux Roblox",
-    publisher: "Roblox Corporation",
-
-    denominations: [
-      {
-        id: "rbx-80",
-        amount: "80 Robux",
-        shortAmount: "80 Robux",
-        category: "✨ Top Up Robux",
-        price: 15000
-      },
-      {
-        id: "rbx-160",
-        amount: "160 Robux",
-        shortAmount: "160 Robux",
-        category: "✨ Top Up Robux",
-        price: 29000
-      },
-      {
-        id: "rbx-240",
-        amount: "240 Robux",
-        shortAmount: "240 Robux",
-        category: "✨ Top Up Robux",
-        price: 42000
-      },
-      {
-        id: "rbx-400",
-        amount: "400 Robux",
-        shortAmount: "400 Robux",
-        category: "✨ Top Up Robux",
-        price: 68000
-      },
-      {
-        id: "rbx-800",
-        amount: "800 Robux",
-        shortAmount: "800 Robux",
-        category: "✨ Top Up Robux",
-        price: 135000
-      },
-      {
-        id: "rbx-1700",
-        amount: "1700 Robux",
-        shortAmount: "1700 Robux",
-        category: "✨ Top Up Robux",
-        price: 270000
-      }
-    ]
-  },
 
   /* =========================================================
      ROBLOX VIA LOGIN
