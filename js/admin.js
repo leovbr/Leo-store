@@ -139,7 +139,6 @@ function getGameIcon(order) {
 
   if (slug === "free-fire") return "🔥";
   if (slug === "mobile-legends") return "⚔️";
-  if (slug === "roblox") return "🧱";
   if (slug === "pubg-mobile") return "🔫";
 
   return "🎮";
