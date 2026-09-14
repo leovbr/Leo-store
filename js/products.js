@@ -14,7 +14,6 @@ const PRODUCTS = [
     slug: "mobile-legends",
     icon: "⚔️",
     image: "assets/icons/mobile-legends.webp",
-    banner: "assets/banners/mobile-legends.webp",
     description: "Top Up Diamonds Mobile Legends",
     publisher: "Moonton",
 
@@ -298,7 +297,6 @@ const PRODUCTS = [
     slug: "free-fire",
     icon: "🔥",
     image: "assets/icons/free-fire.webp",
-    banner: "assets/banners/free-fire.webp",
     description: "Top Up Diamonds Free Fire",
     publisher: "Garena",
 
@@ -398,7 +396,6 @@ const PRODUCTS = [
     slug: "roblox-via-login",
     icon: "🧱",
     image: "assets/icons/roblox.webp",
-    banner: "assets/banners/roblox.webp",
     description: "Robux Roblox via Login",
     publisher: "Roblox Corporation",
 
@@ -466,7 +463,6 @@ const PRODUCTS = [
     slug: "roblox-via-username",
     icon: "🧱",
     image: "assets/icons/roblox.webp",
-    banner: "assets/banners/roblox.webp",
     description: "Robux Roblox via Username",
     publisher: "Roblox Corporation",
 
@@ -534,7 +530,6 @@ const PRODUCTS = [
     slug: "pubg-mobile",
     icon: "🎯",
     image: "assets/icons/pubg-mobile.webp",
-    banner: "assets/banners/pubg-mobile.webp",
     description: "Top Up UC PUBG Mobile",
     publisher: "Tencent Games",
 
