@@ -1276,5 +1276,407 @@ document.addEventListener("DOMContentLoaded", function () {
 
           promoApplied = true;
 
+if (promoMessage) {
 
+            promoMessage.textContent =
+              "Promo berhasil digunakan. Diskon Rp1.000.";
+
+          }
+
+
+          updateSummary();
+
+          return;
+
+        }
+
+
+        promoApplied = false;
+
+
+        if (promoMessage) {
+
+          promoMessage.textContent =
+            "Kode promo tidak ditemukan.";
+
+        }
+
+
+        updateSummary();
+
+      }
+    );
+
+  }
+
+
+  /* =======================================================
+     CHECKOUT
+  ======================================================= */
+
+  function createOrder() {
+
+    if (!selectedProduct) {
+
+      alert(
+        "Silakan pilih game terlebih dahulu."
+      );
+
+      return;
+
+    }
+
+
+    if (!selectedDenomination) {
+
+      alert(
+        "Silakan pilih nominal terlebih dahulu."
+      );
+
+      return;
+
+    }
+
+
+    if (
+      selectedProduct.id !==
+        "roblox-via-login" &&
+      selectedProduct.id !==
+        "roblox-via-username"
+    ) {
+
+      if (
+        !playerIdInput ||
+        !playerIdInput.value.trim()
+      ) {
+
+        alert(
+          "Silakan masukkan Player ID."
+        );
+
+        playerIdInput?.focus();
+
+        return;
+
+      }
+
+    } else {
+
+      if (
+        !playerIdInput ||
+        !playerIdInput.value.trim()
+      ) {
+
+        alert(
+          "Silakan masukkan Username Roblox."
+        );
+
+        playerIdInput?.focus();
+
+        return;
+
+      }
+
+    }
+
+
+    if (
+      selectedProduct.id !==
+        "roblox-via-login" &&
+      selectedProduct.id !==
+        "roblox-via-username"
+    ) {
+
+      if (
+        !serverInput ||
+        !serverInput.value.trim()
+      ) {
+
+        alert(
+          "Silakan masukkan Server."
+        );
+
+        serverInput?.focus();
+
+        return;
+
+      }
+
+    }
+
+
+    if (!selectedPayment) {
+
+      alert(
+        "Silakan pilih metode pembayaran."
+      );
+
+      return;
+
+    }
+
+
+    if (
+      !contactEmail ||
+      !contactEmail.value.trim()
+    ) {
+
+      alert(
+        "Silakan masukkan email."
+      );
+
+      contactEmail?.focus();
+
+      return;
+
+    }
+
+
+    if (
+      !contactWhatsapp ||
+      !contactWhatsapp.value.trim()
+    ) {
+
+      alert(
+        "Silakan masukkan nomor WhatsApp."
+      );
+
+      contactWhatsapp?.focus();
+
+      return;
+
+    }
+
+
+    const orderId =
+      "LEO-" +
+      Date.now().toString(36).toUpperCase();
+
+
+    const order = {
+
+      id:
+        orderId,
+
+      orderId:
+        orderId,
+
+      gameId:
+        selectedProduct.id,
+
+      game:
+        selectedProduct.name,
+
+      playerId:
+        playerIdInput.value.trim(),
+
+      server:
+        serverInput
+          ? serverInput.value.trim()
+          : "",
+
+      denominationId:
+        selectedDenomination.id,
+
+      denomination:
+        selectedDenomination.amount,
+
+      quantity:
+        getQuantity(),
+
+      paymentId:
+        selectedPayment.id,
+
+      payment:
+        selectedPayment.name,
+
+      email:
+        contactEmail.value.trim(),
+
+      whatsapp:
+        (
+          countryCode?.value ||
+          "+62"
+        ) +
+        contactWhatsapp.value.trim(),
+
+      subtotal:
+        getBaseTotal(),
+
+      fee:
+        getPaymentFee(),
+
+      total:
+        getTotal(),
+
+      promo:
+        promoApplied
+          ? "LEO1000"
+          : "",
+
+      status:
+        "Menunggu Pembayaran",
+       createdAt:
+        new Date().toISOString()
+
+    };
+
+
+    let orders = [];
+
+
+    try {
+
+      const stored =
+        localStorage.getItem(
+          ORDERS_KEY
+        );
+
+
+      if (stored) {
+
+        orders =
+          JSON.parse(
+            stored
+          );
+
+      }
+
+
+      if (!Array.isArray(orders)) {
+        orders = [];
+      }
+
+    } catch (error) {
+
+      orders = [];
+
+    }
+
+
+    orders.unshift(order);
+
+
+    localStorage.setItem(
+      ORDERS_KEY,
+      JSON.stringify(orders)
+    );
+
+
+    localStorage.setItem(
+      LAST_ORDER_KEY,
+      JSON.stringify(order)
+    );
+
+
+    /*
+      Support legacy order storage
+      supaya halaman order/admin lama
+      tetap bisa membaca transaksi.
+    */
+
+    localStorage.setItem(
+      "fidelis_orders",
+      JSON.stringify(orders)
+    );
+
+
+    localStorage.setItem(
+      "fidelis_last_order",
+      JSON.stringify(order)
+    );
+
+
+    window.location.href =
+      "order.html";
+
+  }
+
+
+  if (checkoutButton) {
+
+    checkoutButton.addEventListener(
+      "click",
+      createOrder
+    );
+
+  }
+
+
+  /* =======================================================
+     INITIALIZE
+  ======================================================= */
+
+  populateGames();
+
+  setupPayments();
+
+  setupPaymentCategories();
+
+
+  const queryGame =
+    getQueryGame();
+
+
+  if (queryGame) {
+
+    const product =
+      getProduct(queryGame);
+
+
+    if (
+      product &&
+      gameSelect
+    ) {
+
+      gameSelect.value =
+        product.slug ||
+        product.id;
+
+
+      selectGame(
+        product.slug ||
+        product.id
+      );
+
+    }
+
+  } else {
+
+    updateHero(null);
+
+    updateAccountFields(null);
+
+    renderDenominations(null);
+
+  }
+
+
+  if (quantityInput) {
+
+    quantityInput.value =
+      1;
+
+  }
+
+
+  updateSummary();
+
+
+  console.log(
+    "LEOOSTORE CHECKOUT READY",
+    {
+      products:
+        products.length,
+
+      queryGame:
+        queryGame,
+
+      selectedProduct:
+        selectedProduct?.id ||
+        null
+    }
+  );
+
+});
       
