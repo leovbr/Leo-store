@@ -1,5 +1,5 @@
 /* =========================================================
-   LEO STORE — SHOP
+   LEOOSTORE — SHOP
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -7,6 +7,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchInput = document.getElementById("shopSearch");
 
   if (!productList) return;
+
+  const products = Array.isArray(window.PRODUCTS)
+    ? window.PRODUCTS
+    : [];
 
   function escapeHTML(value) {
     return String(value ?? "")
@@ -17,28 +21,54 @@ document.addEventListener("DOMContentLoaded", () => {
       .replace(/'/g, "&#039;");
   }
 
-  function renderProducts(products) {
-    if (!products || products.length === 0) {
+  function rupiah(value) {
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      maximumFractionDigits: 0
+    }).format(Number(value || 0));
+  }
+
+  function getCheapest(product) {
+    if (
+      !Array.isArray(product.denominations) ||
+      !product.denominations.length
+    ) {
+      return null;
+    }
+
+    return product.denominations.reduce((lowest, item) => {
+      if (!lowest) return item;
+
+      return Number(item.price || 0) <
+        Number(lowest.price || 0)
+        ? item
+        : lowest;
+    }, null);
+  }
+
+  function renderProducts(list) {
+    if (!list.length) {
       productList.innerHTML = `
         <div class="empty-state">
           <strong>Game tidak ditemukan</strong>
           <span>Coba cari nama game yang berbeda.</span>
         </div>
       `;
-
       return;
     }
 
-    productList.innerHTML = products.map(product => {
-      const cheapest = getCheapestDenomination(product.id);
-
+    productList.innerHTML = list.map(product => {
       const denominations = Array.isArray(product.denominations)
         ? product.denominations
         : [];
 
+      const cheapest = getCheapest(product);
       const preview = denominations.slice(0, 5);
 
-      const nominalHTML = preview.length
+      const gameId = product.slug || product.id;
+
+      const chips = preview.length
         ? `
           <div class="product-denominations">
             ${preview.map(item => `
@@ -58,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
         `
         : "";
 
-      const imageHTML = product.image
+      const image = product.image
         ? `
           <img
             class="product-game-image"
@@ -88,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <article class="product-card">
 
           <div class="product-image-wrap">
-            ${imageHTML}
+            ${image}
           </div>
 
           <div class="product-info">
@@ -102,13 +132,13 @@ document.addEventListener("DOMContentLoaded", () => {
               )}
             </p>
 
-            ${nominalHTML}
+            ${chips}
 
             ${
               cheapest
                 ? `
                   <div class="product-price">
-                    Mulai dari ${formatRupiah(cheapest.price)}
+                    Mulai dari ${rupiah(cheapest.price)}
                   </div>
 
                   <div class="product-minimum">
@@ -123,30 +153,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
             <a
               class="product-btn"
-              href="checkout.html?game=${encodeURIComponent(product.slug)}"
+              href="checkout.html?game=${encodeURIComponent(gameId)}"
             >
               Top Up
             </a>
 
           </div>
+
         </article>
       `;
     }).join("");
   }
 
-  function loadProducts(keyword = "") {
-    const products = keyword
-      ? searchProducts(keyword)
-      : getProducts();
+  function filterProducts(keyword) {
+    const query = String(keyword || "")
+      .trim()
+      .toLowerCase();
 
-    renderProducts(products);
+    if (!query) {
+      renderProducts(products);
+      return;
+    }
+
+    const filtered = products.filter(product => {
+      return [
+        product.name,
+        product.id,
+        product.slug,
+        product.publisher
+      ].some(value =>
+        String(value || "")
+          .toLowerCase()
+          .includes(query)
+      );
+    });
+
+    renderProducts(filtered);
   }
 
-  loadProducts();
+  renderProducts(products);
 
   if (searchInput) {
     searchInput.addEventListener("input", () => {
-      loadProducts(searchInput.value);
+      filterProducts(searchInput.value);
     });
   }
 });
