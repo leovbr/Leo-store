@@ -1,155 +1,17 @@
-/* LEOOSTORE checkout fixes — final */
-
-/* Remove the decorative/trust block and the large footer logo/photo. */
-.checkout-page .checkout-benefits,
-.checkout-page .site-footer .footer-brand,
-.checkout-page .site-footer .footer-logo {
-  display: none !important;
-}
-
-/* Clean summary: only the requested information remains. */
-.checkout-page .summary-product,
-.checkout-page .summary-row:has(#summaryAdminFee),
-.checkout-page .summary-secure {
-  display: none !important;
-}
-
-/* Make the WHOLE summary card behave like the LEOOSTORE header:
-   it stays in view while the page scrolls up/down. */
-.checkout-page .checkout-sidebar {
-  position: sticky !important;
-  top: 82px !important;
-  align-self: start !important;
-  height: fit-content !important;
-  padding: 0 0 24px !important;
-  margin: 0 !important;
-  z-index: 100 !important;
-}
-
-.checkout-page .checkout-summary {
-  margin: 0 !important;
-  overflow: hidden !important;
-}
-
-/* Compact summary rows: label + value on the same line. */
-.checkout-page .checkout-summary .summary-row,
-.checkout-page .checkout-summary .summary-total {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  gap: 16px !important;
-}
-
-.checkout-page .checkout-summary .summary-total {
-  margin-top: 0 !important;
-}
-
-/* CTA is physically part of the sticky summary card. */
-.checkout-page #checkoutButton,
-.checkout-page .btn-checkout {
-  position: relative !important;
-  left: auto !important;
-  right: auto !important;
-  bottom: auto !important;
-  transform: none !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  width: 100% !important;
-  min-height: 56px !important;
-  margin: 18px 0 0 !important;
-  border-radius: 16px !important;
-  box-shadow: 0 16px 40px rgba(0,0,0,.30), 0 0 0 1px rgba(124,92,255,.24) !important;
-}
-
-.checkout-page #checkoutButton:active,
-.checkout-page .btn-checkout:active {
-  transform: translateY(1px) !important;
-}
-
-/* Footer: Navigasi is gone. */
-.checkout-page .site-footer .footer-column:first-child {
-  display: none !important;
-}
-
-/* Keep only Help + Social columns, cleanly aligned. */
-.checkout-page .site-footer .footer-links {
-  display: grid !important;
-  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-  gap: 28px !important;
-}
-
-/* Contact number under Bantuan. */
-.checkout-page .site-footer .footer-column:nth-child(2) a:last-child {
-  font-size: 0 !important;
-}
-
-.checkout-page .site-footer .footer-column:nth-child(2) a:last-child::before {
-  content: "Hubungi Kami";
-  display: block;
-  font-size: 14px;
-}
-
-.checkout-page .site-footer .footer-column:nth-child(2) a:last-child::after {
-  content: "085823538473";
-  display: block;
-  margin-top: 3px;
-  font-size: 12px;
-  opacity: .65;
-}
-
-/* Social links with icons beside each name. */
-.checkout-page .site-footer .footer-column:nth-child(3) a {
-  display: flex !important;
-  align-items: center !important;
-  gap: 9px !important;
-}
-
-.checkout-page .site-footer .footer-column:nth-child(3) a::before {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 22px;
-  height: 22px;
-  flex: 0 0 22px;
-  border-radius: 7px;
-  font-size: 13px;
-  font-weight: 800;
-}
-
-.checkout-page .site-footer .footer-column:nth-child(3) a:nth-child(2)::before {
-  content: "◎";
-}
-
-.checkout-page .site-footer .footer-column:nth-child(3) a:nth-child(3)::before {
-  content: "♪";
-}
-
-.checkout-page .site-footer .footer-column:nth-child(3) a:nth-child(4)::before {
-  content: "◉";
-}
-
-@media (max-width: 680px) {
-  .checkout-page .checkout-sidebar {
-    position: sticky !important;
-    top: 70px !important;
-    padding-bottom: 18px !important;
-  }
-
-  .checkout-page .site-footer .footer-links {
-    grid-template-columns: 1fr 1fr !important;
-    gap: 20px !important;
-  }
-
-  .checkout-page #checkoutButton,
-  .checkout-page .btn-checkout {
-    min-height: 54px !important;
-    border-radius: 15px !important;
-  }
-}
-
-@media (max-width: 390px) {
-  .checkout-page .site-footer .footer-links {
-    grid-template-columns: 1fr !important;
-  }
-}
+/* LEOOSTORE CHECKOUT — FINAL OVERRIDES */
+.checkout-page .checkout-benefits,.checkout-page .checkout-sidebar .summary-product,.checkout-page .checkout-sidebar .summary-secure,.checkout-page .checkout-sidebar .summary-row:has(#summaryAdminFee),.checkout-page .site-footer .footer-brand,.checkout-page .site-footer .footer-column:first-child{display:none!important}
+.checkout-page .checkout-sidebar{position:sticky!important;top:82px!important;align-self:flex-start!important;height:max-content!important;z-index:100!important;width:100%!important}
+.checkout-page .checkout-summary{margin:0!important;overflow:hidden!important}
+.checkout-page .checkout-summary .summary-row,.checkout-page .checkout-summary .summary-total{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:16px!important}
+.checkout-page .checkout-summary .summary-row{padding:0 20px!important;margin-top:14px!important}
+.checkout-page .checkout-summary .summary-divider{margin:14px 20px 0!important}
+.checkout-page .checkout-summary .summary-total{margin:0 20px!important;padding:16px 0!important}
+.checkout-page #checkoutButton,.checkout-page .btn-checkout{position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;transform:none!important;width:calc(100% - 40px)!important;min-height:56px!important;margin:0 20px 20px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;border-radius:15px!important}
+.checkout-page .site-footer .footer-links{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:28px!important}
+.checkout-page .site-footer .footer-column:nth-child(2) a{display:flex!important;align-items:center!important;gap:8px!important}
+.checkout-page .site-footer .footer-column:nth-child(2) a:first-of-type:before{content:'◎';font-size:15px}
+.checkout-page .site-footer .footer-column:nth-child(2) a:nth-of-type(2):before{content:'♪';font-size:15px}
+.checkout-page .site-footer .footer-column:nth-child(2) a:nth-of-type(3):before{content:'◉';font-size:15px}
+.checkout-page .site-footer .footer-column:nth-child(2) a span{margin-left:4px;opacity:.65;font-size:11px}
+@media(max-width:680px){.checkout-page .checkout-sidebar{top:70px!important}.checkout-page .site-footer .footer-links{grid-template-columns:1fr 1fr!important;gap:20px!important}}
+@media(max-width:390px){.checkout-page .site-footer .footer-links{grid-template-columns:1fr!important}}
