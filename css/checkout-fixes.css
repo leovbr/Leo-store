@@ -5,53 +5,129 @@
   display: none !important;
 }
 
-/* Keep the checkout action visible while the customer scrolls. */
-.checkout-page #checkoutButton,
-.checkout-page .btn-checkout {
-  position: fixed !important;
-  z-index: 9999 !important;
-  left: 50% !important;
-  bottom: max(14px, env(safe-area-inset-bottom)) !important;
-  transform: translateX(-50%) !important;
-  width: min(680px, calc(100vw - 28px)) !important;
-  min-height: 56px !important;
-  margin: 0 !important;
-  border-radius: 16px !important;
-  box-shadow: 0 16px 40px rgba(0,0,0,.42), 0 0 0 1px rgba(124,92,255,.24) !important;
+/* Clean summary: keep only the useful order details. */
+.checkout-page .summary-product,
+.checkout-page .summary-row:has(#summaryAdminFee) {
+  display: none !important;
 }
 
-.checkout-page #checkoutButton:active,
-.checkout-page .btn-checkout:active {
-  transform: translateX(-50%) translateY(1px) !important;
-}
-
-/* Make room so the fixed CTA never covers the summary. */
+/* Keep the complete summary + payment CTA together while scrolling,
+   like the store header/logo stays visible. */
 .checkout-page .checkout-sidebar {
-  padding-bottom: 92px !important;
+  position: sticky !important;
+  top: 82px !important;
+  align-self: start !important;
+  height: fit-content !important;
+  padding-bottom: 24px !important;
+  z-index: 20 !important;
 }
 
 .checkout-page .checkout-summary {
   margin-bottom: 0 !important;
 }
 
-@media (min-width: 681px) {
-  .checkout-page #checkoutButton,
-  .checkout-page .btn-checkout {
-    width: min(520px, calc(100vw - 48px)) !important;
-    bottom: 22px !important;
-  }
+/* CTA is part of the summary card, not a separate floating button. */
+.checkout-page #checkoutButton,
+.checkout-page .btn-checkout {
+  position: relative !important;
+  left: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  width: 100% !important;
+  min-height: 56px !important;
+  margin: 20px 0 0 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 16px 40px rgba(0,0,0,.30), 0 0 0 1px rgba(124,92,255,.24) !important;
+}
+
+.checkout-page #checkoutButton:active,
+.checkout-page .btn-checkout:active {
+  transform: translateY(1px) !important;
+}
+
+/* Footer: remove Navigasi completely. */
+.checkout-page .site-footer .footer-column:first-child {
+  display: none !important;
+}
+
+/* Make the remaining footer columns compact and aligned. */
+.checkout-page .site-footer .footer-links {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 28px !important;
+}
+
+/* Contact number under Bantuan. */
+.checkout-page .site-footer .footer-column:nth-child(2) a:last-child {
+  font-size: 0 !important;
+}
+
+.checkout-page .site-footer .footer-column:nth-child(2) a:last-child::before {
+  content: "Hubungi Kami";
+  display: block;
+  font-size: 14px;
+}
+
+.checkout-page .site-footer .footer-column:nth-child(2) a:last-child::after {
+  content: "085823538473";
+  display: block;
+  margin-top: 3px;
+  font-size: 12px;
+  opacity: .65;
+}
+
+/* Social links with recognizable icons beside each name. */
+.checkout-page .site-footer .footer-column:nth-child(3) a {
+  display: flex !important;
+  align-items: center !important;
+  gap: 9px !important;
+}
+
+.checkout-page .site-footer .footer-column:nth-child(3) a::before {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.checkout-page .site-footer .footer-column:nth-child(3) a:nth-child(2)::before {
+  content: "◎";
+}
+
+.checkout-page .site-footer .footer-column:nth-child(3) a:nth-child(3)::before {
+  content: "♪";
+}
+
+.checkout-page .site-footer .footer-column:nth-child(3) a:nth-child(4)::before {
+  content: "◉";
 }
 
 @media (max-width: 680px) {
-  .checkout-page #checkoutButton,
-  .checkout-page .btn-checkout {
-    width: calc(100vw - 24px) !important;
-    min-height: 54px !important;
-    bottom: max(10px, env(safe-area-inset-bottom)) !important;
-    border-radius: 15px !important;
+  .checkout-page .checkout-sidebar {
+    position: sticky !important;
+    top: 70px !important;
+    padding-bottom: 18px !important;
   }
 
-  .checkout-page .checkout-sidebar {
-    padding-bottom: 82px !important;
+  .checkout-page .site-footer .footer-links {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 20px !important;
+  }
+
+  .checkout-page #checkoutButton,
+  .checkout-page .btn-checkout {
+    min-height: 54px !important;
+    border-radius: 15px !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .checkout-page .site-footer .footer-links {
+    grid-template-columns: 1fr !important;
   }
 }
