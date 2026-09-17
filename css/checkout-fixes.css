@@ -1,41 +1,63 @@
-/* LEOOSTORE checkout fixes */
+/* LEOOSTORE checkout fixes — final */
 
-/* Remove the decorative/trust photo block at the very bottom. */
-.checkout-page .checkout-benefits {
+/* Remove the decorative/trust block and the large footer logo/photo. */
+.checkout-page .checkout-benefits,
+.checkout-page .site-footer .footer-brand,
+.checkout-page .site-footer .footer-logo {
   display: none !important;
 }
 
-/* Clean summary: keep only the useful order details. */
+/* Clean summary: only the requested information remains. */
 .checkout-page .summary-product,
-.checkout-page .summary-row:has(#summaryAdminFee) {
+.checkout-page .summary-row:has(#summaryAdminFee),
+.checkout-page .summary-secure {
   display: none !important;
 }
 
-/* Keep the complete summary + payment CTA together while scrolling,
-   like the store header/logo stays visible. */
+/* Make the WHOLE summary card behave like the LEOOSTORE header:
+   it stays in view while the page scrolls up/down. */
 .checkout-page .checkout-sidebar {
   position: sticky !important;
   top: 82px !important;
   align-self: start !important;
   height: fit-content !important;
-  padding-bottom: 24px !important;
-  z-index: 20 !important;
+  padding: 0 0 24px !important;
+  margin: 0 !important;
+  z-index: 100 !important;
 }
 
 .checkout-page .checkout-summary {
-  margin-bottom: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
 }
 
-/* CTA is part of the summary card, not a separate floating button. */
+/* Compact summary rows: label + value on the same line. */
+.checkout-page .checkout-summary .summary-row,
+.checkout-page .checkout-summary .summary-total {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+}
+
+.checkout-page .checkout-summary .summary-total {
+  margin-top: 0 !important;
+}
+
+/* CTA is physically part of the sticky summary card. */
 .checkout-page #checkoutButton,
 .checkout-page .btn-checkout {
   position: relative !important;
   left: auto !important;
+  right: auto !important;
   bottom: auto !important;
   transform: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
   width: 100% !important;
   min-height: 56px !important;
-  margin: 20px 0 0 !important;
+  margin: 18px 0 0 !important;
   border-radius: 16px !important;
   box-shadow: 0 16px 40px rgba(0,0,0,.30), 0 0 0 1px rgba(124,92,255,.24) !important;
 }
@@ -45,12 +67,12 @@
   transform: translateY(1px) !important;
 }
 
-/* Footer: remove Navigasi completely. */
+/* Footer: Navigasi is gone. */
 .checkout-page .site-footer .footer-column:first-child {
   display: none !important;
 }
 
-/* Make the remaining footer columns compact and aligned. */
+/* Keep only Help + Social columns, cleanly aligned. */
 .checkout-page .site-footer .footer-links {
   display: grid !important;
   grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
@@ -76,7 +98,7 @@
   opacity: .65;
 }
 
-/* Social links with recognizable icons beside each name. */
+/* Social links with icons beside each name. */
 .checkout-page .site-footer .footer-column:nth-child(3) a {
   display: flex !important;
   align-items: center !important;
