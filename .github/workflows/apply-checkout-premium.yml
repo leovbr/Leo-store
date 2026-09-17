@@ -2,8 +2,6 @@ name: Apply checkout premium stylesheet
 
 on:
   push:
-    paths:
-      - "css/checkout-premium.css"
 
 permissions:
   contents: write
