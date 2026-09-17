@@ -6,7 +6,9 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   const $ = (id) => document.getElementById(id);
-  const products = Array.isArray(window.PRODUCTS) ? window.PRODUCTS : [];
+  const products = typeof PRODUCTS !== "undefined" && Array.isArray(PRODUCTS)
+    ? PRODUCTS
+    : (Array.isArray(window.PRODUCTS) ? window.PRODUCTS : []);
 
   const gameSelect = $("game");
   const playerIdInput = $("playerId");
@@ -101,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const image = product.image || "";
     if (gameName) gameName.textContent = product.name || "Game";
-    if (gameDescription) gameDescription.textContent = product.publisher || "Publisher";
+    if (gameDescription) gameDescription.textContent = product.description || product.publisher || "Publisher";
     if (gameImage) {
       gameImage.src = image;
       gameImage.alt = product.name || "Game";
@@ -232,7 +234,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (summaryDenomination) summaryDenomination.textContent = selectedDenomination?.amount || "Pilih nominal";
     if (summaryFee) summaryFee.textContent = rupiah(getPaymentFee());
 
-    /* FIX: Produk = subtotal. Total Pembayaran = subtotal + fee - promo. */
     if (summaryPrice) summaryPrice.textContent = rupiah(getBaseTotal());
     if (summaryTotal) summaryTotal.textContent = rupiah(getTotal());
 
