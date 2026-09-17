@@ -10,6 +10,12 @@ document.addEventListener("DOMContentLoaded", () => {
     ? PRODUCTS
     : (Array.isArray(window.PRODUCTS) ? window.PRODUCTS : []);
 
+  // Load the latest checkout fixes without relying on cached HTML/CSS.
+  const fixStyles = document.createElement("link");
+  fixStyles.rel = "stylesheet";
+  fixStyles.href = "css/checkout-fixes.css?v=20260918-2";
+  document.head.appendChild(fixStyles);
+
   const gameSelect = $("game");
   const playerIdInput = $("playerId");
   const serverInput = $("server");
@@ -229,11 +235,9 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateSummary() {
     const quantity = getQuantity();
     if (summaryQuantity) summaryQuantity.textContent = quantity;
-
     if (summaryName) summaryName.textContent = selectedProduct?.name || "Pilih Game";
     if (summaryDenomination) summaryDenomination.textContent = selectedDenomination?.amount || "Pilih nominal";
     if (summaryFee) summaryFee.textContent = rupiah(getPaymentFee());
-
     if (summaryPrice) summaryPrice.textContent = rupiah(getBaseTotal());
     if (summaryTotal) summaryTotal.textContent = rupiah(getTotal());
 
