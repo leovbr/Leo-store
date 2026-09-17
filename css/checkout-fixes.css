@@ -1,0 +1,57 @@
+/* LEOOSTORE checkout fixes */
+
+/* Remove the decorative/trust photo block at the very bottom. */
+.checkout-page .checkout-benefits {
+  display: none !important;
+}
+
+/* Keep the checkout action visible while the customer scrolls. */
+.checkout-page #checkoutButton,
+.checkout-page .btn-checkout {
+  position: fixed !important;
+  z-index: 9999 !important;
+  left: 50% !important;
+  bottom: max(14px, env(safe-area-inset-bottom)) !important;
+  transform: translateX(-50%) !important;
+  width: min(680px, calc(100vw - 28px)) !important;
+  min-height: 56px !important;
+  margin: 0 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 16px 40px rgba(0,0,0,.42), 0 0 0 1px rgba(124,92,255,.24) !important;
+}
+
+.checkout-page #checkoutButton:active,
+.checkout-page .btn-checkout:active {
+  transform: translateX(-50%) translateY(1px) !important;
+}
+
+/* Make room so the fixed CTA never covers the summary. */
+.checkout-page .checkout-sidebar {
+  padding-bottom: 92px !important;
+}
+
+.checkout-page .checkout-summary {
+  margin-bottom: 0 !important;
+}
+
+@media (min-width: 681px) {
+  .checkout-page #checkoutButton,
+  .checkout-page .btn-checkout {
+    width: min(520px, calc(100vw - 48px)) !important;
+    bottom: 22px !important;
+  }
+}
+
+@media (max-width: 680px) {
+  .checkout-page #checkoutButton,
+  .checkout-page .btn-checkout {
+    width: calc(100vw - 24px) !important;
+    min-height: 54px !important;
+    bottom: max(10px, env(safe-area-inset-bottom)) !important;
+    border-radius: 15px !important;
+  }
+
+  .checkout-page .checkout-sidebar {
+    padding-bottom: 82px !important;
+  }
+}
