@@ -1,0 +1,594 @@
+/* =========================================================
+   LEOOSTORE — PREMIUM CHECKOUT MOBILE
+   Scoped to checkout page only.
+   ========================================================= */
+
+.checkout-page {
+  --checkout-glow: rgba(124, 92, 255, .22);
+}
+
+.checkout-page .checkout-section {
+  padding: 18px 0 72px;
+}
+
+.checkout-page .game-hero {
+  min-height: 250px;
+  border-radius: 24px;
+  border-color: rgba(255,255,255,.10);
+  box-shadow: 0 24px 60px rgba(0,0,0,.34);
+}
+
+.checkout-page .game-hero::after {
+  background:
+    linear-gradient(90deg, rgba(5,6,10,.88), rgba(5,6,10,.48), rgba(5,6,10,.12)),
+    linear-gradient(0deg, rgba(5,6,10,.82), transparent 70%);
+}
+
+.checkout-page .game-hero-overlay {
+  padding: 26px;
+}
+
+.checkout-page .game-hero-main {
+  gap: 18px;
+}
+
+.checkout-page .game-hero-icon {
+  width: 82px;
+  height: 82px;
+  flex-basis: 82px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,.22);
+  box-shadow: 0 14px 36px rgba(0,0,0,.42);
+}
+
+.checkout-page .game-hero-text h1 {
+  font-size: clamp(26px, 5vw, 40px);
+  text-shadow: 0 8px 28px rgba(0,0,0,.35);
+}
+
+.checkout-page .game-hero-benefits {
+  padding: 10px;
+  gap: 6px;
+  border-radius: 16px;
+  background: rgba(8,9,14,.48);
+  border-color: rgba(255,255,255,.12);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
+}
+
+.checkout-page .checkout-layout {
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.checkout-page .checkout-main {
+  gap: 14px;
+}
+
+.checkout-page .checkout-card {
+  padding: 20px;
+  border-radius: 20px;
+  border-color: rgba(255,255,255,.075);
+  box-shadow: 0 12px 38px rgba(0,0,0,.18);
+}
+
+.checkout-page .checkout-card-header {
+  margin-bottom: 15px;
+}
+
+.checkout-page .checkout-card-header h2 {
+  margin: 0;
+  font-size: 17px;
+  letter-spacing: -.02em;
+}
+
+.checkout-page .checkout-card-header p {
+  margin: 4px 0 0;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.checkout-page .form-group label {
+  margin-bottom: 6px;
+  font-size: 12px;
+}
+
+.checkout-page .form-group input,
+.checkout-page .form-group select,
+.checkout-page .checkout-card input,
+.checkout-page .checkout-card select {
+  min-height: 48px;
+  border-radius: 13px;
+  background: rgba(255,255,255,.025);
+  border-color: rgba(255,255,255,.09);
+}
+
+.checkout-page .form-group input:focus,
+.checkout-page .form-group select:focus,
+.checkout-page .checkout-card input:focus,
+.checkout-page .checkout-card select:focus {
+  border-color: rgba(124,92,255,.78);
+  box-shadow: 0 0 0 4px rgba(124,92,255,.10), 0 8px 24px rgba(0,0,0,.12);
+}
+
+.checkout-page .denomination-group-grid {
+  gap: 9px !important;
+}
+
+.checkout-page .denomination-option {
+  min-height: 104px !important;
+  padding: 13px !important;
+  border-radius: 15px !important;
+  background: rgba(255,255,255,.022) !important;
+  border-color: rgba(255,255,255,.08) !important;
+}
+
+.checkout-page .denomination-option:hover {
+  transform: translateY(-1px) !important;
+  border-color: rgba(255,255,255,.15) !important;
+}
+
+.checkout-page .denomination-option.selected,
+.checkout-page .denomination-option.active {
+  background: linear-gradient(145deg, rgba(124,92,255,.17), rgba(124,92,255,.07)) !important;
+  border-color: rgba(124,92,255,.78) !important;
+  box-shadow: 0 0 0 1px rgba(124,92,255,.18), 0 12px 28px rgba(124,92,255,.10) !important;
+}
+
+.checkout-page .denomination-title {
+  font-size: 13px;
+}
+
+.checkout-page .denomination-price-box {
+  font-size: 12px;
+}
+
+.checkout-page .denomination-divider {
+  margin: 8px 0 !important;
+}
+
+.checkout-page .denomination-delivery-text {
+  width: 82px !important;
+  min-width: 82px !important;
+  height: 27px !important;
+  min-height: 27px !important;
+  padding: 3px 5px !important;
+  border-radius: 8px !important;
+  background: rgba(124,92,255,.09) !important;
+  border-color: rgba(124,92,255,.18) !important;
+}
+
+.checkout-page .quantity-control {
+  max-width: 100%;
+  grid-template-columns: 48px minmax(0,1fr) 48px;
+}
+
+.checkout-page .quantity-control button,
+.checkout-page .quantity-control input {
+  min-height: 48px;
+  border-radius: 13px;
+}
+
+.checkout-page .payment-list {
+  gap: 9px;
+}
+
+.checkout-page .payment-category {
+  border-radius: 15px;
+  background: rgba(255,255,255,.018);
+  border-color: rgba(255,255,255,.08);
+}
+
+.checkout-page .payment-category-header {
+  min-height: 52px;
+  padding: 0 14px;
+  font-weight: 800;
+}
+
+.checkout-page .payment-category-header span:first-child {
+  font-size: 13px;
+}
+
+.checkout-page .payment-category-header span:last-child {
+  font-size: 18px;
+}
+
+.checkout-page .payment-category-body {
+  padding: 0 10px 10px;
+}
+
+.checkout-page .payment-option {
+  min-height: 48px !important;
+  padding: 11px 12px !important;
+  border-radius: 12px !important;
+  background: rgba(255,255,255,.025) !important;
+  border-color: rgba(255,255,255,.07) !important;
+  font-size: 12px;
+}
+
+.checkout-page .payment-option.selected,
+.checkout-page .payment-option.active {
+  background: rgba(124,92,255,.13) !important;
+  border-color: rgba(124,92,255,.70) !important;
+}
+
+.checkout-page .promo-form {
+  gap: 8px;
+}
+
+.checkout-page #promoCode,
+.checkout-page #promoButton {
+  min-height: 48px !important;
+  border-radius: 13px !important;
+}
+
+.checkout-page #promoButton {
+  padding: 0 18px !important;
+  box-shadow: 0 9px 24px rgba(124,92,255,.18);
+}
+
+.checkout-page .checkout-summary {
+  border-radius: 20px;
+  border-color: rgba(255,255,255,.09);
+  box-shadow: 0 18px 50px rgba(0,0,0,.24);
+  overflow: hidden;
+}
+
+.checkout-page .checkout-summary-header {
+  padding: 19px 20px 16px;
+  background: linear-gradient(180deg, rgba(124,92,255,.08), transparent);
+}
+
+.checkout-page .checkout-summary-header h2 {
+  font-size: 20px;
+  letter-spacing: -.025em;
+}
+
+.checkout-page .summary-product {
+  margin: 0 20px;
+  padding: 15px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.checkout-page .summary-product-icon {
+  width: 50px;
+  height: 50px;
+  flex: 0 0 50px;
+  overflow: hidden;
+  border-radius: 13px;
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow: 0 8px 22px rgba(0,0,0,.24);
+}
+
+.checkout-page .summary-product-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.checkout-page .summary-product-info {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.checkout-page .summary-product-info strong {
+  font-size: 14px;
+}
+
+.checkout-page .summary-product-info span {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.checkout-page .summary-divider {
+  margin: 0 20px;
+  height: 1px;
+  background: var(--border);
+}
+
+.checkout-page .summary-row {
+  padding: 0 20px;
+  margin-top: 13px;
+  font-size: 13px;
+}
+
+.checkout-page .summary-total {
+  margin: 16px 20px 0;
+  padding: 16px 0;
+  font-size: 15px;
+}
+
+.checkout-page .summary-total strong {
+  font-size: 19px;
+}
+
+.checkout-page .summary-secure {
+  margin: 0 20px 16px;
+  padding: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 13px;
+  background: rgba(53,211,153,.055);
+  border: 1px solid rgba(53,211,153,.12);
+}
+
+.checkout-page .summary-secure p {
+  margin: 2px 0 0;
+  color: var(--text-muted);
+  font-size: 10px;
+}
+
+.checkout-page .btn-checkout {
+  width: calc(100% - 40px);
+  min-height: 52px;
+  margin: 0 20px 20px;
+  padding: 0 17px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid rgba(124,92,255,.8);
+  border-radius: 14px;
+  color: #fff;
+  background: linear-gradient(135deg, #7c5cff, #6947f2);
+  box-shadow: 0 12px 28px rgba(124,92,255,.25);
+  font-weight: 800;
+}
+
+.checkout-page .btn-checkout:active {
+  transform: translateY(1px);
+}
+
+.checkout-page .checkout-benefits {
+  margin-top: 12px;
+  display: grid;
+  gap: 8px;
+}
+
+.checkout-page .benefit-item {
+  padding: 12px 13px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 15px;
+  background: rgba(255,255,255,.018);
+}
+
+.checkout-page .benefit-icon {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--primary-soft);
+}
+
+.checkout-page .benefit-content {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.checkout-page .benefit-content strong {
+  font-size: 12px;
+}
+
+.checkout-page .benefit-content span {
+  margin-top: 2px;
+  color: var(--text-muted);
+  font-size: 10px;
+}
+
+@media (max-width: 680px) {
+  .checkout-page .checkout-section {
+    padding: 10px 0 42px;
+  }
+
+  .checkout-page .game-hero {
+    min-height: 222px;
+    border-radius: 19px;
+  }
+
+  .checkout-page .game-hero-overlay {
+    padding: 17px;
+  }
+
+  .checkout-page .game-hero-content {
+    gap: 11px;
+  }
+
+  .checkout-page .game-hero-icon {
+    width: 66px;
+    height: 66px;
+    flex-basis: 66px;
+    border-radius: 15px;
+  }
+
+  .checkout-page .game-hero-text h1 {
+    font-size: 23px;
+  }
+
+  .checkout-page .game-hero-text p {
+    margin-top: 4px;
+    font-size: 10px;
+  }
+
+  .checkout-page .game-hero-benefits {
+    padding: 8px 5px;
+    border-radius: 13px;
+  }
+
+  .checkout-page .hero-benefit {
+    gap: 3px;
+    font-size: 8px;
+  }
+
+  .checkout-page .game-hero-divider {
+    min-height: 13px;
+  }
+
+  .checkout-page .checkout-layout {
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .checkout-page .checkout-card {
+    padding: 15px;
+    border-radius: 17px;
+  }
+
+  .checkout-page .checkout-card-header h2 {
+    font-size: 15px;
+  }
+
+  .checkout-page .checkout-card-header p {
+    font-size: 10px;
+  }
+
+  .checkout-page .form-grid {
+    gap: 8px !important;
+  }
+
+  .checkout-page .form-group input,
+  .checkout-page .form-group select,
+  .checkout-page .checkout-card input,
+  .checkout-page .checkout-card select {
+    min-height: 46px;
+    padding: 0 11px;
+    font-size: 12px;
+  }
+
+  .checkout-page .form-group label {
+    font-size: 10px;
+  }
+
+  .checkout-page .denomination-group-grid {
+    gap: 8px !important;
+  }
+
+  .checkout-page .denomination-option {
+    min-height: 100px !important;
+    padding: 10px !important;
+    border-radius: 13px !important;
+  }
+
+  .checkout-page .denomination-title {
+    font-size: 12px;
+  }
+
+  .checkout-page .denomination-price-box {
+    font-size: 11px;
+  }
+
+  .checkout-page .denomination-delivery-text {
+    width: 76px !important;
+    min-width: 76px !important;
+    height: 25px !important;
+    min-height: 25px !important;
+  }
+
+  .checkout-page .quantity-control {
+    grid-template-columns: 44px minmax(0,1fr) 44px;
+  }
+
+  .checkout-page .payment-category-header {
+    min-height: 48px;
+    padding: 0 12px;
+  }
+
+  .checkout-page .payment-category-body {
+    padding: 0 8px 8px;
+  }
+
+  .checkout-page .payment-option {
+    min-height: 45px !important;
+    padding: 9px 10px !important;
+    font-size: 11px;
+  }
+
+  .checkout-page .checkout-sidebar {
+    width: 100%;
+  }
+
+  .checkout-page .checkout-summary-header {
+    padding: 16px;
+  }
+
+  .checkout-page .checkout-summary-header h2 {
+    font-size: 17px;
+  }
+
+  .checkout-page .summary-product,
+  .checkout-page .summary-row,
+  .checkout-page .summary-secure {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  .checkout-page .summary-divider {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  .checkout-page .summary-total {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  .checkout-page .btn-checkout {
+    width: calc(100% - 32px);
+    margin-left: 16px;
+    margin-right: 16px;
+    margin-bottom: 16px;
+  }
+
+  .checkout-page .checkout-benefits {
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 6px;
+  }
+
+  .checkout-page .benefit-item {
+    min-width: 0;
+    padding: 10px 7px;
+    flex-direction: column;
+    text-align: center;
+    gap: 6px;
+    border-radius: 13px;
+  }
+
+  .checkout-page .benefit-icon {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
+    border-radius: 9px;
+  }
+
+  .checkout-page .benefit-content strong {
+    font-size: 9px;
+  }
+
+  .checkout-page .benefit-content span {
+    display: none;
+  }
+}
+
+@media (max-width: 380px) {
+  .checkout-page .checkout-benefits {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-page .benefit-item {
+    flex-direction: row;
+    text-align: left;
+  }
+
+  .checkout-page .benefit-content span {
+    display: block;
+  }
+}
