@@ -347,3 +347,19 @@
 @media(max-width:680px){
   .checkout-page .footer-bottom{margin-top:8px!important;padding:10px 14px!important}
 }
+
+
+/* FOOTER STRUCTURE HARD FIX v20260918-13 */
+.checkout-page .footer-social-row .social-link.social-whatsapp{order:1!important}
+.checkout-page .footer-social-row .social-link.social-instagram{order:2!important}
+.checkout-page .footer-social-row .social-link.social-tiktok{order:3!important}
+.checkout-page .footer-social-copyright{
+  order:4!important;
+  display:block!important;
+  width:100%!important;
+  margin-top:4px!important;
+  text-align:center!important;
+  font-size:10px!important;
+  line-height:1.5!important;
+  color:rgba(255,255,255,.6)!important;
+}
