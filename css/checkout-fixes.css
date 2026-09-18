@@ -152,3 +152,43 @@
  .checkout-page .footer-social-row{gap:5px!important}
  .checkout-page .footer-social-row .social-link{padding:4px 5px!important}
 }
+
+
+/* FINAL FUNCTIONAL PAYMENT TOGGLES + BELOW STICKY SUMMARY v20260918-9 */
+.checkout-page .payment-category-header{display:flex!important;align-items:center!important;justify-content:space-between!important;user-select:none!important}
+.checkout-page .payment-category:not(.open) .payment-category-body{display:none!important}
+.checkout-page .payment-category.open .payment-category-body{display:grid!important}
+.checkout-page .payment-category-qris.open .payment-category-body{grid-template-columns:1fr!important}
+.checkout-page .payment-category-ewallet.open .payment-category-body,
+.checkout-page .payment-category-va.open .payment-category-body{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+.checkout-page .payment-category-header span:last-child{transition:transform .2s ease!important}
+.checkout-page .payment-category.open .payment-category-header span:last-child{transform:rotate(180deg)!important}
+
+/* Summary stays physically below checkout content, then sticks while scrolling past it */
+.checkout-page .checkout-layout{display:flex!important;flex-direction:column!important;gap:18px!important}
+.checkout-page .checkout-main{order:1!important;width:100%!important}
+.checkout-page .checkout-sidebar{order:2!important;width:100%!important;position:sticky!important;top:82px!important;bottom:auto!important;align-self:stretch!important;z-index:50!important}
+.checkout-page .checkout-summary{width:100%!important}
+.checkout-page .checkout-summary .summary-row,
+.checkout-page .checkout-summary .summary-total{font-size:13px!important}
+.checkout-page .checkout-summary .summary-row strong,
+.checkout-page .checkout-summary .summary-total strong{font-size:14px!important}
+.checkout-page #checkoutButton,.checkout-page .btn-checkout{min-height:50px!important}
+
+/* Footer: centered brand/nav + social stack exactly like the requested layout */
+.checkout-page .footer-brand-column{align-items:center!important;text-align:center!important}
+.checkout-page .footer-brand-link{justify-content:center!important}
+.checkout-page .footer-nav{justify-content:center!important}
+.checkout-page .footer-social-column{display:flex!important;flex-direction:column!important;align-items:center!important;text-align:center!important}
+.checkout-page .footer-social-column h4{width:100%!important;text-align:center!important;margin:0 0 12px!important}
+.checkout-page .footer-social-row{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:9px!important;width:100%!important}
+.checkout-page .footer-social-row .social-link{display:flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;width:max-content!important;min-width:0!important;padding:3px 5px!important;margin:0!important}
+.checkout-page .footer-social-row .social-link img{width:15px!important;height:15px!important;flex:0 0 15px!important}
+.checkout-page .footer-social-row .social-link span{font-size:10px!important;line-height:1!important}
+.checkout-page .footer-social-row .social-link small{font-size:9px!important;line-height:1!important;white-space:nowrap!important;color:rgba(255,255,255,.5)!important}
+@media(max-width:680px){
+ .checkout-page .checkout-sidebar{top:70px!important}
+ .checkout-page .payment-category-ewallet.open .payment-category-body,
+ .checkout-page .payment-category-va.open .payment-category-body{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .checkout-page .footer-social-row{gap:8px!important}
+}
