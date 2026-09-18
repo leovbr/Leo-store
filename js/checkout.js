@@ -113,7 +113,8 @@ document.addEventListener("DOMContentLoaded", () => {
       gameImage.style.display = image ? "block" : "none";
     }
     if (gameHeroBanner) {
-      gameHeroBanner.style.backgroundImage = image ? `url("${image}")` : "";
+      gameHeroBanner.style.backgroundImage = "";
+      gameHeroBanner.style.setProperty("--hero-banner-image", image ? `url("${image}")` : "none");
     }
     if (gameIconFallback) {
       gameIconFallback.textContent = product.icon || "🎮";
