@@ -313,3 +313,14 @@
     margin:0 14px 10px!important;
   }
 }
+
+
+/* SOCIAL ORDER + VISIBILITY v20260918-11 */
+.checkout-page .footer-social-row .social-link:nth-child(3){order:1!important}
+.checkout-page .footer-social-row .social-link:nth-child(1){order:2!important}
+.checkout-page .footer-social-row .social-link:nth-child(2){order:3!important}
+.checkout-page .site-footer{padding-bottom:210px!important}
+@media(max-width:680px){
+  .checkout-page .site-footer{padding-bottom:210px!important}
+  .checkout-page .footer-social-row{gap:9px!important}
+}
