@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const image = product.image || "";
     if (gameName) gameName.textContent = product.name || "Game";
-    if (gameDescription) gameDescription.textContent = product.description || product.publisher || "Publisher";
+    if (gameDescription) gameDescription.textContent = product.publisher || "Publisher";
     if (gameImage) {
       gameImage.src = image;
       gameImage.alt = product.name || "Game";
