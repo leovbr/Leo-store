@@ -724,3 +724,34 @@
     margin-right:0!important;
   }
 }
+
+/* ===== CONTACT INPUT — PASTE TEXT STAYS WHITE ===== */
+.checkout-page #contactEmail,
+.checkout-page #contactWhatsapp{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  caret-color:#fff!important;
+  background:#171a23!important;
+}
+.checkout-page #contactEmail::placeholder,
+.checkout-page #contactWhatsapp::placeholder{
+  color:rgba(255,255,255,.42)!important;
+  -webkit-text-fill-color:rgba(255,255,255,.42)!important;
+  opacity:1!important;
+}
+.checkout-page #contactEmail:-webkit-autofill,
+.checkout-page #contactEmail:-webkit-autofill:hover,
+.checkout-page #contactEmail:-webkit-autofill:focus,
+.checkout-page #contactWhatsapp:-webkit-autofill,
+.checkout-page #contactWhatsapp:-webkit-autofill:hover,
+.checkout-page #contactWhatsapp:-webkit-autofill:focus{
+  -webkit-text-fill-color:#fff!important;
+  caret-color:#fff!important;
+  box-shadow:0 0 0 1000px #171a23 inset!important;
+  transition:background-color 9999s ease-out 0s!important;
+}
+.checkout-page #contactEmail::selection,
+.checkout-page #contactWhatsapp::selection{
+  background:rgba(124,92,255,.45)!important;
+  color:#fff!important;
+}
