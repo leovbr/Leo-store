@@ -354,3 +354,11 @@
 .checkout-page .checkout-layout > .checkout-footer-inline{order:2!important;margin-top:0!important;margin-bottom:0!important;}
 .checkout-page .checkout-layout > .checkout-sidebar{order:3!important;}
 .checkout-page .checkout-summary{padding-bottom:0!important;}
+
+/* FINAL MOBILE SCROLL ROOM: let users scroll past footer so fixed payment button never hides content */
+.checkout-page .site-footer.checkout-footer-inline{
+  padding-bottom:100px!important;
+}
+.checkout-page .footer-social-copyright{
+  margin-bottom:0!important;
+}
