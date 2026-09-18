@@ -154,8 +154,11 @@ document.addEventListener("DOMContentLoaded", () => {
             <a
               class="product-btn"
               href="checkout.html?game=${encodeURIComponent(gameId)}"
+              aria-label="Top Up ${escapeHTML(product.name)}"
             >
-              Top Up
+              <span class="product-btn-icon" aria-hidden="true">⚡</span>
+              <span class="product-btn-text">Top Up Sekarang</span>
+              <span class="product-btn-arrow" aria-hidden="true">→</span>
             </a>
 
           </div>
