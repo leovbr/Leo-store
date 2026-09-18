@@ -54,20 +54,20 @@
   overflow:hidden!important;
 }
 
-/* Only the payment button follows the viewport while scrolling. */
+/* SUMMARY + PAYMENT BUTTON STAY IN NORMAL DOCUMENT FLOW */
 .checkout-page #checkoutButton,
 .checkout-page .btn-checkout{
-  position:fixed!important;
-  left:50%!important;
+  position:relative!important;
+  left:auto!important;
   right:auto!important;
-  bottom:12px!important;
+  bottom:auto!important;
   top:auto!important;
-  transform:translateX(-50%)!important;
-  width:min(720px,calc(100vw - 24px))!important;
-  max-width:720px!important;
+  transform:none!important;
+  width:100%!important;
+  max-width:none!important;
   min-height:56px!important;
   margin:0!important;
-  z-index:99999!important;
+  z-index:1!important;
   display:flex!important;
   align-items:center!important;
   justify-content:space-between!important;
@@ -355,7 +355,7 @@
 .checkout-page .checkout-layout > .checkout-sidebar{order:3!important;}
 .checkout-page .checkout-summary{padding-bottom:0!important;}
 
-/* FINAL MOBILE SCROLL ROOM: let users scroll past footer so fixed payment button never hides content */
+/* FINAL MOBILE SCROLL ROOM: leave comfortable space after the footer */
 .checkout-page .site-footer.checkout-footer-inline{
   padding-bottom:100px!important;
 }
