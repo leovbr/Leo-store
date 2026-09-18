@@ -13,7 +13,7 @@ const PRODUCTS = [
     image: "assets/icons/mobile-legends.webp",
     icon: "🎮",
     publisher: "Moonton",
-    description: "Top Up Diamond Mobile Legends dengan proses cepat.",
+    description: "Moonton",
 
     denominations: [
       { id: "ml-5", amount: "5 Diamonds", price: 1500, category: "Diamond" },
@@ -45,7 +45,7 @@ const PRODUCTS = [
     image: "assets/icons/free-fire.webp",
     icon: "🔥",
     publisher: "Garena",
-    description: "Top Up Diamond Free Fire dengan proses cepat.",
+    description: "Garena",
 
     denominations: [
       { id: "ff-5", amount: "5 Diamonds", price: 1000, category: "Diamond" },
@@ -72,8 +72,8 @@ const PRODUCTS = [
     name: "Roblox Via Login",
     image: "assets/icons/roblox.webp",
     icon: "🎮",
-    publisher: "Roblox",
-    description: "Top Up Robux melalui metode login Roblox.",
+    publisher: "Roblox Corporation",
+    description: "Roblox Corporation",
 
     denominations: [
       { id: "rbl-login-80", amount: "80 Robux", price: 15000, category: "Robux" },
@@ -96,8 +96,8 @@ const PRODUCTS = [
     name: "Roblox Via Username",
     image: "assets/icons/roblox.webp",
     icon: "🎮",
-    publisher: "Roblox",
-    description: "Top Up Robux menggunakan username Roblox.",
+    publisher: "Roblox Corporation",
+    description: "Roblox Corporation",
 
     denominations: [
       { id: "rbl-user-80", amount: "80 Robux", price: 17000, category: "Robux" },
@@ -120,8 +120,8 @@ const PRODUCTS = [
     name: "PUBG Mobile",
     image: "assets/icons/pubg-mobile.webp",
     icon: "🎯",
-    publisher: "Tencent",
-    description: "Top Up UC PUBG Mobile dengan proses cepat.",
+    publisher: "Level Infinite",
+    description: "Level Infinite",
 
     denominations: [
       { id: "pubg-60", amount: "60 UC", price: 15000, category: "UC" },
