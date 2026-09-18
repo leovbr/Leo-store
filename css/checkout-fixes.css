@@ -673,3 +673,54 @@
   justify-content:flex-end!important;
   text-align:right!important;
 }
+
+
+/* ===== BOTTOM FAST BADGE — FORCE FAR RIGHT / OVERRIDE ALL LEGACY WIDTHS ===== */
+.checkout-page .denomination-delivery{
+  width:100%!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  margin:0!important;
+  padding:0!important;
+  box-sizing:border-box!important;
+}
+.checkout-page .denomination-delivery-text{
+  display:inline-flex!important;
+  width:max-content!important;
+  min-width:0!important;
+  max-width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  margin-left:auto!important;
+  margin-right:0!important;
+  padding:0!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:5px!important;
+  text-align:right!important;
+  box-sizing:border-box!important;
+  flex:0 0 auto!important;
+}
+.checkout-page .denomination-delivery-text .delivery-icon{
+  flex:0 0 auto!important;
+  margin:0!important;
+  order:1!important;
+}
+.checkout-page .denomination-delivery-text > span:last-child{
+  white-space:nowrap!important;
+  text-align:right!important;
+  order:2!important;
+}
+@media(max-width:680px){
+  .checkout-page .denomination-delivery-text{
+    width:max-content!important;
+    min-width:0!important;
+    max-width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    padding:0!important;
+    margin-left:auto!important;
+    margin-right:0!important;
+  }
+}
