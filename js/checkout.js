@@ -40,6 +40,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const countryCode = $("countryCode");
   const checkoutButton = $("checkoutButton");
   const robloxLoginNotice = $("robloxLoginNotice");
+  const accountTitle = $("accountTitle");
+  const accountDescription = $("accountDescription");
+  const standardAccountFields = $("standardAccountFields");
+  const robloxLoginFields = $("robloxLoginFields");
+  const robloxUsername = $("robloxUsername");
+  const robloxPassword = $("robloxPassword");
+  const robloxInfoButton = $("robloxInfoButton");
+  const robloxInfoPanel = $("robloxInfoPanel");
+  const robloxInfoOk = $("robloxInfoOk");
 
   const ORDERS_KEY = "LEOOSTORE_orders";
   const LAST_ORDER_KEY = "LEOOSTORE_last_order";
@@ -128,6 +137,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (serverField) serverField.style.display = isRoblox ? "none" : "";
     if (serverInput && isRoblox) serverInput.value = "";
+    if (accountTitle) accountTitle.textContent = id === "roblox-via-login" ? "Data Akun" : "Data Akun";
+    if (accountDescription) accountDescription.textContent = id === "roblox-via-login"
+      ? "Masukkan username dan password."
+      : "Masukkan data akun untuk proses top up.";
+    if (standardAccountFields) standardAccountFields.hidden = isRoblox;
+    if (robloxLoginFields) robloxLoginFields.hidden = !isRoblox;
+    if (robloxInfoButton) robloxInfoButton.hidden = !isRoblox;
+    if (!isRoblox) {
+      if (robloxUsername) robloxUsername.value = "";
+      if (robloxPassword) robloxPassword.value = "";
+      if (robloxInfoPanel) robloxInfoPanel.hidden = true;
+    }
     if (robloxLoginNotice) {
       robloxLoginNotice.style.display = id === "roblox-via-login" ? "block" : "none";
     }
@@ -297,8 +318,19 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!selectedDenomination) return alert("Silakan pilih nominal terlebih dahulu.");
 
     const isRoblox = selectedProduct.id === "roblox-via-login" || selectedProduct.id === "roblox-via-username";
-    if (!playerIdInput?.value.trim()) {
-      alert(isRoblox ? "Silakan masukkan Username Roblox." : "Silakan masukkan Player ID.");
+    if (isRoblox) {
+      if (!robloxUsername?.value.trim()) {
+        alert("Silakan masukkan Username Roblox.");
+        robloxUsername?.focus();
+        return;
+      }
+      if (!robloxPassword?.value) {
+        alert("Silakan masukkan Password Roblox.");
+        robloxPassword?.focus();
+        return;
+      }
+    } else if (!playerIdInput?.value.trim()) {
+      alert("Silakan masukkan Player ID.");
       playerIdInput?.focus();
       return;
     }
@@ -326,7 +358,9 @@ document.addEventListener("DOMContentLoaded", () => {
       gameId: selectedProduct.id,
       game: selectedProduct.name,
       gameName: selectedProduct.name,
-      playerId: playerIdInput.value.trim(),
+      playerId: isRoblox ? robloxUsername.value.trim() : playerIdInput.value.trim(),
+      username: isRoblox ? robloxUsername.value.trim() : "",
+      password: isRoblox ? robloxPassword.value : "",
       server: serverInput?.value.trim() || "",
       denominationId: selectedDenomination.id,
       denomination: selectedDenomination.amount,
@@ -375,6 +409,12 @@ document.addEventListener("DOMContentLoaded", () => {
   quantityInput?.addEventListener("input", updateSummary);
   promoButton?.addEventListener("click", applyPromo);
   checkoutButton?.addEventListener("click", createOrder);
+  robloxInfoButton?.addEventListener("click", () => {
+    if (robloxInfoPanel) robloxInfoPanel.hidden = false;
+  });
+  robloxInfoOk?.addEventListener("click", () => {
+    if (robloxInfoPanel) robloxInfoPanel.hidden = true;
+  });
 
   populateGames();
   setupPayments();
