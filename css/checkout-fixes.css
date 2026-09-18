@@ -432,3 +432,31 @@
     gap:8px!important;
   }
 }
+
+
+/* FOOTER TIGHT POSITION v20260918-15 */
+.checkout-page .site-footer{
+  margin-top:0!important;
+  padding-top:8px!important;
+  padding-bottom:20px!important;
+}
+.checkout-page .site-footer .footer-links{
+  margin-top:0!important;
+}
+.checkout-page .site-footer .footer-social-column{
+  margin-top:0!important;
+}
+.checkout-page .site-footer .footer-social-column h4{
+  margin-top:0!important;
+  margin-bottom:6px!important;
+}
+.checkout-page .site-footer .footer-social-row{
+  gap:4px!important;
+}
+.checkout-page .site-footer .footer-social-row .social-link{
+  padding:2px 5px!important;
+}
+.checkout-page .site-footer .footer-social-row .footer-social-copyright{
+  margin-top:0!important;
+  padding-top:2px!important;
+}
