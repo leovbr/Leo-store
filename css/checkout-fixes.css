@@ -30,34 +30,35 @@
 }
 
 .checkout-page .checkout-sidebar{
-  order:3!important;
-  /* Ringkasan selalu terlihat dan menempel di bawah viewport, seperti header yang menempel di atas. */
+  /* Wrapper is intentionally out of the checkout flow; the summary itself owns fixed positioning. */
+  position:static!important;
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:0!important;
+  min-width:0!important;
+}
+
+.checkout-page .checkout-summary{
+  /* TRUE viewport-fixed summary: outside the main transformed/layout containers. */
   position:fixed!important;
   left:0!important;
   right:0!important;
   bottom:0!important;
   top:auto!important;
   inset-inline:0!important;
-  transform:none!important;
+  inset-block-start:auto!important;
   width:100%!important;
   max-width:none!important;
-  min-width:0!important;
-  height:auto!important;
   margin:0!important;
   padding:0!important;
-  align-self:stretch!important;
-  z-index:999!important;
-}
-
-.checkout-page .checkout-summary{
-  position:static!important;
-  inset:auto!important;
-  width:100%!important;
-  max-width:none!important;
-  margin:0!important;
+  transform:none!important;
   overflow:hidden!important;
   float:none!important;
   border-radius:16px 16px 0 0!important;
+  z-index:10000!important;
+  box-sizing:border-box!important;
+  box-shadow:0 -14px 40px rgba(0,0,0,.35)!important;
 }
 
 /* SUMMARY + PAYMENT BUTTON STAY IN NORMAL DOCUMENT FLOW */
@@ -101,6 +102,16 @@
 @keyframes checkoutShine{
   0%,55%{transform:translateX(-120%)}
   75%,100%{transform:translateX(120%)}
+}
+
+/* ===== FIXED SUMMARY CLEARANCE ===== */
+.checkout-page main{
+  padding-bottom:190px!important;
+}
+@media(max-width:680px){
+  .checkout-page main{
+    padding-bottom:230px!important;
+  }
 }
 
 /* ===== FOOTER BETWEEN CONTACT AND SUMMARY ===== */
