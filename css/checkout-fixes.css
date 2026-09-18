@@ -460,3 +460,33 @@
   margin-top:0!important;
   padding-top:2px!important;
 }
+
+
+/* FOOTER MOVE-UP — FIX ACTUAL OUTER GAP v20260918-16 */
+.checkout-page main{
+  margin-bottom:0!important;
+  padding-bottom:0!important;
+}
+.checkout-page .checkout-section{
+  margin-bottom:0!important;
+  padding-bottom:0!important;
+}
+.checkout-page .checkout-section > .container{
+  margin-bottom:0!important;
+  padding-bottom:0!important;
+}
+.checkout-page .site-footer{
+  margin-top:-36px!important;
+  position:relative!important;
+  z-index:1!important;
+  padding-top:4px!important;
+}
+.checkout-page .site-footer .footer-links{
+  margin-top:0!important;
+}
+@media(max-width:680px){
+  .checkout-page .site-footer{
+    margin-top:-42px!important;
+    padding-top:2px!important;
+  }
+}
