@@ -93,7 +93,10 @@ document.addEventListener("DOMContentLoaded", () => {
         gameImage.removeAttribute("src");
         gameImage.style.display = "none";
       }
-      if (gameHeroBanner) gameHeroBanner.style.backgroundImage = "";
+      if (gameHeroBanner) {
+        gameHeroBanner.style.backgroundImage = "";
+        gameHeroBanner.style.setProperty("--hero-banner-image", "none");
+      }
       if (gameIconFallback) {
         gameIconFallback.textContent = "🎮";
         gameIconFallback.style.display = "flex";
