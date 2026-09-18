@@ -68,3 +68,33 @@
  .checkout-page .checkout-main{order:2!important;width:100%!important}
  .checkout-page .checkout-sidebar{order:3!important}
 }
+
+
+/* FINAL SUMMARY + SOCIAL LAYOUT v20260918-7 */
+.checkout-page .checkout-layout{align-items:start!important}
+.checkout-page .checkout-sidebar{position:sticky!important;top:82px!important;align-self:start!important}
+.checkout-page .checkout-summary{display:flex!important;flex-direction:column!important}
+.checkout-page .checkout-summary .btn-checkout{order:10!important}
+.checkout-page .checkout-summary-header{order:1!important}
+.checkout-page .summary-product{order:2!important}
+.checkout-page .summary-list{order:3!important}
+.checkout-page .summary-total{order:4!important}
+.checkout-page .summary-secure{order:5!important}
+.checkout-page .btn-checkout{order:6!important}
+.checkout-page .checkout-page{} 
+.checkout-page .site-footer .footer-column:nth-child(2) .social-link{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;width:auto!important;margin:0!important;padding:5px 7px!important}
+.checkout-page .site-footer .footer-column:nth-child(2) .social-link img{width:15px!important;height:15px!important;flex:0 0 15px!important}
+.checkout-page .site-footer .footer-column:nth-child(2) .social-link span{font-size:10px!important;line-height:1!important}
+.checkout-page .site-footer .footer-column:nth-child(2) .social-link small{font-size:8px!important;line-height:1!important;color:rgba(255,255,255,.48)!important;white-space:nowrap!important}
+.checkout-page .site-footer .footer-column:nth-child(2){display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:8px!important}
+@media(max-width:680px){
+ .checkout-page .checkout-layout{display:flex!important;flex-direction:column!important}
+ .checkout-page .checkout-sidebar{order:initial!important;position:static!important;width:100%!important}
+ .checkout-page .checkout-main{order:2!important}
+ .checkout-page .checkout-sidebar{order:3!important}
+ .checkout-page .site-footer .footer-column:nth-child(2){gap:6px!important;justify-content:center!important}
+ .checkout-page .site-footer .footer-column:nth-child(2) .social-link{padding:4px 5px!important;gap:5px!important}
+ .checkout-page .site-footer .footer-column:nth-child(2) .social-link img{width:13px!important;height:13px!important;flex-basis:13px!important}
+ .checkout-page .site-footer .footer-column:nth-child(2) .social-link span{font-size:9px!important}
+ .checkout-page .site-footer .footer-column:nth-child(2) .social-link small{font-size:7px!important}
+}
