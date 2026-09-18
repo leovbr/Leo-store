@@ -39,7 +39,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const contactWhatsapp = $("contactWhatsapp");
   const countryCode = $("countryCode");
   const checkoutButton = $("checkoutButton");
-  const robloxLoginNotice = $("robloxLoginNotice");
   const accountTitle = $("accountTitle");
   const accountDescription = $("accountDescription");
   const standardAccountFields = $("standardAccountFields");
@@ -134,23 +133,21 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateAccountFields(product) {
     const id = String(product?.id || "");
     const isRoblox = id === "roblox-via-login" || id === "roblox-via-username";
+    const isRobloxLogin = id === "roblox-via-login";
 
     if (serverField) serverField.style.display = isRoblox ? "none" : "";
     if (serverInput && isRoblox) serverInput.value = "";
-    if (accountTitle) accountTitle.textContent = id === "roblox-via-login" ? "Data Akun" : "Data Akun";
-    if (accountDescription) accountDescription.textContent = id === "roblox-via-login"
+    if (accountTitle) accountTitle.textContent = "Data Akun";
+    if (accountDescription) accountDescription.textContent = isRobloxLogin
       ? "Masukkan username dan password."
       : "Masukkan data akun untuk proses top up.";
-    if (standardAccountFields) standardAccountFields.hidden = isRoblox;
-    if (robloxLoginFields) robloxLoginFields.hidden = !isRoblox;
-    if (robloxInfoButton) robloxInfoButton.hidden = !isRoblox;
+    if (standardAccountFields) standardAccountFields.hidden = isRobloxLogin;
+    if (robloxLoginFields) robloxLoginFields.hidden = !isRobloxLogin;
+    if (robloxInfoButton) robloxInfoButton.hidden = !isRobloxLogin;
     if (!isRoblox) {
       if (robloxUsername) robloxUsername.value = "";
       if (robloxPassword) robloxPassword.value = "";
       if (robloxInfoPanel) robloxInfoPanel.hidden = true;
-    }
-    if (robloxLoginNotice) {
-      robloxLoginNotice.style.display = id === "roblox-via-login" ? "block" : "none";
     }
     if (playerIdInput) {
       playerIdInput.placeholder = id === "roblox-via-login" || id === "roblox-via-username"
