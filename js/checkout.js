@@ -48,6 +48,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const robloxInfoButton = $("robloxInfoButton");
   const robloxInfoPanel = $("robloxInfoPanel");
   const robloxInfoOk = $("robloxInfoOk");
+  const robloxPreorderModal = $("robloxPreorderModal");
+  const robloxPreorderTitle = $("robloxPreorderTitle");
+  const robloxPreorderBody = $("robloxPreorderBody");
+  const robloxPreorderOk = $("robloxPreorderOk");
 
   const ORDERS_KEY = "LEOOSTORE_orders";
   const LAST_ORDER_KEY = "LEOOSTORE_last_order";
@@ -273,6 +277,39 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  function showRobloxPreorderInfo(product) {
+    if (!robloxPreorderModal || !product) return;
+    const id = String(product.id || "");
+    const isRobloxUsername = id === "roblox-via-username";
+    const isRobloxLogin = id === "roblox-via-login";
+    if (!isRobloxUsername && !isRobloxLogin) return;
+
+    if (robloxPreorderTitle) {
+      robloxPreorderTitle.textContent = isRobloxUsername
+        ? "🎮 Roblox Via Username"
+        : "🔐 Roblox Via Login";
+    }
+
+    const formatText = 'Halo min, saya sudah order (nominal robux) dengan username LeoXXXX (tidak perlu mirip)';
+    if (robloxPreorderBody) {
+      robloxPreorderBody.innerHTML = isRobloxUsername
+        ? '<ul><li>Pastikan akun Roblox berusia <strong>18+</strong>.</li><li>Pastikan <strong>V2L aktif</strong>.</li><li>Masukkan username Roblox dengan benar.</li><li>Pesanan yang sudah diproses tidak dapat dibatalkan karena kesalahan data.</li><li>Setelah melakukan pembayaran, hubungi WhatsApp admin <strong>LEOOSTORE 085823538473</strong> dan kirim format:</li></ul><div class="roblox-format">"' + escapeHTML(formatText) + '"</div>'
+        : '<ul><li>Metode ini membutuhkan <strong>Username &amp; Password Roblox</strong>.</li><li>Data digunakan hanya untuk proses top up.</li><li>Jangan memberikan password akun selain melalui halaman checkout resmi.</li><li>Setelah pembayaran, admin akan menghubungi untuk proses top up.</li><li>Setelah melakukan pembayaran, hubungi WhatsApp admin <strong>LEOOSTORE 085823538473</strong> dan kirim format:</li></ul><div class="roblox-format">"' + escapeHTML(formatText) + '"</div>';
+    }
+
+    robloxPreorderModal.hidden = false;
+    robloxPreorderModal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("roblox-preorder-open");
+    setTimeout(() => robloxPreorderOk?.focus(), 0);
+  }
+
+  function closeRobloxPreorderInfo() {
+    if (!robloxPreorderModal) return;
+    robloxPreorderModal.hidden = true;
+    robloxPreorderModal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("roblox-preorder-open");
+  }
+
   function selectGame(gameId) {
     selectedProduct = getProduct(gameId);
     selectedDenomination = null;
@@ -283,6 +320,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateAccountFields(selectedProduct);
     renderDenominations(selectedProduct);
     updateSummary();
+    showRobloxPreorderInfo(selectedProduct);
   }
 
   function setupPayments() {
@@ -410,6 +448,9 @@ document.addEventListener("DOMContentLoaded", () => {
   robloxInfoButton?.addEventListener("click", () => {
     if (robloxInfoPanel) robloxInfoPanel.hidden = false;
   });
+  robloxPreorderOk?.addEventListener("click", closeRobloxPreorderInfo);
+  robloxPreorderModal?.querySelector(".roblox-preorder-backdrop")?.addEventListener("click", closeRobloxPreorderInfo);
+
   robloxInfoOk?.addEventListener("click", () => {
     if (robloxInfoPanel) robloxInfoPanel.hidden = true;
   });
