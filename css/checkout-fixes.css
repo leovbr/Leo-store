@@ -346,3 +346,21 @@
   .checkout-page .game-hero-benefits .hero-benefit{font-size:7px!important;gap:2px!important;}
   .checkout-page .game-hero-benefits .hero-benefit-icon{font-size:10px!important;}
 }
+
+/* ===== HERO LOWER PANEL — ABSOLUTE BLACK FROM DIVIDER TO END ===== */
+.checkout-page .game-hero-content{
+  background:linear-gradient(to bottom,transparent 0,transparent 249px,#050609 249px,#050609 100%)!important;
+}
+.checkout-page .game-hero-benefits{background:#050609!important;}
+.checkout-page .game-hero-main{background:#050609!important;}
+.checkout-page .game-hero-main > .game-hero-content{
+  background:linear-gradient(to bottom,transparent 0,transparent 249px,#050609 249px,#050609 100%)!important;
+}
+@media(max-width:640px){
+  .checkout-page .game-hero-content{
+    background:linear-gradient(to bottom,transparent 0,transparent 232px,#050609 232px,#050609 100%)!important;
+  }
+  .checkout-page .game-hero-main > .game-hero-content{
+    background:linear-gradient(to bottom,transparent 0,transparent 232px,#050609 232px,#050609 100%)!important;
+  }
+}
