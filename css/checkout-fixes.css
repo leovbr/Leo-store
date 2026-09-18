@@ -511,3 +511,25 @@
   margin-top:0!important;
   margin-bottom:5px!important;
 }
+
+
+/* ACTUAL GAP FIX — REMOVE CHECKOUT MAIN BOTTOM RESERVE v20260918-18 */
+.checkout-page .checkout-main{
+  padding-bottom:0!important;
+  margin-bottom:0!important;
+}
+.checkout-page .checkout-layout{
+  margin-bottom:0!important;
+}
+.checkout-page .checkout-section > .container{
+  margin-bottom:0!important;
+}
+.checkout-page .site-footer.checkout-footer-inline{
+  margin-top:0!important;
+  clear:both!important;
+}
+@media(max-width:680px){
+  .checkout-page .checkout-main{
+    padding-bottom:0!important;
+  }
+}
