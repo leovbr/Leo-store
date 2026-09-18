@@ -49,7 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const robloxInfoPanel = $("robloxInfoPanel");
   const robloxInfoOk = $("robloxInfoOk");
   const robloxPreorderModal = $("robloxPreorderModal");
-  const robloxPreorderTitle = $("robloxPreorderTitle");
   const robloxPreorderBody = $("robloxPreorderBody");
   const robloxPreorderOk = $("robloxPreorderOk");
 
@@ -283,9 +282,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const isRobloxUsername = id === "roblox-via-username";
     const isRobloxLogin = id === "roblox-via-login";
     if (!isRobloxUsername && !isRobloxLogin) return;
-
-    if (robloxPreorderTitle) {
-    }
 
     const formatText = 'Halo min, saya sudah order (nominal robux) dengan username LeoXXXX (tidak perlu mirip)';
     if (robloxPreorderBody) {
