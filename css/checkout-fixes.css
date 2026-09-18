@@ -49,15 +49,24 @@
 }
 
 .checkout-page .checkout-summary{
+  position:static!important;
+  inset:auto!important;
+  top:auto!important;
+  right:auto!important;
+  bottom:auto!important;
+  left:auto!important;
+  transform:none!important;
   width:100%!important;
+  max-width:none!important;
   margin:0!important;
   overflow:hidden!important;
+  float:none!important;
 }
 
 /* SUMMARY + PAYMENT BUTTON STAY IN NORMAL DOCUMENT FLOW */
 .checkout-page #checkoutButton,
 .checkout-page .btn-checkout{
-  position:relative!important;
+  position:static!important;
   left:auto!important;
   right:auto!important;
   bottom:auto!important;
@@ -67,7 +76,7 @@
   max-width:none!important;
   min-height:56px!important;
   margin:0!important;
-  z-index:1!important;
+  z-index:auto!important;
   display:flex!important;
   align-items:center!important;
   justify-content:space-between!important;
