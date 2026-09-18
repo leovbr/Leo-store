@@ -980,3 +980,18 @@
 .checkout-page #robloxLoginFields[hidden]{
   display:none!important;
 }
+
+
+/* ===== ROBLOX VIA USERNAME — DENOMINATION CONTENT ONLY =====
+   Adds the Robux logo inside the price line for this product's denominations.
+   No card/grid/section positioning is changed.
+*/
+.checkout-page .denomination-price-box .denomination-logo{
+  width:16px!important;
+  height:16px!important;
+  min-width:16px!important;
+  min-height:16px!important;
+  object-fit:contain!important;
+  vertical-align:-3px!important;
+  margin-right:5px!important;
+}
