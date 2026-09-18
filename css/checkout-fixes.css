@@ -31,15 +31,9 @@
 
 .checkout-page .checkout-sidebar{
   order:3!important;
-  /* Ringkasan + tombol bergerak sebagai SATU kolom saat halaman di-scroll. */
-  position:sticky!important;
-  top:84px!important;
-  align-self:flex-start!important;
+  /* Ringkasan berada di bawah footer dan ikut alur scroll halaman. */
+  position:static!important;
   inset:auto!important;
-  top:auto!important;
-  right:auto!important;
-  bottom:auto!important;
-  left:auto!important;
   transform:none!important;
   width:100%!important;
   max-width:none!important;
@@ -318,13 +312,6 @@
 }
 
 @media(max-width:680px){
-  /* Di layar kecil, kolom ringkasan kembali mengikuti alur halaman normal. */
-  .checkout-page .checkout-sidebar{
-    position:static!important;
-    top:auto!important;
-    align-self:stretch!important;
-  }
-
   .checkout-page .checkout-layout{
     gap:12px!important;
   }
