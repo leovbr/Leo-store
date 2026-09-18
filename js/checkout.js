@@ -39,6 +39,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const contactWhatsapp = $("contactWhatsapp");
   const countryCode = $("countryCode");
   const checkoutButton = $("checkoutButton");
+  const checkoutSummary = $("checkoutSummary");
+  const summaryToggle = $("summaryToggle");
+  const summaryEmpty = $("summaryEmpty");
+  const summaryEmptyButton = $("summaryEmptyButton");
+  const summaryContent = $("summaryContent");
+  const summaryPayment = $("summaryPayment");
   const accountTitle = $("accountTitle");
   const accountDescription = $("accountDescription");
   const standardAccountFields = $("standardAccountFields");
@@ -248,7 +254,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function getPaymentFee() {
     if (!selectedDenomination || !selectedPayment) return 0;
-    const fee = Number(selectedPayment.fee || 0);
+    const fee = selectedPayment.id === "qris" ? 0.8 : Number(selectedPayment.fee || 0);
     return selectedPayment.feeType === "percent" ? Math.round(getBaseTotal() * fee / 100) : fee;
   }
 
@@ -265,6 +271,18 @@ document.addEventListener("DOMContentLoaded", () => {
     if (summaryFee) summaryFee.textContent = rupiah(getPaymentFee());
     if (summaryPrice) summaryPrice.textContent = rupiah(getBaseTotal());
     if (summaryTotal) summaryTotal.textContent = rupiah(getTotal());
+    if (summaryPayment) summaryPayment.textContent = selectedPayment
+      ? (selectedPayment.id === "qris" ? "QRIS (All Payment)" : selectedPayment.name)
+      : "-";
+    const hasProduct = Boolean(selectedProduct && selectedDenomination);
+    if (summaryEmpty) summaryEmpty.hidden = hasProduct;
+    if (summaryContent) summaryContent.hidden = !hasProduct;
+    if (summaryToggle) {
+      summaryToggle.hidden = !hasProduct;
+      summaryToggle.setAttribute("aria-expanded", String(checkoutSummary?.classList.contains("expanded") || false));
+      summaryToggle.setAttribute("aria-label", checkoutSummary?.classList.contains("expanded") ? "Tutup ringkasan" : "Buka ringkasan");
+    }
+    if (checkoutButton) checkoutButton.disabled = !hasProduct;
 
     if (summaryImage) {
       if (selectedProduct?.image) {
@@ -437,6 +455,13 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   quantityInput?.addEventListener("input", updateSummary);
   promoButton?.addEventListener("click", applyPromo);
+  summaryToggle?.addEventListener("click", () => {
+    if (!selectedProduct || !selectedDenomination || !checkoutSummary) return;
+    checkoutSummary.classList.toggle("expanded");
+    updateSummary();
+  });
+  summaryEmptyButton?.addEventListener("click", () => gameSelect?.focus());
+
   checkoutButton?.addEventListener("click", createOrder);
   robloxInfoButton?.addEventListener("click", () => {
     if (robloxInfoPanel) robloxInfoPanel.hidden = false;
