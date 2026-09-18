@@ -168,8 +168,17 @@ document.addEventListener("DOMContentLoaded", () => {
         option.setAttribute("tabindex", "0");
         option.innerHTML = `
           <div class="denomination-main">
-            <div class="denomination-title">${escapeHTML(item.amount)}</div>
-            <div class="denomination-price-box"><span>${rupiah(item.price)}</span></div>
+            <div class="denomination-leading">
+              <span class="denomination-action-icon" aria-hidden="true">⚡</span>
+              <div class="denomination-copy">
+                <div class="denomination-title">${escapeHTML(item.amount)}</div>
+                <div class="denomination-price-box"><span>${rupiah(item.price)}</span></div>
+              </div>
+            </div>
+            <div class="denomination-topup-btn">
+              <span>Top Up</span>
+              <span class="denomination-topup-arrow" aria-hidden="true">→</span>
+            </div>
           </div>
           <div class="denomination-divider"></div>
           <div class="denomination-delivery">
