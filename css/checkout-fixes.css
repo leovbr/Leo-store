@@ -307,3 +307,42 @@
     top:233px!important;
   }
 }
+
+/* ===== GAME HERO — FINAL CLEAN FINISH ===== */
+.checkout-page .game-hero{background-color:#050609!important;}
+.checkout-page .game-hero::before{top:250px!important;bottom:0!important;background:#050609!important;z-index:1!important;}
+.checkout-page .game-hero::after{
+  top:0!important;bottom:auto!important;height:250px!important;
+  background:
+    linear-gradient(90deg,rgba(5,6,10,.88),rgba(5,6,10,.48),rgba(5,6,10,.12)),
+    linear-gradient(0deg,rgba(5,6,10,.82),transparent 70%)!important;
+  z-index:2!important;pointer-events:none!important;
+}
+.checkout-page .game-hero-content::after{top:250px!important;height:1px!important;background:rgba(255,255,255,.24)!important;z-index:5!important;}
+.checkout-page .game-hero-text{top:257px!important;left:138px!important;max-width:calc(100% - 166px)!important;z-index:7!important;}
+.checkout-page .game-hero-text h1{font-size:clamp(24px,3.4vw,30px)!important;line-height:1.05!important;white-space:nowrap!important;overflow:visible!important;}
+.checkout-page .game-hero-text p{margin-top:4px!important;font-size:12px!important;line-height:1.15!important;white-space:nowrap!important;overflow:visible!important;}
+.checkout-page .game-hero-benefits{
+  top:305px!important;height:55px!important;min-height:55px!important;padding:11px 18px!important;
+  display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;
+  background:#050609!important;border:0!important;border-radius:0!important;box-shadow:none!important;z-index:8!important;
+}
+.checkout-page .game-hero-benefits .game-hero-divider{display:none!important;}
+.checkout-page .game-hero-benefits .hero-benefit{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:5px!important;min-width:0!important;flex:1 1 0!important;white-space:nowrap!important;}
+.checkout-page .game-hero-benefits .hero-benefit-icon{flex:0 0 auto!important;}
+@media(max-width:640px){
+  .checkout-page .game-hero::before{top:233px!important;background:#050609!important;}
+  .checkout-page .game-hero::after{height:233px!important;}
+  .checkout-page .game-hero-content::after{top:233px!important;}
+  .checkout-page .game-hero-text{left:106px!important;top:242px!important;max-width:calc(100% - 118px)!important;}
+  .checkout-page .game-hero-text h1{font-size:21px!important;line-height:1.02!important;}
+  .checkout-page .game-hero-text p{margin-top:3px!important;font-size:11px!important;line-height:1.1!important;}
+  .checkout-page .game-hero-benefits{top:280px!important;height:50px!important;min-height:50px!important;padding:10px 8px!important;gap:5px!important;}
+  .checkout-page .game-hero-benefits .hero-benefit{gap:3px!important;font-size:8px!important;}
+  .checkout-page .game-hero-benefits .hero-benefit-icon{font-size:11px!important;}
+}
+@media(max-width:380px){
+  .checkout-page .game-hero-benefits{padding-left:5px!important;padding-right:5px!important;gap:2px!important;}
+  .checkout-page .game-hero-benefits .hero-benefit{font-size:7px!important;gap:2px!important;}
+  .checkout-page .game-hero-benefits .hero-benefit-icon{font-size:10px!important;}
+}
