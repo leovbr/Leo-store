@@ -125,11 +125,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             <h3>${escapeHTML(product.name)}</h3>
 
-            <p>
-              ${escapeHTML(
-                product.description ||
-                `Top Up ${product.name}`
-              )}
+            <p class="product-publisher">
+              ${escapeHTML(product.publisher || "")}
             </p>
 
             ${chips}
