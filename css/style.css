@@ -2309,3 +2309,143 @@ header {
   .shop-page .product-card,.shop-page .product-btn::before,.shop-page .product-btn-icon{animation:none!important}
   .shop-page .product-card,.shop-page .product-btn,.shop-page .product-btn-arrow{transition:none!important}
 }
+
+
+/* =========================================================
+   LEOOSTORE — SHOP FOOTER MATCH CHECKOUT
+   ========================================================= */
+
+.shop-footer .footer-links{
+  width:100%;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:28px;
+  align-items:start;
+}
+
+.shop-footer .footer-brand-column,
+.shop-footer .footer-social-column{
+  min-width:0;
+}
+
+.shop-footer .footer-brand-link{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  color:var(--text);
+}
+
+.shop-footer .footer-brand-link img{
+  width:30px;
+  height:30px;
+  object-fit:contain;
+  border-radius:8px;
+}
+
+.shop-footer .footer-brand-link strong{
+  font-size:18px;
+  font-weight:900;
+}
+
+.shop-footer .footer-nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:14px;
+}
+
+.shop-footer .footer-nav a{
+  color:var(--text-muted);
+  font-size:12px;
+  transition:color .2s ease,transform .2s ease;
+}
+
+.shop-footer .footer-nav a:hover{
+  color:var(--text);
+  transform:translateY(-1px);
+}
+
+.shop-footer .footer-social-column h4{
+  margin:0 0 12px;
+  color:var(--text);
+  font-size:14px;
+  font-weight:800;
+}
+
+.shop-footer .footer-social-row{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.shop-footer .social-link{
+  display:grid;
+  grid-template-columns:24px auto 1fr;
+  align-items:center;
+  gap:8px;
+  width:100%;
+  max-width:280px;
+  min-height:36px;
+  color:var(--text-soft);
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.02);
+  border-radius:10px;
+  padding:6px 9px;
+  transition:background .2s ease,border-color .2s ease,transform .2s ease;
+}
+
+.shop-footer .social-link:hover{
+  background:var(--primary-soft);
+  border-color:rgba(124,92,255,.35);
+  transform:translateY(-1px);
+}
+
+.shop-footer .social-link img{
+  width:17px;
+  height:17px;
+  filter:invert(1);
+  opacity:.9;
+}
+
+.shop-footer .social-link span{
+  font-size:11px;
+  font-weight:700;
+}
+
+.shop-footer .social-link small{
+  justify-self:end;
+  color:var(--text-muted);
+  font-size:10px;
+}
+
+.shop-footer .footer-social-copyright{
+  margin-top:16px;
+  color:var(--text-muted);
+  font-size:11px;
+  line-height:1.5;
+}
+
+@media(max-width:680px){
+  .shop-footer .footer-links{
+    grid-template-columns:1fr;
+    gap:22px;
+    text-align:left;
+  }
+
+  .shop-footer .footer-nav{
+    gap:10px;
+  }
+
+  .shop-footer .footer-social-column h4{
+    margin-bottom:10px;
+  }
+
+  .shop-footer .social-link{
+    max-width:100%;
+  }
+
+  .shop-footer .footer-social-copyright{
+    margin-top:13px;
+    font-size:10px;
+  }
+}
