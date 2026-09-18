@@ -8,10 +8,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=20260918-4">
-<link rel="stylesheet" href="css/style-pages.css?v=20260918-4">
-<link rel="stylesheet" href="css/checkout-premium.css?v=20260918-4">
-<link rel="stylesheet" href="css/checkout-fixes.css?v=20260918-4">
+<link rel="stylesheet" href="css/style.css?v=20260918-5">
+<link rel="stylesheet" href="css/style-pages.css?v=20260918-5">
+<link rel="stylesheet" href="css/checkout-premium.css?v=20260918-5">
+<link rel="stylesheet" href="css/checkout-fixes.css?v=20260918-5">
 </head>
 <body class="checkout-page">
 <header class="site-header"><div class="container">
@@ -26,14 +26,35 @@
 <section class="checkout-card"><div class="checkout-card-header"><span class="checkout-step">2</span><div><h2>Data Akun</h2><p>Masukkan data akun untuk proses top up.</p></div></div><div class="form-grid account-fields"><div class="form-group"><label for="playerId">Player ID / Username</label><input type="text" id="playerId" name="playerId" placeholder="Masukkan Player ID / Username" autocomplete="off"></div><div class="form-group" id="serverField"><label for="server">Server</label><input type="text" id="server" name="server" placeholder="Masukkan Server" autocomplete="off"></div></div><div id="robloxLoginNotice" class="roblox-login-notice" style="display:none;"><strong>🔐 Roblox Via Login</strong><p>Untuk metode ini, data login Roblox diperlukan sesuai proses top up.</p></div></section>
 <section class="checkout-card"><div class="checkout-card-header"><span class="checkout-step">3</span><div><h2>Pilih Nominal</h2><p>Pilih nominal top up yang tersedia.</p></div></div><input type="hidden" id="nominal" name="nominal"><div id="denominationList" class="denomination-list"><div class="checkout-loading">Pilih game terlebih dahulu.</div></div></section>
 <section class="checkout-card"><div class="checkout-card-header"><span class="checkout-step">4</span><div><h2>Jumlah</h2><p>Tentukan jumlah pembelian.</p></div></div><div class="quantity-control"><button type="button" id="quantityMinus" aria-label="Kurangi jumlah">−</button><input type="number" id="quantity" name="quantity" value="1" min="1" max="99" inputmode="numeric"><button type="button" id="quantityPlus" aria-label="Tambah jumlah">+</button></div></section>
-<section class="checkout-card"><div class="checkout-card-header"><span class="checkout-step">5</span><div><h2>Metode Pembayaran</h2><p>Pilih metode pembayaran yang tersedia.</p></div></div><input type="hidden" id="payment" name="payment"><div class="payment-list"><div class="payment-category"><div class="payment-category-header"><span>QRIS</span><span>⌄</span></div><div class="payment-category-body"><div class="payment-option" data-payment-id="qris" data-payment-name="QRIS" data-fee="0" data-fee-type="fixed">QRIS</div></div></div></div></section>
+<section class="checkout-card"><div class="checkout-card-header"><span class="checkout-step">5</span><div><h2>Metode Pembayaran</h2><p>Pilih metode pembayaran yang tersedia.</p></div></div><input type="hidden" id="payment" name="payment">
+<div class="payment-list">
+<div class="payment-category">
+<div class="payment-category-header"><span>Pembayaran Digital</span><span>⌄</span></div>
+<div class="payment-category-body">
+<div class="payment-option payment-option-logo" data-payment-id="qris" data-payment-name="QRIS" data-fee="0" data-fee-type="fixed"><img src="https://cdn.jsdelivr.net/npm/@hafidznoor/idn-finlogos@2/dist/icons/qris.svg" alt="QRIS"><span>QRIS</span></div>
+<div class="payment-option payment-option-logo" data-payment-id="dana" data-payment-name="DANA" data-fee="0" data-fee-type="fixed"><img src="https://cdn.jsdelivr.net/npm/@hafidznoor/idn-finlogos@2/dist/icons/dana.svg" alt="DANA"><span>DANA</span></div>
+<div class="payment-option payment-option-logo" data-payment-id="ovo" data-payment-name="OVO" data-fee="0" data-fee-type="fixed"><img src="https://cdn.jsdelivr.net/npm/@hafidznoor/idn-finlogos@2/dist/icons/ovo.svg" alt="OVO"><span>OVO</span></div>
+<div class="payment-option payment-option-logo" data-payment-id="gopay" data-payment-name="GoPay" data-fee="0" data-fee-type="fixed"><img src="https://cdn.jsdelivr.net/npm/@hafidznoor/idn-finlogos@2/dist/icons/gopay.svg" alt="GoPay"><span>GoPay</span></div>
+</div></div>
+<div class="payment-category">
+<div class="payment-category-header"><span>Virtual Account</span><span>⌄</span></div>
+<div class="payment-category-body">
+<div class="payment-option payment-option-logo" data-payment-id="bca-va" data-payment-name="BCA Virtual Account" data-fee="0" data-fee-type="fixed"><img src="https://cdn.jsdelivr.net/npm/@hafidznoor/idn-finlogos@2/dist/icons/bca.svg" alt="BCA"><span>BCA Virtual Account</span></div>
+<div class="payment-option payment-option-logo" data-payment-id="bri-va" data-payment-name="BRI Virtual Account" data-fee="0" data-fee-type="fixed"><img src="https://cdn.jsdelivr.net/npm/@hafidznoor/idn-finlogos@2/dist/icons/bri.svg" alt="BRI"><span>BRI Virtual Account</span></div>
+<div class="payment-option payment-option-logo" data-payment-id="bni-va" data-payment-name="BNI Virtual Account" data-fee="0" data-fee-type="fixed"><img src="https://cdn.jsdelivr.net/npm/@hafidznoor/idn-finlogos@2/dist/icons/bni.svg" alt="BNI"><span>BNI Virtual Account</span></div>
+<div class="payment-option payment-option-logo" data-payment-id="mandiri-va" data-payment-name="Mandiri Virtual Account" data-fee="0" data-fee-type="fixed"><img src="https://cdn.jsdelivr.net/npm/@hafidznoor/idn-finlogos@2/dist/icons/mandiri.svg" alt="Mandiri"><span>Mandiri Virtual Account</span></div>
+</div></div>
+</div></section>
 <section class="checkout-card"><div class="checkout-card-header"><span class="checkout-step">6</span><div><h2>Promo</h2><p>Masukkan kode promo jika ada.</p></div></div><div class="promo-form"><input id="promoCode" type="text" placeholder="Kode promo"><button id="promoButton" type="button">Pakai</button></div><div id="promoMessage"></div></section>
-<section class="checkout-card"><div class="checkout-card-header"><span class="checkout-step">7</span><div><h2>Kontak</h2><p>Gunakan data aktif untuk informasi pesanan.</p></div></div><div class="form-grid"><div class="form-group"><label for="contactEmail">Email</label><input id="contactEmail" type="email" placeholder="Email"></div><div class="form-group"><label for="contactWhatsapp">WhatsApp</label><div class="whatsapp-input"><select id="countryCode"><option value="+62">+62</option></select><input id="contactWhatsapp" type="tel" placeholder="Nomor WhatsApp"></div></div></div></section>
+<section class="checkout-card"><div class="checkout-card-header"><span class="checkout-step">7</span><div><h2>Kontak</h2><p>Gunakan data aktif untuk informasi pesanan.</p></div></div><div class="contact-fields"><div class="form-group"><label for="contactEmail">Email</label><input id="contactEmail" type="email" placeholder="Masukkan email aktif" autocomplete="email"></div><div class="form-group"><label for="contactWhatsapp">WhatsApp</label><div class="whatsapp-input"><select id="countryCode"><option value="+62">+62</option></select><input id="contactWhatsapp" type="tel" placeholder="Masukkan nomor WhatsApp" autocomplete="tel"></div></div></div></section>
 </div>
 <aside class="checkout-sidebar"><div class="checkout-summary"><div class="checkout-summary-header"><span class="eyebrow">RINGKASAN</span><h2>Pesanan Kamu</h2></div><div class="summary-row"><span>Produk</span><strong id="summaryProductPrice">Rp0</strong></div><div class="summary-row"><span>Jumlah</span><strong id="summaryQuantity">1</strong></div><div class="summary-divider"></div><div class="summary-total"><span>Total Pembayaran</span><strong id="summaryTotal">Rp0</strong></div><button type="button" class="btn-checkout" id="checkoutButton"><span>Lanjutkan Pembayaran</span><span>→</span></button></div></aside>
 </div></div></section></main>
-<footer class="site-footer"><div class="footer-inner"><div class="footer-links"><div class="footer-column"><h4>Bantuan</h4><a href="#">Cara Order</a><a href="#">FAQ</a><a href="tel:085823538473">Hubungi Kami <span>085823538473</span></a></div><div class="footer-column"><h4>Ikuti Kami</h4><a href="#">◉ Instagram</a><a href="#">♪ TikTok</a><a href="https://wa.me/6285823538473">◉ WhatsApp</a></div></div></div><div class="footer-bottom">© 2026 LEOOSTORE. All rights reserved. Made with ❤️ for gamers.</div></footer>
-<script src="js/products.js?v=20260918-4"></script>
-<script src="js/checkout.js?v=20260918-4"></script>
+<footer class="site-footer"><div class="footer-inner"><div class="footer-links">
+<div class="footer-column"><h4>Bantuan</h4><a href="#">Cara Order</a><a href="#">FAQ</a><a href="tel:085823538473">Hubungi Kami <span>085823538473</span></a></div>
+<div class="footer-column"><h4>Ikuti Kami</h4><a href="#" class="social-link"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v16/icons/instagram.svg" alt="">Instagram</a><a href="#" class="social-link"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v16/icons/tiktok.svg" alt="">TikTok</a><a href="https://wa.me/6285823538473" class="social-link"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v16/icons/whatsapp.svg" alt="">WhatsApp</a></div>
+</div></div><div class="footer-bottom"><strong>LEOOSTORE</strong>© 2026 · Fast. Trusted. Delivered.</div></footer>
+<script src="js/products.js?v=20260918-5"></script>
+<script src="js/checkout.js?v=20260918-5"></script>
 </body>
 </html>
