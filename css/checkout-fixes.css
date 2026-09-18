@@ -847,3 +847,61 @@
     bottom:0!important;
   }
 }
+
+/* ===== TARGET LOCK — 16:9 HERO BANNER =====
+   Banner is strictly 16:9 and ends at the logo-center divider.
+   Nothing from the hero banner exists below that line.
+   All existing logo/title/benefits sizing and positioning stay unchanged.
+*/
+.checkout-page .game-hero{
+  height:390px!important;
+  min-height:390px!important;
+  background:var(--card)!important;
+  background-image:none!important;
+  overflow:hidden!important;
+}
+
+.checkout-page .game-hero::after{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  left:0!important;
+  top:0!important;
+  width:100%!important;
+  height:auto!important;
+  aspect-ratio:16/9!important;
+  background-image:var(--hero-banner-image)!important;
+  background-position:center!important;
+  background-size:cover!important;
+  background-repeat:no-repeat!important;
+  z-index:1!important;
+  pointer-events:none!important;
+}
+
+.checkout-page .game-hero::before{
+  top:250px!important;
+  bottom:0!important;
+  background:var(--card)!important;
+  z-index:4!important;
+}
+
+.checkout-page .game-hero-overlay{
+  z-index:5!important;
+}
+
+@media(max-width:640px){
+  .checkout-page .game-hero{
+    height:360px!important;
+    min-height:360px!important;
+  }
+
+  .checkout-page .game-hero::after{
+    height:auto!important;
+    aspect-ratio:16/9!important;
+  }
+
+  .checkout-page .game-hero::before{
+    top:233px!important;
+    bottom:0!important;
+  }
+}
