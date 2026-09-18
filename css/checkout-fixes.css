@@ -138,3 +138,122 @@
     top:235px!important;
   }
 }
+
+
+/* ===== GAME HERO — FINAL VISUAL TARGET LOCK =====
+   Upper banner / logo / title layout only.
+   Logo keeps its current size. The horizontal banner boundary
+   passes exactly through the logo center. Game name + publisher
+   sit below that boundary beside the logo. Existing benefits remain.
+*/
+.checkout-page .game-hero{
+  min-height:360px!important;
+  height:360px!important;
+}
+
+.checkout-page .game-hero-main{
+  min-height:360px!important;
+  height:360px!important;
+}
+
+.checkout-page .game-hero-content{
+  height:305px!important;
+  min-height:305px!important;
+  padding:0 28px!important;
+}
+
+.checkout-page .game-hero-content::after{
+  top:250px!important;
+  height:1px!important;
+  background:rgba(255,255,255,.24)!important;
+  z-index:4!important;
+}
+
+.checkout-page .game-hero-icon{
+  left:28px!important;
+  top:204px!important;
+  width:92px!important;
+  height:92px!important;
+  flex-basis:92px!important;
+  z-index:6!important;
+}
+
+.checkout-page .game-hero-text{
+  left:138px!important;
+  top:263px!important;
+  max-width:calc(100% - 166px)!important;
+  z-index:7!important;
+}
+
+.checkout-page .game-hero-text h1{
+  margin:0!important;
+  line-height:1.08!important;
+}
+
+.checkout-page .game-hero-text p{
+  margin:5px 0 0!important;
+  line-height:1.2!important;
+}
+
+.checkout-page .game-hero-benefits{
+  top:305px!important;
+  height:55px!important;
+  min-height:55px!important;
+  padding:11px 18px!important;
+  border-top:0!important;
+  border-bottom:0!important;
+  z-index:8!important;
+  box-sizing:border-box!important;
+}
+
+@media(max-width:640px){
+  .checkout-page .game-hero{
+    min-height:330px!important;
+    height:330px!important;
+  }
+
+  .checkout-page .game-hero-main{
+    min-height:330px!important;
+    height:330px!important;
+  }
+
+  .checkout-page .game-hero-content{
+    height:280px!important;
+    min-height:280px!important;
+    padding:0 20px!important;
+  }
+
+  .checkout-page .game-hero-content::after{
+    top:233px!important;
+  }
+
+  .checkout-page .game-hero-icon{
+    left:20px!important;
+    top:197px!important;
+    width:72px!important;
+    height:72px!important;
+    flex-basis:72px!important;
+  }
+
+  .checkout-page .game-hero-text{
+    left:106px!important;
+    top:244px!important;
+    max-width:calc(100% - 126px)!important;
+  }
+
+  .checkout-page .game-hero-text h1{
+    font-size:25px!important;
+  }
+
+  .checkout-page .game-hero-text p{
+    margin-top:4px!important;
+    font-size:12px!important;
+  }
+
+  .checkout-page .game-hero-benefits{
+    top:280px!important;
+    height:50px!important;
+    min-height:50px!important;
+    padding:11px 7px!important;
+  }
+}
