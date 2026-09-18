@@ -285,16 +285,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!isRobloxUsername && !isRobloxLogin) return;
 
     if (robloxPreorderTitle) {
-      robloxPreorderTitle.textContent = isRobloxUsername
-        ? "🎮 Roblox Via Username"
-        : "🔐 Roblox Via Login";
     }
 
     const formatText = 'Halo min, saya sudah order (nominal robux) dengan username LeoXXXX (tidak perlu mirip)';
     if (robloxPreorderBody) {
       robloxPreorderBody.innerHTML = isRobloxUsername
         ? '<ul><li>Pastikan akun Roblox berusia <strong>18+</strong>.</li><li>Pastikan <strong>V2L aktif</strong>.</li><li>Masukkan username Roblox dengan benar.</li><li>Pesanan yang sudah diproses tidak dapat dibatalkan karena kesalahan data.</li><li>Setelah melakukan pembayaran, hubungi WhatsApp admin <strong>LEOOSTORE 085823538473</strong> dan kirim format:</li></ul><div class="roblox-format">"' + escapeHTML(formatText) + '"</div>'
-        : '<ul><li>Metode ini membutuhkan <strong>Username &amp; Password Roblox</strong>.</li><li>Data digunakan hanya untuk proses top up.</li><li>Jangan memberikan password akun selain melalui halaman checkout resmi.</li><li>Setelah pembayaran, admin akan menghubungi untuk proses top up.</li><li>Setelah melakukan pembayaran, hubungi WhatsApp admin <strong>LEOOSTORE 085823538473</strong> dan kirim format:</li></ul><div class="roblox-format">"' + escapeHTML(formatText) + '"</div>';
+        : '<ul><li>Metode ini membutuhkan <strong>Username &amp; Password Roblox</strong>.</li><li>Data digunakan hanya untuk proses top up.</li><li>Jangan memberikan password akun selain melalui halaman checkout resmi.</li><li>Setelah melakukan pembayaran, hubungi WhatsApp admin <strong>LEOOSTORE 085823538473</strong> dan kirim format:</li></ul><div class="roblox-format">"' + escapeHTML(formatText) + '"</div>';
     }
 
     robloxPreorderModal.hidden = false;
