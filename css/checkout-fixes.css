@@ -705,3 +705,84 @@
     background:var(--card)!important;
   }
 }
+
+
+/* ===== FINAL HERO PANEL LOCK — COVER BANNER BELOW LOGO CENTER =====
+   The lower surface is a single overlay on the hero itself.
+   It starts exactly at the logo-center divider and reaches the hero bottom,
+   so the banner image cannot bleed through anywhere in the lower panel.
+*/
+.checkout-page .game-hero{
+  position:relative!important;
+  overflow:hidden!important;
+  background-color:var(--card)!important;
+}
+
+.checkout-page .game-hero::before{
+  content:""!important;
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  top:250px!important;
+  bottom:0!important;
+  width:100%!important;
+  height:auto!important;
+  background:var(--card)!important;
+  z-index:4!important;
+  pointer-events:none!important;
+}
+
+.checkout-page .game-hero::after{
+  display:none!important;
+}
+
+.checkout-page .game-hero-overlay{
+  z-index:5!important;
+}
+
+.checkout-page .game-hero-main{
+  background:transparent!important;
+}
+
+.checkout-page .game-hero-content{
+  position:relative!important;
+  background:transparent!important;
+  isolation:auto!important;
+}
+
+.checkout-page .game-hero-content::before{
+  display:none!important;
+}
+
+.checkout-page .game-hero-content::after{
+  top:250px!important;
+  height:1px!important;
+  background:rgba(255,255,255,.24)!important;
+  z-index:20!important;
+}
+
+.checkout-page .game-hero-icon{
+  z-index:21!important;
+}
+
+.checkout-page .game-hero-text{
+  z-index:22!important;
+}
+
+.checkout-page .game-hero-benefits{
+  position:absolute!important;
+  z-index:23!important;
+  background:var(--card)!important;
+}
+
+@media(max-width:640px){
+  .checkout-page .game-hero::before{
+    top:233px!important;
+    bottom:0!important;
+    background:var(--card)!important;
+  }
+
+  .checkout-page .game-hero-content::after{
+    top:233px!important;
+  }
+}
