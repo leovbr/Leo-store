@@ -134,16 +134,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const id = String(product?.id || "");
     const isRoblox = id === "roblox-via-login" || id === "roblox-via-username";
     const isRobloxLogin = id === "roblox-via-login";
+    const isRobloxUsername = id === "roblox-via-username";
 
     if (serverField) serverField.style.display = isRoblox ? "none" : "";
     if (serverInput && isRoblox) serverInput.value = "";
     if (accountTitle) accountTitle.textContent = "Data Akun";
-    if (accountDescription) accountDescription.textContent = isRobloxLogin
+    if (accountDescription) accountDescription.textContent = (isRobloxLogin || isRobloxUsername)
       ? "Masukkan username dan password."
       : "Masukkan data akun untuk proses top up.";
-    if (standardAccountFields) standardAccountFields.hidden = isRobloxLogin;
-    if (robloxLoginFields) robloxLoginFields.hidden = !isRobloxLogin;
-    if (robloxInfoButton) robloxInfoButton.hidden = !isRobloxLogin;
+    if (standardAccountFields) standardAccountFields.hidden = isRobloxLogin || isRobloxUsername;
+    if (robloxLoginFields) robloxLoginFields.hidden = !(isRobloxLogin || isRobloxUsername);
+    if (robloxInfoButton) robloxInfoButton.hidden = !(isRobloxLogin || isRobloxUsername);
     if (!isRoblox) {
       if (robloxUsername) robloxUsername.value = "";
       if (robloxPassword) robloxPassword.value = "";
