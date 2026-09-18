@@ -257,3 +257,53 @@
     padding:11px 7px!important;
   }
 }
+
+
+/* ===== GAME HERO — FINAL BLACK LOWER PANEL LOCK =====
+   Banner image ends at the logo center line.
+   Everything below that line is the market-style solid black panel.
+*/
+.checkout-page .game-hero::before{
+  content:""!important;
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  top:250px!important;
+  bottom:0!important;
+  background:#050609!important;
+  z-index:1!important;
+  pointer-events:none!important;
+}
+
+.checkout-page .game-hero::after{
+  z-index:2!important;
+}
+
+.checkout-page .game-hero-content::after{
+  top:250px!important;
+  z-index:5!important;
+}
+
+.checkout-page .game-hero-icon{
+  z-index:6!important;
+}
+
+.checkout-page .game-hero-text{
+  z-index:7!important;
+}
+
+.checkout-page .game-hero-benefits{
+  z-index:8!important;
+  background:#050609!important;
+  border:0!important;
+}
+
+@media(max-width:640px){
+  .checkout-page .game-hero::before{
+    top:233px!important;
+  }
+
+  .checkout-page .game-hero-content::after{
+    top:233px!important;
+  }
+}
