@@ -96,14 +96,15 @@ const PRODUCTS = [
     publisher: "Roblox Corporation",
 
     denominations: [
-      { id: "rbl-user-80", amount: "80 Robux", price: 17000, category: "Robux" },
-      { id: "rbl-user-160", amount: "160 Robux", price: 32000, category: "Robux" },
-      { id: "rbl-user-240", amount: "240 Robux", price: 46000, category: "Robux" },
-      { id: "rbl-user-400", amount: "400 Robux", price: 73000, category: "Robux" },
-      { id: "rbl-user-800", amount: "800 Robux", price: 140000, category: "Robux" },
-      { id: "rbl-user-1700", amount: "1700 Robux", price: 280000, category: "Robux" },
-      { id: "rbl-user-4500", amount: "4500 Robux", price: 700000, category: "Robux" },
-      { id: "rbl-user-10000", amount: "10000 Robux", price: 1500000, category: "Robux" }
+      { id: "rbl-user-40", amount: "40 Robux (Wajib 18+ & Aktif V2L)", price: 8500, category: "Robux", logo: "assets/icons/robux.webp" },
+      { id: "rbl-user-80", amount: "80 Robux (Wajib 18+ & Aktif V2L)", price: 17000, category: "Robux", logo: "assets/icons/robux.webp" },
+      { id: "rbl-user-160", amount: "160 Robux (Wajib 18+ & Aktif V2L)", price: 32000, category: "Robux", logo: "assets/icons/robux.webp" },
+      { id: "rbl-user-240", amount: "240 Robux (Wajib 18+ & Aktif V2L)", price: 46000, category: "Robux", logo: "assets/icons/robux.webp" },
+      { id: "rbl-user-400", amount: "400 Robux (Wajib 18+ & Aktif V2L)", price: 73000, category: "Robux", logo: "assets/icons/robux.webp" },
+      { id: "rbl-user-800", amount: "800 Robux (Wajib 18+ & Aktif V2L)", price: 140000, category: "Robux", logo: "assets/icons/robux.webp" },
+      { id: "rbl-user-1700", amount: "1700 Robux (Wajib 18+ & Aktif V2L)", price: 280000, category: "Robux", logo: "assets/icons/robux.webp" },
+      { id: "rbl-user-4500", amount: "4500 Robux (Wajib 18+ & Aktif V2L)", price: 700000, category: "Robux", logo: "assets/icons/robux.webp" },
+      { id: "rbl-user-10000", amount: "10000 Robux (Wajib 18+ & Aktif V2L)", price: 1500000, category: "Robux", logo: "assets/icons/robux.webp" }
     ]
   },
 
