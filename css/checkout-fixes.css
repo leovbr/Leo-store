@@ -363,3 +363,72 @@
   line-height:1.5!important;
   color:rgba(255,255,255,.6)!important;
 }
+
+
+/* FOOTER FINAL CLEAN STRUCTURE v20260918-14 */
+.checkout-page .site-footer .footer-links{
+  display:block!important;
+  width:100%!important;
+  max-width:720px!important;
+  margin:0 auto!important;
+  padding:0 16px!important;
+}
+.checkout-page .site-footer .footer-column:first-child{
+  display:none!important;
+}
+.checkout-page .site-footer .footer-social-column{
+  display:flex!important;
+  width:100%!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  text-align:center!important;
+}
+.checkout-page .site-footer .footer-social-column h4{
+  display:block!important;
+  margin:0 0 12px!important;
+}
+.checkout-page .site-footer .footer-social-row{
+  display:flex!important;
+  width:100%!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:9px!important;
+}
+.checkout-page .site-footer .footer-social-row .social-link{
+  display:flex!important;
+  order:initial!important;
+  width:max-content!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:4px 6px!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:7px!important;
+}
+.checkout-page .site-footer .footer-social-row .social-whatsapp{order:1!important}
+.checkout-page .site-footer .footer-social-row .social-instagram{order:2!important}
+.checkout-page .site-footer .footer-social-row .social-tiktok{order:3!important}
+.checkout-page .site-footer .footer-social-row .footer-social-copyright{
+  display:block!important;
+  order:4!important;
+  width:100%!important;
+  margin:2px 0 0!important;
+  padding:4px 0!important;
+  text-align:center!important;
+  font-size:10px!important;
+  line-height:1.5!important;
+  color:rgba(255,255,255,.58)!important;
+}
+.checkout-page .site-footer{
+  padding:28px 0 34px!important;
+}
+@media(max-width:680px){
+  .checkout-page .site-footer .footer-links{
+    padding:0 12px!important;
+  }
+  .checkout-page .site-footer .footer-social-row{
+    gap:8px!important;
+  }
+}
