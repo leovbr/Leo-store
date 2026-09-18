@@ -786,3 +786,64 @@
     top:233px!important;
   }
 }
+
+
+/* ===== HERO LOWER BACKGROUND EXTENSION — KEEP BANNER FIXED =====
+   Extend only the card-colored panel below the logo-center divider.
+   The actual banner remains fixed to the original upper 250px/233px area.
+*/
+.checkout-page .game-hero{
+  height:440px!important;
+  min-height:440px!important;
+  background-color:var(--card)!important;
+  background-image:none!important;
+}
+
+.checkout-page .game-hero-main{
+  height:440px!important;
+  min-height:440px!important;
+  background:transparent!important;
+}
+
+.checkout-page .game-hero::after{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  top:0!important;
+  height:250px!important;
+  background-image:var(--hero-banner-image)!important;
+  background-position:center!important;
+  background-size:cover!important;
+  background-repeat:no-repeat!important;
+  z-index:1!important;
+  pointer-events:none!important;
+}
+
+.checkout-page .game-hero::before{
+  top:250px!important;
+  bottom:0!important;
+  background:var(--card)!important;
+  z-index:2!important;
+}
+
+.checkout-page .game-hero-overlay{z-index:5!important;}
+
+@media(max-width:640px){
+  .checkout-page .game-hero{
+    height:410px!important;
+    min-height:410px!important;
+  }
+  .checkout-page .game-hero-main{
+    height:410px!important;
+    min-height:410px!important;
+  }
+  .checkout-page .game-hero::after{
+    height:233px!important;
+  }
+  .checkout-page .game-hero::before{
+    top:233px!important;
+    bottom:0!important;
+  }
+}
