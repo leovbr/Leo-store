@@ -490,3 +490,24 @@
     padding-top:2px!important;
   }
 }
+
+
+/* CHECKOUT FOOTER DIRECTLY UNDER CONTACT CARD v20260918-17 */
+.checkout-page .site-footer.checkout-footer-inline{
+  margin-top:0!important;
+  padding:0 0 18px!important;
+}
+.checkout-page .checkout-section,
+.checkout-page .checkout-section > .container{
+  min-height:0!important;
+}
+.checkout-page .checkout-section > .container{
+  padding-bottom:0!important;
+}
+.checkout-page .site-footer.checkout-footer-inline .footer-links{
+  padding-top:0!important;
+}
+.checkout-page .site-footer.checkout-footer-inline .footer-social-column h4{
+  margin-top:0!important;
+  margin-bottom:5px!important;
+}
