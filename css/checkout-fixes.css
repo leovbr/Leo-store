@@ -47,3 +47,24 @@
  .checkout-page .site-footer .footer-column:nth-child(2) a{grid-template-columns:19px minmax(0,1fr)!important}
  .checkout-page .site-footer .footer-column:nth-child(2) a small{grid-column:2!important;justify-self:start!important;margin-top:-2px!important}
 }
+
+
+/* CHECKOUT SUMMARY POSITION FINAL v20260918-7 */
+.checkout-page .checkout-layout{display:grid!important;grid-template-columns:minmax(0,1.55fr) minmax(320px,.75fr)!important;align-items:start!important}
+.checkout-page .checkout-sidebar{order:initial!important;position:sticky!important;top:82px!important;align-self:start!important}
+.checkout-page .checkout-summary-header{padding:18px 20px 14px!important}
+.checkout-page .checkout-summary-header .eyebrow{display:block!important;margin-bottom:4px!important}
+.checkout-page .checkout-summary-header h2{margin:0!important;font-size:18px!important}
+.checkout-page .checkout-summary .summary-row{margin-top:12px!important;padding:0 20px!important}
+.checkout-page .checkout-summary .summary-divider{margin:14px 20px 0!important}
+.checkout-page .checkout-summary .summary-total{margin:0 20px!important;padding:15px 0!important;align-items:flex-end!important}
+.checkout-page .checkout-summary .summary-total span{max-width:50%!important;line-height:1.3!important}
+.checkout-page .checkout-summary .summary-total strong{font-size:18px!important;white-space:nowrap!important}
+.checkout-page #checkoutButton,.checkout-page .btn-checkout{margin:0 20px 20px!important;width:calc(100% - 40px)!important;min-height:52px!important;justify-content:center!important;gap:7px!important}
+.checkout-page #checkoutButton span:first-child,.checkout-page .btn-checkout span:first-child{white-space:nowrap!important}
+@media(max-width:680px){
+ .checkout-page .checkout-layout{display:flex!important;flex-direction:column!important;gap:12px!important}
+ .checkout-page .checkout-sidebar{order:initial!important;position:static!important;width:100%!important;z-index:auto!important}
+ .checkout-page .checkout-main{order:2!important;width:100%!important}
+ .checkout-page .checkout-sidebar{order:3!important}
+}
