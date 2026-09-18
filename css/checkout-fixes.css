@@ -31,9 +31,13 @@
 
 .checkout-page .checkout-sidebar{
   order:3!important;
-  /* Ringkasan berada di bawah footer dan ikut alur scroll halaman. */
-  position:static!important;
-  inset:auto!important;
+  /* Ringkasan selalu terlihat dan menempel di bawah viewport, seperti header yang menempel di atas. */
+  position:fixed!important;
+  left:0!important;
+  right:0!important;
+  bottom:0!important;
+  top:auto!important;
+  inset-inline:0!important;
   transform:none!important;
   width:100%!important;
   max-width:none!important;
@@ -42,22 +46,18 @@
   margin:0!important;
   padding:0!important;
   align-self:stretch!important;
-  z-index:auto!important;
+  z-index:999!important;
 }
 
 .checkout-page .checkout-summary{
   position:static!important;
   inset:auto!important;
-  top:auto!important;
-  right:auto!important;
-  bottom:auto!important;
-  left:auto!important;
-  transform:none!important;
   width:100%!important;
   max-width:none!important;
   margin:0!important;
   overflow:hidden!important;
   float:none!important;
+  border-radius:16px 16px 0 0!important;
 }
 
 /* SUMMARY + PAYMENT BUTTON STAY IN NORMAL DOCUMENT FLOW */
