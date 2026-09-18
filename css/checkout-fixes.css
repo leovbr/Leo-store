@@ -865,11 +865,12 @@
   content:""!important;
   display:block!important;
   position:absolute!important;
-  left:0!important;
+  left:50%!important;
   top:0!important;
-  width:100%!important;
-  height:auto!important;
+  width:min(100%,444.444px)!important;
+  height:250px!important;
   aspect-ratio:16/9!important;
+  transform:translateX(-50%)!important;
   background-image:var(--hero-banner-image)!important;
   background-position:center!important;
   background-size:cover!important;
@@ -896,8 +897,12 @@
   }
 
   .checkout-page .game-hero::after{
-    height:auto!important;
+    left:50%!important;
+    top:0!important;
+    width:min(100%,414px)!important;
+    height:233px!important;
     aspect-ratio:16/9!important;
+    transform:translateX(-50%)!important;
   }
 
   .checkout-page .game-hero::before{
