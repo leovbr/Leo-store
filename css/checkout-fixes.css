@@ -793,15 +793,15 @@
    The actual banner remains fixed to the original upper 250px/233px area.
 */
 .checkout-page .game-hero{
-  height:440px!important;
-  min-height:440px!important;
+  height:390px!important;
+  min-height:390px!important;
   background-color:var(--card)!important;
   background-image:none!important;
 }
 
 .checkout-page .game-hero-main{
-  height:440px!important;
-  min-height:440px!important;
+  height:390px!important;
+  min-height:390px!important;
   background:transparent!important;
 }
 
@@ -832,12 +832,12 @@
 
 @media(max-width:640px){
   .checkout-page .game-hero{
-    height:410px!important;
-    min-height:410px!important;
+    height:360px!important;
+    min-height:360px!important;
   }
   .checkout-page .game-hero-main{
-    height:410px!important;
-    min-height:410px!important;
+    height:360px!important;
+    min-height:360px!important;
   }
   .checkout-page .game-hero::after{
     height:233px!important;
