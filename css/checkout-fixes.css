@@ -364,3 +364,59 @@
     background:linear-gradient(to bottom,transparent 0,transparent 232px,#050609 232px,#050609 100%)!important;
   }
 }
+
+
+/* ===== TARGET LOCK — RESTORE BANNER ABOVE CENTER LINE =====
+   Upper 250px stays the real game banner.
+   From the logo-center divider downward, the panel is solid black.
+   No black layer is allowed to cover the upper banner.
+*/
+.checkout-page .game-hero{
+  background-color:#0c0f15!important;
+}
+
+.checkout-page .game-hero::after{
+  display:none!important;
+  background:none!important;
+}
+
+.checkout-page .game-hero::before{
+  top:250px!important;
+  bottom:0!important;
+  background:#050609!important;
+  z-index:1!important;
+}
+
+.checkout-page .game-hero-main{
+  background:transparent!important;
+}
+
+.checkout-page .game-hero-content{
+  background:transparent!important;
+}
+
+.checkout-page .game-hero-main > .game-hero-content{
+  background:transparent!important;
+}
+
+.checkout-page .game-hero-content::after{
+  top:250px!important;
+  height:1px!important;
+  background:rgba(255,255,255,.24)!important;
+  z-index:5!important;
+}
+
+.checkout-page .game-hero-benefits{
+  background:#050609!important;
+}
+
+@media(max-width:640px){
+  .checkout-page .game-hero::before{
+    top:233px!important;
+    bottom:0!important;
+  }
+
+  .checkout-page .game-hero-content::after{
+    top:233px!important;
+  }
+}
