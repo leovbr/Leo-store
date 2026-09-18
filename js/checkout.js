@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Load the latest checkout fixes without relying on cached HTML/CSS.
   const fixStyles = document.createElement("link");
   fixStyles.rel = "stylesheet";
-  fixStyles.href = "css/checkout-fixes.css?v=20260918-2";
+  fixStyles.href = "css/checkout-fixes.css?v=20260918-9";
   document.head.appendChild(fixStyles);
 
   const gameSelect = $("game");
