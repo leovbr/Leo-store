@@ -995,3 +995,75 @@
   vertical-align:-3px!important;
   margin-right:5px!important;
 }
+/* ===== ROBLOX PRE-ORDER INFORMATION — ROBLOX ONLY ===== */
+.checkout-page .roblox-preorder-modal[hidden]{display:none!important;}
+.checkout-page .roblox-preorder-modal{
+  position:fixed!important;
+  inset:0!important;
+  z-index:9999!important;
+  display:grid!important;
+  place-items:center!important;
+  padding:20px!important;
+}
+.checkout-page .roblox-preorder-backdrop{
+  position:absolute!important;
+  inset:0!important;
+  background:rgba(0,0,0,.78)!important;
+  backdrop-filter:blur(5px)!important;
+}
+.checkout-page .roblox-preorder-dialog{
+  position:relative!important;
+  width:min(100%,520px)!important;
+  max-height:min(90vh,720px)!important;
+  overflow:auto!important;
+  border:1px solid rgba(255,255,255,.12)!important;
+  border-radius:20px!important;
+  background:var(--card)!important;
+  box-shadow:0 24px 80px rgba(0,0,0,.45)!important;
+}
+.checkout-page .roblox-preorder-content{padding:24px!important;}
+.checkout-page .roblox-preorder-title{
+  font-size:18px!important;
+  font-weight:800!important;
+  margin-bottom:14px!important;
+}
+.checkout-page .roblox-preorder-heading{
+  font-size:14px!important;
+  font-weight:800!important;
+  margin-bottom:12px!important;
+}
+.checkout-page .roblox-preorder-body{
+  color:var(--text-muted)!important;
+  font-size:13px!important;
+  line-height:1.65!important;
+}
+.checkout-page .roblox-preorder-body ul{
+  margin:0!important;
+  padding-left:20px!important;
+}
+.checkout-page .roblox-preorder-body li{margin:6px 0!important;}
+.checkout-page .roblox-preorder-body .roblox-format{
+  margin-top:10px!important;
+  padding:10px 12px!important;
+  border-radius:10px!important;
+  background:rgba(255,255,255,.05)!important;
+  color:var(--text)!important;
+}
+.checkout-page .roblox-preorder-ok{
+  display:block!important;
+  min-width:100px!important;
+  margin:20px auto 0!important;
+  padding:10px 22px!important;
+  border:1px solid rgba(124,92,255,.45)!important;
+  border-radius:10px!important;
+  background:rgba(124,92,255,.18)!important;
+  color:#fff!important;
+  font-weight:800!important;
+  cursor:pointer!important;
+}
+.checkout-page.roblox-preorder-open{overflow:hidden!important;}
+@media(max-width:640px){
+  .checkout-page .roblox-preorder-content{padding:20px!important;}
+  .checkout-page .roblox-preorder-dialog{border-radius:16px!important;}
+}
+
