@@ -192,3 +192,124 @@
  .checkout-page .payment-category-va.open .payment-category-body{grid-template-columns:repeat(2,minmax(0,1fr))!important}
  .checkout-page .footer-social-row{gap:8px!important}
 }
+
+
+/* HARD OVERRIDE v20260918-10 */
+.checkout-page .checkout-layout{
+  display:flex!important;
+  flex-direction:column!important;
+  gap:18px!important;
+}
+.checkout-page .checkout-main{
+  order:1!important;
+  width:100%!important;
+  padding-bottom:150px!important;
+}
+.checkout-page .checkout-sidebar{
+  order:2!important;
+  width:100%!important;
+  position:fixed!important;
+  left:50%!important;
+  right:auto!important;
+  bottom:12px!important;
+  top:auto!important;
+  transform:translateX(-50%)!important;
+  z-index:9999!important;
+  width:min(720px,calc(100vw - 24px))!important;
+  max-width:720px!important;
+  margin:0!important;
+  align-self:auto!important;
+}
+.checkout-page .checkout-summary{
+  width:100%!important;
+  margin:0!important;
+  box-shadow:0 18px 55px rgba(0,0,0,.45)!important;
+}
+.checkout-page .checkout-summary-header{
+  padding:12px 16px 5px!important;
+}
+.checkout-page .checkout-summary-header h2{
+  margin:2px 0 0!important;
+  font-size:16px!important;
+}
+.checkout-page .checkout-summary .summary-row{
+  margin-top:6px!important;
+  padding:0 16px!important;
+  min-height:26px!important;
+  font-size:12px!important;
+}
+.checkout-page .checkout-summary .summary-divider{
+  margin:7px 16px 0!important;
+}
+.checkout-page .checkout-summary .summary-total{
+  margin:0 16px!important;
+  padding:9px 0!important;
+  font-size:13px!important;
+}
+.checkout-page #checkoutButton,.checkout-page .btn-checkout{
+  width:calc(100% - 32px)!important;
+  margin:0 16px 12px!important;
+  min-height:46px!important;
+}
+.checkout-page .payment-category-header{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  cursor:pointer!important;
+}
+.checkout-page .payment-category-body{
+  display:none!important;
+}
+.checkout-page .payment-category.open .payment-category-body{
+  display:grid!important;
+}
+.checkout-page .payment-category-qris.open .payment-category-body{
+  grid-template-columns:1fr!important;
+}
+.checkout-page .payment-category-ewallet.open .payment-category-body,
+.checkout-page .payment-category-va.open .payment-category-body{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+}
+.checkout-page .payment-category-header span:last-child{
+  transform:none!important;
+  transition:transform .2s ease!important;
+}
+.checkout-page .payment-category.open .payment-category-header span:last-child{
+  transform:rotate(180deg)!important;
+}
+.checkout-page .footer-social-column{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  text-align:center!important;
+}
+.checkout-page .footer-social-row{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  gap:8px!important;
+}
+.checkout-page .footer-social-row .social-link{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:max-content!important;
+  gap:7px!important;
+  margin:0!important;
+  padding:3px 5px!important;
+}
+@media(max-width:680px){
+  .checkout-page .checkout-main{padding-bottom:170px!important}
+  .checkout-page .checkout-sidebar{
+    bottom:8px!important;
+    width:calc(100vw - 16px)!important;
+  }
+  .checkout-page .checkout-summary-header{padding:10px 14px 4px!important}
+  .checkout-page .checkout-summary .summary-row{padding:0 14px!important}
+  .checkout-page .checkout-summary .summary-divider{margin:6px 14px 0!important}
+  .checkout-page .checkout-summary .summary-total{margin:0 14px!important;padding:8px 0!important}
+  .checkout-page #checkoutButton,.checkout-page .btn-checkout{
+    width:calc(100% - 28px)!important;
+    margin:0 14px 10px!important;
+  }
+}
