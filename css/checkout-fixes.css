@@ -910,3 +910,61 @@
     bottom:0!important;
   }
 }
+
+
+/* ===== ROBLOX VIA LOGIN ONLY =====
+   Scoped exclusively to #robloxLoginFields / Roblox info controls.
+*/
+.checkout-page #robloxLoginFields{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin-top:2px;
+}
+.checkout-page #robloxLoginFields[hidden]{display:none!important;}
+.checkout-page .roblox-login-field{margin:0;}
+.checkout-page .roblox-info-button{
+  width:28px;
+  height:28px;
+  flex:0 0 28px;
+  margin-left:auto;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:50%;
+  color:#fff;
+  background:rgba(255,255,255,.05);
+  font-weight:800;
+  cursor:pointer;
+}
+.checkout-page .roblox-info-button[hidden]{display:none!important;}
+.checkout-page .roblox-info-panel{
+  margin-top:12px;
+  padding:16px;
+  border:1px solid rgba(124,92,255,.24);
+  border-radius:14px;
+  background:rgba(124,92,255,.07);
+}
+.checkout-page .roblox-info-panel[hidden]{display:none!important;}
+.checkout-page .roblox-info-panel strong,
+.checkout-page .roblox-info-panel b{display:block;}
+.checkout-page .roblox-info-panel strong{font-size:12px;color:var(--text-muted);margin-bottom:5px;}
+.checkout-page .roblox-info-panel b{font-size:13px;}
+.checkout-page .roblox-info-panel p{margin:7px 0 12px;color:var(--text-muted);font-size:12px;line-height:1.5;}
+.checkout-page .roblox-info-panel button{
+  min-width:70px;
+  min-height:36px;
+  padding:0 14px;
+  border:1px solid rgba(124,92,255,.45);
+  border-radius:10px;
+  color:#fff;
+  background:rgba(124,92,255,.18);
+  font-weight:800;
+  cursor:pointer;
+}
+@media(max-width:640px){
+  .checkout-page #robloxLoginFields{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:8px;
+  }
+}
