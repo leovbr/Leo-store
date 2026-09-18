@@ -2227,3 +2227,85 @@ header {
   }
 
 }
+
+
+/* =========================================================
+   LEOOSTORE — SHOP GAME CARD ACTION + ANIMATION
+   ========================================================= */
+@keyframes shopCardReveal {
+  from { opacity: 0; transform: translateY(16px) scale(.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes shopButtonShine {
+  0% { transform: translateX(-120%); }
+  45%, 100% { transform: translateX(120%); }
+}
+@keyframes shopIconPulse {
+  0%, 100% { transform: scale(1) rotate(0); }
+  50% { transform: scale(1.12) rotate(-4deg); }
+}
+.shop-page .product-card {
+  position: relative;
+  animation: shopCardReveal .55s cubic-bezier(.22,1,.36,1) both;
+  will-change: transform, opacity;
+}
+.shop-page .product-card:nth-child(1){animation-delay:.03s}
+.shop-page .product-card:nth-child(2){animation-delay:.08s}
+.shop-page .product-card:nth-child(3){animation-delay:.13s}
+.shop-page .product-card:nth-child(4){animation-delay:.18s}
+.shop-page .product-card:nth-child(5){animation-delay:.23s}
+.shop-page .product-card:nth-child(6){animation-delay:.28s}
+.shop-page .product-card:nth-child(7){animation-delay:.33s}
+.shop-page .product-card:nth-child(8){animation-delay:.38s}
+.shop-page .product-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(124,92,255,.38);
+  box-shadow: 0 18px 42px rgba(0,0,0,.30),0 0 0 1px rgba(124,92,255,.08);
+}
+.shop-page .product-image-wrap { position:relative; }
+.shop-page .product-image-wrap::after {
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(115deg,transparent 20%,rgba(255,255,255,.09) 45%,transparent 70%);
+  transform:translateX(-120%); transition:transform .7s ease;
+}
+.shop-page .product-card:hover .product-image-wrap::after { transform:translateX(120%); }
+.shop-page .product-btn {
+  position:relative; isolation:isolate; overflow:hidden;
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  min-height:42px; padding:0 12px;
+  color:#fff; background:var(--primary);
+  border:1px solid rgba(255,255,255,.08); border-radius:11px;
+  font-size:12px; font-weight:800; line-height:1;
+  box-shadow:0 8px 22px rgba(124,92,255,.18);
+  transition:transform .2s ease,background .2s ease,box-shadow .2s ease;
+}
+.shop-page .product-btn::before {
+  content:""; position:absolute; inset:0 auto 0 0; width:38%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);
+  transform:translateX(-120%); animation:shopButtonShine 3.2s ease-in-out infinite;
+  pointer-events:none; z-index:-1;
+}
+.shop-page .product-btn:hover {
+  background:var(--primary-hover); transform:translateY(-2px);
+  box-shadow:0 12px 28px rgba(124,92,255,.30);
+}
+.shop-page .product-btn:active { transform:translateY(0) scale(.985); }
+.shop-page .product-btn-icon {
+  display:inline-flex; align-items:center; justify-content:center; flex:0 0 auto;
+  font-size:14px; line-height:1; animation:shopIconPulse 2s ease-in-out infinite;
+}
+.shop-page .product-btn-text { min-width:0; white-space:nowrap; }
+.shop-page .product-btn-arrow {
+  display:inline-flex; align-items:center; justify-content:center; flex:0 0 auto;
+  font-size:17px; line-height:1; transition:transform .2s ease;
+}
+.shop-page .product-btn:hover .product-btn-arrow { transform:translateX(4px); }
+@media(max-width:680px){
+  .shop-page .product-btn { min-height:38px; padding:0 8px; gap:5px; border-radius:10px; font-size:10px; }
+  .shop-page .product-btn-icon { font-size:12px; }
+  .shop-page .product-btn-arrow { font-size:15px; }
+}
+@media(prefers-reduced-motion:reduce){
+  .shop-page .product-card,.shop-page .product-btn::before,.shop-page .product-btn-icon{animation:none!important}
+  .shop-page .product-card,.shop-page .product-btn,.shop-page .product-btn-arrow{transition:none!important}
+}
