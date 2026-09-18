@@ -854,8 +854,8 @@
    All existing logo/title/benefits sizing and positioning stay unchanged.
 */
 .checkout-page .game-hero{
-  height:390px!important;
-  min-height:390px!important;
+  height:360px!important;
+  min-height:360px!important;
   background:var(--card)!important;
   background-image:none!important;
   overflow:hidden!important;
@@ -892,8 +892,8 @@
 
 @media(max-width:640px){
   .checkout-page .game-hero{
-    height:360px!important;
-    min-height:360px!important;
+    height:340px!important;
+    min-height:340px!important;
   }
 
   .checkout-page .game-hero::after{
