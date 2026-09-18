@@ -169,8 +169,15 @@ document.addEventListener("DOMContentLoaded", () => {
         option.innerHTML = `
           <div class="denomination-main">
             <div class="denomination-copy">
-              <div class="denomination-title>${escapeHTML(item.amount)}</div>
+              <div class="denomination-title">${escapeHTML(item.amount)}</div>
               <div class="denomination-price-box"><span>${rupiah(item.price)}</span></div>
+            </div>
+          </div>
+          <div class="denomination-divider"></div>
+          <div class="denomination-delivery">
+            <div class="denomination-delivery-text">
+              <span class="delivery-icon" aria-hidden="true">⚡</span>
+              <span>Proses Cepat</span>
             </div>
           </div>`;
 
