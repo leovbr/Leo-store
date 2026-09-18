@@ -341,3 +341,10 @@
     padding:0 10px!important;
   }
 }
+
+
+/* FOOTER MUST FOLLOW CONTACT/SUMMARY — OVERRIDE GLOBAL FOOTER AUTO MARGIN */
+.checkout-page .site-footer.checkout-footer-inline{margin-top:0!important;}
+.checkout-page .site-footer.checkout-footer-inline .footer-inner{margin-top:0!important;}
+.checkout-page main{min-height:0!important;}
+.checkout-page .checkout-section{min-height:0!important;padding-bottom:0!important;}
