@@ -1,595 +1,343 @@
-/* LEOOSTORE CHECKOUT — FINAL OVERRIDES v20260918-5 */
-.checkout-page .checkout-benefits,.checkout-page .checkout-sidebar .summary-product,.checkout-page .checkout-sidebar .summary-secure,.checkout-page .checkout-sidebar .summary-row:has(#summaryAdminFee),.checkout-page .site-footer .footer-brand,.checkout-page .site-footer .footer-column:first-child{display:none!important}
-.checkout-page .checkout-sidebar{position:sticky!important;top:82px!important;align-self:flex-start!important;height:max-content!important;z-index:100!important;width:100%!important}
-.checkout-page .checkout-summary{margin:0!important;overflow:hidden!important}
-.checkout-page .checkout-summary .summary-row,.checkout-page .checkout-summary .summary-total{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:16px!important}
-.checkout-page .checkout-summary .summary-row{padding:0 20px!important;margin-top:14px!important}.checkout-page .checkout-summary .summary-divider{margin:14px 20px 0!important}.checkout-page .checkout-summary .summary-total{margin:0 20px!important;padding:16px 0!important}
-.checkout-page #checkoutButton,.checkout-page .btn-checkout{position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;transform:none!important;width:calc(100% - 40px)!important;min-height:56px!important;margin:0 20px 20px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;border-radius:15px!important;overflow:hidden!important}
-.checkout-page #checkoutButton:before,.checkout-page .btn-checkout:before{content:"";position:absolute;inset:0;transform:translateX(-120%);background:linear-gradient(110deg,transparent,rgba(255,255,255,.22),transparent);animation:checkoutShine 2.8s ease-in-out infinite;pointer-events:none}
-.checkout-page #checkoutButton span,.checkout-page .btn-checkout span{position:relative;z-index:1}@keyframes checkoutShine{0%,55%{transform:translateX(-120%)}75%,100%{transform:translateX(120%)}}
-.checkout-page .payment-category{margin-top:14px!important}.checkout-page .payment-category-header{cursor:pointer!important}.checkout-page .payment-category-body{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important}
-.checkout-page .payment-option-logo{display:flex!important;align-items:center!important;gap:11px!important;min-height:58px!important;padding:11px 13px!important;border:1px solid rgba(255,255,255,.08)!important;background:rgba(255,255,255,.035)!important;border-radius:13px!important;transition:transform .2s ease,border-color .2s ease,background .2s ease,box-shadow .2s ease!important}
-.checkout-page .payment-option-logo img{width:34px!important;height:34px!important;object-fit:contain!important;flex:0 0 34px!important;border-radius:8px!important;background:#fff!important;padding:4px!important}
-.checkout-page .payment-option-logo:hover{transform:translateY(-2px)!important;border-color:rgba(124,92,255,.55)!important;background:rgba(124,92,255,.08)!important}.checkout-page .payment-option-logo.selected,.checkout-page .payment-option-logo.active{border-color:rgba(124,92,255,.9)!important;background:rgba(124,92,255,.14)!important;box-shadow:0 0 0 2px rgba(124,92,255,.12)!important}
-.checkout-page .contact-fields{display:flex!important;flex-direction:column!important;gap:16px!important}.checkout-page .contact-fields .form-group{width:100%!important}
-.checkout-page .contact-fields input,.checkout-page .contact-fields select,.checkout-page .whatsapp-input input,.checkout-page .whatsapp-input select,.checkout-page .promo-form input{background:#171a23!important;color:#fff!important;border:1px solid rgba(255,255,255,.11)!important;box-shadow:none!important}
-.checkout-page .contact-fields input::placeholder,.checkout-page .whatsapp-input input::placeholder,.checkout-page .promo-form input::placeholder{color:rgba(255,255,255,.42)!important}
-.checkout-page .contact-fields input:focus,.checkout-page .whatsapp-input input:focus,.checkout-page .whatsapp-input select:focus,.checkout-page .promo-form input:focus{background:#1b1f2a!important;color:#fff!important;border-color:rgba(124,92,255,.85)!important;outline:none!important;box-shadow:0 0 0 3px rgba(124,92,255,.12)!important}
-.checkout-page .site-footer .footer-links{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:28px!important}.checkout-page .site-footer .footer-column:nth-child(2) a{display:flex!important;align-items:center!important;gap:10px!important}
-.checkout-page .site-footer .social-link img{width:19px!important;height:19px!important;object-fit:contain!important;filter:brightness(0) invert(1)!important;opacity:.9!important}.checkout-page .site-footer .footer-column:nth-child(1) a:last-child span{margin-left:4px!important;opacity:.6!important;font-size:11px!important}
-.checkout-page .footer-bottom{display:flex!important;justify-content:center!important;align-items:center!important;gap:5px!important;flex-wrap:wrap!important}.checkout-page .footer-bottom strong{letter-spacing:.12em!important}
-@media(max-width:680px){.checkout-page .checkout-sidebar{top:70px!important}.checkout-page .payment-category-body{grid-template-columns:1fr!important}.checkout-page .site-footer .footer-links{grid-template-columns:1fr 1fr!important;gap:20px!important}}
-@media(max-width:390px){.checkout-page .site-footer .footer-links{grid-template-columns:1fr!important}}
+/* LEOOSTORE CHECKOUT — CLEAN OVERRIDES
+   Rebuilt 2026-09-18 to remove conflicting legacy layout rules.
+*/
 
-/* FINAL CHECKOUT POLISH v20260918-6 */
-.checkout-page .payment-category-body{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-.checkout-page .payment-option-logo{min-width:0!important;overflow:hidden!important}
-.checkout-page .payment-option-logo span{min-width:0!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}
-.checkout-page .contact-fields input:-webkit-autofill,.checkout-page .contact-fields input:-webkit-autofill:hover,.checkout-page .contact-fields input:-webkit-autofill:focus,.checkout-page .contact-fields input:-webkit-autofill:active,.checkout-page .whatsapp-input input:-webkit-autofill,.checkout-page .whatsapp-input input:-webkit-autofill:hover,.checkout-page .whatsapp-input input:-webkit-autofill:focus,.checkout-page .whatsapp-input input:-webkit-autofill:active{ -webkit-text-fill-color:#fff!important; -webkit-box-shadow:0 0 0 1000px #171a23 inset!important; box-shadow:0 0 0 1000px #171a23 inset!important; caret-color:#fff!important; transition:background-color 9999s ease-out 0s!important }
-.checkout-page .checkout-sidebar{position:sticky!important;top:82px!important;align-self:start!important}
-.checkout-page .site-footer{overflow:hidden!important}
-.checkout-page .site-footer .footer-links{width:min(100%,720px)!important;margin:0 auto!important;padding:0 20px!important;box-sizing:border-box!important}
-.checkout-page .site-footer .footer-column:nth-child(2){min-width:0!important}
-.checkout-page .site-footer .footer-column:nth-child(2) a{display:grid!important;grid-template-columns:20px auto minmax(0,1fr)!important;align-items:center!important;column-gap:9px!important;width:100%!important;min-width:0!important}
-.checkout-page .site-footer .footer-column:nth-child(2) a small{justify-self:end!important;min-width:0!important;white-space:nowrap!important;color:rgba(255,255,255,.55)!important;font-size:10px!important}
-.checkout-page .footer-bottom{width:100%!important;box-sizing:border-box!important;padding:14px 18px!important;text-align:center!important;line-height:1.5!important}
-@media(max-width:680px){
- .checkout-page .payment-category-body{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
- .checkout-page .payment-option-logo{min-height:54px!important;padding:9px!important;gap:8px!important}
- .checkout-page .payment-option-logo img{width:30px!important;height:30px!important;flex-basis:30px!important}
- .checkout-page .payment-option-logo span{font-size:10px!important}
- .checkout-page .checkout-layout{display:flex!important;flex-direction:column!important}
- .checkout-page .checkout-sidebar{order:-1!important;width:100%!important;position:sticky!important;top:70px!important;z-index:100!important}
- .checkout-page .site-footer .footer-links{width:100%!important;padding:0 24px!important;gap:18px!important}
-}
-@media(max-width:390px){
- .checkout-page .site-footer .footer-links{padding:0 20px!important}
- .checkout-page .site-footer .footer-column:nth-child(2) a{grid-template-columns:19px minmax(0,1fr)!important}
- .checkout-page .site-footer .footer-column:nth-child(2) a small{grid-column:2!important;justify-self:start!important;margin-top:-2px!important}
+/* ===== CHECKOUT FLOW ===== */
+.checkout-page .checkout-section{
+  padding-bottom:0!important;
+  margin-bottom:0!important;
 }
 
-
-/* CHECKOUT SUMMARY POSITION FINAL v20260918-7 */
-.checkout-page .checkout-layout{display:grid!important;grid-template-columns:minmax(0,1.55fr) minmax(320px,.75fr)!important;align-items:start!important}
-.checkout-page .checkout-sidebar{order:initial!important;position:sticky!important;top:82px!important;align-self:start!important}
-.checkout-page .checkout-summary-header{padding:18px 20px 14px!important}
-.checkout-page .checkout-summary-header .eyebrow{display:block!important;margin-bottom:4px!important}
-.checkout-page .checkout-summary-header h2{margin:0!important;font-size:18px!important}
-.checkout-page .checkout-summary .summary-row{margin-top:12px!important;padding:0 20px!important}
-.checkout-page .checkout-summary .summary-divider{margin:14px 20px 0!important}
-.checkout-page .checkout-summary .summary-total{margin:0 20px!important;padding:15px 0!important;align-items:flex-end!important}
-.checkout-page .checkout-summary .summary-total span{max-width:50%!important;line-height:1.3!important}
-.checkout-page .checkout-summary .summary-total strong{font-size:18px!important;white-space:nowrap!important}
-.checkout-page #checkoutButton,.checkout-page .btn-checkout{margin:0 20px 20px!important;width:calc(100% - 40px)!important;min-height:52px!important;justify-content:center!important;gap:7px!important}
-.checkout-page #checkoutButton span:first-child,.checkout-page .btn-checkout span:first-child{white-space:nowrap!important}
-@media(max-width:680px){
- .checkout-page .checkout-layout{display:flex!important;flex-direction:column!important;gap:12px!important}
- .checkout-page .checkout-sidebar{order:initial!important;position:static!important;width:100%!important;z-index:auto!important}
- .checkout-page .checkout-main{order:2!important;width:100%!important}
- .checkout-page .checkout-sidebar{order:3!important}
-}
-
-
-/* FINAL SUMMARY + SOCIAL LAYOUT v20260918-7 */
-.checkout-page .checkout-layout{align-items:start!important}
-.checkout-page .checkout-sidebar{position:sticky!important;top:82px!important;align-self:start!important}
-.checkout-page .checkout-summary{display:flex!important;flex-direction:column!important}
-.checkout-page .checkout-summary .btn-checkout{order:10!important}
-.checkout-page .checkout-summary-header{order:1!important}
-.checkout-page .summary-product{order:2!important}
-.checkout-page .summary-list{order:3!important}
-.checkout-page .summary-total{order:4!important}
-.checkout-page .summary-secure{order:5!important}
-.checkout-page .btn-checkout{order:6!important}
-.checkout-page .checkout-page{} 
-.checkout-page .site-footer .footer-column:nth-child(2) .social-link{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;width:auto!important;margin:0!important;padding:5px 7px!important}
-.checkout-page .site-footer .footer-column:nth-child(2) .social-link img{width:15px!important;height:15px!important;flex:0 0 15px!important}
-.checkout-page .site-footer .footer-column:nth-child(2) .social-link span{font-size:10px!important;line-height:1!important}
-.checkout-page .site-footer .footer-column:nth-child(2) .social-link small{font-size:8px!important;line-height:1!important;color:rgba(255,255,255,.48)!important;white-space:nowrap!important}
-.checkout-page .site-footer .footer-column:nth-child(2){display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:8px!important}
-@media(max-width:680px){
- .checkout-page .checkout-layout{display:flex!important;flex-direction:column!important}
- .checkout-page .checkout-sidebar{order:initial!important;position:static!important;width:100%!important}
- .checkout-page .checkout-main{order:2!important}
- .checkout-page .checkout-sidebar{order:3!important}
- .checkout-page .site-footer .footer-column:nth-child(2){gap:6px!important;justify-content:center!important}
- .checkout-page .site-footer .footer-column:nth-child(2) .social-link{padding:4px 5px!important;gap:5px!important}
- .checkout-page .site-footer .footer-column:nth-child(2) .social-link img{width:13px!important;height:13px!important;flex-basis:13px!important}
- .checkout-page .site-footer .footer-column:nth-child(2) .social-link span{font-size:9px!important}
- .checkout-page .site-footer .footer-column:nth-child(2) .social-link small{font-size:7px!important}
-}
-
-
-/* FINAL PAYMENT GROUPS + SUMMARY + FOOTER v20260918-8 */
-.checkout-page .payment-category-qris .payment-category-body{grid-template-columns:1fr!important}
-.checkout-page .payment-category-ewallet .payment-category-body,
-.checkout-page .payment-category-va .payment-category-body{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-.checkout-page .payment-category{margin-top:16px!important}
-.checkout-page .payment-category:first-child{margin-top:0!important}
-.checkout-page .payment-category-qris .payment-option-logo{max-width:100%!important}
-.checkout-page .checkout-sidebar{position:static!important;top:auto!important;align-self:start!important}
-.checkout-page .checkout-summary{display:block!important}
-.checkout-page .checkout-summary-header{padding:18px 20px 10px!important}
-.checkout-page .checkout-summary-header h2{margin:0!important}
-.checkout-page .checkout-summary .summary-row{display:flex!important;justify-content:space-between!important;align-items:center!important;padding:0 20px!important;margin:0!important;min-height:38px!important}
-.checkout-page .checkout-summary .summary-divider{display:none!important}
-.checkout-page .checkout-summary .summary-total{display:flex!important;justify-content:space-between!important;align-items:center!important;margin:0 20px!important;padding:10px 0 16px!important}
-.checkout-page .checkout-summary .summary-total span{max-width:none!important}
-.checkout-page .checkout-summary .summary-total strong{font-size:18px!important}
-.checkout-page #checkoutButton,.checkout-page .btn-checkout{margin:0 20px 20px!important;width:calc(100% - 40px)!important;min-height:52px!important;justify-content:space-between!important;gap:0!important}
-.checkout-page .footer-brand-column{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:12px!important}
-.checkout-page .footer-brand-link{display:inline-flex!important;align-items:center!important;gap:9px!important;color:inherit!important;text-decoration:none!important}
-.checkout-page .footer-brand-link img{width:30px!important;height:30px!important;object-fit:contain!important;border-radius:8px!important}
-.checkout-page .footer-brand-link strong{font-size:14px!important;letter-spacing:.12em!important}
-.checkout-page .footer-nav{display:flex!important;align-items:center!important;gap:16px!important;flex-wrap:wrap!important}
-.checkout-page .footer-nav a{font-size:12px!important;text-decoration:none!important;white-space:nowrap!important}
-.checkout-page .footer-social-column{text-align:center!important}
-.checkout-page .footer-social-column h4{text-align:center!important;margin-bottom:10px!important}
-.checkout-page .footer-social-row{display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;flex-wrap:wrap!important}
-.checkout-page .footer-social-row .social-link{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:5px!important;width:auto!important;padding:5px 7px!important;margin:0!important}
-.checkout-page .footer-social-row .social-link img{width:14px!important;height:14px!important;flex:0 0 14px!important}
-.checkout-page .footer-social-row .social-link span{font-size:9px!important;line-height:1!important}
-.checkout-page .footer-social-row .social-link small{font-size:7px!important;line-height:1!important;white-space:nowrap!important;color:rgba(255,255,255,.48)!important}
-@media(max-width:680px){
- .checkout-page .payment-category-ewallet .payment-category-body,
- .checkout-page .payment-category-va .payment-category-body{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
- .checkout-page .payment-option-logo{min-height:54px!important;padding:9px!important;gap:8px!important}
- .checkout-page .payment-option-logo img{width:30px!important;height:30px!important;flex-basis:30px!important}
- .checkout-page .payment-option-logo span{font-size:10px!important}
- .checkout-page .checkout-summary-header{padding:16px 16px 8px!important}
- .checkout-page .checkout-summary .summary-row{padding:0 16px!important;min-height:36px!important}
- .checkout-page .checkout-summary .summary-total{margin:0 16px!important;padding:8px 0 14px!important}
- .checkout-page #checkoutButton,.checkout-page .btn-checkout{width:calc(100% - 32px)!important;margin:0 16px 16px!important}
- .checkout-page .footer-links{grid-template-columns:1fr!important;gap:22px!important}
- .checkout-page .footer-brand-column{align-items:center!important;text-align:center!important}
- .checkout-page .footer-nav{justify-content:center!important;gap:14px!important}
- .checkout-page .footer-social-column{width:100%!important}
-}
-@media(max-width:390px){
- .checkout-page .payment-category-ewallet .payment-category-body,
- .checkout-page .payment-category-va .payment-category-body{grid-template-columns:repeat(2,minmax(0,1fr))!important}
- .checkout-page .footer-nav{gap:10px!important}
- .checkout-page .footer-social-row{gap:5px!important}
- .checkout-page .footer-social-row .social-link{padding:4px 5px!important}
-}
-
-
-/* FINAL FUNCTIONAL PAYMENT TOGGLES + BELOW STICKY SUMMARY v20260918-9 */
-.checkout-page .payment-category-header{display:flex!important;align-items:center!important;justify-content:space-between!important;user-select:none!important}
-.checkout-page .payment-category:not(.open) .payment-category-body{display:none!important}
-.checkout-page .payment-category.open .payment-category-body{display:grid!important}
-.checkout-page .payment-category-qris.open .payment-category-body{grid-template-columns:1fr!important}
-.checkout-page .payment-category-ewallet.open .payment-category-body,
-.checkout-page .payment-category-va.open .payment-category-body{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-.checkout-page .payment-category-header span:last-child{transition:transform .2s ease!important}
-.checkout-page .payment-category.open .payment-category-header span:last-child{transform:rotate(180deg)!important}
-
-/* Summary stays physically below checkout content, then sticks while scrolling past it */
-.checkout-page .checkout-layout{display:flex!important;flex-direction:column!important;gap:18px!important}
-.checkout-page .checkout-main{order:1!important;width:100%!important}
-.checkout-page .checkout-sidebar{order:2!important;width:100%!important;position:sticky!important;top:82px!important;bottom:auto!important;align-self:stretch!important;z-index:50!important}
-.checkout-page .checkout-summary{width:100%!important}
-.checkout-page .checkout-summary .summary-row,
-.checkout-page .checkout-summary .summary-total{font-size:13px!important}
-.checkout-page .checkout-summary .summary-row strong,
-.checkout-page .checkout-summary .summary-total strong{font-size:14px!important}
-.checkout-page #checkoutButton,.checkout-page .btn-checkout{min-height:50px!important}
-
-/* Footer: centered brand/nav + social stack exactly like the requested layout */
-.checkout-page .footer-brand-column{align-items:center!important;text-align:center!important}
-.checkout-page .footer-brand-link{justify-content:center!important}
-.checkout-page .footer-nav{justify-content:center!important}
-.checkout-page .footer-social-column{display:flex!important;flex-direction:column!important;align-items:center!important;text-align:center!important}
-.checkout-page .footer-social-column h4{width:100%!important;text-align:center!important;margin:0 0 12px!important}
-.checkout-page .footer-social-row{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:9px!important;width:100%!important}
-.checkout-page .footer-social-row .social-link{display:flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;width:max-content!important;min-width:0!important;padding:3px 5px!important;margin:0!important}
-.checkout-page .footer-social-row .social-link img{width:15px!important;height:15px!important;flex:0 0 15px!important}
-.checkout-page .footer-social-row .social-link span{font-size:10px!important;line-height:1!important}
-.checkout-page .footer-social-row .social-link small{font-size:9px!important;line-height:1!important;white-space:nowrap!important;color:rgba(255,255,255,.5)!important}
-@media(max-width:680px){
- .checkout-page .checkout-sidebar{top:70px!important}
- .checkout-page .payment-category-ewallet.open .payment-category-body,
- .checkout-page .payment-category-va.open .payment-category-body{grid-template-columns:repeat(2,minmax(0,1fr))!important}
- .checkout-page .footer-social-row{gap:8px!important}
-}
-
-
-/* HARD OVERRIDE v20260918-10 */
 .checkout-page .checkout-layout{
   display:flex!important;
   flex-direction:column!important;
-  gap:18px!important;
+  align-items:stretch!important;
+  gap:16px!important;
+  width:100%!important;
+  margin-top:18px!important;
+  margin-bottom:0!important;
 }
+
 .checkout-page .checkout-main{
   order:1!important;
+  display:flex!important;
+  flex-direction:column!important;
   width:100%!important;
-  padding-bottom:150px!important;
+  min-width:0!important;
+  gap:14px!important;
+  padding:0!important;
+  margin:0!important;
 }
+
 .checkout-page .checkout-sidebar{
   order:2!important;
+  position:static!important;
+  inset:auto!important;
+  top:auto!important;
+  right:auto!important;
+  bottom:auto!important;
+  left:auto!important;
+  transform:none!important;
   width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  height:auto!important;
+  margin:0!important;
+  padding:0!important;
+  align-self:stretch!important;
+  z-index:auto!important;
+}
+
+.checkout-page .checkout-summary{
+  width:100%!important;
+  margin:0!important;
+  overflow:hidden!important;
+}
+
+/* Only the payment button follows the viewport while scrolling. */
+.checkout-page #checkoutButton,
+.checkout-page .btn-checkout{
   position:fixed!important;
   left:50%!important;
   right:auto!important;
   bottom:12px!important;
   top:auto!important;
   transform:translateX(-50%)!important;
-  z-index:9999!important;
   width:min(720px,calc(100vw - 24px))!important;
   max-width:720px!important;
+  min-height:56px!important;
   margin:0!important;
-  align-self:auto!important;
+  z-index:99999!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  border-radius:15px!important;
+  overflow:hidden!important;
 }
-.checkout-page .checkout-summary{
-  width:100%!important;
-  margin:0!important;
-  box-shadow:0 18px 55px rgba(0,0,0,.45)!important;
+
+.checkout-page #checkoutButton:before,
+.checkout-page .btn-checkout:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  transform:translateX(-120%);
+  background:linear-gradient(110deg,transparent,rgba(255,255,255,.22),transparent);
+  animation:checkoutShine 2.8s ease-in-out infinite;
+  pointer-events:none;
 }
-.checkout-page .checkout-summary-header{
-  padding:12px 16px 5px!important;
+
+.checkout-page #checkoutButton span,
+.checkout-page .btn-checkout span{
+  position:relative;
+  z-index:1;
 }
-.checkout-page .checkout-summary-header h2{
-  margin:2px 0 0!important;
-  font-size:16px!important;
+
+@keyframes checkoutShine{
+  0%,55%{transform:translateX(-120%)}
+  75%,100%{transform:translateX(120%)}
 }
+
+/* ===== SUMMARY ===== */
+.checkout-page .checkout-summary-header{padding:12px 16px 5px!important}
+.checkout-page .checkout-summary-header h2{margin:2px 0 0!important;font-size:16px!important}
 .checkout-page .checkout-summary .summary-row{
-  margin-top:6px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:16px!important;
   padding:0 16px!important;
+  margin-top:6px!important;
   min-height:26px!important;
-  font-size:12px!important;
 }
-.checkout-page .checkout-summary .summary-divider{
-  margin:7px 16px 0!important;
-}
+.checkout-page .checkout-summary .summary-divider{margin:7px 16px 0!important}
 .checkout-page .checkout-summary .summary-total{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:16px!important;
   margin:0 16px!important;
-  padding:9px 0!important;
-  font-size:13px!important;
+  padding:12px 0!important;
 }
-.checkout-page #checkoutButton,.checkout-page .btn-checkout{
-  width:calc(100% - 32px)!important;
-  margin:0 16px 12px!important;
-  min-height:46px!important;
+
+/* Reserve only enough document space for the fixed payment button. */
+.checkout-page .checkout-summary{
+  padding-bottom:76px!important;
 }
+
+/* ===== PAYMENT ACCORDION ===== */
+.checkout-page .payment-category{
+  margin-top:14px!important;
+}
+
 .checkout-page .payment-category-header{
   display:flex!important;
   align-items:center!important;
   justify-content:space-between!important;
   cursor:pointer!important;
 }
+
 .checkout-page .payment-category-body{
   display:none!important;
 }
+
 .checkout-page .payment-category.open .payment-category-body{
   display:grid!important;
+  gap:10px!important;
 }
+
 .checkout-page .payment-category-qris.open .payment-category-body{
   grid-template-columns:1fr!important;
 }
+
 .checkout-page .payment-category-ewallet.open .payment-category-body,
 .checkout-page .payment-category-va.open .payment-category-body{
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
 }
-.checkout-page .payment-category-header span:last-child{
-  transform:none!important;
-  transition:transform .2s ease!important;
+
+.checkout-page .payment-option-logo{
+  display:flex!important;
+  align-items:center!important;
+  gap:11px!important;
+  min-width:0!important;
+  min-height:58px!important;
+  padding:11px 13px!important;
+  overflow:hidden!important;
+  border:1px solid rgba(255,255,255,.08)!important;
+  background:rgba(255,255,255,.035)!important;
+  border-radius:13px!important;
+  transition:transform .2s ease,border-color .2s ease,background .2s ease,box-shadow .2s ease!important;
 }
-.checkout-page .payment-category.open .payment-category-header span:last-child{
-  transform:rotate(180deg)!important;
+
+.checkout-page .payment-option-logo img{
+  width:34px!important;
+  height:34px!important;
+  flex:0 0 34px!important;
+  object-fit:contain!important;
+  border-radius:8px!important;
+  background:#fff!important;
+  padding:4px!important;
 }
-.checkout-page .footer-social-column{
+
+.checkout-page .payment-option-logo span{
+  min-width:0!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+
+.checkout-page .payment-option-logo.selected,
+.checkout-page .payment-option-logo.active{
+  border-color:rgba(124,92,255,.9)!important;
+  background:rgba(124,92,255,.14)!important;
+  box-shadow:0 0 0 2px rgba(124,92,255,.12)!important;
+}
+
+/* ===== CONTACT ===== */
+.checkout-page .contact-fields{
   display:flex!important;
   flex-direction:column!important;
-  align-items:center!important;
-  text-align:center!important;
+  gap:16px!important;
 }
-.checkout-page .footer-social-row{
-  display:flex!important;
-  flex-direction:column!important;
-  align-items:center!important;
-  gap:8px!important;
+
+.checkout-page .contact-fields .form-group{width:100%!important}
+
+.checkout-page .contact-fields input,
+.checkout-page .contact-fields select,
+.checkout-page .whatsapp-input input,
+.checkout-page .whatsapp-input select,
+.checkout-page .promo-form input{
+  background:#171a23!important;
+  color:#fff!important;
+  border:1px solid rgba(255,255,255,.11)!important;
+  box-shadow:none!important;
 }
-.checkout-page .footer-social-row .social-link{
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  width:max-content!important;
-  gap:7px!important;
+
+.checkout-page .contact-fields input::placeholder,
+.checkout-page .whatsapp-input input::placeholder,
+.checkout-page .promo-form input::placeholder{
+  color:rgba(255,255,255,.42)!important;
+}
+
+/* ===== FOOTER — DIRECTLY AFTER SUMMARY ===== */
+.checkout-page .site-footer.checkout-footer-inline{
+  display:block!important;
+  width:100%!important;
   margin:0!important;
-  padding:3px 5px!important;
-}
-@media(max-width:680px){
-  .checkout-page .checkout-main{padding-bottom:170px!important}
-  .checkout-page .checkout-sidebar{
-    bottom:8px!important;
-    width:calc(100vw - 16px)!important;
-  }
-  .checkout-page .checkout-summary-header{padding:10px 14px 4px!important}
-  .checkout-page .checkout-summary .summary-row{padding:0 14px!important}
-  .checkout-page .checkout-summary .summary-divider{margin:6px 14px 0!important}
-  .checkout-page .checkout-summary .summary-total{margin:0 14px!important;padding:8px 0!important}
-  .checkout-page #checkoutButton,.checkout-page .btn-checkout{
-    width:calc(100% - 28px)!important;
-    margin:0 14px 10px!important;
-  }
+  padding:0 0 20px!important;
+  position:static!important;
+  clear:both!important;
+  overflow:hidden!important;
 }
 
-
-/* SOCIAL ORDER + VISIBILITY v20260918-11 */
-.checkout-page .footer-social-row .social-link:nth-child(3){order:1!important}
-.checkout-page .footer-social-row .social-link:nth-child(1){order:2!important}
-.checkout-page .footer-social-row .social-link:nth-child(2){order:3!important}
-.checkout-page .site-footer{padding-bottom:210px!important}
-@media(max-width:680px){
-  .checkout-page .site-footer{padding-bottom:210px!important}
-  .checkout-page .footer-social-row{gap:9px!important}
-}
-
-
-/* FOOTER STACK FIX v20260918-12 */
-.checkout-page .footer-social-row{
-  display:flex!important;
-  flex-direction:column!important;
-  align-items:center!important;
-  justify-content:flex-start!important;
-  gap:8px!important;
-}
-.checkout-page .footer-social-row .social-link{
-  order:initial!important;
-}
-.checkout-page .footer-social-row .social-link[href*="wa.me"]{order:1!important}
-.checkout-page .footer-social-row .social-link[href="#"]{order:2!important}
-.checkout-page .footer-social-row .social-link:nth-child(2){order:3!important}
-.checkout-page .footer-bottom{
-  margin-top:10px!important;
-  padding:10px 18px!important;
-}
-@media(max-width:680px){
-  .checkout-page .footer-bottom{margin-top:8px!important;padding:10px 14px!important}
-}
-
-
-/* FOOTER STRUCTURE HARD FIX v20260918-13 */
-.checkout-page .footer-social-row .social-link.social-whatsapp{order:1!important}
-.checkout-page .footer-social-row .social-link.social-instagram{order:2!important}
-.checkout-page .footer-social-row .social-link.social-tiktok{order:3!important}
-.checkout-page .footer-social-copyright{
-  order:4!important;
-  display:block!important;
+.checkout-page .site-footer.checkout-footer-inline .footer-inner{
   width:100%!important;
-  margin-top:4px!important;
-  text-align:center!important;
-  font-size:10px!important;
-  line-height:1.5!important;
-  color:rgba(255,255,255,.6)!important;
+  display:block!important;
+  margin:0!important;
 }
 
-
-/* FOOTER FINAL CLEAN STRUCTURE v20260918-14 */
-.checkout-page .site-footer .footer-links{
+.checkout-page .site-footer.checkout-footer-inline .footer-links{
   display:block!important;
-  width:100%!important;
-  max-width:720px!important;
+  width:min(100%,720px)!important;
   margin:0 auto!important;
   padding:0 16px!important;
+  box-sizing:border-box!important;
 }
-.checkout-page .site-footer .footer-column:first-child{
+
+.checkout-page .site-footer.checkout-footer-inline .footer-brand-column{
   display:none!important;
 }
-.checkout-page .site-footer .footer-social-column{
+
+.checkout-page .site-footer.checkout-footer-inline .footer-social-column{
   display:flex!important;
   width:100%!important;
   flex-direction:column!important;
   align-items:center!important;
   justify-content:flex-start!important;
+  margin:0!important;
+  padding:0!important;
   text-align:center!important;
 }
-.checkout-page .site-footer .footer-social-column h4{
-  display:block!important;
-  margin:0 0 12px!important;
+
+.checkout-page .site-footer.checkout-footer-inline .footer-social-column h4{
+  margin:0 0 6px!important;
+  padding:0!important;
 }
-.checkout-page .site-footer .footer-social-row{
+
+.checkout-page .site-footer.checkout-footer-inline .footer-social-row{
   display:flex!important;
   width:100%!important;
   flex-direction:column!important;
   align-items:center!important;
   justify-content:flex-start!important;
-  gap:9px!important;
+  gap:5px!important;
+  margin:0!important;
+  padding:0!important;
 }
-.checkout-page .site-footer .footer-social-row .social-link{
+
+.checkout-page .site-footer.checkout-footer-inline .social-link{
   display:flex!important;
-  order:initial!important;
   width:max-content!important;
   min-width:0!important;
   margin:0!important;
-  padding:4px 6px!important;
+  padding:2px 5px!important;
   align-items:center!important;
   justify-content:center!important;
   gap:7px!important;
 }
-.checkout-page .site-footer .footer-social-row .social-whatsapp{order:1!important}
-.checkout-page .site-footer .footer-social-row .social-instagram{order:2!important}
-.checkout-page .site-footer .footer-social-row .social-tiktok{order:3!important}
-.checkout-page .site-footer .footer-social-row .footer-social-copyright{
+
+.checkout-page .site-footer.checkout-footer-inline .social-link img{
+  width:19px!important;
+  height:19px!important;
+  object-fit:contain!important;
+  filter:brightness(0) invert(1)!important;
+  opacity:.9!important;
+}
+
+.checkout-page .site-footer.checkout-footer-inline .footer-social-copyright{
   display:block!important;
-  order:4!important;
   width:100%!important;
   margin:2px 0 0!important;
-  padding:4px 0!important;
+  padding:2px 0!important;
   text-align:center!important;
   font-size:10px!important;
   line-height:1.5!important;
   color:rgba(255,255,255,.58)!important;
 }
-.checkout-page .site-footer{
-  padding:28px 0 34px!important;
-}
-@media(max-width:680px){
-  .checkout-page .site-footer .footer-links{
-    padding:0 12px!important;
-  }
-  .checkout-page .site-footer .footer-social-row{
-    gap:8px!important;
-  }
-}
 
-
-/* FOOTER TIGHT POSITION v20260918-15 */
-.checkout-page .site-footer{
-  margin-top:0!important;
-  padding-top:8px!important;
-  padding-bottom:20px!important;
-}
-.checkout-page .site-footer .footer-links{
-  margin-top:0!important;
-}
-.checkout-page .site-footer .footer-social-column{
-  margin-top:0!important;
-}
-.checkout-page .site-footer .footer-social-column h4{
-  margin-top:0!important;
-  margin-bottom:6px!important;
-}
-.checkout-page .site-footer .footer-social-row{
-  gap:4px!important;
-}
-.checkout-page .site-footer .footer-social-row .social-link{
-  padding:2px 5px!important;
-}
-.checkout-page .site-footer .footer-social-row .footer-social-copyright{
-  margin-top:0!important;
-  padding-top:2px!important;
-}
-
-
-/* FOOTER MOVE-UP — FIX ACTUAL OUTER GAP v20260918-16 */
-.checkout-page main{
-  margin-bottom:0!important;
-  padding-bottom:0!important;
-}
-.checkout-page .checkout-section{
-  margin-bottom:0!important;
-  padding-bottom:0!important;
-}
-.checkout-page .checkout-section > .container{
-  margin-bottom:0!important;
-  padding-bottom:0!important;
-}
-.checkout-page .site-footer{
-  margin-top:-36px!important;
-  position:relative!important;
-  z-index:1!important;
-  padding-top:4px!important;
-}
-.checkout-page .site-footer .footer-links{
-  margin-top:0!important;
-}
-@media(max-width:680px){
-  .checkout-page .site-footer{
-    margin-top:-42px!important;
-    padding-top:2px!important;
-  }
-}
-
-
-/* CHECKOUT FOOTER DIRECTLY UNDER CONTACT CARD v20260918-17 */
-.checkout-page .site-footer.checkout-footer-inline{
-  margin-top:0!important;
-  padding:0 0 18px!important;
-}
-.checkout-page .checkout-section,
-.checkout-page .checkout-section > .container{
-  min-height:0!important;
-}
-.checkout-page .checkout-section > .container{
-  padding-bottom:0!important;
-}
-.checkout-page .site-footer.checkout-footer-inline .footer-links{
-  padding-top:0!important;
-}
-.checkout-page .site-footer.checkout-footer-inline .footer-social-column h4{
-  margin-top:0!important;
-  margin-bottom:5px!important;
-}
-
-
-/* ACTUAL GAP FIX — REMOVE CHECKOUT MAIN BOTTOM RESERVE v20260918-18 */
-.checkout-page .checkout-main{
-  padding-bottom:0!important;
-  margin-bottom:0!important;
-}
-.checkout-page .checkout-layout{
-  margin-bottom:0!important;
-}
-.checkout-page .checkout-section > .container{
-  margin-bottom:0!important;
-}
-.checkout-page .site-footer.checkout-footer-inline{
-  margin-top:0!important;
-  clear:both!important;
-}
-@media(max-width:680px){
-  .checkout-page .checkout-main{
-    padding-bottom:0!important;
-  }
-}
-
-
-/* CHECKOUT FLOW FINAL — SUMMARY AFTER CONTACT, ONLY BUTTON FIXED v20260918-19 */
-.checkout-page .checkout-layout{
-  display:flex!important;
-  flex-direction:column!important;
-  gap:16px!important;
-}
-.checkout-page .checkout-main{
-  order:1!important;
-  width:100%!important;
-  padding:0!important;
-  margin:0!important;
-}
-.checkout-page .checkout-sidebar{
-  order:2!important;
-  position:static!important;
-  width:100%!important;
-  max-width:none!important;
-  margin:0!important;
-  padding:0!important;
-  transform:none!important;
-  top:auto!important;
-  bottom:auto!important;
-  left:auto!important;
-  right:auto!important;
-  z-index:auto!important;
-}
-.checkout-page .checkout-summary{
-  width:100%!important;
-  margin:0!important;
-}
-.checkout-page #checkoutButton,
-.checkout-page .btn-checkout{
-  position:fixed!important;
-  left:50%!important;
-  bottom:12px!important;
-  transform:translateX(-50%)!important;
-  width:min(720px,calc(100vw - 24px))!important;
-  max-width:720px!important;
-  margin:0!important;
-  z-index:99999!important;
-}
-.checkout-page .checkout-footer-inline{
-  margin-top:0!important;
-}
 @media(max-width:680px){
   .checkout-page .checkout-layout{
-    display:flex!important;
-    flex-direction:column!important;
     gap:12px!important;
   }
-  .checkout-page .checkout-main{
-    order:1!important;
-    padding:0!important;
+
+  .checkout-page .payment-category-ewallet.open .payment-category-body,
+  .checkout-page .payment-category-va.open .payment-category-body{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:8px!important;
   }
-  .checkout-page .checkout-sidebar{
-    order:2!important;
+
+  .checkout-page .payment-option-logo{
+    min-height:54px!important;
+    padding:9px!important;
+    gap:8px!important;
+  }
+
+  .checkout-page .payment-option-logo img{
+    width:30px!important;
+    height:30px!important;
+    flex-basis:30px!important;
+  }
+
+  .checkout-page .payment-option-logo span{
+    font-size:10px!important;
+  }
+
+  .checkout-page .site-footer.checkout-footer-inline .footer-links{
+    padding:0 12px!important;
+  }
+}
+
+@media(max-width:390px){
+  .checkout-page .site-footer.checkout-footer-inline .footer-links{
+    padding:0 10px!important;
   }
 }
