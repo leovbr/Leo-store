@@ -193,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="denomination-main">
             <div class="denomination-copy">
               <div class="denomination-title">${escapeHTML(item.amount)}</div>
-              <div class="denomination-price-box"><span>${rupiah(item.price)}</span></div>
+              <div class="denomination-price-box"><span>${item.logo ? `<img src="${escapeHTML(item.logo)}" alt="" class="denomination-logo">` : ""}${rupiah(item.price)}</span></div>
             </div>
           </div>
           <div class="denomination-divider"></div>
