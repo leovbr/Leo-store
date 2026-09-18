@@ -1067,3 +1067,97 @@
   .checkout-page .roblox-preorder-dialog{border-radius:16px!important;}
 }
 
+
+
+/* =========================================================
+   CHECKOUT SUMMARY — TARGET LOCK
+   ========================================================= */
+.checkout-page .checkout-summary-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.checkout-page .summary-toggle{
+  width:34px;
+  height:34px;
+  flex:0 0 34px;
+  display:grid;
+  place-items:center;
+  padding:0;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:var(--bg-soft);
+  color:var(--text);
+  font-size:18px;
+  font-weight:800;
+  cursor:pointer;
+}
+.checkout-page .summary-toggle[hidden]{display:none!important;}
+.checkout-page .summary-empty{
+  min-height:210px;
+  padding:28px 20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:16px;
+  text-align:center;
+}
+.checkout-page .summary-empty[hidden]{display:none!important;}
+.checkout-page .summary-empty-button{
+  min-height:44px;
+  padding:0 18px;
+  border:1px solid rgba(124,92,255,.8);
+  border-radius:12px;
+  background:linear-gradient(135deg,#7c5cff,#6947f2);
+  color:#fff;
+  font-weight:800;
+  cursor:pointer;
+}
+.checkout-page .summary-content[hidden]{display:none!important;}
+.checkout-page .summary-product-line{
+  margin:0 20px;
+  padding:16px 0 12px;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+.checkout-page .summary-product-line span{
+  font-size:15px;
+  font-weight:800;
+}
+.checkout-page .summary-product-line strong{
+  color:var(--text-muted);
+  font-size:12px;
+  line-height:1.45;
+}
+.checkout-page .summary-payment-row{
+  margin-top:13px!important;
+}
+.checkout-page .summary-content .btn-checkout{
+  margin-top:16px;
+}
+.checkout-page .checkout-summary:not(.expanded) .summary-content{
+  display:block;
+}
+.checkout-page .checkout-summary:not(.expanded) .summary-row,
+.checkout-page .checkout-summary:not(.expanded) .summary-total,
+.checkout-page .checkout-summary:not(.expanded) .summary-payment-row{
+  display:none;
+}
+.checkout-page .checkout-summary:not(.expanded) .summary-product-line{
+  padding-bottom:18px;
+}
+.checkout-page .checkout-summary:not(.expanded) .btn-checkout{
+  margin-top:0;
+}
+.checkout-page .btn-checkout:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+  pointer-events:none;
+}
+@media(max-width:680px){
+  .checkout-page .summary-empty{min-height:180px;}
+  .checkout-page .summary-product-line{margin-left:16px;margin-right:16px;}
+}
