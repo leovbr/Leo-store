@@ -968,3 +968,15 @@
     gap:8px;
   }
 }
+
+
+/* ===== ROBLOX ACCOUNT TARGET LOCK =====
+   The generic Player ID / Server grid is hidden only when Roblox mode asks for
+   the dedicated Username + Password fields. Other products are untouched.
+*/
+.checkout-page #standardAccountFields[hidden]{
+  display:none!important;
+}
+.checkout-page #robloxLoginFields[hidden]{
+  display:none!important;
+}
