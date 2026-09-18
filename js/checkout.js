@@ -10,12 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
     ? PRODUCTS
     : (Array.isArray(window.PRODUCTS) ? window.PRODUCTS : []);
 
-  // Load the latest checkout fixes without relying on cached HTML/CSS.
-  const fixStyles = document.createElement("link");
-  fixStyles.rel = "stylesheet";
-  fixStyles.href = "css/checkout-fixes.css?v=20260918-14";
-  document.head.appendChild(fixStyles);
-
   const gameSelect = $("game");
   const playerIdInput = $("playerId");
   const serverInput = $("server");
