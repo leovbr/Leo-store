@@ -613,3 +613,53 @@
   .checkout-page .denomination-topup-btn,
   .checkout-page .denomination-topup-arrow{transition:none!important}
 }
+
+
+/* ===== DENOMINATION — DIAMOND + BOTTOM FAST BADGE ===== */
+.checkout-page .denomination-divider{
+  position:relative!important;
+  z-index:1!important;
+  height:1px!important;
+  margin:9px 0 7px!important;
+  background:rgba(255,255,255,.08)!important;
+}
+.checkout-page .denomination-delivery{
+  position:relative!important;
+  z-index:1!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  width:100%!important;
+  min-height:18px!important;
+}
+.checkout-page .denomination-delivery-text{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:5px!important;
+  font-size:9px!important;
+  font-weight:700!important;
+  color:rgba(255,255,255,.62)!important;
+}
+.checkout-page .denomination-delivery-text .delivery-icon{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-size:11px!important;
+  line-height:1!important;
+  animation:denominationIconPulse 2s ease-in-out infinite!important;
+}
+.checkout-page .checkout-layout > .checkout-footer-inline{
+  position:relative!important;
+  z-index:2!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+.checkout-page .checkout-layout > .checkout-footer-inline .footer-social-column{
+  visibility:visible!important;
+  opacity:1!important;
+}
+@media(max-width:680px){
+  .checkout-page .denomination-divider{margin:7px 0 6px!important}
+  .checkout-page .denomination-delivery-text{font-size:8px!important}
+  .checkout-page .denomination-delivery-text .delivery-icon{font-size:10px!important}
+}
