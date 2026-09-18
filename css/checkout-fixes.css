@@ -20,3 +20,30 @@
 .checkout-page .footer-bottom{display:flex!important;justify-content:center!important;align-items:center!important;gap:5px!important;flex-wrap:wrap!important}.checkout-page .footer-bottom strong{letter-spacing:.12em!important}
 @media(max-width:680px){.checkout-page .checkout-sidebar{top:70px!important}.checkout-page .payment-category-body{grid-template-columns:1fr!important}.checkout-page .site-footer .footer-links{grid-template-columns:1fr 1fr!important;gap:20px!important}}
 @media(max-width:390px){.checkout-page .site-footer .footer-links{grid-template-columns:1fr!important}}
+
+/* FINAL CHECKOUT POLISH v20260918-6 */
+.checkout-page .payment-category-body{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+.checkout-page .payment-option-logo{min-width:0!important;overflow:hidden!important}
+.checkout-page .payment-option-logo span{min-width:0!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}
+.checkout-page .contact-fields input:-webkit-autofill,.checkout-page .contact-fields input:-webkit-autofill:hover,.checkout-page .contact-fields input:-webkit-autofill:focus,.checkout-page .contact-fields input:-webkit-autofill:active,.checkout-page .whatsapp-input input:-webkit-autofill,.checkout-page .whatsapp-input input:-webkit-autofill:hover,.checkout-page .whatsapp-input input:-webkit-autofill:focus,.checkout-page .whatsapp-input input:-webkit-autofill:active{ -webkit-text-fill-color:#fff!important; -webkit-box-shadow:0 0 0 1000px #171a23 inset!important; box-shadow:0 0 0 1000px #171a23 inset!important; caret-color:#fff!important; transition:background-color 9999s ease-out 0s!important }
+.checkout-page .checkout-sidebar{position:sticky!important;top:82px!important;align-self:start!important}
+.checkout-page .site-footer{overflow:hidden!important}
+.checkout-page .site-footer .footer-links{width:min(100%,720px)!important;margin:0 auto!important;padding:0 20px!important;box-sizing:border-box!important}
+.checkout-page .site-footer .footer-column:nth-child(2){min-width:0!important}
+.checkout-page .site-footer .footer-column:nth-child(2) a{display:grid!important;grid-template-columns:20px auto minmax(0,1fr)!important;align-items:center!important;column-gap:9px!important;width:100%!important;min-width:0!important}
+.checkout-page .site-footer .footer-column:nth-child(2) a small{justify-self:end!important;min-width:0!important;white-space:nowrap!important;color:rgba(255,255,255,.55)!important;font-size:10px!important}
+.checkout-page .footer-bottom{width:100%!important;box-sizing:border-box!important;padding:14px 18px!important;text-align:center!important;line-height:1.5!important}
+@media(max-width:680px){
+ .checkout-page .payment-category-body{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+ .checkout-page .payment-option-logo{min-height:54px!important;padding:9px!important;gap:8px!important}
+ .checkout-page .payment-option-logo img{width:30px!important;height:30px!important;flex-basis:30px!important}
+ .checkout-page .payment-option-logo span{font-size:10px!important}
+ .checkout-page .checkout-layout{display:flex!important;flex-direction:column!important}
+ .checkout-page .checkout-sidebar{order:-1!important;width:100%!important;position:sticky!important;top:70px!important;z-index:100!important}
+ .checkout-page .site-footer .footer-links{width:100%!important;padding:0 24px!important;gap:18px!important}
+}
+@media(max-width:390px){
+ .checkout-page .site-footer .footer-links{padding:0 20px!important}
+ .checkout-page .site-footer .footer-column:nth-child(2) a{grid-template-columns:19px minmax(0,1fr)!important}
+ .checkout-page .site-footer .footer-column:nth-child(2) a small{grid-column:2!important;justify-self:start!important;margin-top:-2px!important}
+}
