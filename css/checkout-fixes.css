@@ -30,7 +30,7 @@
 }
 
 .checkout-page .checkout-sidebar{
-  order:2!important;
+  order:3!important;
   position:static!important;
   inset:auto!important;
   top:auto!important;
@@ -97,6 +97,12 @@
   75%,100%{transform:translateX(120%)}
 }
 
+/* ===== FOOTER BETWEEN CONTACT AND SUMMARY ===== */
+.checkout-page .checkout-layout > .checkout-footer-inline{
+  order:2!important;
+  flex:0 0 auto!important;
+}
+
 /* ===== SUMMARY ===== */
 .checkout-page .checkout-summary-header{padding:12px 16px 5px!important}
 .checkout-page .checkout-summary-header h2{margin:2px 0 0!important;font-size:16px!important}
@@ -117,11 +123,6 @@
   gap:16px!important;
   margin:0 16px!important;
   padding:12px 0!important;
-}
-
-/* Reserve only enough document space for the fixed payment button. */
-.checkout-page .checkout-summary{
-  padding-bottom:76px!important;
 }
 
 /* ===== PAYMENT ACCORDION ===== */
@@ -348,3 +349,8 @@
 .checkout-page .site-footer.checkout-footer-inline .footer-inner{margin-top:0!important;}
 .checkout-page main{min-height:0!important;}
 .checkout-page .checkout-section{min-height:0!important;padding-bottom:0!important;}
+
+/* FINAL FLOW: CONTACT -> IKUTI KAMI -> RINGKASAN */
+.checkout-page .checkout-layout > .checkout-footer-inline{order:2!important;margin-top:0!important;margin-bottom:0!important;}
+.checkout-page .checkout-layout > .checkout-sidebar{order:3!important;}
+.checkout-page .checkout-summary{padding-bottom:0!important;}
