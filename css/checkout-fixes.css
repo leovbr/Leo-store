@@ -663,3 +663,13 @@
   .checkout-page .denomination-delivery-text{font-size:8px!important}
   .checkout-page .denomination-delivery-text .delivery-icon{font-size:10px!important}
 }
+
+
+/* ===== BOTTOM FAST BADGE — RIGHT ALIGNED ===== */
+.checkout-page .denomination-delivery{
+  justify-content:flex-end!important;
+}
+.checkout-page .denomination-delivery-text{
+  justify-content:flex-end!important;
+  text-align:right!important;
+}
