@@ -800,8 +800,8 @@
 }
 
 .checkout-page .game-hero-main{
-  height:390px!important;
-  min-height:390px!important;
+  height:360px!important;
+  min-height:360px!important;
   background:transparent!important;
 }
 
@@ -836,8 +836,8 @@
     min-height:360px!important;
   }
   .checkout-page .game-hero-main{
-    height:360px!important;
-    min-height:360px!important;
+    height:340px!important;
+    min-height:340px!important;
   }
   .checkout-page .game-hero::after{
     height:233px!important;
