@@ -386,12 +386,12 @@ const PRODUCTS = [
     publisher: "Level Infinite",
 
     denominations: [
-      { id: "pubg-60", amount: "60 UC", price: 15000, category: "UC" },
-      { id: "pubg-325", amount: "325 UC", price: 75000, category: "UC" },
-      { id: "pubg-660", amount: "660 UC", price: 145000, category: "UC" },
-      { id: "pubg-1800", amount: "1800 UC", price: 365000, category: "UC" },
-      { id: "pubg-3850", amount: "3850 UC", price: 720000, category: "UC" },
-      { id: "pubg-8100", amount: "8100 UC", price: 1450000, category: "UC" }
+      { id: "pubg-60", amount: "60 UC", shortAmount: "60 UC", name: "PUBG Mobile - 60 UC", price: 16999, category: "⚡ UC Global" },
+      { id: "pubg-325", amount: "325 (300+25) UC", shortAmount: "325 (300+25) UC", name: "PUBG Mobile - 325 (300+25) UC", price: 84999, category: "⚡ UC Global" },
+      { id: "pubg-660", amount: "660 (600+60) UC", shortAmount: "660 (600+60) UC", name: "PUBG Mobile - 660 (600+60) UC", price: 168999, category: "⚡ UC Global" },
+      { id: "pubg-1800", amount: "1800 (1500+300) UC", shortAmount: "1800 (1500+300) UC", name: "PUBG Mobile - 1800 (1500+300) UC", price: 422999, category: "⚡ UC Global" },
+      { id: "pubg-3850", amount: "3850 (3000+850) UC", shortAmount: "3850 (3000+850) UC", name: "PUBG Mobile - 3850 (3000+850) UC", price: 845999, category: "⚡ UC Global" },
+      { id: "pubg-8100", amount: "8100 (6000+2100) UC", shortAmount: "8100 (6000+2100) UC", name: "PUBG Mobile - 8100 (6000+2100) UC", price: 1691999, category: "⚡ UC Global" }
     ]
   }
 ];
