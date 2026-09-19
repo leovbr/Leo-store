@@ -1495,3 +1495,26 @@
     font-size:8px!important;
   }
 }
+
+
+/* =========================================================
+   SHOP CARDS — CLICK TARGET LOCK
+   Explicitly restore the anchor hit-area; visual layout unchanged.
+   ========================================================= */
+.shop-page .product-grid{
+  position:relative!important;
+  z-index:10!important;
+}
+.shop-page .product-card{
+  position:relative!important;
+  z-index:11!important;
+  display:block!important;
+  pointer-events:auto!important;
+  cursor:pointer!important;
+  text-decoration:none!important;
+  color:inherit!important;
+  -webkit-tap-highlight-color:transparent!important;
+}
+.shop-page .product-card *{
+  pointer-events:none!important;
+}
