@@ -2814,3 +2814,87 @@ body{
     height:1.7px!important;
   }
 }
+
+
+/* =========================================================
+   HOME — ALL GAMES ACTION BUTTON
+   Target lock: only center + button appearance/animation.
+   ========================================================= */
+.home-page .all-games-section .section-heading{
+  text-align:center!important;
+}
+
+.home-page .all-games-section .home-more-wrapper{
+  display:flex!important;
+  justify-content:center!important;
+  align-items:center!important;
+  width:100%!important;
+  margin-top:18px!important;
+}
+
+.home-page .all-games-section .home-more-link{
+  position:relative!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:9px!important;
+  min-height:44px!important;
+  padding:0 18px!important;
+  border:1px solid rgba(124,92,255,.8)!important;
+  border-radius:12px!important;
+  background:linear-gradient(135deg,#7c5cff,#6947f2)!important;
+  color:#fff!important;
+  font-size:13px!important;
+  font-weight:800!important;
+  text-decoration:none!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.20)!important;
+  transition:transform .2s ease,box-shadow .2s ease,filter .2s ease!important;
+  overflow:hidden!important;
+}
+
+.home-page .all-games-section .home-more-link::after{
+  content:""!important;
+  position:absolute!important;
+  top:0!important;
+  left:-120%!important;
+  width:55%!important;
+  height:100%!important;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent)!important;
+  transform:skewX(-18deg)!important;
+  animation:homeMoreShine 3s ease-in-out infinite!important;
+  pointer-events:none!important;
+}
+
+.home-page .all-games-section .home-more-link span{
+  display:inline-flex!important;
+  transition:transform .2s ease!important;
+}
+
+.home-page .all-games-section .home-more-link:hover{
+  transform:translateY(-2px)!important;
+  box-shadow:0 14px 32px rgba(0,0,0,.28)!important;
+  filter:brightness(1.06)!important;
+}
+
+.home-page .all-games-section .home-more-link:hover span{
+  transform:translateX(3px)!important;
+}
+
+@keyframes homeMoreShine{
+  0%,55%{left:-120%;}
+  75%,100%{left:140%;}
+}
+
+@media(max-width:600px){
+  .home-page .all-games-section .home-more-link{
+    min-height:42px!important;
+    padding:0 16px!important;
+    font-size:12px!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .home-page .all-games-section .home-more-link::after{
+    animation:none!important;
+  }
+}
