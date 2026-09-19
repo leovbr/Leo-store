@@ -1227,3 +1227,24 @@
 .checkout-page .denomination-divider {
   transform: translateY(6px) !important;
 }
+
+/* =========================================================
+   UNIVERSAL FOOTER — SOCIAL ONLY
+   Keep all page positions unchanged; remove legacy brand/nav.
+   ========================================================= */
+.site-footer.universal-social-footer .footer-brand-column,
+.site-footer.universal-social-footer .footer-brand-link,
+.site-footer.universal-social-footer .footer-nav{
+  display:none!important;
+}
+.site-footer.universal-social-footer .footer-social-column{
+  width:100%!important;
+  min-width:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  margin:0!important;
+  padding:0!important;
+  text-align:center!important;
+}
