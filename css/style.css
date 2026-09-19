@@ -2554,3 +2554,54 @@ body{
   background:rgba(15,23,42,.025)!important;
 }
 
+
+
+/* =========================================================
+   LEOOSTORE — GLOBAL NAVY THEME
+   TARGET LOCK — COLORS ONLY
+   ========================================================= */
+:root{
+  --bg:#07111f;
+  --bg-soft:#0b1728;
+  --card:#0f1d30;
+  --card-2:#13243a;
+  --card-hover:#172a43;
+  --border:rgba(148,163,184,.14);
+  --border-strong:rgba(148,163,184,.24);
+  --text:#f5f8ff;
+  --text-soft:#aebbd0;
+  --text-muted:#7f90a8;
+  --primary:#7c5cff;
+  --primary-hover:#9278ff;
+  --primary-soft:rgba(124,92,255,.14);
+  --shadow:0 18px 50px rgba(0,0,0,.28);
+}
+
+body{
+  color:var(--text)!important;
+  background:
+    radial-gradient(circle at 15% 0%,rgba(124,92,255,.10),transparent 30%),
+    radial-gradient(circle at 85% 15%,rgba(37,99,235,.08),transparent 28%),
+    var(--bg)!important;
+}
+
+.site-header,header{
+  background:rgba(7,17,31,.88)!important;
+  border-bottom-color:var(--border)!important;
+}
+
+.side-menu{
+  background:linear-gradient(180deg,#0f1d30 0%,#07111f 100%)!important;
+  border-left-color:var(--border-strong)!important;
+  box-shadow:-25px 0 70px rgba(0,0,0,.45)!important;
+}
+
+.search-panel{
+  background:rgba(7,17,31,.96)!important;
+  border-bottom-color:var(--border)!important;
+}
+
+.header-action,
+.currency-selector{
+  background:rgba(255,255,255,.035)!important;
+}
