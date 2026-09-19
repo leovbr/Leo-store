@@ -97,14 +97,15 @@ const PRODUCTS = [
 
     denominations: [
       { id: "rbl-user-40", amount: "40 Robux (Wajib 18+ & Aktif V2L)", price: 8500, category: "Robux", logo: "assets/icons/robux.webp" },
-      { id: "rbl-user-80", amount: "80 Robux (Wajib 18+ & Aktif V2L)", price: 17000, category: "Robux", logo: "assets/icons/robux.webp" },
+      { id: "rbl-user-80", amount: "80 Robux (Wajib 18+ & Aktif V2L)", price: 16000, category: "Robux", logo: "assets/icons/robux.webp" },
       { id: "rbl-user-160", amount: "160 Robux (Wajib 18+ & Aktif V2L)", price: 32000, category: "Robux", logo: "assets/icons/robux.webp" },
-      { id: "rbl-user-240", amount: "240 Robux (Wajib 18+ & Aktif V2L)", price: 46000, category: "Robux", logo: "assets/icons/robux.webp" },
-      { id: "rbl-user-400", amount: "400 Robux (Wajib 18+ & Aktif V2L)", price: 73000, category: "Robux", logo: "assets/icons/robux.webp" },
-      { id: "rbl-user-800", amount: "800 Robux (Wajib 18+ & Aktif V2L)", price: 140000, category: "Robux", logo: "assets/icons/robux.webp" },
-      { id: "rbl-user-1700", amount: "1700 Robux (Wajib 18+ & Aktif V2L)", price: 280000, category: "Robux", logo: "assets/icons/robux.webp" },
-      { id: "rbl-user-4500", amount: "4500 Robux (Wajib 18+ & Aktif V2L)", price: 700000, category: "Robux", logo: "assets/icons/robux.webp" },
-      { id: "rbl-user-10000", amount: "10000 Robux (Wajib 18+ & Aktif V2L)", price: 1500000, category: "Robux", logo: "assets/icons/robux.webp" }
+      { id: "rbl-user-240", amount: "240 Robux (Wajib 18+ & Aktif V2L)", price: 48000, category: "Robux", logo: "assets/icons/robux.webp" },
+      { id: "rbl-user-320", amount: "320 Robux (Wajib 18+ & Aktif V2L)", price: 64000, category: "Robux", logo: "assets/icons/robux.webp" },
+      { id: "rbl-user-400", amount: "400 Robux (Wajib 18+ & Aktif V2L)", price: 80000, category: "Robux", logo: "assets/icons/robux.webp" },
+      { id: "rbl-user-500", amount: "500 Robux (Wajib 18+ & Aktif V2L)", price: 85000, category: "Robux", logo: "assets/icons/robux.webp" },
+      { id: "rbl-user-1000", amount: "1000 Robux (Wajib 18+ & Aktif V2L)", price: 170000, category: "Robux", logo: "assets/icons/robux.webp" },
+      { id: "rbl-user-1500", amount: "1500 Robux (Wajib 18+ & Aktif V2L)", price: 255000, category: "Robux", logo: "assets/icons/robux.webp" },
+      { id: "rbl-user-2000", amount: "2000 Robux (Wajib 18+ & Aktif V2L)", price: 340000, category: "Robux", logo: "assets/icons/robux.webp" }
     ]
   },
 
