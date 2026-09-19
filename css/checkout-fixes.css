@@ -1220,3 +1220,16 @@
     font-size:10px!important;
   }
 }
+
+
+/* ===== CHECKOUT SUMMARY — STICKY ON SCROLL ONLY =====
+   Target lock: summary follows the viewport while scrolling.
+   No width, position-in-layout, size, or surrounding layout changes.
+*/
+@media(min-width:681px){
+  .checkout-page .checkout-sidebar{
+    position:sticky!important;
+    top:20px!important;
+    align-self:flex-start!important;
+  }
+}
