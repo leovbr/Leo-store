@@ -1220,3 +1220,10 @@
     font-size:10px!important;
   }
 }
+
+/* =========================================================
+   DENOMINATION DIVIDER — MOVE LINE DOWN ONLY
+   ========================================================= */
+.checkout-page .denomination-divider {
+  transform: translateY(6px) !important;
+}
