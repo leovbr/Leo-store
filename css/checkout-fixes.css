@@ -1251,7 +1251,7 @@
 
 
 /* =========================================================
-   SHOP.HTML — 4 GAME CARDS PER ROW / NO OVERFLOW
+   SHOP.HTML — 3 GAME CARDS PER ROW / NO OVERFLOW
    Target lock: shop cards only.
    ========================================================= */
 .shop-page .product-grid{
@@ -1297,7 +1297,7 @@
   .shop-page .product-grid{
     width:100%!important;
     max-width:100%!important;
-    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
     gap:5px!important;
   }
 
