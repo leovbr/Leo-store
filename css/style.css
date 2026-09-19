@@ -2605,3 +2605,17 @@ body{
 .currency-selector{
   background:rgba(255,255,255,.035)!important;
 }
+
+/* =========================================================
+   UNIVERSAL SOCIAL FOOTER — FINAL OVERRIDE
+   ========================================================= */
+.site-footer.universal-social-footer .footer-brand-column,
+.site-footer.universal-social-footer .footer-brand-link,
+.site-footer.universal-social-footer .footer-nav,
+.site-footer.universal-social-footer .footer-brand-line{
+  display:none!important;
+}
+.site-footer.universal-social-footer .footer-links{
+  display:block!important;
+  width:100%!important;
+}
