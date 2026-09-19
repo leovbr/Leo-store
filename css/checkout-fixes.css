@@ -1161,3 +1161,62 @@
   .checkout-page .summary-empty{min-height:180px;}
   .checkout-page .summary-product-line{margin-left:16px;margin-right:16px;}
 }
+
+/* ===== CHECKOUT SUMMARY — COMPACT SIZE ONLY =====
+   Target: RINGKASAN / Pesanan Kamu / empty state.
+   No position, width, grid, or surrounding layout changes.
+*/
+.checkout-page .checkout-summary-header{
+  min-height:54px!important;
+  padding:10px 16px!important;
+  gap:8px!important;
+}
+.checkout-page .checkout-summary-header .eyebrow{
+  font-size:9px!important;
+  line-height:1.1!important;
+  margin-bottom:3px!important;
+}
+.checkout-page .checkout-summary-header h2{
+  font-size:16px!important;
+  line-height:1.15!important;
+}
+.checkout-page .summary-toggle{
+  width:30px!important;
+  height:30px!important;
+  flex-basis:30px!important;
+  border-radius:8px!important;
+  font-size:15px!important;
+}
+.checkout-page .summary-empty{
+  min-height:145px!important;
+  padding:18px 14px!important;
+  gap:11px!important;
+  font-size:12px!important;
+  line-height:1.35!important;
+}
+.checkout-page .summary-empty-button{
+  min-height:36px!important;
+  padding:0 14px!important;
+  border-radius:9px!important;
+  font-size:11px!important;
+}
+@media(max-width:680px){
+  .checkout-page .checkout-summary-header{
+    min-height:50px!important;
+    padding:9px 14px!important;
+  }
+  .checkout-page .checkout-summary-header h2{
+    font-size:15px!important;
+  }
+  .checkout-page .summary-empty{
+    min-height:130px!important;
+    padding:16px 12px!important;
+    gap:10px!important;
+    font-size:11px!important;
+  }
+  .checkout-page .summary-empty-button{
+    min-height:34px!important;
+    padding:0 13px!important;
+    font-size:10px!important;
+  }
+}
