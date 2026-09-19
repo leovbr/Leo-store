@@ -2651,3 +2651,34 @@ body{
   }
   .cs-label{font-size:9px!important;}
 }
+
+
+/* =========================================================
+   HEADER — ADMIN / CUSTOMER SERVICE ICON
+   Target lock: icon only, preserve existing controls.
+   ========================================================= */
+.header-actions .cs-button{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-decoration:none!important;
+  color:inherit!important;
+  flex:0 0 auto!important;
+  cursor:pointer!important;
+}
+.cs-button .cs-icon{
+  width:17px!important;
+  height:17px!important;
+  fill:none!important;
+  stroke:currentColor!important;
+  stroke-width:1.9!important;
+  stroke-linecap:round!important;
+  stroke-linejoin:round!important;
+}
+.nav .cs-button{
+  margin-right:2px!important;
+  flex:0 0 auto!important;
+}
+@media(max-width:600px){
+  .cs-button .cs-icon{width:16px!important;height:16px!important;}
+}
