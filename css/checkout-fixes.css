@@ -1248,3 +1248,148 @@
   padding:0!important;
   text-align:center!important;
 }
+
+
+/* =========================================================
+   SHOP.HTML — 4 GAME CARDS PER ROW / NO OVERFLOW
+   Target lock: shop cards only.
+   ========================================================= */
+.shop-page .product-grid{
+  width:100%!important;
+  max-width:100%!important;
+  margin-inline:0!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:8px!important;
+  box-sizing:border-box!important;
+}
+
+.shop-page .product-card{
+  min-width:0!important;
+  width:100%!important;
+  box-sizing:border-box!important;
+}
+
+.shop-page .product-image-wrap{
+  width:100%!important;
+  aspect-ratio:1/1!important;
+}
+
+.shop-page .product-info{
+  min-width:0!important;
+  padding:8px!important;
+}
+
+.shop-page .product-info h3{
+  margin:0!important;
+  font-size:12px!important;
+  line-height:1.2!important;
+  overflow-wrap:anywhere!important;
+}
+
+.shop-page .product-info .product-publisher{
+  margin:3px 0 0!important;
+  font-size:9px!important;
+  line-height:1.2!important;
+  overflow-wrap:anywhere!important;
+}
+
+@media(max-width:680px){
+  .shop-page .product-grid{
+    width:100%!important;
+    max-width:100%!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    gap:5px!important;
+  }
+
+  .shop-page .product-info{
+    padding:6px 5px!important;
+  }
+
+  .shop-page .product-info h3{
+    font-size:9px!important;
+    line-height:1.15!important;
+  }
+
+  .shop-page .product-info .product-publisher{
+    font-size:7px!important;
+    line-height:1.15!important;
+  }
+}
+
+/* =========================================================
+   SHOP HEADER — CS ICON BARE + NAV FITS SCREEN
+   ========================================================= */
+.shop-page .site-header > .container > .cs-button{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:auto!important;
+  min-width:0!important;
+  height:auto!important;
+  min-height:0!important;
+  padding:1px!important;
+  margin:0 4px 0 6px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  color:var(--text-soft)!important;
+  flex:0 0 auto!important;
+}
+
+.shop-page .site-header > .container > .cs-button .cs-icon{
+  display:block!important;
+  width:20px!important;
+  height:20px!important;
+  fill:none!important;
+  stroke:currentColor!important;
+  stroke-width:1.9!important;
+  stroke-linecap:round!important;
+  stroke-linejoin:round!important;
+}
+
+.shop-page .site-header > .container > .nav{
+  min-width:0!important;
+  flex:1 1 auto!important;
+  display:flex!important;
+  justify-content:flex-end!important;
+  gap:0!important;
+}
+
+.shop-page .site-header > .container > .nav a{
+  min-width:0!important;
+  padding:8px 5px!important;
+  font-size:11px!important;
+  white-space:nowrap!important;
+}
+
+@media(max-width:680px){
+  .shop-page .site-header > .container{
+    width:calc(100% - 12px)!important;
+    max-width:none!important;
+  }
+
+  .shop-page .site-header > .container > .cs-button{
+    margin-left:3px!important;
+    margin-right:2px!important;
+  }
+
+  .shop-page .site-header > .container > .cs-button .cs-icon{
+    width:18px!important;
+    height:18px!important;
+  }
+
+  .shop-page .site-header > .container > .nav a{
+    padding:7px 3px!important;
+    font-size:9px!important;
+    letter-spacing:-.02em!important;
+  }
+}
+
+@media(max-width:380px){
+  .shop-page .site-header > .container > .nav a{
+    padding-left:2px!important;
+    padding-right:2px!important;
+    font-size:8px!important;
+  }
+}
