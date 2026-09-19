@@ -2651,3 +2651,48 @@ body{
   }
   .cs-label{font-size:9px!important;}
 }
+
+/* =========================================================
+   HEADER — ADMIN CS CUSTOMER SERVICE
+   Text + headset icon only; preserve existing header layout.
+   ========================================================= */
+.header-actions .cs-button{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:6px!important;
+  min-width:auto!important;
+  padding:0 10px!important;
+  text-decoration:none!important;
+  color:inherit!important;
+  flex:0 0 auto!important;
+}
+.header-actions .cs-button .cs-icon{
+  width:16px!important;
+  height:16px!important;
+  display:block!important;
+  flex:0 0 16px!important;
+  fill:none!important;
+  stroke:currentColor!important;
+  stroke-width:1.8!important;
+  stroke-linecap:round!important;
+  stroke-linejoin:round!important;
+}
+.cs-label{
+  font-size:10px!important;
+  font-weight:800!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+@media(max-width:680px){
+  .header-actions .cs-button{
+    gap:5px!important;
+    padding:0 8px!important;
+  }
+  .header-actions .cs-button .cs-icon{
+    width:15px!important;
+    height:15px!important;
+    flex-basis:15px!important;
+  }
+  .cs-label{font-size:9px!important;}
+}
