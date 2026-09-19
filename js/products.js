@@ -393,7 +393,7 @@ const PRODUCTS = [
       { id: "pubg-3850", amount: "3850 (3000+850) UC", shortAmount: "3850 (3000+850) UC", name: "PUBG Mobile - 3850 (3000+850) UC", price: 845999, category: "⚡ UC Global" },
       { id: "pubg-8100", amount: "8100 (6000+2100) UC", shortAmount: "8100 (6000+2100) UC", name: "PUBG Mobile - 8100 (6000+2100) UC", price: 1691999, category: "⚡ UC Global" }
     ]
-  }
+  },
 
   /* =======================================================
      TAHAP 3 — GAME TAMBAHAN
