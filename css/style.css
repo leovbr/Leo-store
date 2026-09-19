@@ -2682,3 +2682,80 @@ body{
 @media(max-width:600px){
   .cs-button .cs-icon{width:16px!important;height:16px!important;}
 }
+
+
+/* =========================================================
+   HEADER ICONS — BARE / NO BOX
+   Target lock: CS + search + hamburger only.
+   Keep header positions; remove visual columns/boxes.
+   ========================================================= */
+.header-actions .cs-button,
+.header-actions .search-button,
+.header-actions .menu-button{
+  width:auto!important;
+  min-width:0!important;
+  height:auto!important;
+  min-height:0!important;
+  padding:2px!important;
+  margin:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  outline:none!important;
+  color:var(--text-soft)!important;
+  opacity:1!important;
+}
+.header-actions .cs-button:hover,
+.header-actions .search-button:hover,
+.header-actions .menu-button:hover,
+.header-actions .cs-button:focus-visible,
+.header-actions .search-button:focus-visible,
+.header-actions .menu-button:focus-visible{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  color:var(--text)!important;
+  transform:none!important;
+}
+.header-actions .cs-button .cs-icon{
+  display:block!important;
+  width:18px!important;
+  height:18px!important;
+  color:currentColor!important;
+}
+.header-actions .search-button .header-icon{
+  display:block!important;
+  width:20px!important;
+  height:20px!important;
+  color:currentColor!important;
+  font-size:22px!important;
+  line-height:20px!important;
+}
+.header-actions .menu-button .menu-icon{
+  display:flex!important;
+  width:20px!important;
+  height:20px!important;
+  padding:0!important;
+  margin:0!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:4px!important;
+}
+.header-actions .menu-button .menu-icon span{
+  display:block!important;
+  width:18px!important;
+  height:1.5px!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:999px!important;
+  background:currentColor!important;
+}
+@media(max-width:600px){
+  .header-actions .cs-button .cs-icon{width:17px!important;height:17px!important;}
+  .header-actions .search-button .header-icon{width:19px!important;height:19px!important;font-size:21px!important;}
+  .header-actions .menu-button .menu-icon{width:19px!important;height:19px!important;}
+  .header-actions .menu-button .menu-icon span{width:17px!important;}
+}
