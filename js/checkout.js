@@ -144,9 +144,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const isRoblox = id === "roblox-via-login" || id === "roblox-via-username";
     const isRobloxLogin = id === "roblox-via-login";
     const isRobloxUsername = id === "roblox-via-username";
+    const isPubg = id === "pubg-mobile";
 
-    if (serverField) serverField.style.display = isRoblox ? "none" : "";
-    if (serverInput && isRoblox) serverInput.value = "";
+    if (serverField) serverField.style.display = (isRoblox || isPubg) ? "none" : "";
+    if (serverInput && (isRoblox || isPubg)) serverInput.value = "";
     if (accountTitle) accountTitle.textContent = "Data Akun";
     if (accountDescription) accountDescription.textContent = (isRobloxLogin || isRobloxUsername)
       ? "Masukkan username dan password."
@@ -381,7 +382,7 @@ document.addEventListener("DOMContentLoaded", () => {
       playerIdInput?.focus();
       return;
     }
-    if (!isRoblox && !serverInput?.value.trim()) {
+    if (!isRoblox && selectedProduct.id !== "pubg-mobile" && !serverInput?.value.trim()) {
       alert("Silakan masukkan Server.");
       serverInput?.focus();
       return;
