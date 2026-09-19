@@ -2759,3 +2759,58 @@ body{
   .header-actions .menu-button .menu-icon{width:19px!important;height:19px!important;}
   .header-actions .menu-button .menu-icon span{width:17px!important;}
 }
+
+
+/* =========================================================
+   HEADER ICONS — SIZE / ALIGNMENT FINISH
+   Slightly larger, clean, evenly aligned.
+   ========================================================= */
+.header-actions .cs-button .cs-icon{
+  width:21px!important;
+  height:21px!important;
+}
+.header-actions .search-button .header-icon{
+  width:23px!important;
+  height:23px!important;
+  font-size:25px!important;
+  line-height:23px!important;
+}
+.header-actions .menu-button .menu-icon{
+  width:23px!important;
+  height:23px!important;
+  gap:4px!important;
+}
+.header-actions .menu-button .menu-icon span{
+  width:21px!important;
+  height:1.7px!important;
+}
+.header-actions .cs-button,
+.header-actions .search-button,
+.header-actions .menu-button{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  vertical-align:middle!important;
+  padding:1px!important;
+}
+@media(max-width:600px){
+  .header-actions .cs-button .cs-icon{
+    width:20px!important;
+    height:20px!important;
+  }
+  .header-actions .search-button .header-icon{
+    width:22px!important;
+    height:22px!important;
+    font-size:24px!important;
+    line-height:22px!important;
+  }
+  .header-actions .menu-button .menu-icon{
+    width:22px!important;
+    height:22px!important;
+    gap:4px!important;
+  }
+  .header-actions .menu-button .menu-icon span{
+    width:20px!important;
+    height:1.7px!important;
+  }
+}
