@@ -394,6 +394,879 @@ const PRODUCTS = [
       { id: "pubg-8100", amount: "8100 (6000+2100) UC", shortAmount: "8100 (6000+2100) UC", name: "PUBG Mobile - 8100 (6000+2100) UC", price: 1691999, category: "⚡ UC Global" }
     ]
   }
+
+  /* =======================================================
+     TAHAP 3 — GAME TAMBAHAN
+     Harga sementara; akan disesuaikan saat supplier tersedia.
+     ======================================================= */
+  {
+  "id": "genshin-impact",
+  "slug": "genshin-impact",
+  "name": "Genshin Impact",
+  "image": "",
+  "icon": "🌌",
+  "publisher": "HoYoverse",
+  "denominations": [
+    {
+      "id": "gi-60",
+      "amount": "60 Genesis Crystals",
+      "price": 16000,
+      "category": "✨ Genesis Crystals"
+    },
+    {
+      "id": "gi-300",
+      "amount": "300 + 30 Genesis Crystals",
+      "price": 59500,
+      "category": "✨ Genesis Crystals"
+    },
+    {
+      "id": "gi-980",
+      "amount": "980 + 110 Genesis Crystals",
+      "price": 184000,
+      "category": "✨ Genesis Crystals"
+    },
+    {
+      "id": "gi-1980",
+      "amount": "1980 + 260 Genesis Crystals",
+      "price": 395000,
+      "category": "✨ Genesis Crystals"
+    },
+    {
+      "id": "gi-3280",
+      "amount": "3280 + 600 Genesis Crystals",
+      "price": 590000,
+      "category": "✨ Genesis Crystals"
+    },
+    {
+      "id": "gi-6480",
+      "amount": "6480 + 1600 Genesis Crystals",
+      "price": 1200000,
+      "category": "✨ Genesis Crystals"
+    }
+  ]
+},
+
+  {
+  "id": "honkai-star-rail",
+  "slug": "honkai-star-rail",
+  "name": "Honkai: Star Rail",
+  "image": "",
+  "icon": "🚂",
+  "publisher": "HoYoverse",
+  "denominations": [
+    {
+      "id": "hsr-60",
+      "amount": "60 Oneiric Shard",
+      "price": 14414,
+      "category": "✨ Oneiric Shard"
+    },
+    {
+      "id": "hsr-330",
+      "amount": "330 (300 + 30) Oneiric Shard",
+      "price": 71171,
+      "category": "✨ Oneiric Shard"
+    },
+    {
+      "id": "hsr-1090",
+      "amount": "1090 (980 + 110) Oneiric Shard",
+      "price": 224324,
+      "category": "✨ Oneiric Shard"
+    },
+    {
+      "id": "hsr-2240",
+      "amount": "2240 (1980 + 260) Oneiric Shard",
+      "price": 431532,
+      "category": "✨ Oneiric Shard"
+    },
+    {
+      "id": "hsr-3880",
+      "amount": "3880 (3280 + 600) Oneiric Shard",
+      "price": 719820,
+      "category": "✨ Oneiric Shard"
+    },
+    {
+      "id": "hsr-8080",
+      "amount": "8080 (6480 + 1600) Oneiric Shard",
+      "price": 1440541,
+      "category": "✨ Oneiric Shard"
+    },
+    {
+      "id": "hsr-pass",
+      "amount": "Express Supply Pass",
+      "price": 61000,
+      "category": "🔥 Special Items"
+    }
+  ]
+},
+
+  {
+  "id": "zenless-zone-zero",
+  "slug": "zenless-zone-zero",
+  "name": "Zenless Zone Zero",
+  "image": "",
+  "icon": "⚡",
+  "publisher": "HoYoverse",
+  "denominations": [
+    {
+      "id": "zzz-60",
+      "amount": "60 Monochrome",
+      "price": 11977,
+      "category": "✨ Monochrome"
+    },
+    {
+      "id": "zzz-300",
+      "amount": "300 Monochrome",
+      "price": 60897,
+      "category": "✨ Monochrome"
+    },
+    {
+      "id": "zzz-980",
+      "amount": "980 Monochrome",
+      "price": 184115,
+      "category": "✨ Monochrome"
+    },
+    {
+      "id": "zzz-1980",
+      "amount": "1980 Monochrome",
+      "price": 371249,
+      "category": "✨ Monochrome"
+    },
+    {
+      "id": "zzz-3280",
+      "amount": "3280 Monochrome",
+      "price": 607693,
+      "category": "✨ Monochrome"
+    },
+    {
+      "id": "zzz-6480",
+      "amount": "6480 Monochrome",
+      "price": 1265609,
+      "category": "✨ Monochrome"
+    },
+    {
+      "id": "zzz-pass",
+      "amount": "Inter-Knot Membership",
+      "price": 60897,
+      "category": "🔥 Special Items"
+    }
+  ]
+},
+
+  {
+  "id": "valorant",
+  "slug": "valorant",
+  "name": "VALORANT",
+  "image": "",
+  "icon": "🎯",
+  "publisher": "Riot Games",
+  "denominations": [
+    {
+      "id": "val-475",
+      "amount": "475 VP",
+      "price": 55374,
+      "category": "✨ Valorant Points"
+    },
+    {
+      "id": "val-1000",
+      "amount": "1000 VP",
+      "price": 110720,
+      "category": "✨ Valorant Points"
+    },
+    {
+      "id": "val-2050",
+      "amount": "2050 VP",
+      "price": 221414,
+      "category": "✨ Valorant Points"
+    },
+    {
+      "id": "val-3650",
+      "amount": "3650 VP",
+      "price": 384491,
+      "category": "✨ Valorant Points"
+    },
+    {
+      "id": "val-5350",
+      "amount": "5350 VP",
+      "price": 552507,
+      "category": "✨ Valorant Points"
+    },
+    {
+      "id": "val-11000",
+      "amount": "11000 VP",
+      "price": 1086209,
+      "category": "✨ Valorant Points"
+    }
+  ]
+},
+
+  {
+  "id": "arena-of-valor",
+  "slug": "arena-of-valor",
+  "name": "Arena of Valor",
+  "image": "",
+  "icon": "⚔️",
+  "publisher": "Garena",
+  "denominations": [
+    {
+      "id": "aov-33",
+      "amount": "33 Garena Shells",
+      "price": 10000,
+      "category": "✨ Voucher"
+    },
+    {
+      "id": "aov-66",
+      "amount": "66 Garena Shells",
+      "price": 20000,
+      "category": "✨ Voucher"
+    },
+    {
+      "id": "aov-165",
+      "amount": "165 Garena Shells",
+      "price": 50000,
+      "category": "✨ Voucher"
+    },
+    {
+      "id": "aov-330",
+      "amount": "330 Garena Shells",
+      "price": 100000,
+      "category": "✨ Voucher"
+    }
+  ]
+},
+
+  {
+  "id": "call-of-duty-mobile",
+  "slug": "call-of-duty-mobile",
+  "name": "Call of Duty: Mobile",
+  "image": "",
+  "icon": "🔫",
+  "publisher": "Garena",
+  "denominations": [
+    {
+      "id": "codm-31",
+      "amount": "31 CP",
+      "price": 4505,
+      "category": "✨ COD Points"
+    },
+    {
+      "id": "codm-63",
+      "amount": "63 CP",
+      "price": 9009,
+      "category": "✨ COD Points"
+    },
+    {
+      "id": "codm-128",
+      "amount": "128 CP",
+      "price": 18018,
+      "category": "✨ COD Points"
+    },
+    {
+      "id": "codm-321",
+      "amount": "321 CP",
+      "price": 45045,
+      "category": "✨ COD Points"
+    },
+    {
+      "id": "codm-645",
+      "amount": "645 CP",
+      "price": 90090,
+      "category": "✨ COD Points"
+    },
+    {
+      "id": "codm-1373",
+      "amount": "1373 CP",
+      "price": 180180,
+      "category": "✨ COD Points"
+    },
+    {
+      "id": "codm-2750",
+      "amount": "2750 CP",
+      "price": 342342,
+      "category": "✨ COD Points"
+    },
+    {
+      "id": "codm-5619",
+      "amount": "5619 CP",
+      "price": 657658,
+      "category": "✨ COD Points"
+    }
+  ]
+},
+
+  {
+  "id": "honor-of-kings",
+  "slug": "honor-of-kings",
+  "name": "Honor of Kings",
+  "image": "",
+  "icon": "👑",
+  "publisher": "Level Infinite",
+  "denominations": [
+    {
+      "id": "hok-16",
+      "amount": "16 Tokens",
+      "price": 2845,
+      "category": "✨ Tokens"
+    },
+    {
+      "id": "hok-80",
+      "amount": "80 Tokens",
+      "price": 14214,
+      "category": "✨ Tokens"
+    },
+    {
+      "id": "hok-240",
+      "amount": "240 Tokens",
+      "price": 45428,
+      "category": "✨ Tokens"
+    },
+    {
+      "id": "hok-400",
+      "amount": "400 Tokens",
+      "price": 71195,
+      "category": "✨ Tokens"
+    },
+    {
+      "id": "hok-560",
+      "amount": "560 Tokens",
+      "price": 106008,
+      "category": "✨ Tokens"
+    },
+    {
+      "id": "hok-800",
+      "amount": "800 Tokens",
+      "price": 139263,
+      "category": "✨ Tokens"
+    },
+    {
+      "id": "hok-1200",
+      "amount": "1200 Tokens",
+      "price": 212705,
+      "category": "✨ Tokens"
+    },
+    {
+      "id": "hok-2400",
+      "amount": "2400 Tokens",
+      "price": 425569,
+      "category": "✨ Tokens"
+    }
+  ]
+},
+
+  {
+  "id": "wuthering-waves",
+  "slug": "wuthering-waves",
+  "name": "Wuthering Waves",
+  "image": "",
+  "icon": "🌊",
+  "publisher": "KURO GAMES",
+  "denominations": [
+    {
+      "id": "ww-60",
+      "amount": "60 Lunite",
+      "price": 14756,
+      "category": "✨ Lunite"
+    },
+    {
+      "id": "ww-300",
+      "amount": "300 Lunite",
+      "price": 60000,
+      "category": "✨ Lunite"
+    },
+    {
+      "id": "ww-980",
+      "amount": "980 Lunite",
+      "price": 184000,
+      "category": "✨ Lunite"
+    },
+    {
+      "id": "ww-1980",
+      "amount": "1980 Lunite",
+      "price": 395000,
+      "category": "✨ Lunite"
+    },
+    {
+      "id": "ww-3280",
+      "amount": "3280 Lunite",
+      "price": 607000,
+      "category": "✨ Lunite"
+    },
+    {
+      "id": "ww-6480",
+      "amount": "6480 Lunite",
+      "price": 1260000,
+      "category": "✨ Lunite"
+    }
+  ]
+},
+
+  {
+  "id": "blood-strike",
+  "slug": "blood-strike",
+  "name": "Blood Strike",
+  "image": "",
+  "icon": "💥",
+  "publisher": "NetEase Games",
+  "denominations": [
+    {
+      "id": "bs-100",
+      "amount": "100 Gold",
+      "price": 7400,
+      "category": "✨ Gold"
+    },
+    {
+      "id": "bs-500",
+      "amount": "500 Gold",
+      "price": 35000,
+      "category": "✨ Gold"
+    },
+    {
+      "id": "bs-1000",
+      "amount": "1000 Gold",
+      "price": 69000,
+      "category": "✨ Gold"
+    },
+    {
+      "id": "bs-2200",
+      "amount": "2200 Gold",
+      "price": 145000,
+      "category": "✨ Gold"
+    },
+    {
+      "id": "bs-5000",
+      "amount": "5000 Gold",
+      "price": 320000,
+      "category": "✨ Gold"
+    }
+  ]
+},
+
+  {
+  "id": "efootball",
+  "slug": "efootball",
+  "name": "eFootball",
+  "image": "",
+  "icon": "⚽",
+  "publisher": "KONAMI",
+  "denominations": [
+    {
+      "id": "ef-100",
+      "amount": "100 eFootball Coins",
+      "price": 16000,
+      "category": "✨ Coins"
+    },
+    {
+      "id": "ef-310",
+      "amount": "310 eFootball Coins",
+      "price": 45000,
+      "category": "✨ Coins"
+    },
+    {
+      "id": "ef-650",
+      "amount": "650 eFootball Coins",
+      "price": 90000,
+      "category": "✨ Coins"
+    },
+    {
+      "id": "ef-1040",
+      "amount": "1040 eFootball Coins",
+      "price": 145000,
+      "category": "✨ Coins"
+    },
+    {
+      "id": "ef-2130",
+      "amount": "2130 eFootball Coins",
+      "price": 285000,
+      "category": "✨ Coins"
+    },
+    {
+      "id": "ef-3250",
+      "amount": "3250 eFootball Coins",
+      "price": 425000,
+      "category": "✨ Coins"
+    },
+    {
+      "id": "ef-5700",
+      "amount": "5700 eFootball Coins",
+      "price": 730000,
+      "category": "✨ Coins"
+    }
+  ]
+},
+
+  {
+  "id": "ea-sports-fc-mobile",
+  "slug": "ea-sports-fc-mobile",
+  "name": "EA SPORTS FC Mobile",
+  "image": "",
+  "icon": "⚽",
+  "publisher": "Electronic Arts",
+  "denominations": [
+    {
+      "id": "fc-40",
+      "amount": "40 FC Points",
+      "price": 6400,
+      "category": "✨ FC Points"
+    },
+    {
+      "id": "fc-100",
+      "amount": "100 FC Points",
+      "price": 15000,
+      "category": "✨ FC Points"
+    },
+    {
+      "id": "fc-520",
+      "amount": "520 FC Points",
+      "price": 70000,
+      "category": "✨ FC Points"
+    },
+    {
+      "id": "fc-1070",
+      "amount": "1070 FC Points",
+      "price": 135000,
+      "category": "✨ FC Points"
+    },
+    {
+      "id": "fc-2200",
+      "amount": "2200 FC Points",
+      "price": 270000,
+      "category": "✨ FC Points"
+    },
+    {
+      "id": "fc-5750",
+      "amount": "5750 FC Points",
+      "price": 700000,
+      "category": "✨ FC Points"
+    }
+  ]
+},
+
+  {
+  "id": "league-of-legends-wild-rift",
+  "slug": "league-of-legends-wild-rift",
+  "name": "League of Legends: Wild Rift",
+  "image": "",
+  "icon": "🛡️",
+  "publisher": "Riot Games",
+  "denominations": [
+    {
+      "id": "wr-425",
+      "amount": "425 Wild Cores",
+      "price": 14300,
+      "category": "✨ Wild Cores"
+    },
+    {
+      "id": "wr-1000",
+      "amount": "1000 Wild Cores",
+      "price": 32000,
+      "category": "✨ Wild Cores"
+    },
+    {
+      "id": "wr-1850",
+      "amount": "1850 Wild Cores",
+      "price": 58000,
+      "category": "✨ Wild Cores"
+    },
+    {
+      "id": "wr-2800",
+      "amount": "2800 Wild Cores",
+      "price": 86000,
+      "category": "✨ Wild Cores"
+    },
+    {
+      "id": "wr-4250",
+      "amount": "4250 Wild Cores",
+      "price": 130000,
+      "category": "✨ Wild Cores"
+    },
+    {
+      "id": "wr-10000",
+      "amount": "10000 Wild Cores",
+      "price": 290000,
+      "category": "✨ Wild Cores"
+    }
+  ]
+},
+
+  {
+  "id": "marvel-rivals",
+  "slug": "marvel-rivals",
+  "name": "Marvel Rivals",
+  "image": "",
+  "icon": "🦸",
+  "publisher": "NetEase Games",
+  "denominations": [
+    {
+      "id": "mr-100",
+      "amount": "100 Lattice",
+      "price": 16200,
+      "category": "✨ Lattice"
+    },
+    {
+      "id": "mr-500",
+      "amount": "500 Lattice",
+      "price": 76000,
+      "category": "✨ Lattice"
+    },
+    {
+      "id": "mr-1000",
+      "amount": "1000 Lattice",
+      "price": 150000,
+      "category": "✨ Lattice"
+    },
+    {
+      "id": "mr-2180",
+      "amount": "2180 Lattice",
+      "price": 315000,
+      "category": "✨ Lattice"
+    },
+    {
+      "id": "mr-5680",
+      "amount": "5680 Lattice",
+      "price": 790000,
+      "category": "✨ Lattice"
+    }
+  ]
+},
+
+  {
+  "id": "lifeafter",
+  "slug": "lifeafter",
+  "name": "LifeAfter",
+  "image": "",
+  "icon": "🧟",
+  "publisher": "NetEase Games",
+  "denominations": [
+    {
+      "id": "la-60",
+      "amount": "60 Credits",
+      "price": 5800,
+      "category": "✨ Credits"
+    },
+    {
+      "id": "la-300",
+      "amount": "300 Credits",
+      "price": 25000,
+      "category": "✨ Credits"
+    },
+    {
+      "id": "la-980",
+      "amount": "980 Credits",
+      "price": 85000,
+      "category": "✨ Credits"
+    },
+    {
+      "id": "la-1980",
+      "amount": "1980 Credits",
+      "price": 165000,
+      "category": "✨ Credits"
+    },
+    {
+      "id": "la-3280",
+      "amount": "3280 Credits",
+      "price": 270000,
+      "category": "✨ Credits"
+    },
+    {
+      "id": "la-6480",
+      "amount": "6480 Credits",
+      "price": 520000,
+      "category": "✨ Credits"
+    }
+  ]
+},
+
+  {
+  "id": "point-blank",
+  "slug": "point-blank",
+  "name": "Point Blank",
+  "image": "",
+  "icon": "🎯",
+  "publisher": "Zepetto",
+  "denominations": [
+    {
+      "id": "pb-100",
+      "amount": "100 Cash",
+      "price": 9000,
+      "category": "✨ Cash"
+    },
+    {
+      "id": "pb-500",
+      "amount": "500 Cash",
+      "price": 42000,
+      "category": "✨ Cash"
+    },
+    {
+      "id": "pb-1000",
+      "amount": "1000 Cash",
+      "price": 83000,
+      "category": "✨ Cash"
+    },
+    {
+      "id": "pb-2500",
+      "amount": "2500 Cash",
+      "price": 205000,
+      "category": "✨ Cash"
+    },
+    {
+      "id": "pb-5000",
+      "amount": "5000 Cash",
+      "price": 400000,
+      "category": "✨ Cash"
+    }
+  ]
+},
+
+  {
+  "id": "delta-force",
+  "slug": "delta-force",
+  "name": "Delta Force",
+  "image": "",
+  "icon": "🪖",
+  "publisher": "Garena",
+  "denominations": [
+    {
+      "id": "df-33",
+      "amount": "33 Garena Shells",
+      "price": 10000,
+      "category": "✨ Voucher"
+    },
+    {
+      "id": "df-66",
+      "amount": "66 Garena Shells",
+      "price": 20000,
+      "category": "✨ Voucher"
+    },
+    {
+      "id": "df-165",
+      "amount": "165 Garena Shells",
+      "price": 50000,
+      "category": "✨ Voucher"
+    },
+    {
+      "id": "df-330",
+      "amount": "330 Garena Shells",
+      "price": 100000,
+      "category": "✨ Voucher"
+    }
+  ]
+},
+
+  {
+  "id": "black-clover-m",
+  "slug": "black-clover-m",
+  "name": "Black Clover M",
+  "image": "",
+  "icon": "🍀",
+  "publisher": "Garena",
+  "denominations": [
+    {
+      "id": "bcm-33",
+      "amount": "33 Garena Shells",
+      "price": 10000,
+      "category": "✨ Voucher"
+    },
+    {
+      "id": "bcm-66",
+      "amount": "66 Garena Shells",
+      "price": 20000,
+      "category": "✨ Voucher"
+    },
+    {
+      "id": "bcm-165",
+      "amount": "165 Garena Shells",
+      "price": 50000,
+      "category": "✨ Voucher"
+    },
+    {
+      "id": "bcm-330",
+      "amount": "330 Garena Shells",
+      "price": 100000,
+      "category": "✨ Voucher"
+    }
+  ]
+},
+
+  {
+  "id": "speed-drifters",
+  "slug": "speed-drifters",
+  "name": "Speed Drifters",
+  "image": "",
+  "icon": "🏎️",
+  "publisher": "Garena",
+  "denominations": [
+    {
+      "id": "sd-56",
+      "amount": "56 Diamonds",
+      "price": 9816,
+      "category": "✨ Diamonds"
+    },
+    {
+      "id": "sd-112",
+      "amount": "112 Diamonds",
+      "price": 19632,
+      "category": "✨ Diamonds"
+    },
+    {
+      "id": "sd-282",
+      "amount": "282 Diamonds",
+      "price": 48977,
+      "category": "✨ Diamonds"
+    },
+    {
+      "id": "sd-568",
+      "amount": "568 Diamonds",
+      "price": 97954,
+      "category": "✨ Diamonds"
+    },
+    {
+      "id": "sd-1160",
+      "amount": "1160 Diamonds",
+      "price": 195000,
+      "category": "✨ Diamonds"
+    }
+  ]
+},
+
+  {
+  "id": "honkai-impact-3",
+  "slug": "honkai-impact-3",
+  "name": "Honkai Impact 3rd",
+  "image": "",
+  "icon": "⚔️",
+  "publisher": "HoYoverse",
+  "denominations": [
+    {
+      "id": "hi3-65",
+      "amount": "65 Crystals",
+      "price": 13700,
+      "category": "✨ Crystals"
+    },
+    {
+      "id": "hi3-330",
+      "amount": "330 Crystals",
+      "price": 60000,
+      "category": "✨ Crystals"
+    },
+    {
+      "id": "hi3-710",
+      "amount": "710 Crystals",
+      "price": 120000,
+      "category": "✨ Crystals"
+    },
+    {
+      "id": "hi3-1430",
+      "amount": "1430 Crystals",
+      "price": 240000,
+      "category": "✨ Crystals"
+    },
+    {
+      "id": "hi3-3050",
+      "amount": "3050 Crystals",
+      "price": 500000,
+      "category": "✨ Crystals"
+    }
+  ]
+}
 ];
 
 
