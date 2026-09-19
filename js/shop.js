@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <img
             class="product-game-image"
             src="${escapeHTML(product.image)}"
-            alt="${escapeHTML(product.name)}"
+            alt=""
             loading="lazy"
             onerror="
               this.style.display='none';
