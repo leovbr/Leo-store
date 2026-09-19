@@ -163,7 +163,7 @@ const PRODUCTS = [
       { id: "ff-37050", amount: "37050 Diamonds", price: 4952680, category: "✨ Top Up Instant" },
       { id: "ff-73100", amount: "73100 Diamonds", price: 9751285, category: "✨ Top Up Instant" }
     ]
-  }
+  },
 
   /* =======================================================
      ROBLOX VIA LOGIN
