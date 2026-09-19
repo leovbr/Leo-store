@@ -2502,3 +2502,55 @@ header {
     white-space:nowrap!important;
   }
 }
+
+
+/* =========================================================
+   LEOOSTORE — GLOBAL LIGHT PREMIUM THEME
+   TARGET LOCK — COLORS ONLY
+   ========================================================= */
+:root{
+  --bg:#f5f7fb;
+  --bg-soft:#eef1f6;
+  --card:#ffffff;
+  --card-2:#f8f9fc;
+  --card-hover:#f1f3f8;
+  --border:rgba(15,23,42,.09);
+  --border-strong:rgba(15,23,42,.16);
+  --text:#171b24;
+  --text-soft:#5f6878;
+  --text-muted:#8791a2;
+  --primary:#6d4df5;
+  --primary-hover:#5b3fe0;
+  --primary-soft:rgba(109,77,245,.10);
+  --shadow:0 18px 50px rgba(30,41,59,.10);
+}
+
+body{
+  color:var(--text)!important;
+  background:
+    radial-gradient(circle at 15% 0%,rgba(109,77,245,.07),transparent 30%),
+    radial-gradient(circle at 85% 15%,rgba(59,130,246,.045),transparent 28%),
+    var(--bg)!important;
+}
+
+.site-header,header{
+  background:rgba(255,255,255,.88)!important;
+  border-bottom-color:var(--border)!important;
+}
+
+.side-menu{
+  background:linear-gradient(180deg,#ffffff 0%,#f4f6fa 100%)!important;
+  border-left-color:var(--border-strong)!important;
+  box-shadow:-25px 0 70px rgba(30,41,59,.14)!important;
+}
+
+.search-panel{
+  background:rgba(255,255,255,.96)!important;
+  border-bottom-color:var(--border)!important;
+}
+
+.header-action,
+.currency-selector{
+  background:rgba(15,23,42,.025)!important;
+}
+
