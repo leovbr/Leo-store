@@ -8,8 +8,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!productList) return;
 
-  const products = Array.isArray(window.PRODUCTS)
-    ? window.PRODUCTS
+  // products.js defines PRODUCTS with const, so it is not exposed
+  // as window.PRODUCTS. Read the shared catalog directly.
+  const products = typeof PRODUCTS !== "undefined" && Array.isArray(PRODUCTS)
+    ? PRODUCTS
     : [];
 
   function escapeHTML(value) {
