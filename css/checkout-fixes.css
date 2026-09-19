@@ -1233,3 +1233,21 @@
     align-self:flex-start!important;
   }
 }
+
+
+/* ===== CHECKOUT SUMMARY — VIEWPORT BOTTOM LOCK =====
+   Target only: the summary stays attached to the bottom of the viewport
+   while the page scrolls. Other checkout content/positions are untouched.
+*/
+@media(min-width:681px){
+  .checkout-page .checkout-sidebar{
+    position:fixed!important;
+    left:auto!important;
+    top:auto!important;
+    right:max(16px, calc((100vw - 1180px) / 2))!important;
+    bottom:16px!important;
+    width:min(377px, calc(100vw - 32px))!important;
+    z-index:100!important;
+    align-self:auto!important;
+  }
+}
