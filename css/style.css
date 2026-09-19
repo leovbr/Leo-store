@@ -2619,3 +2619,35 @@ body{
   display:block!important;
   width:100%!important;
 }
+
+/* =========================================================
+   HEADER — ADMIN / CUSTOMER SERVICE
+   Add only; preserve existing header positions.
+   ========================================================= */
+.header-actions .cs-button{
+  text-decoration:none!important;
+  color:inherit!important;
+  flex:0 0 auto!important;
+}
+.header-actions .cs-button img{
+  width:16px!important;
+  height:16px!important;
+  object-fit:contain!important;
+  filter:brightness(0) invert(1)!important;
+  opacity:.92!important;
+}
+.cs-label{
+  font-size:10px!important;
+  font-weight:800!important;
+  line-height:1!important;
+}
+@media(max-width:680px){
+  .header-actions .cs-button{
+    gap:5px!important;
+  }
+  .header-actions .cs-button img{
+    width:15px!important;
+    height:15px!important;
+  }
+  .cs-label{font-size:9px!important;}
+}
