@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
 
       return `
-        <article class="product-card">
+        <a class="product-card" href="checkout.html?game=${encodeURIComponent(gameId)}" aria-label="Top up ${escapeHTML(product.name)}">
 
           <div class="product-image-wrap">
             ${image}
@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </p>
           </div>
 
-        </article>
+        </a>
       `;
     }).join("");
   }
