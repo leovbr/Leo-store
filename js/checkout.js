@@ -436,7 +436,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const response = await fetch("https://spring-surf-a6a7.leovbriansyh791.workers.dev/api/orders", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "text/plain;charset=UTF-8" },
         body: JSON.stringify({
           orderId,
           productId: selectedProduct.id,
