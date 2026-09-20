@@ -147,47 +147,37 @@ const LAST_ORDER_KEY =
       "paidButton"
     );
 
-
   paidButton?.addEventListener(
     "click",
-    () => {
+    async () => {
+      paidButton.disabled = true;
+      paidButton.textContent = "Mengecek Status...";
 
-      paidButton.disabled =
-        true;
+      try {
+        const response = await fetch(
+          "https://spring-surf-a6a7.leovbriansyh791.workers.dev/api/orders/" +
+          encodeURIComponent(order.orderId),
+          { cache: "no-store" }
+        );
+        const result = await response.json().catch(() => ({}));
 
-      paidButton.textContent =
-        "Memverifikasi...";
+        if (!response.ok || !result.ok) {
+          throw new Error(result.error || "Status pembayaran belum dapat dicek.");
+        }
 
+        order.status = result.order?.status || order.status;
+        saveOrder(order);
 
-      setTimeout(
-        () => {
-
-          order.status =
-            "Pembayaran Berhasil";
-
-          order.paidAt =
-            new Date().toISOString();
-
-
-          saveOrder(
-            order
-          );
-
-
-          window.location.replace(
-            `order.html?id=${encodeURIComponent(
-              order.orderId
-            )}`
-          );
-
-        },
-        1200
-      );
-
+        window.location.replace(
+          "order.html?id=" + encodeURIComponent(order.orderId)
+        );
+      } catch (error) {
+        paidButton.disabled = false;
+        paidButton.textContent = "Cek Status Pembayaran";
+        alert(error.message || "Gagal mengecek status pembayaran.");
+      }
     }
   );
-
-});
 
 
 /* =========================================================
@@ -352,7 +342,7 @@ function renderPayment(
           id="paidButton"
           type="button"
         >
-          Saya Sudah Bayar
+          Cek Status Pembayaran
         </button>
 
 
