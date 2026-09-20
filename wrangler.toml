@@ -6,3 +6,5 @@ compatibility_date = "2026-09-20"
 binding = "DB"
 database_name = "leoostore"
 database_id = "9213b5cc-842d-4967-9506-2000d3418bfe"
+
+# Trigger Cloudflare Git build; no runtime behavior change.
