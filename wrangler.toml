@@ -1,0 +1,5 @@
+name = "spring-surf-a6a7"
+main = "worker/src/index.js"
+compatibility_date = "2026-09-20"
+
+# D1 binding will be added after the database is created.
