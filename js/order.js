@@ -5,6 +5,7 @@
 
 const ORDERS_KEY = "LEOOSTORE_orders";
 const LAST_ORDER_KEY = "LEOOSTORE_last_orders";
+const PAYMENT_API = "https://spring-surf-a6a7.leovbriansyh791.workers.dev";
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -71,11 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
       order
     );
 
-
-    handleProcessing(
-      order
-    );
-
+    syncOrderFromBackend(order);
 
     return;
 
@@ -184,6 +181,59 @@ function getLastOrder() {
   }
 
 }
+
+
+/* =========================================================
+   BACKEND STATUS SYNC
+========================================================= */
+
+async function syncOrderFromBackend(order) {
+  if (!order?.orderId) return;
+
+  try {
+    const response = await fetch(
+      PAYMENT_API + "/api/orders/" + encodeURIComponent(order.orderId),
+      { cache: "no-store" }
+    );
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok || !result.ok || !result.order) return;
+
+    const backendOrder = result.order;
+    const merged = {
+      ...order,
+      ...backendOrder,
+      orderId: backendOrder.orderId || order.orderId,
+      gameId: backendOrder.productId || order.gameId,
+      gameName: backendOrder.productName || order.gameName || order.game,
+      game: backendOrder.productName || order.game,
+      amount: backendOrder.denomination || order.amount,
+      denomination: backendOrder.denomination || order.denomination,
+      paymentId: backendOrder.paymentId || order.paymentId,
+      payment: backendOrder.paymentName || order.payment,
+      paymentName: backendOrder.paymentName || order.paymentName,
+      price: Number(backendOrder.total ?? order.price ?? 0),
+      total: Number(backendOrder.total ?? order.total ?? 0),
+      createdAt: backendOrder.createdAt || order.createdAt
+    };
+
+    const orders = getOrders();
+    const index = orders.findIndex(item => String(item.orderId) === String(merged.orderId));
+    if (index !== -1) orders[index] = merged;
+    else orders.unshift(merged);
+    saveOrders(orders);
+    saveLastOrder(merged);
+
+    renderCurrentPage(merged);
+
+    if (merged.status === "Menunggu Pembayaran") {
+      setTimeout(() => syncOrderFromBackend(merged), 3000);
+    }
+  } catch (error) {
+    console.error("Order status sync failed:", error);
+    setTimeout(() => syncOrderFromBackend(order), 5000);
+  }
+}
+
 
 
 function saveOrders(
