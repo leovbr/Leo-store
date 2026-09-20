@@ -403,7 +403,7 @@ const PRODUCTS = [
   "id": "genshin-impact",
   "slug": "genshin-impact",
   "name": "Genshin Impact",
-  "image": "",
+  "image": "assets/icons/genshin-impact.webp",
   "icon": "🌌",
   "publisher": "HoYoverse",
   "denominations": [
@@ -450,7 +450,7 @@ const PRODUCTS = [
   "id": "honkai-star-rail",
   "slug": "honkai-star-rail",
   "name": "Honkai: Star Rail",
-  "image": "",
+  "image": "assets/icons/honkai-star-rail.webp",
   "icon": "🚂",
   "publisher": "HoYoverse",
   "denominations": [
@@ -503,7 +503,7 @@ const PRODUCTS = [
   "id": "zenless-zone-zero",
   "slug": "zenless-zone-zero",
   "name": "Zenless Zone Zero",
-  "image": "",
+  "image": "assets/icons/zenless-zone-zero.webp",
   "icon": "⚡",
   "publisher": "HoYoverse",
   "denominations": [
@@ -556,7 +556,7 @@ const PRODUCTS = [
   "id": "valorant",
   "slug": "valorant",
   "name": "VALORANT",
-  "image": "",
+  "image": "assets/icons/valorant.webp",
   "icon": "🎯",
   "publisher": "Riot Games",
   "denominations": [
@@ -603,7 +603,7 @@ const PRODUCTS = [
   "id": "arena-of-valor",
   "slug": "arena-of-valor",
   "name": "Arena of Valor",
-  "image": "",
+  "image": "assets/icons/arena-of-valor.webp",
   "icon": "⚔️",
   "publisher": "Garena",
   "denominations": [
@@ -638,7 +638,7 @@ const PRODUCTS = [
   "id": "call-of-duty-mobile",
   "slug": "call-of-duty-mobile",
   "name": "Call of Duty: Mobile",
-  "image": "",
+  "image": "assets/icons/call-of-duty-mobile.webp",
   "icon": "🔫",
   "publisher": "Garena",
   "denominations": [
@@ -697,7 +697,7 @@ const PRODUCTS = [
   "id": "honor-of-kings",
   "slug": "honor-of-kings",
   "name": "Honor of Kings",
-  "image": "",
+  "image": "assets/icons/honor-of-kings.webp",
   "icon": "👑",
   "publisher": "Level Infinite",
   "denominations": [
@@ -756,7 +756,7 @@ const PRODUCTS = [
   "id": "wuthering-waves",
   "slug": "wuthering-waves",
   "name": "Wuthering Waves",
-  "image": "",
+  "image": "assets/icons/wuthering-waves.webp",
   "icon": "🌊",
   "publisher": "KURO GAMES",
   "denominations": [
@@ -803,7 +803,7 @@ const PRODUCTS = [
   "id": "blood-strike",
   "slug": "blood-strike",
   "name": "Blood Strike",
-  "image": "",
+  "image": "assets/icons/blood-strike.webp",
   "icon": "💥",
   "publisher": "NetEase Games",
   "denominations": [
@@ -844,7 +844,7 @@ const PRODUCTS = [
   "id": "efootball",
   "slug": "efootball",
   "name": "eFootball",
-  "image": "",
+  "image": "assets/icons/efootball.webp",
   "icon": "⚽",
   "publisher": "KONAMI",
   "denominations": [
@@ -897,7 +897,7 @@ const PRODUCTS = [
   "id": "ea-sports-fc-mobile",
   "slug": "ea-sports-fc-mobile",
   "name": "EA SPORTS FC Mobile",
-  "image": "",
+  "image": "assets/icons/ea-sports-fc-mobile.webp",
   "icon": "⚽",
   "publisher": "Electronic Arts",
   "denominations": [
@@ -944,7 +944,7 @@ const PRODUCTS = [
   "id": "league-of-legends-wild-rift",
   "slug": "league-of-legends-wild-rift",
   "name": "League of Legends: Wild Rift",
-  "image": "",
+  "image": "assets/icons/league-of-legends-wild-rift.webp",
   "icon": "🛡️",
   "publisher": "Riot Games",
   "denominations": [
@@ -991,7 +991,7 @@ const PRODUCTS = [
   "id": "marvel-rivals",
   "slug": "marvel-rivals",
   "name": "Marvel Rivals",
-  "image": "",
+  "image": "assets/icons/marvel-rivals.webp",
   "icon": "🦸",
   "publisher": "NetEase Games",
   "denominations": [
@@ -1032,7 +1032,7 @@ const PRODUCTS = [
   "id": "lifeafter",
   "slug": "lifeafter",
   "name": "LifeAfter",
-  "image": "",
+  "image": "assets/icons/lifeafter.webp",
   "icon": "🧟",
   "publisher": "NetEase Games",
   "denominations": [
@@ -1079,7 +1079,7 @@ const PRODUCTS = [
   "id": "point-blank",
   "slug": "point-blank",
   "name": "Point Blank",
-  "image": "",
+  "image": "assets/icons/point-blank.webp",
   "icon": "🎯",
   "publisher": "Zepetto",
   "denominations": [
@@ -1120,7 +1120,7 @@ const PRODUCTS = [
   "id": "delta-force",
   "slug": "delta-force",
   "name": "Delta Force",
-  "image": "",
+  "image": "assets/icons/delta-force.webp",
   "icon": "🪖",
   "publisher": "Garena",
   "denominations": [
@@ -1155,7 +1155,7 @@ const PRODUCTS = [
   "id": "black-clover-m",
   "slug": "black-clover-m",
   "name": "Black Clover M",
-  "image": "",
+  "image": "assets/icons/black-clover-m.webp",
   "icon": "🍀",
   "publisher": "Garena",
   "denominations": [
@@ -1190,7 +1190,7 @@ const PRODUCTS = [
   "id": "speed-drifters",
   "slug": "speed-drifters",
   "name": "Speed Drifters",
-  "image": "",
+  "image": "assets/icons/speed-drifters.webp",
   "icon": "🏎️",
   "publisher": "Garena",
   "denominations": [
@@ -1231,7 +1231,7 @@ const PRODUCTS = [
   "id": "honkai-impact-3",
   "slug": "honkai-impact-3",
   "name": "Honkai Impact 3rd",
-  "image": "",
+  "image": "assets/icons/honkai-impact-3.webp",
   "icon": "⚔️",
   "publisher": "HoYoverse",
   "denominations": [
