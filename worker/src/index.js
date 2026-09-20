@@ -12,7 +12,7 @@ const corsOrigin=request=>{const origin=request.headers.get("Origin")||"";return
 
 const normalizeOrderId=value=>{const id=String(value||"").trim();return /^[A-Za-z0-9._~-]{1,50}$/.test(id)?id:null;};
 
-const getProduct=id=>CATALOG[String(id||"").trim()]||null;
+const getProduct=id=>CATALOG.find(product=>String(product.id)===String(id||"").trim()||String(product.slug||"")===String(id||"").trim())||null;
 
 const getDenomination=(product,id)=>product?.denominations?.find(item=>item.id===String(id||"").trim())||null;
 
