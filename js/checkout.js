@@ -361,7 +361,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateSummary();
   }
 
-  function createOrder() {
+  async function createOrder() {
     if (!selectedProduct) return alert("Silakan pilih game terlebih dahulu.");
     if (!selectedDenomination) return alert("Silakan pilih nominal terlebih dahulu.");
 
@@ -428,21 +428,65 @@ document.addEventListener("DOMContentLoaded", () => {
       createdAt: new Date().toISOString()
     };
 
-    let orders = [];
-    try {
-      orders = JSON.parse(localStorage.getItem(ORDERS_KEY) || "[]");
-      if (!Array.isArray(orders)) orders = [];
-    } catch (_) {
-      orders = [];
+    if (checkoutButton) {
+      checkoutButton.disabled = true;
+      checkoutButton.textContent = "Membuat Pembayaran...";
     }
-    orders.unshift(order);
 
-    localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
-    localStorage.setItem(LAST_ORDER_KEY, JSON.stringify(order));
-    localStorage.setItem("fidelis_orders", JSON.stringify(orders));
-    localStorage.setItem("fidelis_last_order", JSON.stringify(order));
+    try {
+      const response = await fetch("https://spring-surf-a6a7.leovbriansyh791.workers.dev/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          orderId,
+          productId: selectedProduct.id,
+          denominationId: selectedDenomination.id,
+          quantity: getQuantity(),
+          paymentId: selectedPayment.id,
+          email: order.email,
+          whatsapp: order.whatsapp,
+          playerId: order.playerId,
+          server: order.server,
+          promo: order.promo
+        })
+      });
 
-    window.location.href = "payment.html?id=" + encodeURIComponent(orderId);
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || !result.ok) {
+        throw new Error(result.error || "Gagal membuat pembayaran.");
+      }
+
+      order.midtransToken = result.token || "";
+      order.paymentUrl = result.redirectUrl || "";
+      order.backendStatus = result.status || "Menunggu Pembayaran";
+
+      let orders = [];
+      try {
+        orders = JSON.parse(localStorage.getItem(ORDERS_KEY) || "[]");
+        if (!Array.isArray(orders)) orders = [];
+      } catch (_) {
+        orders = [];
+      }
+      orders.unshift(order);
+
+      localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
+      localStorage.setItem(LAST_ORDER_KEY, JSON.stringify(order));
+      localStorage.setItem("fidelis_orders", JSON.stringify(orders));
+      localStorage.setItem("fidelis_last_order", JSON.stringify(order));
+
+      if (result.redirectUrl) {
+        window.location.href = result.redirectUrl;
+      } else {
+        window.location.href = "payment.html?id=" + encodeURIComponent(orderId);
+      }
+    } catch (error) {
+      console.error("Payment creation failed:", error);
+      if (checkoutButton) {
+        checkoutButton.disabled = false;
+        checkoutButton.textContent = "Bayar Sekarang";
+      }
+      alert(error.message || "Gagal membuat pembayaran. Silakan coba lagi.");
+    }
   }
 
   gameSelect?.addEventListener("change", () => selectGame(gameSelect.value));
