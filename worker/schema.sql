@@ -1,3 +1,4 @@
+-- LEOOSTORE D1 schema
 CREATE TABLE IF NOT EXISTS orders (
   order_id TEXT PRIMARY KEY,
   product_id TEXT NOT NULL,
@@ -24,5 +25,7 @@ CREATE TABLE IF NOT EXISTS orders (
   updated_at TEXT NOT NULL,
   paid_at TEXT
 );
+
 CREATE INDEX IF NOT EXISTS idx_orders_status ON orders(status);
 CREATE INDEX IF NOT EXISTS idx_orders_created_at ON orders(created_at);
+CREATE INDEX IF NOT EXISTS idx_orders_transaction_id ON orders(transaction_id);
