@@ -6,7 +6,8 @@ const CATALOG = [{"id":"mobile-legends","name":"Mobile Legends","publisher":"Moo
 
 const PAYMENT_METHODS = new Set(["qris","dana","ovo","gopay","shopeepay","bca-va","bri-va","bni-va","mandiri-va","permata-va","cimb-va","danamon-va","btn-va"]);
 
-const corsHeaders=origin=>({"content-type":"application/json; charset=UTF-8","cache-control":"no-store","access-control-allow-origin":origin,"access-control-allow-methods":"GET,POST,OPTIONS","access-control-allow-headers":"Content-Type, Authorization","access-control-max-age":"86400","vary":"Origin"});\nconst json = (data,status=200,origin=ALLOWED_ORIGIN)=>new Response(JSON.stringify(data),{status,headers:corsHeaders(origin)});
+const corsHeaders=origin=>({"content-type":"application/json; charset=UTF-8","cache-control":"no-store","access-control-allow-origin":origin,"access-control-allow-methods":"GET,POST,OPTIONS","access-control-allow-headers":"Content-Type, Authorization","access-control-max-age":"86400","vary":"Origin"});
+const json = (data,status=200,origin=ALLOWED_ORIGIN)=>new Response(JSON.stringify(data),{status,headers:corsHeaders(origin)});
 
 const corsOrigin=request=>{const origin=request.headers.get("Origin")||"";return origin===ALLOWED_ORIGIN?origin:ALLOWED_ORIGIN;};
 
