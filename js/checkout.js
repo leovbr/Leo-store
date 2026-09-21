@@ -146,9 +146,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const isRobloxUsername = id === "roblox-via-username";
     const isPubg = id === "pubg-mobile";
     const isFreeFire = id === "free-fire" || id === "freefire";
+    const isValorant = id === "valorant";
 
-    if (serverField) serverField.style.display = (isRoblox || isPubg || isFreeFire) ? "none" : "";
-    if (serverInput && (isRoblox || isPubg || isFreeFire)) serverInput.value = "";
+    if (serverField) serverField.style.display = (isRoblox || isPubg || isFreeFire || isValorant) ? "none" : "";
+    if (serverInput && (isRoblox || isPubg || isFreeFire || isValorant)) serverInput.value = "";
     if (accountTitle) accountTitle.textContent = "Data Akun";
     if (accountDescription) accountDescription.textContent = (isRobloxLogin || isRobloxUsername)
       ? "Masukkan username dan password."
@@ -164,7 +165,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (playerIdInput) {
       playerIdInput.placeholder = id === "roblox-via-login" || id === "roblox-via-username"
         ? "Masukkan Username Roblox"
-        : "Masukkan Player ID";
+        : isValorant
+          ? "Masukkan Riot ID"
+          : "Masukkan Player ID";
     }
   }
 
@@ -383,7 +386,7 @@ document.addEventListener("DOMContentLoaded", () => {
       playerIdInput?.focus();
       return;
     }
-    if (!isRoblox && selectedProduct.id !== "pubg-mobile" && selectedProduct.id !== "free-fire" && selectedProduct.id !== "freefire" && !serverInput?.value.trim()) {
+    if (!isRoblox && selectedProduct.id !== "pubg-mobile" && selectedProduct.id !== "free-fire" && selectedProduct.id !== "freefire" && selectedProduct.id !== "valorant" && !serverInput?.value.trim()) {
       alert("Silakan masukkan Server.");
       serverInput?.focus();
       return;
