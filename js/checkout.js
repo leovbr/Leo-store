@@ -434,22 +434,31 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      const response = await fetch("https://spring-surf-a6a7.leovbriansyh791.workers.dev/api/orders", {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=UTF-8" },
-        body: JSON.stringify({
-          orderId,
-          productId: selectedProduct.id,
-          denominationId: selectedDenomination.id,
-          quantity: getQuantity(),
-          paymentId: selectedPayment.id,
-          email: order.email,
-          whatsapp: order.whatsapp,
-          playerId: order.playerId,
-          server: order.server,
-          promo: order.promo
-        })
+      const paymentPayload = JSON.stringify({
+        orderId,
+        productId: selectedProduct.id,
+        denominationId: selectedDenomination.id,
+        quantity: getQuantity(),
+        paymentId: selectedPayment.id,
+        email: order.email,
+        whatsapp: order.whatsapp,
+        playerId: order.playerId,
+        server: order.server,
+        promo: order.promo
       });
+
+      let response;
+      try {
+        response = await fetch("https://spring-surf-a6a7.leovbriansyh791.workers.dev/api/orders", {
+          method: "POST",
+          headers: { "Content-Type": "text/plain" },
+          body: paymentPayload,
+          cache: "no-store"
+        });
+      } catch (networkError) {
+        console.error("Payment API network error:", networkError);
+        throw new Error("Payment server tidak dapat dihubungi. Coba refresh halaman dan ulangi.");
+      }
 
       const result = await response.json().catch(() => ({}));
       if (!response.ok || !result.ok) {
