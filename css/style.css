@@ -3018,14 +3018,14 @@ body{
    HOME — CROWNED LEOOSTORE WORDMARK
    Home header only; other pages keep the original branding.
    ========================================================= */
-.home-page .header-brand{
+.header-brand{
   position:relative!important;
   display:inline-flex!important;
   align-items:center!important;
   flex:0 0 auto!important;
 }
-.home-page .header-brand .header-logo{display:none!important;}
-.home-page .header-brand .header-brand-text{
+.header-brand .header-logo{display:none!important;}
+.header-brand .header-brand-text{
   position:relative!important;
   display:inline-block!important;
   padding-top:9px!important;
@@ -3046,7 +3046,7 @@ body{
   transform:skewX(-7deg)!important;
   animation:leoHomeWordmarkShine 3.2s ease-in-out infinite!important;
 }
-.home-page .header-brand .header-brand-text::before{
+.header-brand .header-brand-text::before{
   content:"♛"!important;
   position:absolute!important;
   top:-7px!important;
@@ -3070,6 +3070,6 @@ body{
   50%{transform:translateX(-50%) skewX(7deg) translateY(-2px) scale(1.12) rotate(2deg);}
 }
 @media(max-width:600px){
-  .home-page .header-brand .header-brand-text{font-size:19px!important;padding-top:8px!important;}
-  .home-page .header-brand .header-brand-text::before{top:-6px!important;font-size:14px!important;}
+  .header-brand .header-brand-text{font-size:19px!important;padding-top:8px!important;}
+  .header-brand .header-brand-text::before{top:-6px!important;font-size:14px!important;}
 }
