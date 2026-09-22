@@ -3015,61 +3015,52 @@ body{
 
 
 /* =========================================================
-   HOME — CROWNED LEOOSTORE WORDMARK
-   Home header only; other pages keep the original branding.
+   LEOOSTORE — CROWNED IMAGE WORDMARK
+   All pages using the shared header.
    ========================================================= */
 .header-brand{
   position:relative!important;
   display:inline-flex!important;
   align-items:center!important;
   flex:0 0 auto!important;
+  width:170px!important;
+  height:54px!important;
+  overflow:visible!important;
 }
-.header-brand .header-logo{display:none!important;}
+
 .header-brand .header-brand-text{
-  position:relative!important;
-  display:inline-block!important;
-  padding-top:9px!important;
-  color:transparent!important;
-  background:linear-gradient(105deg,#5ee7ff 0%,#4aa8ff 28%,#8a63ff 55%,#ff4fc3 80%,#ff72e7 100%)!important;
-  background-size:220% 100%!important;
-  -webkit-background-clip:text!important;
-  background-clip:text!important;
-  -webkit-text-fill-color:transparent!important;
-  font-family:"Arial Black","Plus Jakarta Sans",sans-serif!important;
-  font-size:22px!important;
-  font-weight:900!important;
-  font-style:italic!important;
-  line-height:1!important;
-  letter-spacing:-.055em!important;
-  text-transform:uppercase!important;
-  text-shadow:0 4px 18px rgba(78,125,255,.20)!important;
-  transform:skewX(-7deg)!important;
-  animation:leoHomeWordmarkShine 3.2s ease-in-out infinite!important;
+  display:none!important;
 }
-.header-brand .header-brand-text::before{
-  content:"♛"!important;
-  position:absolute!important;
-  top:-7px!important;
-  left:50%!important;
-  transform:translateX(-50%) skewX(7deg)!important;
-  font-family:Georgia,"Times New Roman",serif!important;
-  font-size:16px!important;
-  font-style:normal!important;
-  line-height:1!important;
-  color:#f4d76b!important;
-  -webkit-text-fill-color:#f4d76b!important;
-  text-shadow:0 0 8px rgba(255,205,80,.55)!important;
-  animation:leoHomeCrown 2s ease-in-out infinite!important;
+
+.header-brand .header-logo{
+  display:block!important;
+  width:170px!important;
+  height:54px!important;
+  max-width:none!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  filter:drop-shadow(0 4px 12px rgba(62,128,255,.18))!important;
+  animation:leoLogoFloat 3.2s ease-in-out infinite!important;
 }
-@keyframes leoHomeWordmarkShine{
-  0%,100%{background-position:120% 0;filter:brightness(1);}
-  50%{background-position:-20% 0;filter:brightness(1.18);}
+
+@keyframes leoLogoFloat{
+  0%,100%{transform:translateY(0) scale(1);}
+  50%{transform:translateY(-1px) scale(1.015);}
 }
-@keyframes leoHomeCrown{
-  0%,100%{transform:translateX(-50%) skewX(7deg) translateY(0) scale(1) rotate(-2deg);}
-  50%{transform:translateX(-50%) skewX(7deg) translateY(-2px) scale(1.12) rotate(2deg);}
-}
+
 @media(max-width:600px){
-  .header-brand .header-brand-text{font-size:19px!important;padding-top:8px!important;}
-  .header-brand .header-brand-text::before{top:-6px!important;font-size:14px!important;}
+  .header-brand{
+    width:145px!important;
+    height:48px!important;
+  }
+  .header-brand .header-logo{
+    width:145px!important;
+    height:48px!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .header-brand .header-logo{
+    animation:none!important;
+  }
 }
