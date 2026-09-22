@@ -1086,40 +1086,41 @@ body {
 
 /* =========================================================
    LEOOSTORE BRAND ANIMATION — HEADER ONLY
+   Obsidian Black + Moving Silver Shine
    ========================================================= */
 .admin-brand h1 {
   position: relative;
   display: inline-block;
-  background: linear-gradient(110deg,#f5f7fb 0%,#f5f7fb 35%,#8b7cff 50%,#ffffff 65%,#f5f7fb 100%);
-  background-size: 220% 100%;
-  -webkit-background-clip:text;
-  background-clip:text;
-  -webkit-text-fill-color:transparent;
-  animation: leoBrandShine 3.2s ease-in-out infinite;
-  text-shadow: 0 0 18px rgba(108,99,255,.08);
+  color: #15181d;
+  background: linear-gradient(
+    110deg,
+    #090b0f 0%,
+    #15181d 30%,
+    #3f444c 42%,
+    #f4f6f8 50%,
+    #3f444c 58%,
+    #15181d 70%,
+    #090b0f 100%
+  );
+  background-size: 240% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: leoObsidianShine 3.8s ease-in-out infinite;
+  text-shadow: 0 0 14px rgba(255,255,255,.035);
 }
-.admin-brand h1::after {
-  content:"";
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:-3px;
-  height:2px;
-  border-radius:99px;
-  background:linear-gradient(90deg,transparent,#8b7cff,transparent);
-  transform:scaleX(.35);
-  opacity:.65;
-  animation: leoBrandPulse 2.4s ease-in-out infinite;
+
+@keyframes leoObsidianShine {
+  0%, 100% {
+    background-position: 120% 0;
+  }
+  50% {
+    background-position: -20% 0;
+  }
 }
-@keyframes leoBrandShine {
-  0%,100% { background-position:100% 0; }
-  50% { background-position:0% 0; }
-}
-@keyframes leoBrandPulse {
-  0%,100% { transform:scaleX(.3); opacity:.35; }
-  50% { transform:scaleX(1); opacity:.9; }
-}
-@media (prefers-reduced-motion:reduce) {
-  .admin-brand h1,
-  .admin-brand h1::after { animation:none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-brand h1 {
+    animation: none;
+  }
 }
