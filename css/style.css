@@ -2904,3 +2904,109 @@ body{
 .home-page .all-games-section .home-game-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:18px!important;width:100%!important;}
 .home-page .all-games-section .home-game-card{width:100%!important;min-width:0!important;}
 @media(max-width:680px){.home-page .all-games-section .home-game-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;}}
+
+
+/* =========================================================
+   LEOOSTORE BRAND — CROWN WORDMARK
+   Target: replace the old icon + plain text with a text
+   wordmark inspired by the supplied crowned LEOOSTORE logo.
+   ========================================================= */
+.header-brand{
+  position:relative!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-width:0!important;
+}
+
+.header-brand .header-logo{
+  display:none!important;
+}
+
+.header-brand .header-brand-text{
+  position:relative!important;
+  display:inline-block!important;
+  padding-top:9px!important;
+  color:transparent!important;
+  background:linear-gradient(
+    100deg,
+    #4edcff 0%,
+    #3f9dff 32%,
+    #8b7cff 54%,
+    #ff4fcf 78%,
+    #ff78df 100%
+  )!important;
+  -webkit-background-clip:text!important;
+  background-clip:text!important;
+  -webkit-text-fill-color:transparent!important;
+  font-family:"Arial Black","Plus Jakarta Sans",sans-serif!important;
+  font-size:22px!important;
+  font-weight:900!important;
+  font-style:italic!important;
+  letter-spacing:-.055em!important;
+  line-height:1!important;
+  text-shadow:0 4px 18px rgba(45,145,255,.16)!important;
+  white-space:nowrap!important;
+}
+
+.header-brand .header-brand-text::before{
+  content:"♛"!important;
+  position:absolute!important;
+  left:50%!important;
+  top:-9px!important;
+  transform:translateX(-50%) scaleX(1.08)!important;
+  color:transparent!important;
+  background:linear-gradient(135deg,#62e7ff 0%,#5c9cff 45%,#ff55d6 100%)!important;
+  -webkit-background-clip:text!important;
+  background-clip:text!important;
+  -webkit-text-fill-color:transparent!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+  font-size:15px!important;
+  font-style:normal!important;
+  line-height:1!important;
+  filter:drop-shadow(0 2px 6px rgba(76,174,255,.32))!important;
+}
+
+.header-brand:hover .header-brand-text{
+  filter:brightness(1.08)!important;
+}
+
+@media(max-width:600px){
+  .header-brand .header-brand-text{
+    padding-top:8px!important;
+    font-size:19px!important;
+  }
+  .header-brand .header-brand-text::before{
+    top:-8px!important;
+    font-size:13px!important;
+  }
+}
+
+/* Same wordmark inside the mobile side menu */
+.side-menu-brand{
+  position:relative!important;
+  display:inline-block!important;
+  padding-top:8px!important;
+  color:transparent!important;
+  background:linear-gradient(100deg,#4edcff 0%,#3f9dff 32%,#8b7cff 54%,#ff4fcf 78%,#ff78df 100%)!important;
+  -webkit-background-clip:text!important;
+  background-clip:text!important;
+  -webkit-text-fill-color:transparent!important;
+  font-family:"Arial Black","Plus Jakarta Sans",sans-serif!important;
+  font-weight:900!important;
+  font-style:italic!important;
+  letter-spacing:-.055em!important;
+}
+
+.side-menu-brand::before{
+  content:"♛"!important;
+  position:absolute!important;
+  left:50%!important;
+  top:-7px!important;
+  transform:translateX(-50%)!important;
+  color:#63dfff!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+  font-size:12px!important;
+  line-height:1!important;
+  filter:drop-shadow(0 2px 5px rgba(76,174,255,.28))!important;
+}
