@@ -1533,6 +1533,39 @@
 
 
 /* =========================================================
+   TARGET LOCK — DESKTOP HERO BANNER
+   Fit the laptop hero cleanly without changing the rest of checkout.
+   ========================================================= */
+@media(min-width:901px){
+  .checkout-page .game-hero{
+    min-height:310px!important;
+    height:310px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    overflow:hidden!important;
+  }
+
+  .checkout-page .game-hero-content{
+    width:min(100%,1180px)!important;
+    height:100%!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    overflow:hidden!important;
+  }
+
+  .checkout-page .game-hero-content::before{
+    width:min(760px,68vw)!important;
+    aspect-ratio:16/9!important;
+    height:auto!important;
+    max-height:100%!important;
+    background-size:cover!important;
+    background-position:center!important;
+    border-radius:0!important;
+  }
+}
+/* =========================================================
    CHECKOUT SUMMARY — BOTTOM STICKY TARGET LOCK
    Same sticky behavior as the site header, but anchored
    to the bottom of the viewport. Only the summary moves.
