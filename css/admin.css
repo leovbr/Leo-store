@@ -1082,3 +1082,44 @@ body {
     font-size: 18px;
   }
 }
+
+
+/* =========================================================
+   LEOOSTORE BRAND ANIMATION — HEADER ONLY
+   ========================================================= */
+.admin-brand h1 {
+  position: relative;
+  display: inline-block;
+  background: linear-gradient(110deg,#f5f7fb 0%,#f5f7fb 35%,#8b7cff 50%,#ffffff 65%,#f5f7fb 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation: leoBrandShine 3.2s ease-in-out infinite;
+  text-shadow: 0 0 18px rgba(108,99,255,.08);
+}
+.admin-brand h1::after {
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-3px;
+  height:2px;
+  border-radius:99px;
+  background:linear-gradient(90deg,transparent,#8b7cff,transparent);
+  transform:scaleX(.35);
+  opacity:.65;
+  animation: leoBrandPulse 2.4s ease-in-out infinite;
+}
+@keyframes leoBrandShine {
+  0%,100% { background-position:100% 0; }
+  50% { background-position:0% 0; }
+}
+@keyframes leoBrandPulse {
+  0%,100% { transform:scaleX(.3); opacity:.35; }
+  50% { transform:scaleX(1); opacity:.9; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .admin-brand h1,
+  .admin-brand h1::after { animation:none; }
+}
