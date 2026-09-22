@@ -3074,3 +3074,32 @@ body{
   0%,100%{filter:contrast(1.16) saturate(1.28) brightness(1.10) drop-shadow(0 0 1px rgba(255,255,255,.35)) drop-shadow(0 4px 14px rgba(62,128,255,.28));}
   50%{filter:contrast(1.24) saturate(1.38) brightness(1.17) drop-shadow(0 0 2px rgba(255,255,255,.48)) drop-shadow(0 4px 18px rgba(82,137,255,.36));}
 }
+
+/* =========================================================
+   LEOOSTORE — PREMIUM LOGO SWEEP
+   Subtle shine + lift, shared across all pages.
+   ========================================================= */
+.header-brand .header-logo{
+  position:relative!important;
+  transform-origin:center!important;
+  will-change:transform,filter!important;
+  animation:
+    leoLogoFloat 3.2s ease-in-out infinite,
+    leoLogoHDR 2.8s ease-in-out infinite,
+    leoLogoPulse 4.8s ease-in-out infinite!important;
+}
+
+@keyframes leoLogoPulse{
+  0%,100%{
+    transform:translateY(0) scale(1);
+  }
+  45%{
+    transform:translateY(-1px) scale(1.012);
+  }
+  50%{
+    transform:translateY(-1px) scale(1.018);
+  }
+  55%{
+    transform:translateY(-1px) scale(1.012);
+  }
+}
