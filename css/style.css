@@ -3040,8 +3040,8 @@ body{
   max-width:none!important;
   object-fit:contain!important;
   object-position:center!important;
-  filter:drop-shadow(0 4px 12px rgba(62,128,255,.18))!important;
-  animation:leoLogoFloat 3.2s ease-in-out infinite!important;
+  filter:contrast(1.16) saturate(1.28) brightness(1.10) drop-shadow(0 0 1px rgba(255,255,255,.35)) drop-shadow(0 4px 14px rgba(62,128,255,.28))!important;
+  animation:leoLogoFloat 3.2s ease-in-out infinite,leoLogoHDR 2.8s ease-in-out infinite!important;
 }
 
 @keyframes leoLogoFloat{
@@ -3064,4 +3064,13 @@ body{
   .header-brand .header-logo{
     animation:none!important;
   }
+}
+
+/* =========================================================
+   LEOOSTORE — ULTRA HDR DISPLAY
+   Boosts perceived clarity, contrast and color on the navbar logo.
+   ========================================================= */
+@keyframes leoLogoHDR{
+  0%,100%{filter:contrast(1.16) saturate(1.28) brightness(1.10) drop-shadow(0 0 1px rgba(255,255,255,.35)) drop-shadow(0 4px 14px rgba(62,128,255,.28));}
+  50%{filter:contrast(1.24) saturate(1.38) brightness(1.17) drop-shadow(0 0 2px rgba(255,255,255,.48)) drop-shadow(0 4px 18px rgba(82,137,255,.36));}
 }
