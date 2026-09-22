@@ -101,34 +101,8 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
 
-  orders.forEach(
-    order => {
-
-      if (
-        order.status ===
-        "Pembayaran Berhasil"
-      ) {
-
-        startProcessing(
-          order.orderId
-        );
-
-      }
-
-      else if (
-        order.status ===
-        "Pesanan Diproses"
-      ) {
-
-        continueProcessing(
-          order.orderId,
-          order.processingAt
-        );
-
-      }
-
-    }
-  );
+  renderHistoryList(sortedOrders);
+  syncHistoryOrders(sortedOrders);
 
 });
 
@@ -261,240 +235,77 @@ function saveLastOrder(
 
 
 /* =========================================================
-   PROCESSING
-   ========================================================= */
+   HISTORY BACKEND SYNC
+========================================================= */
 
-function handleProcessing(
-  order
-) {
+async function syncHistoryOrders(orders) {
+  if (!Array.isArray(orders) || !orders.length) return;
 
-  if (
-    order.status ===
-    "Pembayaran Berhasil"
-  ) {
+  const updated = await Promise.all(
+    orders.map(async (order) => {
+      if (!order?.orderId) return order;
 
-    startProcessing(
-      order.orderId
+      try {
+        const response = await fetch(
+          PAYMENT_API + "/api/orders/" + encodeURIComponent(order.orderId),
+          { cache: "no-store" }
+        );
+        const result = await response.json().catch(() => ({}));
+
+        if (!response.ok || !result.ok || !result.order) {
+          return order;
+        }
+
+        const backendOrder = result.order;
+        return {
+          ...order,
+          ...backendOrder,
+          orderId: backendOrder.orderId || order.orderId,
+          gameId: backendOrder.productId || order.gameId,
+          gameName: backendOrder.productName || order.gameName || order.game,
+          game: backendOrder.productName || order.game,
+          amount: backendOrder.denomination || order.amount,
+          denomination: backendOrder.denomination || order.denomination,
+          paymentId: backendOrder.paymentId || order.paymentId,
+          payment: backendOrder.paymentName || order.payment,
+          paymentName: backendOrder.paymentName || order.paymentName,
+          price: Number(backendOrder.total ?? order.price ?? 0),
+          total: Number(backendOrder.total ?? order.total ?? 0),
+          createdAt: backendOrder.createdAt || order.createdAt
+        };
+      } catch (error) {
+        console.error("History status sync failed:", error);
+        return order;
+      }
+    })
+  );
+
+  const localOrders = getOrders();
+  updated.forEach((order) => {
+    const index = localOrders.findIndex(
+      item => String(item.orderId) === String(order.orderId)
+    );
+    if (index !== -1) localOrders[index] = order;
+    else localOrders.unshift(order);
+  });
+
+  saveOrders(localOrders);
+
+  const latest = updated
+    .slice()
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt || 0) -
+        new Date(a.createdAt || 0)
     );
 
-  }
-
-  else if (
-    order.status ===
-    "Pesanan Diproses"
-  ) {
-
-    continueProcessing(
-      order.orderId,
-      order.processingAt
-    );
-
-  }
-
-}
-
-
-function startProcessing(
-  orderId
-) {
-
-  const orders =
-    getOrders();
-
-
-  const index =
-    orders.findIndex(
-      item =>
-        String(item.orderId) ===
-        String(orderId)
-    );
-
-
-  if (
-    index === -1
-  ) {
-
-    return;
-
-  }
-
-
-  const order =
-    orders[index];
-
-
-  if (
-    order.status !==
-    "Pembayaran Berhasil"
-  ) {
-
-    return;
-
-  }
-
-
-  order.status =
-    "Pesanan Diproses";
-
-
-  order.processingAt =
-    new Date().toISOString();
-
-
-  orders[index] =
-    order;
-
-
-  saveOrders(
-    orders
-  );
-
-
-  saveLastOrder(
-    order
-  );
-
-
-  renderCurrentPage(
-    order
-  );
-
-
-  continueProcessing(
-    order.orderId,
-    order.processingAt
-  );
-
-}
-
-
-function continueProcessing(
-  orderId,
-  processingAt
-) {
-
-  if (
-    !processingAt
-  ) {
-
-    processingAt =
-      new Date().toISOString();
-
-  }
-
-
-  const started =
-    new Date(
-      processingAt
-    ).getTime();
-
-
-  const elapsed =
-    Date.now() -
-    started;
-
-
-  const duration =
-    4000;
-
-
-  const remaining =
-    duration -
-    elapsed;
-
-
-  if (
-    remaining <= 0
-  ) {
-
-    completeTransaction(
-      orderId
-    );
-
-    return;
-
-  }
-
-
-  setTimeout(
-    () => {
-
-      completeTransaction(
-        orderId
-      );
-
-    },
-    remaining
-  );
-
-}
-
-
-function completeTransaction(
-  orderId
-) {
-
-  const orders =
-    getOrders();
-
-
-  const index =
-    orders.findIndex(
-      item =>
-        String(item.orderId) ===
-        String(orderId)
-    );
-
-
-  if (
-    index === -1
-  ) {
-
-    return;
-
-  }
-
-
-  const order =
-    orders[index];
-
-
-  if (
-    order.status !==
-    "Pesanan Diproses"
-  ) {
-
-    return;
-
-  }
-
-
-  order.status =
-    "Top Up Berhasil";
-
-
-  order.completedAt =
-    new Date().toISOString();
-
-
-  orders[index] =
-    order;
-
-
-  saveOrders(
-    orders
-  );
-
-
-  saveLastOrder(
-    order
-  );
-
-
-  renderCurrentPage(
-    order
-  );
-
+  renderHistoryList(latest);
+
+  latest.forEach((order) => {
+    if (order.status === "Menunggu Pembayaran") {
+      setTimeout(() => syncHistoryOrders([order]), 3000);
+    }
+  });
 }
 
 
