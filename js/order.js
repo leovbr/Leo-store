@@ -1032,13 +1032,12 @@ function renderHistoryPage(
      SEARCH
   ======================================================= */
 
-  function performSearch() {
+  async function performSearch() {
 
     const keyword =
       searchInput.value
         .trim()
         .toLowerCase();
-
 
     if (!keyword) {
 
@@ -1050,7 +1049,6 @@ function renderHistoryPage(
 
     }
 
-
     const exactOrder =
       sortedOrders.find(
         order =>
@@ -1059,7 +1057,6 @@ function renderHistoryPage(
           ).toLowerCase() ===
           keyword
       );
-
 
     if (exactOrder) {
 
@@ -1072,6 +1069,77 @@ function renderHistoryPage(
 
     }
 
+    /*
+     * Search the backend when the order is not
+     * present in this browser's localStorage.
+     */
+    const rawOrderId = searchInput.value.trim();
+
+    if (/^leo-[a-z0-9]+$/i.test(rawOrderId)) {
+
+      try {
+
+        const response = await fetch(
+          PAYMENT_API + "/api/orders/" +
+          encodeURIComponent(rawOrderId),
+          { cache: "no-store" }
+        );
+
+        const result =
+          await response.json().catch(() => ({}));
+
+        if (response.ok && result.ok && result.order) {
+
+          const backendOrder = result.order;
+
+          const remoteOrder = {
+            orderId: backendOrder.orderId,
+            gameId: backendOrder.productId || "",
+            gameName: backendOrder.productName || "Game",
+            game: backendOrder.productName || "Game",
+            amount: backendOrder.denomination || "",
+            denomination: backendOrder.denomination || "",
+            playerId: backendOrder.playerId || "",
+            server: backendOrder.server || "",
+            paymentId: backendOrder.paymentId || "",
+            payment: backendOrder.paymentId || "",
+            paymentName: backendOrder.paymentName || backendOrder.paymentId || "Pembayaran",
+            price: Number(backendOrder.total || 0),
+            total: Number(backendOrder.total || 0),
+            quantity: Number(backendOrder.quantity || 1),
+            status: backendOrder.status || "Menunggu Pembayaran",
+            createdAt: backendOrder.createdAt || new Date().toISOString()
+          };
+
+          const localOrders = getOrders();
+          const index = localOrders.findIndex(
+            item => String(item.orderId) === String(remoteOrder.orderId)
+          );
+
+          if (index !== -1) {
+            localOrders[index] = { ...localOrders[index], ...remoteOrder };
+          } else {
+            localOrders.unshift(remoteOrder);
+          }
+
+          saveOrders(localOrders);
+          saveLastOrder(remoteOrder);
+
+          window.location.href =
+            "order.html?id=" +
+            encodeURIComponent(remoteOrder.orderId);
+
+          return;
+
+        }
+
+      } catch (error) {
+
+        console.error("Backend order lookup failed:", error);
+
+      }
+
+    }
 
     const filtered =
       sortedOrders.filter(
@@ -1082,12 +1150,10 @@ function renderHistoryPage(
               order.orderId || ""
             ).toLowerCase();
 
-
           const playerId =
             String(
               order.playerId || ""
             ).toLowerCase();
-
 
           const phone =
             String(
@@ -1098,14 +1164,12 @@ function renderHistoryPage(
               ""
             ).toLowerCase();
 
-
           const game =
             String(
               order.gameName ||
               order.game ||
               ""
             ).toLowerCase();
-
 
           return (
             orderId.includes(
@@ -1125,13 +1189,11 @@ function renderHistoryPage(
         }
       );
 
-
     renderHistoryList(
       filtered
     );
 
   }
-
 
   searchButton?.addEventListener(
     "click",
