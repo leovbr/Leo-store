@@ -136,12 +136,21 @@ function getStatusClass(status) {
 
 function getGameIcon(order) {
   const slug = getGameSlug(order);
+  const knownGames = new Set([
+    "mobile-legends", "free-fire", "pubg-mobile", "valorant", "roblox",
+    "genshin-impact", "honkai-star-rail", "honkai-impact-3",
+    "arena-of-valor", "call-of-duty-mobile", "honor-of-kings",
+    "wuthering-waves", "blood-strike", "efootball", "ea-sports-fc-mobile",
+    "league-of-legends-wild-rift", "marvel-rivals", "lifeafter",
+    "point-blank", "delta-force", "black-clover-m", "speed-drifters",
+    "zenless-zone-zero"
+  ]);
 
-  if (slug === "free-fire") return "🔥";
-  if (slug === "mobile-legends") return "⚔️";
-  if (slug === "pubg-mobile") return "🔫";
+  if (knownGames.has(slug)) {
+    return '<img src="assets/icons/' + escapeHTML(slug) + '.webp" alt="' + escapeHTML(getGameName(order)) + '" loading="lazy">';
+  }
 
-  return "🎮";
+  return '<span class="admin-game-icon-fallback">🎮</span>';
 }
 
 // ================================
