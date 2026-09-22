@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="css/checkout-fixes.css?v=20260920-games1">
 <style>
 /* Trending flame — animation only, no layout changes */
-.home-games-section:first-of-type .section-heading h2 .trending-flame{
+.home-games-section .section-heading h2 .trending-flame{
   display:inline-block;
   transform-origin:50% 85%;
   animation:leoTrendingFlame 1.15s ease-in-out infinite;
@@ -26,591 +26,97 @@
   75%{transform:translateY(-1px) scale(1.06,.98) rotate(-1deg);filter:drop-shadow(0 0 6px rgba(255,138,0,.46));}
 }
 @media (prefers-reduced-motion:reduce){
-  .home-games-section:first-of-type .section-heading h2 .trending-flame{animation:none;}
+  .home-games-section .section-heading h2 .trending-flame{animation:none;}
 }
 </style>
 </head>
- <body class="home-page"> 
-<!-- =========================
-     HEADER
-========================== -->
-    <header class="site-header home-header">
+<body class="home-page">
+<header class="site-header home-header">
   <div class="container header-inner"><a href="index.html" class="header-brand">
-  <img
-    src="assets/logo-1.webp"
-    alt="LEOOSTORE"
-    class="header-logo"
-  >
-
-  <span class="header-brand-text">
-    LEOOSTORE
-  </span>
+  <img src="assets/logo-1.webp" alt="LEOOSTORE" class="header-logo">
+  <span class="header-brand-text">LEOOSTORE</span>
 </a>
-
 <div class="header-actions">
-  <a href="https://wa.me/6285823538473" class="header-action cs-button" aria-label="Chat Admin CS" title="Chat Admin CS" target="_blank" rel="noopener noreferrer">
-  <svg class="cs-icon" viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M4 13v-1a8 8 0 0 1 16 0v1"/>
-    <path d="M4 13v4a2 2 0 0 0 2 2h1v-6H6a2 2 0 0 0-2 2Z"/>
-    <path d="M20 13v4a2 2 0 0 1-2 2h-1v-6h1a2 2 0 0 1 2 2Z"/>
-    <path d="M15 19c-.7 1-1.7 1.5-3 1.5"/>
-  </svg>
-</a>
-
-  <button
-    type="button"
-    class="header-action search-button"
-    id="searchButton"
-    aria-label="Cari"
-  >
-    <span class="header-icon">⌕</span>
-  </button>
-
-  <button
-    type="button"
-    class="currency-selector"
-    id="currencySelector"
-  >
-    <span class="country-flag">🇮🇩</span>
-    <span>ID / IDR</span>
-  </button>
-
-  <button
-    type="button"
-    class="header-action menu-button"
-    id="menuButton"
-    aria-label="Buka menu"
-    aria-expanded="false"
-  >
-    <span class="menu-icon">
-      <span></span>
-      <span></span>
-      <span></span>
-    </span>
-  </button>
-
-</div>
-
-  </div>
-</header><!-- =========================
-     SEARCH PANEL
-========================== --><div class="search-panel" id="searchPanel">  <div class="search-panel-inner"><input
-  type="search"
-  id="siteSearch"
-  placeholder="Cari game..."
-  autocomplete="off"
->
-
-<button
-  type="button"
-  id="searchClose"
-  aria-label="Tutup pencarian"
->
-  ×
-</button>
-
-  </div></div><!-- =========================
-     MENU OVERLAY
-========================== --><div
-  class="menu-overlay"
-  id="menuOverlay"
-></div><!-- =========================
-     SIDE MENU
-========================== --><aside
-  class="side-menu"
-  id="sideMenu"
-  aria-hidden="true"
->  <div class="side-menu-header"><a href="index.html" class="side-menu-brand">
-  LEOOSTORE
-</a>
-
-<button
-  type="button"
-  class="side-menu-close"
-  id="menuClose"
-  aria-label="Tutup menu"
->
-  ×
-</button>
-
-  </div>  <div class="side-menu-divider"></div>  <nav class="side-menu-nav"><a
-  href="shop.html"
-  class="side-menu-item"
->
-  <span>Top Up</span>
-  <span class="side-menu-icon">🛒</span>
-</a>
-
-<a
-  href="order.html"
-  class="side-menu-item"
->
-  <span>Cek Transaksi</span>
-  <span class="side-menu-icon">✓</span>
-</a>
-
-<a
-  href="#"
-  class="side-menu-item"
->
-  <span>Leaderboard</span>
-  <span class="side-menu-icon">🏆</span>
-</a>
-
-<a
-  href="#"
-  class="side-menu-item"
->
-  <span>Artikel</span>
-  <span class="side-menu-icon">📰</span>
-</a>
-
-<a
-  href="#"
-  class="side-menu-item"
->
-  <span>Kalkulator</span>
-  <span class="side-menu-arrow">→</span>
-</a>
-
-<a
-  href="#"
-  class="side-menu-item side-menu-login"
->
-  <span>Masuk</span>
-  <span class="side-menu-icon">⇥</span>
-</a>
-
-  </nav></aside><main> 
-  <!-- =========================
-       PROMO / BANNER
-  ========================== --> 
-    <section class="home-banner-section">
-      
-      <div class="container">
-
-  <div class="section-heading">
-
-  <span class="eyebrow">
-    EVENT & PROMO
-  </span>
-
-</div>
-
-
+  <a href="https://wa.me/6285823538473" class="header-action cs-button" aria-label="Chat Admin CS" title="Chat Admin CS" target="_blank" rel="noopener noreferrer"><svg class="cs-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13v-1a8 8 0 0 1 16 0v1"/><path d="M4 13v4a2 2 0 0 0 2 2h1v-6H6a2 2 0 0 0-2 2Z"/><path d="M20 13v4a2 2 0 0 1-2 2h-1v-6h1a2 2 0 0 1 2 2Z"/><path d="M15 19c-.7 1-1.7 1.5-3 1.5"/></svg></a>
+  <button type="button" class="header-action search-button" id="searchButton" aria-label="Cari"><span class="header-icon">⌕</span></button>
+  <button type="button" class="currency-selector" id="currencySelector"><span class="country-flag">🇮🇩</span><span>ID / IDR</span></button>
+  <button type="button" class="header-action menu-button" id="menuButton" aria-label="Buka menu" aria-expanded="false"><span class="menu-icon"><span></span><span></span><span></span></span></button>
+</div></div>
+</header>
+<div class="search-panel" id="searchPanel"><div class="search-panel-inner"><input type="search" id="siteSearch" placeholder="Cari game..." autocomplete="off"><button type="button" id="searchClose" aria-label="Tutup pencarian">×</button></div></div>
+<div class="menu-overlay" id="menuOverlay"></div>
+<aside class="side-menu" id="sideMenu" aria-hidden="true">
+  <div class="side-menu-header"><a href="index.html" class="side-menu-brand">LEOOSTORE</a><button type="button" class="side-menu-close" id="menuClose" aria-label="Tutup menu">×</button></div>
+  <div class="side-menu-divider"></div>
+  <nav class="side-menu-nav">
+    <a href="shop.html" class="side-menu-item"><span>Top Up</span><span class="side-menu-icon">🛒</span></a>
+    <a href="order.html" class="side-menu-item"><span>Cek Transaksi</span><span class="side-menu-icon">✓</span></a>
+    <a href="#" class="side-menu-item"><span>Leaderboard</span><span class="side-menu-icon">🏆</span></a>
+    <a href="#" class="side-menu-item"><span>Artikel</span><span class="side-menu-icon">📰</span></a>
+    <a href="#" class="side-menu-item"><span>Kalkulator</span><span class="side-menu-arrow">→</span></a>
+    <a href="#" class="side-menu-item side-menu-login"><span>Masuk</span><span class="side-menu-icon">⇥</span></a>
+  </nav>
+</aside>
+<main>
+<section class="home-banner-section"><div class="container">
+  <div class="section-heading"><span class="eyebrow">EVENT & PROMO</span></div>
   <div class="banner-carousel">
-
     <div class="banner-track">
-
-      <!-- MOBILE LEGENDS -->
-      <a
-        href="checkout.html?game=mobile-legends"
-        class="home-banner-slide"
-      >
-
-        <img
-          src="assets/icons/mobile-legends.webp"
-          alt="Mobile Legends"
-        >
-
-        <div class="home-banner-overlay">
-
-          <div>
-            <span>
-              TOP UP SEKARANG
-            </span>
-
-            <strong>
-              Mobile Legends
-            </strong>
-          </div>
-
-          <b>→</b>
-
-        </div>
-
-      </a>
-
-
-      <!-- FREE FIRE -->
-      <a
-        href="checkout.html?game=free-fire"
-        class="home-banner-slide"
-      >
-
-        <img
-          src="assets/icons/free-fire.webp"
-          alt="Free Fire"
-        >
-
-        <div class="home-banner-overlay">
-
-          <div>
-            <span>
-              TOP UP SEKARANG
-            </span>
-
-            <strong>
-              Free Fire
-            </strong>
-          </div>
-
-          <b>→</b>
-
-        </div>
-
-      </a>
-
-      <!-- PUBG MOBILE -->
-      <a
-        href="checkout.html?game=pubg-mobile"
-        class="home-banner-slide"
-      >
-
-        <img
-          src="assets/icons/pubg-mobile.webp"
-          alt="PUBG Mobile"
-        >
-
-        <div class="home-banner-overlay">
-
-          <div>
-            <span>
-              TOP UP SEKARANG
-            </span>
-
-            <strong>
-              PUBG Mobile
-            </strong>
-          </div>
-
-          <b>→</b>
-
-        </div>
-
-      </a>
-
+      <a href="checkout.html?game=mobile-legends" class="home-banner-slide"><img src="assets/icons/mobile-legends.webp" alt="Mobile Legends"><div class="home-banner-overlay"><div><span>TOP UP SEKARANG</span><strong>Mobile Legends</strong></div><b>→</b></div></a>
+      <a href="checkout.html?game=free-fire" class="home-banner-slide"><img src="assets/icons/free-fire.webp" alt="Free Fire"><div class="home-banner-overlay"><div><span>TOP UP SEKARANG</span><strong>Free Fire</strong></div><b>→</b></div></a>
+      <a href="checkout.html?game=pubg-mobile" class="home-banner-slide"><img src="assets/icons/pubg-mobile.webp" alt="PUBG Mobile"><div class="home-banner-overlay"><div><span>TOP UP SEKARANG</span><strong>PUBG Mobile</strong></div><b>→</b></div></a>
     </div>
-
-
-    <button
-      type="button"
-      class="banner-arrow banner-arrow-left"
-      id="bannerPrev"
-      aria-label="Banner sebelumnya"
-    >
-      ‹
-    </button>
-
-
-    <button
-      type="button"
-      class="banner-arrow banner-arrow-right"
-      id="bannerNext"
-      aria-label="Banner berikutnya"
-    >
-      ›
-    </button>
-
-
-    <div
-      class="banner-dots"
-      id="bannerDots"
-    ></div>
-
+    <button type="button" class="banner-arrow banner-arrow-left" id="bannerPrev" aria-label="Banner sebelumnya">‹</button>
+    <button type="button" class="banner-arrow banner-arrow-right" id="bannerNext" aria-label="Banner berikutnya">›</button>
+    <div class="banner-dots" id="bannerDots"></div>
   </div>
-
-</div>
-
-  </section>  <!-- =========================
-       TRENDING
-  ========================== -->  <section class="home-games-section"><div class="container">
-
-  <div class="section-heading">
-
-    <h2>
-      Trending <span class="trending-flame" aria-hidden="true">🔥</span>
-    </h2>
-
-  </div>
-
-
+</div></section>
+<section class="home-games-section"><div class="container">
+  <div class="section-heading"><h2>Trending <span class="trending-flame" aria-hidden="true">🔥</span></h2></div>
   <div class="home-game-grid">
-
-    <!-- MOBILE LEGENDS -->
-    <a
-      href="checkout.html?game=mobile-legends"
-      class="home-game-card"
-    >
-
-      <div class="home-game-image">
-        <img
-          src="assets/icons/mobile-legends.webp"
-          alt="Mobile Legends"
-          loading="lazy"
-        >
-      </div>
-
-      <div class="home-game-info">
-        <strong>
-          Mobile Legends
-        </strong>
-
-        <span>
-          Moonton
-        </span>
-      </div>
-
-    </a>
-
-
-    <!-- FREE FIRE -->
-    <a
-      href="checkout.html?game=free-fire"
-      class="home-game-card"
-    >
-
-      <div class="home-game-image">
-        <img
-          src="assets/icons/free-fire.webp"
-          alt="Free Fire"
-          loading="lazy"
-        >
-      </div>
-
-      <div class="home-game-info">
-        <strong>
-          Free Fire
-        </strong>
-
-        <span>
-          Garena
-        </span>
-      </div>
-
-    </a>
-
-   <!-- ROBLOX VIA LOGIN -->
-<a
-  href="checkout.html?game=roblox-via-login"
-  class="home-game-card"
->
-
-  <div class="home-game-image">
-    <img
-      src="assets/icons/roblox.webp"
-      alt="ROBLOX VIA LOGIN"
-      loading="lazy"
-    >
+    <a href="checkout.html?game=mobile-legends" class="home-game-card"><div class="home-game-image"><img src="assets/icons/mobile-legends.webp" alt="Mobile Legends" loading="lazy"></div><div class="home-game-info"><strong>Mobile Legends</strong><span>Moonton</span></div></a>
+    <a href="checkout.html?game=free-fire" class="home-game-card"><div class="home-game-image"><img src="assets/icons/free-fire.webp" alt="Free Fire" loading="lazy"></div><div class="home-game-info"><strong>Free Fire</strong><span>Garena</span></div></a>
+    <a href="checkout.html?game=roblox-via-login" class="home-game-card"><div class="home-game-image"><img src="assets/icons/roblox.webp" alt="ROBLOX VIA LOGIN" loading="lazy"></div><div class="home-game-info"><strong>ROBLOX VIA LOGIN</strong><span>Roblox Corporation</span></div></a>
+    <a href="checkout.html?game=roblox-via-username" class="home-game-card"><div class="home-game-image"><img src="assets/icons/roblox.webp" alt="ROBLOX VIA USERNAME" loading="lazy"></div><div class="home-game-info"><strong>ROBLOX VIA USERNAME</strong><span>Roblox Corporation</span></div></a>
+    <a href="checkout.html?game=pubg-mobile" class="home-game-card"><div class="home-game-image"><img src="assets/icons/pubg-mobile.webp" alt="PUBG Mobile" loading="lazy"></div><div class="home-game-info"><strong>PUBG Mobile</strong><span>Tencent Games</span></div></a>
+    <a href="checkout.html?game=valorant" class="home-game-card"><div class="home-game-image"><img src="assets/icons/valorant.webp?v=20260920" alt="VALORANT" loading="lazy"></div><div class="home-game-info"><strong>VALORANT</strong><span>Riot Games</span></div></a>
   </div>
-
-  <div class="home-game-info">
-    <strong>
-      ROBLOX VIA LOGIN
-    </strong>
-
-    <span>
-      Roblox Corporation
-    </span>
-  </div>
-
-</a>
-
-
-<!-- ROBLOX VIA USERNAME -->
-<a
-  href="checkout.html?game=roblox-via-username"
-  class="home-game-card"
->
-
-  <div class="home-game-image">
-    <img
-      src="assets/icons/roblox.webp"
-      alt="ROBLOX VIA USERNAME"
-      loading="lazy"
-    >
-  </div>
-
-  <div class="home-game-info">
-    <strong>
-      ROBLOX VIA USERNAME
-    </strong>
-
-    <span>
-      Roblox Corporation
-    </span>
-  </div>
-
-</a>
-    
-
-
-    <!-- PUBG MOBILE -->
-    <a href="checkout.html?game=pubg-mobile" class="home-game-card">
-      <div class="home-game-image"><img src="assets/icons/pubg-mobile.webp" alt="PUBG Mobile" loading="lazy"></div>
-      <div class="home-game-info"><strong>PUBG Mobile</strong><span>Tencent Games</span></div>
-    </a>
-
-    <!-- VALORANT -->
-    <a href="checkout.html?game=valorant" class="home-game-card">
-      <div class="home-game-image"><img src="assets/icons/valorant.webp?v=20260920" alt="VALORANT" loading="lazy"></div>
-      <div class="home-game-info"><strong>VALORANT</strong><span>Riot Games</span></div>
-    </a>
-  </div>
-
-</div>
- 
-
-  </section>  <!-- =========================
-       ALL GAMES
-  ========================== -->  <section class="home-games-section all-games-section"><div class="container">
-
-  <div class="section-heading">
-    <span class="eyebrow">KOLEKSI GAME</span>
-    <h2>All Games</h2>
-  </div>
-
+</div></section>
+<section class="home-games-section all-games-section"><div class="container">
+  <div class="section-heading"><span class="eyebrow">KOLEKSI GAME</span><h2>All Games</h2></div>
   <div class="home-game-grid">
-
-    <!-- MOBILE LEGENDS -->
-    <a href="checkout.html?game=mobile-legends" class="home-game-card">
-      <div class="home-game-image"><img src="assets/icons/mobile-legends.webp" alt="Mobile Legends" loading="lazy"></div>
-      <div class="home-game-info"><strong>Mobile Legends</strong><span>Moonton</span></div>
-    </a>
-
-    <!-- FREE FIRE -->
-    <a href="checkout.html?game=free-fire" class="home-game-card">
-      <div class="home-game-image"><img src="assets/icons/free-fire.webp" alt="Free Fire" loading="lazy"></div>
-      <div class="home-game-info"><strong>Free Fire</strong><span>Garena</span></div>
-    </a>
-
-    <!-- PUBG MOBILE -->
-    <a href="checkout.html?game=pubg-mobile" class="home-game-card">
-      <div class="home-game-image"><img src="assets/icons/pubg-mobile.webp" alt="PUBG Mobile" loading="lazy"></div>
-      <div class="home-game-info"><strong>PUBG Mobile</strong><span>Tencent Games</span></div>
-    </a>
-
-    <!-- ROBLOX -->
-    <a href="checkout.html?game=roblox-via-login" class="home-game-card">
-      <div class="home-game-image"><img src="assets/icons/roblox.webp" alt="ROBLOX" loading="lazy"></div>
-      <div class="home-game-info"><strong>ROBLOX</strong><span>Roblox Corporation</span></div>
-    </a>
-
-    <!-- VALORANT -->
-    <a href="checkout.html?game=valorant" class="home-game-card">
-      <div class="home-game-image"><img src="assets/icons/valorant.webp?v=20260920" alt="VALORANT" loading="lazy"></div>
-      <div class="home-game-info"><strong>VALORANT</strong><span>Riot Games</span></div>
-    </a>
-
-    <!-- GENSHIN IMPACT -->
-    <a href="checkout.html?game=genshin-impact" class="home-game-card">
-      <div class="home-game-image"><img src="assets/icons/genshin-impact.webp?v=20260920" alt="Genshin Impact" loading="lazy"></div>
-      <div class="home-game-info"><strong>Genshin Impact</strong><span>HoYoverse</span></div>
-    </a>
-
-    <!-- HONKAI: STAR RAIL -->
-    <a href="checkout.html?game=honkai-star-rail" class="home-game-card">
-      <div class="home-game-image"><img src="assets/icons/honkai-star-rail.webp" alt="Honkai: Star Rail" loading="lazy"></div>
-      <div class="home-game-info"><strong>Honkai: Star Rail</strong><span>HoYoverse</span></div>
-    </a>
-
-    <!-- ZENLESS ZONE ZERO -->
-    <a href="checkout.html?game=zenless-zone-zero" class="home-game-card">
-      <div class="home-game-image"><img src="assets/icons/zenless-zone-zero.webp" alt="Zenless Zone Zero" loading="lazy"></div>
-      <div class="home-game-info"><strong>Zenless Zone Zero</strong><span>HoYoverse</span></div>
-    </a>
-
-    <!-- CALL OF DUTY MOBILE -->
-    <a href="checkout.html?game=call-of-duty-mobile" class="home-game-card">
-      <div class="home-game-image"><img src="assets/icons/call-of-duty-mobile.webp" alt="Call of Duty: Mobile" loading="lazy"></div>
-      <div class="home-game-info"><strong>Call of Duty: Mobile</strong><span>Garena</span></div>
-    </a>
-
+    <a href="checkout.html?game=mobile-legends" class="home-game-card"><div class="home-game-image"><img src="assets/icons/mobile-legends.webp" alt="Mobile Legends" loading="lazy"></div><div class="home-game-info"><strong>Mobile Legends</strong><span>Moonton</span></div></a>
+    <a href="checkout.html?game=free-fire" class="home-game-card"><div class="home-game-image"><img src="assets/icons/free-fire.webp" alt="Free Fire" loading="lazy"></div><div class="home-game-info"><strong>Free Fire</strong><span>Garena</span></div></a>
+    <a href="checkout.html?game=pubg-mobile" class="home-game-card"><div class="home-game-image"><img src="assets/icons/pubg-mobile.webp" alt="PUBG Mobile" loading="lazy"></div><div class="home-game-info"><strong>PUBG Mobile</strong><span>Tencent Games</span></div></a>
+    <a href="checkout.html?game=roblox-via-login" class="home-game-card"><div class="home-game-image"><img src="assets/icons/roblox.webp" alt="ROBLOX" loading="lazy"></div><div class="home-game-info"><strong>ROBLOX</strong><span>Roblox Corporation</span></div></a>
+    <a href="checkout.html?game=valorant" class="home-game-card"><div class="home-game-image"><img src="assets/icons/valorant.webp?v=20260920" alt="VALORANT" loading="lazy"></div><div class="home-game-info"><strong>VALORANT</strong><span>Riot Games</span></div></a>
+    <a href="checkout.html?game=genshin-impact" class="home-game-card"><div class="home-game-image"><img src="assets/icons/genshin-impact.webp?v=20260920" alt="Genshin Impact" loading="lazy"></div><div class="home-game-info"><strong>Genshin Impact</strong><span>HoYoverse</span></div></a>
+    <a href="checkout.html?game=honkai-star-rail" class="home-game-card"><div class="home-game-image"><img src="assets/icons/honkai-star-rail.webp" alt="Honkai: Star Rail" loading="lazy"></div><div class="home-game-info"><strong>Honkai: Star Rail</strong><span>HoYoverse</span></div></a>
+    <a href="checkout.html?game=zenless-zone-zero" class="home-game-card"><div class="home-game-image"><img src="assets/icons/zenless-zone-zero.webp" alt="Zenless Zone Zero" loading="lazy"></div><div class="home-game-info"><strong>Zenless Zone Zero</strong><span>HoYoverse</span></div></a>
+    <a href="checkout.html?game=call-of-duty-mobile" class="home-game-card"><div class="home-game-image"><img src="assets/icons/call-of-duty-mobile.webp" alt="Call of Duty: Mobile" loading="lazy"></div><div class="home-game-info"><strong>Call of Duty: Mobile</strong><span>Garena</span></div></a>
   </div>
-
-  <div class="home-more-wrapper">
-    <a href="shop.html" class="home-more-link">
-      Tampilkan Semua Game
-      <span aria-hidden="true">→</span>
-    </a>
-  </div>
-
-</div>
-</section></main>
-<!-- =========================
-     FOOTER
-========================== -->
-<footer class="site-footer checkout-footer-inline universal-social-footer"><div class="footer-inner"><div class="footer-links"><div class="footer-column footer-social-column"><h4>Ikuti Kami</h4><div class="footer-social-row"><a href="https://wa.me/6285823538473" class="social-link social-whatsapp"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v16/icons/whatsapp.svg" alt=""><span>WhatsApp</span></a><a href="https://www.instagram.com/leoostore791?stkn=MWVhMDNsd3hicWNzbA==" class="social-link social-instagram" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v16/icons/instagram.svg" alt=""><span>Instagram</span></a><a href="https://www.tiktok.com/@leoostore791?_r=1&_t=ZS-99sj3AXKOcD" class="social-link social-tiktok" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v16/icons/tiktok.svg" alt=""><span>TikTok</span></a><div class="footer-social-copyright">LEOOSTORE © 2026 · Fast. Trusted. Delivered.</div></div></div>
-</div></div></footer>
-   <!-- =========================
-     BANNER SCRIPT
-========================== -->
-   <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const track = document.querySelector(".banner-track");
-    const slides = document.querySelectorAll(".home-banner-slide");
-    const dots = document.getElementById("bannerDots");
-    const prev = document.getElementById("bannerPrev");
-    const next = document.getElementById("bannerNext");
-    if (!track || slides.length === 0) return;
-    let current = 0;
-    function update() {
-      track.style.transform = "translateX(-" + (current * 100) + "%)";
-      document.querySelectorAll(".banner-dot").forEach(function (dot, index) {
-        dot.classList.toggle("active", index === current);
-      });
-    }
-    if (dots) {
-      slides.forEach(function (_, index) {
-        const dot = document.createElement("button");
-        dot.type = "button";
-        dot.className = "banner-dot" + (index === 0 ? " active" : "");
-        dot.setAttribute("aria-label", "Buka banner " + (index + 1));
-        dot.addEventListener("click", function () { current = index; update(); });
-        dots.appendChild(dot);
-      });
-    }
-    prev?.addEventListener("click", function () { current = (current - 1 + slides.length) % slides.length; update(); });
-    next?.addEventListener("click", function () { current = (current + 1) % slides.length; update(); });
-    setInterval(function () { current = (current + 1) % slides.length; update(); }, 5000);
-    update();
-  });
-</script><!-- =========================
-     MENU + SEARCH SCRIPT
-========================== --><script>
-document.addEventListener("DOMContentLoaded", function () {
-  const menuButton = document.getElementById("menuButton");
-  const menuClose = document.getElementById("menuClose");
-  const sideMenu = document.getElementById("sideMenu");
-  const menuOverlay = document.getElementById("menuOverlay");
-  const searchButton = document.getElementById("searchButton");
-  const searchPanel = document.getElementById("searchPanel");
-  const searchClose = document.getElementById("searchClose");
-  const siteSearch = document.getElementById("siteSearch");
-  function openMenu() {
-    sideMenu.classList.add("active"); menuOverlay.classList.add("active");
-    sideMenu.setAttribute("aria-hidden", "false"); menuButton.setAttribute("aria-expanded", "true");
-    document.body.style.overflow = "hidden";
-  }
-  function closeMenu() {
-    sideMenu.classList.remove("active"); menuOverlay.classList.remove("active");
-    sideMenu.setAttribute("aria-hidden", "true"); menuButton.setAttribute("aria-expanded", "false");
-    document.body.style.overflow = "";
-  }
-  menuButton?.addEventListener("click", openMenu);
-  menuClose?.addEventListener("click", closeMenu);
-  menuOverlay?.addEventListener("click", closeMenu);
-  document.addEventListener("keydown", function (event) {
-    if (event.key === "Escape") { closeMenu(); searchPanel?.classList.remove("active"); }
-  });
-  searchButton?.addEventListener("click", function () {
-    searchPanel.classList.toggle("active");
-    if (searchPanel.classList.contains("active")) setTimeout(function () { siteSearch?.focus(); }, 200);
-  });
-  searchClose?.addEventListener("click", function () {
-    searchPanel.classList.remove("active");
-    if (siteSearch) siteSearch.value = "";
-  });
+  <div class="home-more-wrapper"><a href="shop.html" class="home-more-link">Tampilkan Semua Game <span aria-hidden="true">→</span></a></div>
+</div></section></main>
+<footer class="site-footer checkout-footer-inline universal-social-footer"><div class="footer-inner"><div class="footer-links"><div class="footer-column footer-social-column"><h4>Ikuti Kami</h4><div class="footer-social-row"><a href="https://wa.me/6285823538473" class="social-link social-whatsapp"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v16/icons/whatsapp.svg" alt=""><span>WhatsApp</span></a><a href="https://www.instagram.com/leoostore791?stkn=MWVhMDNsd3hicWNzbA==" class="social-link social-instagram" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v16/icons/instagram.svg" alt=""><span>Instagram</span></a><a href="https://www.tiktok.com/@leoostore791?_r=1&_t=ZS-99sj3AXKOcD" class="social-link social-tiktok" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v16/icons/tiktok.svg" alt=""><span>TikTok</span></a><div class="footer-social-copyright">LEOOSTORE © 2026 · Fast. Trusted. Delivered.</div></div></div></div></footer>
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+  const track=document.querySelector(".banner-track"),slides=document.querySelectorAll(".home-banner-slide"),dots=document.getElementById("bannerDots"),prev=document.getElementById("bannerPrev"),next=document.getElementById("bannerNext");
+  if(!track||slides.length===0)return;
+  let current=0;
+  function update(){track.style.transform="translateX(-"+(current*100)+"%)";document.querySelectorAll(".banner-dot").forEach(function(dot,index){dot.classList.toggle("active",index===current);});}
+  if(dots)slides.forEach(function(_,index){const dot=document.createElement("button");dot.type="button";dot.className="banner-dot"+(index===0?" active":"");dot.setAttribute("aria-label","Buka banner "+(index+1));dot.addEventListener("click",function(){current=index;update();});dots.appendChild(dot);});
+  prev?.addEventListener("click",function(){current=(current-1+slides.length)%slides.length;update();});next?.addEventListener("click",function(){current=(current+1)%slides.length;update();});setInterval(function(){current=(current+1)%slides.length;update();},5000);update();
 });
-</script></body>
-</html>
+</script>
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+  const menuButton=document.getElementById("menuButton"),menuClose=document.getElementById("menuClose"),sideMenu=document.getElementById("sideMenu"),menuOverlay=document.getElementById("menuOverlay"),searchButton=document.getElementById("searchButton"),searchPanel=document.getElementById("searchPanel"),searchClose=document.getElementById("searchClose"),siteSearch=document.getElementById("siteSearch");
+  function openMenu(){sideMenu.classList.add("active");menuOverlay.classList.add("active");sideMenu.setAttribute("aria-hidden","false");menuButton.setAttribute("aria-expanded","true");document.body.style.overflow="hidden";}
+  function closeMenu(){sideMenu.classList.remove("active");menuOverlay.classList.remove("active");sideMenu.setAttribute("aria-hidden","true");menuButton.setAttribute("aria-expanded","false");document.body.style.overflow="";}
+  menuButton?.addEventListener("click",openMenu);menuClose?.addEventListener("click",closeMenu);menuOverlay?.addEventListener("click",closeMenu);
+  document.addEventListener("keydown",function(event){if(event.key==="Escape"){closeMenu();searchPanel?.classList.remove("active");}});
+  searchButton?.addEventListener("click",function(){searchPanel.classList.toggle("active");if(searchPanel.classList.contains("active"))setTimeout(function(){siteSearch?.focus();},200);});
+  searchClose?.addEventListener("click",function(){searchPanel.classList.remove("active");if(siteSearch)siteSearch.value="";});
+});
+</script>
+</body></html>
