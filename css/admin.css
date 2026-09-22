@@ -113,11 +113,20 @@ body {
 
   color: white;
 
+  overflow: hidden;
+
   font-size: 20px;
   font-weight: 800;
 
   box-shadow:
     0 8px 25px rgba(108, 99, 255, 0.25);
+}
+
+.brand-icon img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
 }
 
 .admin-brand h1 {
@@ -531,6 +540,22 @@ body {
   gap: 20px;
 
   margin-bottom: 17px;
+}
+
+.admin-game-icon img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.admin-game-icon-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
 .admin-order-top h4 {
