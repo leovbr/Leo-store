@@ -10,6 +10,25 @@
   <link rel="stylesheet" href="css/style.css?v=20260920-games1">
   <link rel="stylesheet" href="css/style-pages.css?v=20260919-navy1">
 <link rel="stylesheet" href="css/checkout-fixes.css?v=20260920-games1">
+<style>
+/* Trending flame — animation only, no layout changes */
+.home-games-section:first-of-type .section-heading h2 .trending-flame{
+  display:inline-block;
+  transform-origin:50% 85%;
+  animation:leoTrendingFlame 1.15s ease-in-out infinite;
+  filter:drop-shadow(0 0 5px rgba(255,112,0,.42));
+  will-change:transform,filter;
+}
+@keyframes leoTrendingFlame{
+  0%,100%{transform:translateY(0) scale(1) rotate(0deg);filter:drop-shadow(0 0 4px rgba(255,112,0,.35));}
+  25%{transform:translateY(-1px) scale(1.07,.96) rotate(-2deg);filter:drop-shadow(0 0 7px rgba(255,138,0,.5));}
+  50%{transform:translateY(-2px) scale(.96,1.08) rotate(2deg);filter:drop-shadow(0 0 9px rgba(255,92,0,.58));}
+  75%{transform:translateY(-1px) scale(1.06,.98) rotate(-1deg);filter:drop-shadow(0 0 6px rgba(255,138,0,.46));}
+}
+@media (prefers-reduced-motion:reduce){
+  .home-games-section:first-of-type .section-heading h2 .trending-flame{animation:none;}
+}
+</style>
 </head>
  <body class="home-page"> 
 <!-- =========================
@@ -310,7 +329,7 @@
   <div class="section-heading">
 
     <h2>
-      Trending
+      Trending <span class="trending-flame" aria-hidden="true">🔥</span>
     </h2>
 
   </div>
@@ -426,7 +445,6 @@
     
 
 
-
     <!-- PUBG MOBILE -->
     <a href="checkout.html?game=pubg-mobile" class="home-game-card">
       <div class="home-game-image"><img src="assets/icons/pubg-mobile.webp" alt="PUBG Mobile" loading="lazy"></div>
@@ -529,242 +547,70 @@
 ========================== -->
    <script>
   document.addEventListener("DOMContentLoaded", function () {
-
     const track = document.querySelector(".banner-track");
     const slides = document.querySelectorAll(".home-banner-slide");
     const dots = document.getElementById("bannerDots");
     const prev = document.getElementById("bannerPrev");
     const next = document.getElementById("bannerNext");
-
-    if (!track || slides.length === 0) {
-      return;
-    }
-
+    if (!track || slides.length === 0) return;
     let current = 0;
-
     function update() {
-
-      track.style.transform =
-        "translateX(-" + (current * 100) + "%)";
-
-      document
-        .querySelectorAll(".banner-dot")
-        .forEach(function (dot, index) {
-
-          dot.classList.toggle(
-            "active",
-            index === current
-          );
-
-        });
-
-    }
-
-    if (dots) {
-
-      slides.forEach(function (_, index) {
-
-        const dot = document.createElement("button");
-
-        dot.type = "button";
-
-        dot.className =
-          "banner-dot" +
-          (index === 0 ? " active" : "");
-
-        dot.setAttribute(
-          "aria-label",
-          "Buka banner " + (index + 1)
-        );
-
-        dot.addEventListener("click", function () {
-
-          current = index;
-          update();
-
-        });
-
-        dots.appendChild(dot);
-
+      track.style.transform = "translateX(-" + (current * 100) + "%)";
+      document.querySelectorAll(".banner-dot").forEach(function (dot, index) {
+        dot.classList.toggle("active", index === current);
       });
-
     }
-
-    prev?.addEventListener("click", function () {
-
-      current =
-        (current - 1 + slides.length) %
-        slides.length;
-
-      update();
-
-    });
-
-    next?.addEventListener("click", function () {
-
-      current =
-        (current + 1) %
-        slides.length;
-
-      update();
-
-    });
-
-    setInterval(function () {
-
-      current =
-        (current + 1) %
-        slides.length;
-
-      update();
-
-    }, 5000);
-
+    if (dots) {
+      slides.forEach(function (_, index) {
+        const dot = document.createElement("button");
+        dot.type = "button";
+        dot.className = "banner-dot" + (index === 0 ? " active" : "");
+        dot.setAttribute("aria-label", "Buka banner " + (index + 1));
+        dot.addEventListener("click", function () { current = index; update(); });
+        dots.appendChild(dot);
+      });
+    }
+    prev?.addEventListener("click", function () { current = (current - 1 + slides.length) % slides.length; update(); });
+    next?.addEventListener("click", function () { current = (current + 1) % slides.length; update(); });
+    setInterval(function () { current = (current + 1) % slides.length; update(); }, 5000);
     update();
-
   });
 </script><!-- =========================
      MENU + SEARCH SCRIPT
 ========================== --><script>
 document.addEventListener("DOMContentLoaded", function () {
-
   const menuButton = document.getElementById("menuButton");
   const menuClose = document.getElementById("menuClose");
   const sideMenu = document.getElementById("sideMenu");
   const menuOverlay = document.getElementById("menuOverlay");
-
   const searchButton = document.getElementById("searchButton");
   const searchPanel = document.getElementById("searchPanel");
   const searchClose = document.getElementById("searchClose");
   const siteSearch = document.getElementById("siteSearch");
-
-
-  /* =========================
-     SIDE MENU
-  ========================== */
-
   function openMenu() {
-
-    sideMenu.classList.add("active");
-    menuOverlay.classList.add("active");
-
-    sideMenu.setAttribute(
-      "aria-hidden",
-      "false"
-    );
-
-    menuButton.setAttribute(
-      "aria-expanded",
-      "true"
-    );
-
+    sideMenu.classList.add("active"); menuOverlay.classList.add("active");
+    sideMenu.setAttribute("aria-hidden", "false"); menuButton.setAttribute("aria-expanded", "true");
     document.body.style.overflow = "hidden";
   }
-
-
   function closeMenu() {
-
-    sideMenu.classList.remove("active");
-    menuOverlay.classList.remove("active");
-
-    sideMenu.setAttribute(
-      "aria-hidden",
-      "true"
-    );
-
-    menuButton.setAttribute(
-      "aria-expanded",
-      "false"
-    );
-
+    sideMenu.classList.remove("active"); menuOverlay.classList.remove("active");
+    sideMenu.setAttribute("aria-hidden", "true"); menuButton.setAttribute("aria-expanded", "false");
     document.body.style.overflow = "";
   }
-
-
-  menuButton?.addEventListener(
-    "click",
-    openMenu
-  );
-
-  menuClose?.addEventListener(
-    "click",
-    closeMenu
-  );
-
-  menuOverlay?.addEventListener(
-    "click",
-    closeMenu
-  );
-
-
-  /* ESC = CLOSE */
-
-  document.addEventListener(
-    "keydown",
-    function (event) {
-
-      if (event.key === "Escape") {
-
-        closeMenu();
-
-        searchPanel?.classList.remove(
-          "active"
-        );
-
-      }
-
-    }
-  );
-
-
-  /* =========================
-     SEARCH
-  ========================== */
-
-  searchButton?.addEventListener(
-    "click",
-    function () {
-
-      searchPanel.classList.toggle(
-        "active"
-      );
-
-      if (
-        searchPanel.classList.contains(
-          "active"
-        )
-      ) {
-
-        setTimeout(
-          function () {
-
-            siteSearch?.focus();
-
-          },
-          200
-        );
-
-      }
-
-    }
-  );
-
-
-  searchClose?.addEventListener(
-    "click",
-    function () {
-
-      searchPanel.classList.remove(
-        "active"
-      );
-
-      if (siteSearch) {
-        siteSearch.value = "";
-      }
-
-    }
-  );
-
+  menuButton?.addEventListener("click", openMenu);
+  menuClose?.addEventListener("click", closeMenu);
+  menuOverlay?.addEventListener("click", closeMenu);
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") { closeMenu(); searchPanel?.classList.remove("active"); }
+  });
+  searchButton?.addEventListener("click", function () {
+    searchPanel.classList.toggle("active");
+    if (searchPanel.classList.contains("active")) setTimeout(function () { siteSearch?.focus(); }, 200);
+  });
+  searchClose?.addEventListener("click", function () {
+    searchPanel.classList.remove("active");
+    if (siteSearch) siteSearch.value = "";
+  });
 });
 </script></body>
 </html>
