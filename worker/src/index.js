@@ -43,7 +43,7 @@ async function handleCreateOrderUnsafe(request,env){
   if(existing)return json({ok:true,orderId:existing.id,token:existing.snap_token,total:existing.total,status:existing.status,reused:true});
   const snapPaymentMap={qris:"other_qris",dana:"dana",ovo:"ovo",gopay:"gopay",shopeepay:"shopeepay","bca-va":"bca_va","bri-va":"bri_va","bni-va":"bni_va","mandiri-va":"echannel","permata-va":"permata_va","cimb-va":"cimb_va","danamon-va":"danamon_va","btn-va":"other_va"};
   const snapPayment=snapPaymentMap[paymentId]||paymentId;
-  const snapPayload={transaction_details:{order_id:orderId,gross_amount:total},item_details:[{id:denomination.id,price:total,quantity:1,name:product.name+" - "+denomination.amount}],enabled_payments:[snapPayment],custom_field1:product.id,custom_field2:denomination.id,custom_field3:paymentId};
+  const snapPayload={transaction_details:{order_id:orderId,gross_amount:total},item_details:[{id:denomination.id,price:total,quantity:1,name:product.name+" - "+denomination.amount}],enabled_payments:[snapPayment],callbacks:{finish:"https://leovbr.github.io/Leo-store/order.html?id="+encodeURIComponent(orderId)},custom_field1:product.id,custom_field2:denomination.id,custom_field3:paymentId};
   if(email||whatsapp)snapPayload.customer_details={email:email||undefined,phone:whatsapp||undefined};
   let response;let midtrans={};
   try{const auth=btoa(env.MIDTRANS_SERVER_KEY+":");response=await fetch(MIDTRANS_SANDBOX_URL,{method:"POST",headers:{"Accept":"application/json","Content-Type":"application/json","Authorization":"Basic "+auth},body:JSON.stringify(snapPayload)});midtrans=await response.json().catch(()=>({}));}
