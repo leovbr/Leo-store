@@ -1,42 +1,1599 @@
-/* =========================================================
-   CHECKOUT SUMMARY — BOTTOM SCREEN LOCK
-   Target only: RINGKASAN / Pesanan Kamu.
-   Keeps the rest of checkout positions unchanged.
-   ========================================================= */
-.checkout-page .checkout-sidebar{
-  position:fixed!important;
-  right:18px!important;
-  bottom:18px!important;
-  top:auto!important;
-  width:min(360px,calc(100vw - 36px))!important;
-  max-width:360px!important;
+/* ===== GAME HERO — MLBB BANNER / LOGO-CENTER DIVIDER LOCK =====
+   Keep game logo size. The banner divider runs through the logo center.
+   Game name + publisher sit directly below that divider, beside the logo.
+*/
+.checkout-page .game-hero{
+  min-height:300px!important;
+  overflow:hidden!important;
+}
+
+.checkout-page .game-hero-overlay{
+  padding:0!important;
+  align-items:stretch!important;
+}
+
+.checkout-page .game-hero-main{
+  position:relative!important;
+  width:100%!important;
+  height:100%!important;
+  min-height:300px!important;
+  display:block!important;
+}
+
+.checkout-page .game-hero-content{
+  position:relative!important;
+  width:100%!important;
+  height:250px!important;
+  min-height:250px!important;
+  padding:0 28px!important;
   margin:0!important;
-  z-index:1000!important;
+  display:block!important;
+  box-sizing:border-box!important;
+}
+
+.checkout-page .game-hero-icon{
+  position:absolute!important;
+  left:28px!important;
+  top:204px!important;
+  width:92px!important;
+  height:92px!important;
+  flex:0 0 92px!important;
+  z-index:5!important;
+}
+
+.checkout-page .game-hero-text{
+  position:absolute!important;
+  left:138px!important;
+  top:257px!important;
+  z-index:6!important;
+  min-width:0!important;
+  max-width:calc(100% - 166px)!important;
+  margin:0!important;
+}
+
+.checkout-page .game-hero-text h1{
+  margin:0!important;
+  font-size:clamp(24px,4vw,36px)!important;
+  line-height:1.08!important;
+}
+
+.checkout-page .game-hero-text p{
+  margin:5px 0 0!important;
+  font-size:13px!important;
+  line-height:1.2!important;
+  color:rgba(255,255,255,.72)!important;
+}
+
+.checkout-page .game-hero-benefits{
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  top:250px!important;
+  width:100%!important;
+  height:50px!important;
+  box-sizing:border-box!important;
+  margin:0!important;
+  padding:11px 18px!important;
+  border-top:1px solid rgba(255,255,255,.18)!important;
+  z-index:3!important;
+}
+
+/* The divider is the exact horizontal reference line at logo center. */
+.checkout-page .game-hero-content::after{
+  content:""!important;
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  top:250px!important;
+  height:1px!important;
+  background:rgba(255,255,255,.18)!important;
+  z-index:4!important;
+}
+
+/* Mobile: preserve the existing smaller logo dimensions. */
+@media(max-width:640px){
+  .checkout-page .game-hero{
+    min-height:285px!important;
+  }
+
+  .checkout-page .game-hero-main{
+    min-height:285px!important;
+  }
+
+  .checkout-page .game-hero-content{
+    height:235px!important;
+    min-height:235px!important;
+    padding:0 20px!important;
+  }
+
+  .checkout-page .game-hero-icon{
+    left:20px!important;
+    top:197px!important;
+    width:72px!important;
+    height:72px!important;
+    flex-basis:72px!important;
+  }
+
+  .checkout-page .game-hero-text{
+    left:106px!important;
+    top:242px!important;
+    max-width:calc(100% - 126px)!important;
+  }
+
+  .checkout-page .game-hero-text h1{
+    font-size:25px!important;
+  }
+
+  .checkout-page .game-hero-text p{
+    font-size:12px!important;
+  }
+
+  .checkout-page .game-hero-benefits{
+    top:235px!important;
+    height:50px!important;
+    padding:11px 7px!important;
+  }
+
+  .checkout-page .game-hero-content::after{
+    top:235px!important;
+  }
+}
+
+
+/* ===== GAME HERO — FINAL VISUAL TARGET LOCK =====
+   Upper banner / logo / title layout only.
+   Logo keeps its current size. The horizontal banner boundary
+   passes exactly through the logo center. Game name + publisher
+   sit below that boundary beside the logo. Existing benefits remain.
+*/
+.checkout-page .game-hero{
+  min-height:360px!important;
+  height:360px!important;
+}
+
+.checkout-page .game-hero-main{
+  min-height:360px!important;
+  height:360px!important;
+}
+
+.checkout-page .game-hero-content{
+  height:305px!important;
+  min-height:305px!important;
+  padding:0 28px!important;
+}
+
+.checkout-page .game-hero-content::after{
+  top:250px!important;
+  height:1px!important;
+  background:rgba(255,255,255,.24)!important;
+  z-index:4!important;
+}
+
+.checkout-page .game-hero-icon{
+  left:28px!important;
+  top:204px!important;
+  width:92px!important;
+  height:92px!important;
+  flex-basis:92px!important;
+  z-index:6!important;
+}
+
+.checkout-page .game-hero-text{
+  left:138px!important;
+  top:263px!important;
+  max-width:calc(100% - 166px)!important;
+  z-index:7!important;
+}
+
+.checkout-page .game-hero-text h1{
+  margin:0!important;
+  line-height:1.08!important;
+}
+
+.checkout-page .game-hero-text p{
+  margin:5px 0 0!important;
+  line-height:1.2!important;
+}
+
+.checkout-page .game-hero-benefits{
+  top:305px!important;
+  height:55px!important;
+  min-height:55px!important;
+  padding:11px 18px!important;
+  border-top:0!important;
+  border-bottom:0!important;
+  z-index:8!important;
+  box-sizing:border-box!important;
+}
+
+@media(max-width:640px){
+  .checkout-page .game-hero{
+    min-height:330px!important;
+    height:330px!important;
+  }
+
+  .checkout-page .game-hero-main{
+    min-height:330px!important;
+    height:330px!important;
+  }
+
+  .checkout-page .game-hero-content{
+    height:280px!important;
+    min-height:280px!important;
+    padding:0 20px!important;
+  }
+
+  .checkout-page .game-hero-content::after{
+    top:233px!important;
+  }
+
+  .checkout-page .game-hero-icon{
+    left:20px!important;
+    top:197px!important;
+    width:72px!important;
+    height:72px!important;
+    flex-basis:72px!important;
+  }
+
+  .checkout-page .game-hero-text{
+    left:106px!important;
+    top:244px!important;
+    max-width:calc(100% - 126px)!important;
+  }
+
+  .checkout-page .game-hero-text h1{
+    font-size:25px!important;
+  }
+
+  .checkout-page .game-hero-text p{
+    margin-top:4px!important;
+    font-size:12px!important;
+  }
+
+  .checkout-page .game-hero-benefits{
+    top:280px!important;
+    height:50px!important;
+    min-height:50px!important;
+    padding:11px 7px!important;
+  }
+}
+
+
+/* ===== GAME HERO — FINAL BLACK LOWER PANEL LOCK =====
+   Banner image ends at the logo center line.
+   Everything below that line is the market-style solid black panel.
+*/
+.checkout-page .game-hero::before{
+  content:""!important;
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  top:250px!important;
+  bottom:0!important;
+  background:#050609!important;
+  z-index:1!important;
+  pointer-events:none!important;
+}
+
+.checkout-page .game-hero::after{
+  z-index:2!important;
+}
+
+.checkout-page .game-hero-content::after{
+  top:250px!important;
+  z-index:5!important;
+}
+
+.checkout-page .game-hero-icon{
+  z-index:6!important;
+}
+
+.checkout-page .game-hero-text{
+  z-index:7!important;
+}
+
+.checkout-page .game-hero-benefits{
+  z-index:8!important;
+  background:#050609!important;
+  border:0!important;
+}
+
+@media(max-width:640px){
+  .checkout-page .game-hero::before{
+    top:233px!important;
+  }
+
+  .checkout-page .game-hero-content::after{
+    top:233px!important;
+  }
+}
+
+/* ===== GAME HERO — FINAL CLEAN FINISH ===== */
+.checkout-page .game-hero{background-color:#050609!important;}
+.checkout-page .game-hero::before{top:250px!important;bottom:0!important;background:#050609!important;z-index:1!important;}
+.checkout-page .game-hero::after{
+  top:0!important;bottom:auto!important;height:250px!important;
+  background:
+    linear-gradient(90deg,rgba(5,6,10,.88),rgba(5,6,10,.48),rgba(5,6,10,.12)),
+    linear-gradient(0deg,rgba(5,6,10,.82),transparent 70%)!important;
+  z-index:2!important;pointer-events:none!important;
+}
+.checkout-page .game-hero-content::after{top:250px!important;height:1px!important;background:rgba(255,255,255,.24)!important;z-index:5!important;}
+.checkout-page .game-hero-text{top:257px!important;left:138px!important;max-width:calc(100% - 166px)!important;z-index:7!important;}
+.checkout-page .game-hero-text h1{font-size:clamp(24px,3.4vw,30px)!important;line-height:1.05!important;white-space:nowrap!important;overflow:visible!important;}
+.checkout-page .game-hero-text p{margin-top:4px!important;font-size:12px!important;line-height:1.15!important;white-space:nowrap!important;overflow:visible!important;}
+.checkout-page .game-hero-benefits{
+  top:305px!important;height:55px!important;min-height:55px!important;padding:11px 18px!important;
+  display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;
+  background:#050609!important;border:0!important;border-radius:0!important;box-shadow:none!important;z-index:8!important;
+}
+.checkout-page .game-hero-benefits .game-hero-divider{display:none!important;}
+.checkout-page .game-hero-benefits .hero-benefit{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:5px!important;min-width:0!important;flex:1 1 0!important;white-space:nowrap!important;}
+.checkout-page .game-hero-benefits .hero-benefit-icon{flex:0 0 auto!important;}
+@media(max-width:640px){
+  .checkout-page .game-hero::before{top:233px!important;background:#050609!important;}
+  .checkout-page .game-hero::after{height:233px!important;}
+  .checkout-page .game-hero-content::after{top:233px!important;}
+  .checkout-page .game-hero-text{left:106px!important;top:242px!important;max-width:calc(100% - 118px)!important;}
+  .checkout-page .game-hero-text h1{font-size:21px!important;line-height:1.02!important;}
+  .checkout-page .game-hero-text p{margin-top:3px!important;font-size:11px!important;line-height:1.1!important;}
+  .checkout-page .game-hero-benefits{top:280px!important;height:50px!important;min-height:50px!important;padding:10px 8px!important;gap:5px!important;}
+  .checkout-page .game-hero-benefits .hero-benefit{gap:3px!important;font-size:8px!important;}
+  .checkout-page .game-hero-benefits .hero-benefit-icon{font-size:11px!important;}
+}
+@media(max-width:380px){
+  .checkout-page .game-hero-benefits{padding-left:5px!important;padding-right:5px!important;gap:2px!important;}
+  .checkout-page .game-hero-benefits .hero-benefit{font-size:7px!important;gap:2px!important;}
+  .checkout-page .game-hero-benefits .hero-benefit-icon{font-size:10px!important;}
+}
+
+/* ===== HERO LOWER PANEL — ABSOLUTE BLACK FROM DIVIDER TO END ===== */
+.checkout-page .game-hero-content{
+  background:linear-gradient(to bottom,transparent 0,transparent 249px,#050609 249px,#050609 100%)!important;
+}
+.checkout-page .game-hero-benefits{background:#050609!important;}
+.checkout-page .game-hero-main{background:#050609!important;}
+.checkout-page .game-hero-main > .game-hero-content{
+  background:linear-gradient(to bottom,transparent 0,transparent 249px,#050609 249px,#050609 100%)!important;
+}
+@media(max-width:640px){
+  .checkout-page .game-hero-content{
+    background:linear-gradient(to bottom,transparent 0,transparent 232px,#050609 232px,#050609 100%)!important;
+  }
+  .checkout-page .game-hero-main > .game-hero-content{
+    background:linear-gradient(to bottom,transparent 0,transparent 232px,#050609 232px,#050609 100%)!important;
+  }
+}
+
+
+/* ===== TARGET LOCK — RESTORE BANNER ABOVE CENTER LINE =====
+   Upper 250px stays the real game banner.
+   From the logo-center divider downward, the panel is solid black.
+   No black layer is allowed to cover the upper banner.
+*/
+.checkout-page .game-hero{
+  background-color:#0c0f15!important;
+}
+
+.checkout-page .game-hero::after{
+  display:none!important;
+  background:none!important;
+}
+
+.checkout-page .game-hero::before{
+  top:250px!important;
+  bottom:0!important;
+  background:#050609!important;
+  z-index:1!important;
+}
+
+.checkout-page .game-hero-main{
+  background:transparent!important;
+}
+
+.checkout-page .game-hero-content{
+  background:transparent!important;
+}
+
+.checkout-page .game-hero-main > .game-hero-content{
+  background:transparent!important;
+}
+
+.checkout-page .game-hero-content::after{
+  top:250px!important;
+  height:1px!important;
+  background:rgba(255,255,255,.24)!important;
+  z-index:5!important;
+}
+
+.checkout-page .game-hero-benefits{
+  background:#050609!important;
+}
+
+@media(max-width:640px){
+  .checkout-page .game-hero::before{
+    top:233px!important;
+    bottom:0!important;
+  }
+
+  .checkout-page .game-hero-content::after{
+    top:233px!important;
+  }
+}
+
+
+/* ===== CHECKOUT FLOW + FOOTER FINAL LOCK =====
+   Keep the order summary in normal page flow.
+   Desktop: main content + summary side by side.
+   Mobile: main content -> summary -> footer.
+   Footer keeps only social links; no oversized brand/logo block.
+*/
+.checkout-page .checkout-layout{
+  display:grid!important;
+  grid-template-columns:minmax(0,1.55fr) minmax(280px,.75fr)!important;
+  align-items:start!important;
+  gap:22px!important;
+  width:100%!important;
+  margin-top:18px!important;
+  margin-bottom:0!important;
+}
+
+.checkout-page .checkout-main{
+  order:1!important;
+  min-width:0!important;
+  width:100%!important;
+}
+
+.checkout-page .checkout-sidebar{
+  order:2!important;
+  position:sticky!important;
+  top:92px!important;
+  align-self:start!important;
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  margin:0!important;
 }
 
 .checkout-page .checkout-summary{
-  max-height:calc(100vh - 36px)!important;
-  overflow:auto!important;
-  box-shadow:0 14px 40px rgba(0,0,0,.38)!important;
+  position:static!important;
+  inset:auto!important;
+  width:100%!important;
+  max-width:none!important;
+  transform:none!important;
+  margin:0!important;
+  float:none!important;
+}
+
+.checkout-footer-inline{
+  width:100%!important;
+  margin:20px 0 0!important;
+  padding:20px 0 18px!important;
+  position:static!important;
+  clear:both!important;
+  overflow:hidden!important;
+  box-sizing:border-box!important;
+}
+
+.checkout-footer-inline .footer-inner{
+  width:100%!important;
+  display:block!important;
+  margin:0!important;
+}
+
+.checkout-footer-inline .footer-links{
+  width:100%!important;
+  display:block!important;
+  margin:0 auto!important;
+  padding:0 16px!important;
+  box-sizing:border-box!important;
+}
+
+.checkout-footer-inline .footer-brand-column{
+  display:none!important;
+}
+
+.checkout-footer-inline .footer-social-column{
+  width:100%!important;
+  min-width:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  margin:0!important;
+  padding:0!important;
+  text-align:center!important;
+}
+
+.checkout-footer-inline .footer-social-column h4{
+  margin:0 0 9px!important;
+  font-size:13px!important;
+  line-height:1.2!important;
+}
+
+.checkout-footer-inline .footer-social-row{
+  width:100%!important;
+  display:flex!important;
+  flex-wrap:wrap!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:6px!important;
+  margin:0!important;
+  padding:0!important;
+}
+
+.checkout-footer-inline .social-link{
+  width:auto!important;
+  max-width:100%!important;
+  min-height:32px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:6px!important;
+  margin:0!important;
+  padding:4px 8px!important;
+  box-sizing:border-box!important;
+  border-radius:9px!important;
+}
+
+.checkout-footer-inline .social-link img{
+  width:15px!important;
+  height:15px!important;
+  min-width:15px!important;
+  min-height:15px!important;
+  object-fit:contain!important;
+  filter:brightness(0) invert(1)!important;
+  opacity:.9!important;
+}
+
+.checkout-footer-inline .social-link span{
+  font-size:10px!important;
+  line-height:1!important;
+}
+
+.checkout-footer-inline .social-link small{
+  font-size:9px!important;
+  line-height:1!important;
+  color:var(--text-muted)!important;
+}
+
+.checkout-footer-inline .footer-social-copyright{
+  width:100%!important;
+  margin:9px 0 0!important;
+  padding:0!important;
+  text-align:center!important;
+  font-size:8px!important;
+  line-height:1.35!important;
+  color:var(--text-muted)!important;
 }
 
 @media(max-width:900px){
+  .checkout-page .checkout-layout{
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:14px!important;
+  }
+
+  .checkout-page .checkout-main{
+    order:1!important;
+  }
+
   .checkout-page .checkout-sidebar{
-    right:12px!important;
-    bottom:12px!important;
-    width:calc(100vw - 24px)!important;
-    max-width:none!important;
+    order:2!important;
+    position:static!important;
+    top:auto!important;
+  }
+
+  .checkout-page .checkout-summary{
+    position:static!important;
+    inset:auto!important;
+  }
+
+  .checkout-footer-inline{
+    margin-top:16px!important;
+    padding:16px 0 14px!important;
+  }
+
+  .checkout-footer-inline .footer-links{
+    padding:0 10px!important;
   }
 }
 
 @media(max-width:680px){
+  .checkout-page .checkout-layout{
+    width:100%!important;
+    margin-top:12px!important;
+    gap:12px!important;
+  }
+
+  .checkout-footer-inline .footer-social-row{
+    gap:5px!important;
+  }
+
+  .checkout-footer-inline .social-link{
+    min-height:30px!important;
+    padding:4px 7px!important;
+  }
+
+  .checkout-footer-inline .social-link img{
+    width:14px!important;
+    height:14px!important;
+    min-width:14px!important;
+    min-height:14px!important;
+  }
+}
+
+
+/* ===== HERO CENTER-DIVIDER TARGET LOCK — CARD BACKGROUND =====
+   Above the divider: keep the real game banner.
+   From the logo-center divider to the end of the hero info area:
+   use the same surface as the account/input cards.
+   This layer sits ABOVE the banner but BELOW the logo/text.
+*/
+.checkout-page .game-hero{
+  background-color:var(--card)!important;
+}
+
+.checkout-page .game-hero::before{
+  top:250px!important;
+  bottom:0!important;
+  background:var(--card)!important;
+  z-index:2!important;
+  pointer-events:none!important;
+}
+
+.checkout-page .game-hero::after{
+  display:none!important;
+}
+
+.checkout-page .game-hero-content{
+  background:transparent!important;
+  isolation:isolate!important;
+}
+
+.checkout-page .game-hero-content::before{
+  content:""!important;
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  top:250px!important;
+  bottom:0!important;
+  background:var(--card)!important;
+  z-index:0!important;
+  pointer-events:none!important;
+}
+
+.checkout-page .game-hero-content::after{
+  top:250px!important;
+  height:1px!important;
+  background:rgba(255,255,255,.24)!important;
+  z-index:8!important;
+}
+
+.checkout-page .game-hero-icon{
+  z-index:10!important;
+}
+
+.checkout-page .game-hero-text{
+  z-index:11!important;
+}
+
+.checkout-page .game-hero-benefits{
+  background:var(--card)!important;
+  z-index:12!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+
+@media(max-width:640px){
+  .checkout-page .game-hero::before{
+    top:233px!important;
+    bottom:0!important;
+    background:var(--card)!important;
+  }
+
+  .checkout-page .game-hero-content::before{
+    top:233px!important;
+    bottom:0!important;
+    background:var(--card)!important;
+  }
+
+  .checkout-page .game-hero-content::after{
+    top:233px!important;
+  }
+
+  .checkout-page .game-hero-benefits{
+    background:var(--card)!important;
+  }
+}
+
+
+/* ===== FINAL HERO PANEL LOCK — COVER BANNER BELOW LOGO CENTER =====
+   The lower surface is a single overlay on the hero itself.
+   It starts exactly at the logo-center divider and reaches the hero bottom,
+   so the banner image cannot bleed through anywhere in the lower panel.
+*/
+.checkout-page .game-hero{
+  position:relative!important;
+  overflow:hidden!important;
+  background-color:var(--card)!important;
+}
+
+.checkout-page .game-hero::before{
+  content:""!important;
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  top:250px!important;
+  bottom:0!important;
+  width:100%!important;
+  height:auto!important;
+  background:var(--card)!important;
+  z-index:4!important;
+  pointer-events:none!important;
+}
+
+.checkout-page .game-hero::after{
+  display:none!important;
+}
+
+.checkout-page .game-hero-overlay{
+  z-index:5!important;
+}
+
+.checkout-page .game-hero-main{
+  background:transparent!important;
+}
+
+.checkout-page .game-hero-content{
+  position:relative!important;
+  background:transparent!important;
+  isolation:auto!important;
+}
+
+.checkout-page .game-hero-content::before{
+  display:none!important;
+}
+
+.checkout-page .game-hero-content::after{
+  top:250px!important;
+  height:1px!important;
+  background:rgba(255,255,255,.24)!important;
+  z-index:20!important;
+}
+
+.checkout-page .game-hero-icon{
+  z-index:21!important;
+}
+
+.checkout-page .game-hero-text{
+  z-index:22!important;
+}
+
+.checkout-page .game-hero-benefits{
+  position:absolute!important;
+  z-index:23!important;
+  background:var(--card)!important;
+}
+
+@media(max-width:640px){
+  .checkout-page .game-hero::before{
+    top:233px!important;
+    bottom:0!important;
+    background:var(--card)!important;
+  }
+
+  .checkout-page .game-hero-content::after{
+    top:233px!important;
+  }
+}
+
+
+/* ===== HERO LOWER BACKGROUND EXTENSION — KEEP BANNER FIXED =====
+   Extend only the card-colored panel below the logo-center divider.
+   The actual banner remains fixed to the original upper 250px/233px area.
+*/
+.checkout-page .game-hero{
+  height:390px!important;
+  min-height:390px!important;
+  background-color:var(--card)!important;
+  background-image:none!important;
+}
+
+.checkout-page .game-hero-main{
+  height:360px!important;
+  min-height:360px!important;
+  background:transparent!important;
+}
+
+.checkout-page .game-hero::after{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  top:0!important;
+  height:250px!important;
+  background-image:var(--hero-banner-image)!important;
+  background-position:center!important;
+  background-size:cover!important;
+  background-repeat:no-repeat!important;
+  z-index:1!important;
+  pointer-events:none!important;
+}
+
+.checkout-page .game-hero::before{
+  top:250px!important;
+  bottom:0!important;
+  background:var(--card)!important;
+  z-index:2!important;
+}
+
+.checkout-page .game-hero-overlay{z-index:5!important;}
+
+@media(max-width:640px){
+  .checkout-page .game-hero{
+    height:360px!important;
+    min-height:360px!important;
+  }
+  .checkout-page .game-hero-main{
+    height:340px!important;
+    min-height:340px!important;
+  }
+  .checkout-page .game-hero::after{
+    height:233px!important;
+  }
+  .checkout-page .game-hero::before{
+    top:233px!important;
+    bottom:0!important;
+  }
+}
+
+/* ===== TARGET LOCK — 16:9 HERO BANNER =====
+   Banner is strictly 16:9 and ends at the logo-center divider.
+   Nothing from the hero banner exists below that line.
+   All existing logo/title/benefits sizing and positioning stay unchanged.
+*/
+.checkout-page .game-hero{
+  height:360px!important;
+  min-height:360px!important;
+  background:var(--card)!important;
+  background-image:none!important;
+  overflow:hidden!important;
+}
+
+.checkout-page .game-hero::after{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  left:50%!important;
+  top:0!important;
+  width:min(100%,444.444px)!important;
+  height:250px!important;
+  aspect-ratio:16/9!important;
+  transform:translateX(-50%)!important;
+  background-image:var(--hero-banner-image)!important;
+  background-position:center!important;
+  background-size:cover!important;
+  background-repeat:no-repeat!important;
+  z-index:1!important;
+  pointer-events:none!important;
+}
+
+.checkout-page .game-hero::before{
+  top:250px!important;
+  bottom:0!important;
+  background:var(--card)!important;
+  z-index:4!important;
+}
+
+.checkout-page .game-hero-overlay{
+  z-index:5!important;
+}
+
+@media(max-width:640px){
+  .checkout-page .game-hero{
+    height:340px!important;
+    min-height:340px!important;
+  }
+
+  .checkout-page .game-hero::after{
+    left:50%!important;
+    top:0!important;
+    width:min(100%,414px)!important;
+    height:233px!important;
+    aspect-ratio:16/9!important;
+    transform:translateX(-50%)!important;
+  }
+
+  .checkout-page .game-hero::before{
+    top:233px!important;
+    bottom:0!important;
+  }
+}
+
+
+/* ===== ROBLOX VIA LOGIN ONLY =====
+   Scoped exclusively to #robloxLoginFields / Roblox info controls.
+*/
+.checkout-page #robloxLoginFields{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin-top:2px;
+}
+.checkout-page #robloxLoginFields[hidden]{display:none!important;}
+.checkout-page .roblox-login-field{margin:0;}
+.checkout-page .roblox-info-button{
+  width:28px;
+  height:28px;
+  flex:0 0 28px;
+  margin-left:auto;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:50%;
+  color:#fff;
+  background:rgba(255,255,255,.05);
+  font-weight:800;
+  cursor:pointer;
+}
+.checkout-page .roblox-info-button[hidden]{display:none!important;}
+.checkout-page .roblox-info-panel{
+  margin-top:12px;
+  padding:16px;
+  border:1px solid rgba(124,92,255,.24);
+  border-radius:14px;
+  background:rgba(124,92,255,.07);
+}
+.checkout-page .roblox-info-panel[hidden]{display:none!important;}
+.checkout-page .roblox-info-panel strong,
+.checkout-page .roblox-info-panel b{display:block;}
+.checkout-page .roblox-info-panel strong{font-size:12px;color:var(--text-muted);margin-bottom:5px;}
+.checkout-page .roblox-info-panel b{font-size:13px;}
+.checkout-page .roblox-info-panel p{margin:7px 0 12px;color:var(--text-muted);font-size:12px;line-height:1.5;}
+.checkout-page .roblox-info-panel button{
+  min-width:70px;
+  min-height:36px;
+  padding:0 14px;
+  border:1px solid rgba(124,92,255,.45);
+  border-radius:10px;
+  color:#fff;
+  background:rgba(124,92,255,.18);
+  font-weight:800;
+  cursor:pointer;
+}
+@media(max-width:640px){
+  .checkout-page #robloxLoginFields{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:8px;
+  }
+}
+
+
+/* ===== ROBLOX ACCOUNT TARGET LOCK =====
+   The generic Player ID / Server grid is hidden only when Roblox mode asks for
+   the dedicated Username + Password fields. Other products are untouched.
+*/
+.checkout-page #standardAccountFields[hidden]{
+  display:none!important;
+}
+.checkout-page #robloxLoginFields[hidden]{
+  display:none!important;
+}
+
+
+/* ===== ROBLOX VIA USERNAME — DENOMINATION CONTENT ONLY =====
+   Adds the Robux logo inside the price line for this product's denominations.
+   No card/grid/section positioning is changed.
+*/
+.checkout-page .denomination-price-box .denomination-logo{
+  width:16px!important;
+  height:16px!important;
+  min-width:16px!important;
+  min-height:16px!important;
+  object-fit:contain!important;
+  vertical-align:-3px!important;
+  margin-right:5px!important;
+}
+/* ===== ROBLOX PRE-ORDER INFORMATION — ROBLOX ONLY ===== */
+.checkout-page .roblox-preorder-modal[hidden]{display:none!important;}
+.checkout-page .roblox-preorder-modal{
+  position:fixed!important;
+  inset:0!important;
+  z-index:9999!important;
+  display:grid!important;
+  place-items:center!important;
+  padding:20px!important;
+}
+.checkout-page .roblox-preorder-backdrop{
+  position:absolute!important;
+  inset:0!important;
+  background:rgba(0,0,0,.78)!important;
+  backdrop-filter:blur(5px)!important;
+}
+.checkout-page .roblox-preorder-dialog{
+  position:relative!important;
+  width:min(100%,520px)!important;
+  max-height:min(90vh,720px)!important;
+  overflow:auto!important;
+  border:1px solid rgba(255,255,255,.12)!important;
+  border-radius:20px!important;
+  background:var(--card)!important;
+  box-shadow:0 24px 80px rgba(0,0,0,.45)!important;
+}
+.checkout-page .roblox-preorder-content{padding:24px!important;}
+.checkout-page .roblox-preorder-title{
+  font-size:18px!important;
+  font-weight:800!important;
+  margin-bottom:14px!important;
+}
+.checkout-page .roblox-preorder-heading{
+  font-size:14px!important;
+  font-weight:800!important;
+  margin-bottom:12px!important;
+}
+.checkout-page .roblox-preorder-body{
+  color:var(--text-muted)!important;
+  font-size:13px!important;
+  line-height:1.65!important;
+}
+.checkout-page .roblox-preorder-body ul{
+  margin:0!important;
+  padding-left:20px!important;
+}
+.checkout-page .roblox-preorder-body li{margin:6px 0!important;}
+.checkout-page .roblox-preorder-body .roblox-format{
+  margin-top:10px!important;
+  padding:10px 12px!important;
+  border-radius:10px!important;
+  background:rgba(255,255,255,.05)!important;
+  color:var(--text)!important;
+}
+.checkout-page .roblox-preorder-ok{
+  display:block!important;
+  min-width:100px!important;
+  margin:20px auto 0!important;
+  padding:10px 22px!important;
+  border:1px solid rgba(124,92,255,.45)!important;
+  border-radius:10px!important;
+  background:rgba(124,92,255,.18)!important;
+  color:#fff!important;
+  font-weight:800!important;
+  cursor:pointer!important;
+}
+.checkout-page.roblox-preorder-open{overflow:hidden!important;}
+@media(max-width:640px){
+  .checkout-page .roblox-preorder-content{padding:20px!important;}
+  .checkout-page .roblox-preorder-dialog{border-radius:16px!important;}
+}
+
+
+
+/* =========================================================
+   CHECKOUT SUMMARY — TARGET LOCK
+   ========================================================= */
+.checkout-page .checkout-summary-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.checkout-page .summary-toggle{
+  width:34px;
+  height:34px;
+  flex:0 0 34px;
+  display:grid;
+  place-items:center;
+  padding:0;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:var(--bg-soft);
+  color:var(--text);
+  font-size:18px;
+  font-weight:800;
+  cursor:pointer;
+}
+.checkout-page .summary-toggle[hidden]{display:none!important;}
+.checkout-page .summary-empty{
+  min-height:210px;
+  padding:28px 20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:16px;
+  text-align:center;
+}
+.checkout-page .summary-empty[hidden]{display:none!important;}
+.checkout-page .summary-empty-button{
+  min-height:44px;
+  padding:0 18px;
+  border:1px solid rgba(124,92,255,.8);
+  border-radius:12px;
+  background:linear-gradient(135deg,#7c5cff,#6947f2);
+  color:#fff;
+  font-weight:800;
+  cursor:pointer;
+}
+.checkout-page .summary-content[hidden]{display:none!important;}
+.checkout-page .summary-product-line{
+  margin:0 20px;
+  padding:16px 0 12px;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+.checkout-page .summary-product-line span{
+  font-size:15px;
+  font-weight:800;
+}
+.checkout-page .summary-product-line strong{
+  color:var(--text-muted);
+  font-size:12px;
+  line-height:1.45;
+}
+.checkout-page .summary-payment-row{
+  margin-top:13px!important;
+}
+.checkout-page .summary-content .btn-checkout{
+  margin-top:16px;
+}
+.checkout-page .checkout-summary:not(.expanded) .summary-content{
+  display:block;
+}
+.checkout-page .checkout-summary:not(.expanded) .summary-row,
+.checkout-page .checkout-summary:not(.expanded) .summary-total,
+.checkout-page .checkout-summary:not(.expanded) .summary-payment-row{
+  display:none;
+}
+.checkout-page .checkout-summary:not(.expanded) .summary-product-line{
+  padding-bottom:18px;
+}
+.checkout-page .checkout-summary:not(.expanded) .btn-checkout{
+  margin-top:0;
+}
+.checkout-page .btn-checkout:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+  pointer-events:none;
+}
+@media(max-width:680px){
+  .checkout-page .summary-empty{min-height:180px;}
+  .checkout-page .summary-product-line{margin-left:16px;margin-right:16px;}
+}
+
+/* ===== CHECKOUT SUMMARY — COMPACT SIZE ONLY =====
+   Target: RINGKASAN / Pesanan Kamu / empty state.
+   No position, width, grid, or surrounding layout changes.
+*/
+.checkout-page .checkout-summary-header{
+  min-height:54px!important;
+  padding:10px 16px!important;
+  gap:8px!important;
+}
+.checkout-page .checkout-summary-header .eyebrow{
+  font-size:9px!important;
+  line-height:1.1!important;
+  margin-bottom:3px!important;
+}
+.checkout-page .checkout-summary-header h2{
+  font-size:16px!important;
+  line-height:1.15!important;
+}
+.checkout-page .summary-toggle{
+  width:30px!important;
+  height:30px!important;
+  flex-basis:30px!important;
+  border-radius:8px!important;
+  font-size:15px!important;
+}
+.checkout-page .summary-empty{
+  min-height:145px!important;
+  padding:18px 14px!important;
+  gap:11px!important;
+  font-size:12px!important;
+  line-height:1.35!important;
+}
+.checkout-page .summary-empty-button{
+  min-height:36px!important;
+  padding:0 14px!important;
+  border-radius:9px!important;
+  font-size:11px!important;
+}
+@media(max-width:680px){
+  .checkout-page .checkout-summary-header{
+    min-height:50px!important;
+    padding:9px 14px!important;
+  }
+  .checkout-page .checkout-summary-header h2{
+    font-size:15px!important;
+  }
+  .checkout-page .summary-empty{
+    min-height:130px!important;
+    padding:16px 12px!important;
+    gap:10px!important;
+    font-size:11px!important;
+  }
+  .checkout-page .summary-empty-button{
+    min-height:34px!important;
+    padding:0 13px!important;
+    font-size:10px!important;
+  }
+}
+
+/* =========================================================
+   DENOMINATION DIVIDER — MOVE LINE DOWN ONLY
+   ========================================================= */
+.checkout-page .denomination-divider {
+  transform: translateY(6px) !important;
+}
+
+/* =========================================================
+   UNIVERSAL FOOTER — SOCIAL ONLY
+   Keep all page positions unchanged; remove legacy brand/nav.
+   ========================================================= */
+.site-footer.universal-social-footer .footer-brand-column,
+.site-footer.universal-social-footer .footer-brand-link,
+.site-footer.universal-social-footer .footer-nav{
+  display:none!important;
+}
+.site-footer.universal-social-footer .footer-social-column{
+  width:100%!important;
+  min-width:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  margin:0!important;
+  padding:0!important;
+  text-align:center!important;
+}
+
+
+/* =========================================================
+   SHOP.HTML — 3 GAME CARDS PER ROW / NO OVERFLOW
+   Target lock: shop cards only.
+   ========================================================= */
+.shop-page .product-grid{
+  width:100%!important;
+  max-width:100%!important;
+  margin-inline:0!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:8px!important;
+  box-sizing:border-box!important;
+}
+
+.shop-page .product-card{
+  min-width:0!important;
+  width:100%!important;
+  box-sizing:border-box!important;
+}
+
+.shop-page .product-image-wrap{
+  width:100%!important;
+  aspect-ratio:1/1!important;
+}
+
+.shop-page .product-info{
+  min-width:0!important;
+  padding:8px!important;
+}
+
+.shop-page .product-info h3{
+  margin:0!important;
+  font-size:12px!important;
+  line-height:1.2!important;
+  overflow-wrap:anywhere!important;
+}
+
+.shop-page .product-info .product-publisher{
+  margin:3px 0 0!important;
+  font-size:9px!important;
+  line-height:1.2!important;
+  overflow-wrap:anywhere!important;
+}
+
+@media(max-width:680px){
+  .shop-page .product-grid{
+    width:100%!important;
+    max-width:100%!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:5px!important;
+  }
+
+  .shop-page .product-info{
+    padding:6px 5px!important;
+  }
+
+  .shop-page .product-info h3{
+    font-size:9px!important;
+    line-height:1.15!important;
+  }
+
+  .shop-page .product-info .product-publisher{
+    font-size:7px!important;
+    line-height:1.15!important;
+  }
+}
+
+/* =========================================================
+   SHOP HEADER — CS ICON BARE + NAV FITS SCREEN
+   ========================================================= */
+.shop-page .site-header > .container > .cs-button{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:auto!important;
+  min-width:0!important;
+  height:auto!important;
+  min-height:0!important;
+  padding:1px!important;
+  margin:0 4px 0 6px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  color:var(--text-soft)!important;
+  flex:0 0 auto!important;
+}
+
+.shop-page .site-header > .container > .cs-button .cs-icon{
+  display:block!important;
+  width:20px!important;
+  height:20px!important;
+  fill:none!important;
+  stroke:currentColor!important;
+  stroke-width:1.9!important;
+  stroke-linecap:round!important;
+  stroke-linejoin:round!important;
+}
+
+.shop-page .site-header > .container > .nav{
+  min-width:0!important;
+  flex:1 1 auto!important;
+  display:flex!important;
+  justify-content:flex-end!important;
+  gap:0!important;
+}
+
+.shop-page .site-header > .container > .nav a{
+  min-width:0!important;
+  padding:8px 5px!important;
+  font-size:11px!important;
+  white-space:nowrap!important;
+}
+
+@media(max-width:680px){
+  .shop-page .site-header > .container{
+    width:calc(100% - 12px)!important;
+    max-width:none!important;
+  }
+
+  .shop-page .site-header > .container > .cs-button{
+    margin-left:3px!important;
+    margin-right:2px!important;
+  }
+
+  .shop-page .site-header > .container > .cs-button .cs-icon{
+    width:18px!important;
+    height:18px!important;
+  }
+
+  .shop-page .site-header > .container > .nav a{
+    padding:7px 3px!important;
+    font-size:9px!important;
+    letter-spacing:-.02em!important;
+  }
+}
+
+@media(max-width:380px){
+  .shop-page .site-header > .container > .nav a{
+    padding-left:2px!important;
+    padding-right:2px!important;
+    font-size:8px!important;
+  }
+}
+
+
+/* =========================================================
+   CHECKOUT + ORDER HEADER — MATCH SHOP HEADER
+   Target lock: Home / Top Up / Cek Pesanan only.
+   Index is intentionally excluded.
+   ========================================================= */
+.checkout-page .site-header > .container,
+.order-page .site-header > .container{
+  width:calc(100% - 28px)!important;
+  max-width:1180px!important;
+  margin-inline:auto!important;
+  padding-inline:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  min-width:0!important;
+}
+
+.checkout-page .site-header > .container > .cs-button,
+.order-page .site-header > .container > .cs-button{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:auto!important;
+  min-width:0!important;
+  height:auto!important;
+  min-height:0!important;
+  padding:1px!important;
+  margin:0 4px 0 6px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  color:var(--text-soft)!important;
+  flex:0 0 auto!important;
+}
+
+.checkout-page .site-header > .container > .cs-button .cs-icon,
+.order-page .site-header > .container > .cs-button .cs-icon{
+  display:block!important;
+  width:20px!important;
+  height:20px!important;
+  fill:none!important;
+  stroke:currentColor!important;
+  stroke-width:1.9!important;
+  stroke-linecap:round!important;
+  stroke-linejoin:round!important;
+}
+
+.checkout-page .site-header > .container > .nav,
+.order-page .site-header > .container > .nav{
+  min-width:0!important;
+  flex:1 1 auto!important;
+  display:flex!important;
+  justify-content:flex-end!important;
+  gap:0!important;
+}
+
+.checkout-page .site-header > .container > .nav a,
+.order-page .site-header > .container > .nav a{
+  min-width:0!important;
+  padding:8px 5px!important;
+  font-size:11px!important;
+  white-space:nowrap!important;
+}
+
+@media(max-width:680px){
+  .checkout-page .site-header > .container,
+  .order-page .site-header > .container{
+    width:calc(100% - 12px)!important;
+    max-width:none!important;
+  }
+
+  .checkout-page .site-header > .container > .cs-button,
+  .order-page .site-header > .container > .cs-button{
+    margin-left:3px!important;
+    margin-right:2px!important;
+  }
+
+  .checkout-page .site-header > .container > .cs-button .cs-icon,
+  .order-page .site-header > .container > .cs-button .cs-icon{
+    width:18px!important;
+    height:18px!important;
+  }
+
+  .checkout-page .site-header > .container > .nav a,
+  .order-page .site-header > .container > .nav a{
+    padding:7px 3px!important;
+    font-size:9px!important;
+    letter-spacing:-.02em!important;
+  }
+}
+
+@media(max-width:380px){
+  .checkout-page .site-header > .container > .nav a,
+  .order-page .site-header > .container > .nav a{
+    padding-left:2px!important;
+    padding-right:2px!important;
+    font-size:8px!important;
+  }
+}
+
+
+/* =========================================================
+   SHOP CARDS — CLICK TARGET LOCK
+   Explicitly restore the anchor hit-area; visual layout unchanged.
+   ========================================================= */
+.shop-page .product-grid{
+  position:relative!important;
+  z-index:10!important;
+}
+.shop-page .product-card{
+  position:relative!important;
+  z-index:11!important;
+  display:block!important;
+  pointer-events:auto!important;
+  cursor:pointer!important;
+  text-decoration:none!important;
+  color:inherit!important;
+  -webkit-tap-highlight-color:transparent!important;
+}
+.shop-page .product-card *{
+  pointer-events:none!important;
+}
+
+
+/* HOME GAME PLACEHOLDER — same dimensions as existing game artwork */
+.home-game-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:clamp(34px,5vw,64px);background:linear-gradient(135deg,var(--card-2),var(--card));}
+.all-games-section .home-game-placeholder{font-size:clamp(34px,6vw,64px);}
+@media(max-width:600px){.all-games-section .home-game-placeholder{font-size:30px;}}
+
+
+/* TARGET LOCK — shared checkout hero banner fallback */
+.checkout-page .game-hero{
+  --hero-banner-image:url("../assets/banner.webp");
+}
+
+
+/* =========================================================
+   CHECKOUT SUMMARY — BOTTOM STICKY TARGET LOCK
+   Same sticky behavior as the site header, but anchored
+   to the bottom of the viewport. Only the summary moves.
+   ========================================================= */
+.checkout-page{
+  scroll-padding-bottom:190px!important;
+}
+
+.checkout-page .checkout-sidebar{
+  position:fixed!important;
+  left:50%!important;
+  right:auto!important;
+  bottom:0!important;
+  top:auto!important;
+  transform:translateX(-50%)!important;
+  width:min(1180px,calc(100vw - 24px))!important;
+  max-width:none!important;
+  margin:0!important;
+  z-index:1000!important;
+  pointer-events:none!important;
+}
+
+.checkout-page .checkout-summary{
+  position:relative!important;
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  transform:none!important;
+  max-height:calc(100vh - 88px)!important;
+  overflow:auto!important;
+  border-bottom-left-radius:0!important;
+  border-bottom-right-radius:0!important;
+  box-shadow:0 -10px 34px rgba(0,0,0,.34)!important;
+  pointer-events:auto!important;
+}
+
+@media(max-width:900px){
+  .checkout-page{
+    scroll-padding-bottom:175px!important;
+  }
+
   .checkout-page .checkout-sidebar{
-    right:8px!important;
-    bottom:8px!important;
     width:calc(100vw - 16px)!important;
   }
 
   .checkout-page .checkout-summary{
-    max-height:calc(100vh - 16px)!important;
+    max-height:calc(100vh - 72px)!important;
+  }
+}
+
+@media(max-width:680px){
+  .checkout-page{
+    scroll-padding-bottom:165px!important;
+  }
+
+  .checkout-page .checkout-sidebar{
+    width:100vw!important;
+  }
+
+  .checkout-page .checkout-summary{
+    border-radius:16px 16px 0 0!important;
+    max-height:calc(100vh - 64px)!important;
   }
 }
