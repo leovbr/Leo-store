@@ -412,7 +412,6 @@ document.addEventListener("DOMContentLoaded", () => {
       gameName: selectedProduct.name,
       playerId: isRoblox ? robloxUsername.value.trim() : playerIdInput.value.trim(),
       username: isRoblox ? robloxUsername.value.trim() : "",
-      password: isRoblox ? robloxPassword.value : "",
       server: serverInput?.value.trim() || "",
       denominationId: selectedDenomination.id,
       denomination: selectedDenomination.amount,
@@ -455,7 +454,7 @@ document.addEventListener("DOMContentLoaded", () => {
       try {
         response = await fetch("https://spring-surf-a6a7.leovbriansyh791.workers.dev/api/orders", {
           method: "POST",
-          headers: { "Content-Type": "text/plain" },
+          headers: { "Content-Type": "application/json" },
           body: paymentPayload,
           cache: "no-store"
         });
