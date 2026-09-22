@@ -3033,6 +3033,7 @@ body{
 }
 
 .header-brand .header-logo{
+  content:url("assets/leoostore-wordmark.svg")!important;
   display:block!important;
   width:170px!important;
   height:54px!important;
