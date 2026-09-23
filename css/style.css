@@ -3148,7 +3148,7 @@ body{
    LEOOSTORE — PER-PAGE NAVBAR LOGO POSITION
    Keep shared size/animation; compensate for page header layouts.
    ========================================================= */
-.index-page .header-brand .header-logo{
+.home-page .header-brand .header-logo{
   top:53%!important;
 }
 
@@ -3157,9 +3157,9 @@ body{
 }
 
 .shop-page .header-brand .header-logo{
-  top:63%!important;
+  top:53%!important;
 }
 
 .order-page .header-brand .header-logo{
-  top:63%!important;
+  top:53%!important;
 }
