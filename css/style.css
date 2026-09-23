@@ -3005,7 +3005,12 @@ body{
   }
 }
 
-/* Home-only logo fine tune */
+/* Navbar logo page fine tune — position only */
 .home-page .header-brand .header-logo{
   left:51%!important;
+}
+.shop-page .header-brand .header-logo,
+.checkout-page .header-brand .header-logo,
+.order-page .header-brand .header-logo{
+  left:49%!important;
 }
