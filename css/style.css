@@ -2906,82 +2906,6 @@ body{
 @media(max-width:680px){.home-page .all-games-section .home-game-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;}}
 
 
-/* =========================================================
-   LEOOSTORE BRAND — CROWN WORDMARK
-   Target: replace the old icon + plain text with a text
-   wordmark inspired by the supplied crowned LEOOSTORE logo.
-   ========================================================= */
-.header-brand{
-  position:relative!important;
-  display:inline-flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  min-width:0!important;
-}
-
-.header-brand .header-logo{
-  display:none!important;
-}
-
-.header-brand .header-brand-text{
-  position:relative!important;
-  display:inline-block!important;
-  padding-top:9px!important;
-  color:transparent!important;
-  background:linear-gradient(
-    100deg,
-    #4edcff 0%,
-    #3f9dff 32%,
-    #8b7cff 54%,
-    #ff4fcf 78%,
-    #ff78df 100%
-  )!important;
-  -webkit-background-clip:text!important;
-  background-clip:text!important;
-  -webkit-text-fill-color:transparent!important;
-  font-family:"Arial Black","Plus Jakarta Sans",sans-serif!important;
-  font-size:22px!important;
-  font-weight:900!important;
-  font-style:italic!important;
-  letter-spacing:-.055em!important;
-  line-height:1!important;
-  text-shadow:0 4px 18px rgba(45,145,255,.16)!important;
-  white-space:nowrap!important;
-}
-
-.header-brand .header-brand-text::before{
-  content:"♛"!important;
-  position:absolute!important;
-  left:50%!important;
-  top:-9px!important;
-  transform:translateX(-50%) scaleX(1.08)!important;
-  color:transparent!important;
-  background:linear-gradient(135deg,#62e7ff 0%,#5c9cff 45%,#ff55d6 100%)!important;
-  -webkit-background-clip:text!important;
-  background-clip:text!important;
-  -webkit-text-fill-color:transparent!important;
-  font-family:Georgia,"Times New Roman",serif!important;
-  font-size:15px!important;
-  font-style:normal!important;
-  line-height:1!important;
-  filter:drop-shadow(0 2px 6px rgba(76,174,255,.32))!important;
-}
-
-.header-brand:hover .header-brand-text{
-  filter:brightness(1.08)!important;
-}
-
-@media(max-width:600px){
-  .header-brand .header-brand-text{
-    padding-top:8px!important;
-    font-size:19px!important;
-  }
-  .header-brand .header-brand-text::before{
-    top:-8px!important;
-    font-size:13px!important;
-  }
-}
-
 /* Same wordmark inside the mobile side menu */
 .side-menu-brand{
   position:relative!important;
@@ -3015,15 +2939,15 @@ body{
 
 
 /* =========================================================
-   LEOOSTORE — CROWNED IMAGE WORDMARK
-   All pages using the shared header.
-   Ratio-aware sizing: the source logo is wide, so don't force
-   it into a short contain box (which makes it look tiny).
+   LEOOSTORE — SHARED NAVBAR LOGO
+   Only the logo/icon is standardized across all pages.
+   Other navbar/layout rules remain untouched.
    ========================================================= */
 .header-brand{
   position:relative!important;
   display:inline-flex!important;
   align-items:center!important;
+  justify-content:center!important;
   flex:0 0 170px!important;
   width:170px!important;
   height:76px!important;
@@ -3038,41 +2962,21 @@ body{
   content:url("../assets/icon.webp")!important;
   display:block!important;
   position:absolute!important;
-  left:41%!important;
-  top:103%!important;
-  width:145px!important;
+  left:50%!important;
+  top:50%!important;
+  width:116px!important;
   height:auto!important;
   max-width:none!important;
   object-fit:contain!important;
   object-position:center!important;
-  transform:translate(-50%,-40%)!important;
-  transform-origin:center!important;
+  margin:0!important;
   border-radius:0!important;
+  transform:translate(-50%,-50%)!important;
+  transform-origin:center!important;
   filter:contrast(1.16) saturate(1.28) brightness(1.10) drop-shadow(0 0 1px rgba(255,255,255,.35)) drop-shadow(0 4px 14px rgba(62,128,255,.28))!important;
-  animation:leoLogoMotion 4.8s ease-in-out infinite!important;
+  animation:leoSharedLogoMotion 4.8s ease-in-out infinite!important;
   will-change:transform,filter!important;
   z-index:2!important;
-}
-
-@media(max-width:900px){
-  .header-brand{
-    flex-basis:155px!important;
-    width:155px!important;
-  }
-  .header-brand .header-logo{
-    width:135px!important;
-  }
-}
-
-@media(max-width:600px){
-  .header-brand{
-    flex-basis:145px!important;
-    width:145px!important;
-    height:68px!important;
-  }
-  .header-brand .header-logo{
-    width:125px!important;
-  }
 }
 
 @media(prefers-reduced-motion:reduce){
@@ -3082,59 +2986,21 @@ body{
   }
 }
 
-/* =========================================================
-   LEOOSTORE — ULTRA HDR DISPLAY
-   ========================================================= */
-@keyframes leoLogoMotion{
+@keyframes leoSharedLogoMotion{
   0%,100%{
-    transform:translate(-50%,-40%) scale(1) rotate(0deg);
+    transform:translate(-50%,-50%) scale(1) rotate(0deg);
     filter:contrast(1.16) saturate(1.28) brightness(1.10) drop-shadow(0 0 1px rgba(255,255,255,.35)) drop-shadow(0 4px 14px rgba(62,128,255,.28));
   }
   25%{
-    transform:translate(-50%,-41%) scale(1.012) rotate(-.25deg);
-    filter:contrast(1.22) saturate(1.34) brightness(1.14) drop-shadow(0 0 2px rgba(255,255,255,.44)) drop-shadow(0 5px 17px rgba(62,128,255,.34));
+    transform:translate(-50%,-50.8%) scale(1.012) rotate(-.2deg);
+    filter:contrast(1.20) saturate(1.32) brightness(1.13) drop-shadow(0 0 2px rgba(255,255,255,.42)) drop-shadow(0 5px 16px rgba(62,128,255,.32));
   }
   50%{
-    transform:translate(-50%,-42%) scale(1.022) rotate(0deg);
-    filter:contrast(1.26) saturate(1.40) brightness(1.18) drop-shadow(0 0 3px rgba(255,255,255,.52)) drop-shadow(0 6px 20px rgba(82,137,255,.40));
+    transform:translate(-50%,-51.5%) scale(1.02) rotate(0deg);
+    filter:contrast(1.23) saturate(1.36) brightness(1.15) drop-shadow(0 0 2px rgba(255,255,255,.46)) drop-shadow(0 6px 18px rgba(82,137,255,.36));
   }
   75%{
-    transform:translate(-50%,-41%) scale(1.012) rotate(.25deg);
-    filter:contrast(1.22) saturate(1.34) brightness(1.14) drop-shadow(0 0 2px rgba(255,255,255,.44)) drop-shadow(0 5px 17px rgba(62,128,255,.34));
+    transform:translate(-50%,-50.8%) scale(1.012) rotate(.2deg);
+    filter:contrast(1.20) saturate(1.32) brightness(1.13) drop-shadow(0 0 2px rgba(255,255,255,.42)) drop-shadow(0 5px 16px rgba(62,128,255,.32));
   }
-}
-
-/* =========================================================
-   LEOOSTORE — ULTRA HDR DISPLAY
-   Boosts perceived clarity, contrast and color on the navbar logo.
-   ========================================================= */
-@keyframes leoLogoHDR{
-  0%,100%{filter:contrast(1.16) saturate(1.28) brightness(1.10) drop-shadow(0 0 1px rgba(255,255,255,.35)) drop-shadow(0 4px 14px rgba(62,128,255,.28));}
-  50%{filter:contrast(1.24) saturate(1.38) brightness(1.17) drop-shadow(0 0 2px rgba(255,255,255,.48)) drop-shadow(0 4px 18px rgba(82,137,255,.36));}
-}
-
-/* =========================================================
-   LEOOSTORE — PER-PAGE NAVBAR LOGO POSITION
-   Keep shared size/animation; compensate for page header layouts.
-   ========================================================= */
-.home-page .header-brand .header-logo{
-  top:0!important;
-  margin-top:0!important;
-}
-
-/* HOME ONLY: compensate the home header's taller layout */
-body.home-page .site-header.home-header .header-inner .header-brand .header-logo{
-  top:8%!important;
-}
-
-.checkout-page .header-brand .header-logo{
-  top:73%!important;
-}
-
-.shop-page .header-brand .header-logo{
-  top:53%!important;
-}
-
-.order-page .header-brand .header-logo{
-  top:53%!important;
 }
