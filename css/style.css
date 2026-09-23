@@ -3004,3 +3004,8 @@ body{
     filter:contrast(1.20) saturate(1.32) brightness(1.13) drop-shadow(0 0 2px rgba(255,255,255,.42)) drop-shadow(0 5px 16px rgba(62,128,255,.32));
   }
 }
+
+/* Home-only logo fine tune */
+.home-page .header-brand .header-logo{
+  left:51%!important;
+}
