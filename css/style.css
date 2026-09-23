@@ -3114,26 +3114,27 @@ body{
 }
 
 /* =========================================================
-   LEOOSTORE — NAVBAR LOGO POSITION LOCK
-   One deterministic position for every page.
+   LEOOSTORE — PER-PAGE NAVBAR LOGO POSITION
+   Keep shared size/animation; compensate for page header layouts.
    ========================================================= */
-.header-brand .header-logo{
-  top:50%!important;
+.home-page .header-brand .header-logo{
+  top:0!important;
   margin-top:0!important;
-  transform:translate(-50%,-50%)!important;
 }
 
-@keyframes leoLogoMotion{
-  0%,100%{
-    transform:translate(-50%,-50%) scale(1) rotate(0deg);
-  }
-  25%{
-    transform:translate(-50%,-50%) scale(1.012) rotate(-.25deg);
-  }
-  50%{
-    transform:translate(-50%,-50%) scale(1.022) rotate(0deg);
-  }
-  75%{
-    transform:translate(-50%,-50%) scale(1.012) rotate(.25deg);
-  }
+/* HOME ONLY: compensate the home header's taller layout */
+body.home-page .site-header.home-header .header-inner .header-brand .header-logo{
+  top:8%!important;
+}
+
+.checkout-page .header-brand .header-logo{
+  top:73%!important;
+}
+
+.shop-page .header-brand .header-logo{
+  top:53%!important;
+}
+
+.order-page .header-brand .header-logo{
+  top:53%!important;
 }
