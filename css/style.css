@@ -3114,37 +3114,6 @@ body{
 }
 
 /* =========================================================
-   LEOOSTORE — PREMIUM LOGO SWEEP
-   Subtle shine + lift, shared across all pages.
-   ========================================================= */
-.header-brand .header-logo{
-  position:relative!important;
-  transform-origin:center!important;
-  will-change:transform,filter!important;
-  animation:leoLogoMotion 4.8s ease-in-out infinite!important;
-}
-
-@keyframes leoLogoMotion{
-  0%,100%{
-    transform:translateY(0) scale(1) rotate(0deg);
-    filter:contrast(1.16) saturate(1.28) brightness(1.10) drop-shadow(0 0 1px rgba(255,255,255,.35)) drop-shadow(0 4px 14px rgba(62,128,255,.28));
-  }
-  25%{
-    transform:translateY(-1px) scale(1.012) rotate(-.25deg);
-    filter:contrast(1.22) saturate(1.34) brightness(1.14) drop-shadow(0 0 2px rgba(255,255,255,.44)) drop-shadow(0 5px 17px rgba(62,128,255,.34));
-  }
-  50%{
-    transform:translateY(-2px) scale(1.022) rotate(0deg);
-    filter:contrast(1.26) saturate(1.40) brightness(1.18) drop-shadow(0 0 3px rgba(255,255,255,.52)) drop-shadow(0 6px 20px rgba(82,137,255,.40));
-  }
-  75%{
-    transform:translateY(-1px) scale(1.012) rotate(.25deg);
-    filter:contrast(1.22) saturate(1.34) brightness(1.14) drop-shadow(0 0 2px rgba(255,255,255,.44)) drop-shadow(0 5px 17px rgba(62,128,255,.34));
-  }
-}
-
-
-/* =========================================================
    LEOOSTORE — PER-PAGE NAVBAR LOGO POSITION
    Keep shared size/animation; compensate for page header layouts.
    ========================================================= */
