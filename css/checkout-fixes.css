@@ -1646,3 +1646,52 @@
     margin-bottom:180px!important;
   }
 }
+
+
+/* Mobile checkout — compact sticky summary + more footer breathing room */
+@media(max-width:680px){
+  .checkout-page .checkout-footer-inline{
+    margin-bottom:300px!important;
+  }
+  .checkout-page .checkout-summary{
+    padding-bottom:0!important;
+  }
+  .checkout-page .checkout-summary-header{
+    min-height:44px!important;
+    padding:7px 12px!important;
+    gap:6px!important;
+  }
+  .checkout-page .checkout-summary-header .eyebrow{
+    font-size:8px!important;
+    margin-bottom:1px!important;
+  }
+  .checkout-page .checkout-summary-header h2{
+    font-size:14px!important;
+    line-height:1.1!important;
+  }
+  .checkout-page .summary-toggle{
+    width:28px!important;
+    height:28px!important;
+    flex-basis:28px!important;
+    font-size:14px!important;
+  }
+  .checkout-page .checkout-summary:not(.expanded) .summary-product-line{
+    margin:0 12px!important;
+    padding:9px 0 8px!important;
+    gap:2px!important;
+  }
+  .checkout-page .summary-product-line span{
+    font-size:13px!important;
+  }
+  .checkout-page .summary-product-line strong{
+    font-size:11px!important;
+    line-height:1.25!important;
+  }
+  .checkout-page .checkout-summary:not(.expanded) .btn-checkout{
+    min-height:48px!important;
+    margin:0 12px!important;
+    width:calc(100% - 24px)!important;
+    font-size:15px!important;
+    padding:0 14px!important;
+  }
+}
