@@ -1630,3 +1630,11 @@
     max-height:calc(100vh - 64px)!important;
   }
 }
+
+
+/* Mobile sticky summary — slightly taller without changing width */
+@media(max-width:680px){
+  .checkout-page .checkout-summary{
+    padding-bottom:18px!important;
+  }
+}
