@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=20260922-logo5">
+  <link rel="stylesheet" href="css/style.css?v=20260922-logo6">
   <link rel="stylesheet" href="css/style-pages.css?v=20260919-navy1">
 <link rel="stylesheet" href="css/checkout-fixes.css?v=20260920-games1">
 <style>
@@ -31,33 +31,9 @@
 
 
 /* =========================================================
-   INDEX ONLY — NAVBAR + HERO CLEANUP
-   Scope locked to index.html. Do not affect other pages.
+   INDEX ONLY — HERO OVERLAY
+   Logo is controlled by the shared navbar CSS.
    ========================================================= */
-.home-page .site-header.home-header .header-brand{
-  flex:0 0 145px!important;
-  width:145px!important;
-  height:68px!important;
-  overflow:visible!important;
-}
-
-.home-page .site-header.home-header .header-brand .header-logo{
-  left:50%!important;
-  top:50%!important;
-  width:116px!important;
-  height:auto!important;
-  margin:0!important;
-  transform:translate(-50%,-50%)!important;
-  animation:leoHomeLogoMotion 4.8s ease-in-out infinite!important;
-}
-
-@keyframes leoHomeLogoMotion{
-  0%,100%{transform:translate(-50%,-50%) scale(1) rotate(0deg);}
-  25%{transform:translate(-50%,-50.8%) scale(1.012) rotate(-.2deg);}
-  50%{transform:translate(-50%,-51.5%) scale(1.02) rotate(0deg);}
-  75%{transform:translate(-50%,-50.8%) scale(1.012) rotate(.2deg);}
-}
-
 .home-page .home-banner-overlay > div{
   display:flex!important;
   flex-direction:column!important;
@@ -105,7 +81,7 @@
 <body class="home-page">
 <header class="site-header home-header">
   <div class="container header-inner"><a href="index.html" class="header-brand">
-  <img src="assets/logo-1.webp" alt="LEOOSTORE" class="header-logo">
+  <img src="assets/icon.webp" alt="LEOOSTORE" class="header-logo">
   <span class="header-brand-text">LEOOSTORE</span>
 </a>
 <div class="header-actions">
