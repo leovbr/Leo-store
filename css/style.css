@@ -3118,8 +3118,8 @@ body{
    Keep shared size/animation; compensate for page header layouts.
    ========================================================= */
 .home-page .header-brand .header-logo{
-  top:43%!important;
-  margin-top:-28px!important;
+  top:0!important;
+  margin-top:0!important;
 }
 
 .checkout-page .header-brand .header-logo{
