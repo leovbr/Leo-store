@@ -28,6 +28,78 @@
 @media (prefers-reduced-motion:reduce){
   .home-games-section .section-heading h2 .trending-flame{animation:none;}
 }
+
+
+/* =========================================================
+   INDEX ONLY — NAVBAR + HERO CLEANUP
+   Scope locked to index.html. Do not affect other pages.
+   ========================================================= */
+.home-page .site-header.home-header .header-brand{
+  flex:0 0 145px!important;
+  width:145px!important;
+  height:68px!important;
+  overflow:visible!important;
+}
+
+.home-page .site-header.home-header .header-brand .header-logo{
+  left:50%!important;
+  top:50%!important;
+  width:116px!important;
+  height:auto!important;
+  margin:0!important;
+  transform:translate(-50%,-50%)!important;
+  animation:leoHomeLogoMotion 4.8s ease-in-out infinite!important;
+}
+
+@keyframes leoHomeLogoMotion{
+  0%,100%{transform:translate(-50%,-50%) scale(1) rotate(0deg);}
+  25%{transform:translate(-50%,-50.8%) scale(1.012) rotate(-.2deg);}
+  50%{transform:translate(-50%,-51.5%) scale(1.02) rotate(0deg);}
+  75%{transform:translate(-50%,-50.8%) scale(1.012) rotate(.2deg);}
+}
+
+.home-page .home-banner-overlay > div{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  gap:2px!important;
+  min-width:0!important;
+}
+
+.home-page .home-banner-overlay > div span{
+  display:block!important;
+  font-size:clamp(11px,2.8vw,15px)!important;
+  line-height:1.1!important;
+  white-space:nowrap!important;
+}
+
+.home-page .home-banner-overlay > div strong{
+  display:block!important;
+  font-size:clamp(18px,4.8vw,28px)!important;
+  line-height:1.05!important;
+  white-space:nowrap!important;
+}
+
+.home-page .home-banner-overlay > b{
+  flex:0 0 auto!important;
+  margin-left:12px!important;
+  font-size:clamp(22px,5vw,30px)!important;
+  line-height:1!important;
+}
+
+@media(max-width:600px){
+  .home-page .site-header.home-header .header-brand{
+    flex-basis:145px!important;
+    width:145px!important;
+  }
+  .home-page .site-header.home-header .header-logo{
+    width:116px!important;
+  }
+  .home-page .home-banner-overlay{
+    padding:18px!important;
+  }
+}
+
 </style>
 </head>
 <body class="home-page">
