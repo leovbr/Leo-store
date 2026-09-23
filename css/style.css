@@ -3149,7 +3149,7 @@ body{
    Keep shared size/animation; compensate for page header layouts.
    ========================================================= */
 .index-page .header-brand .header-logo{
-  top:73%!important;
+  top:63%!important;
 }
 
 .checkout-page .header-brand .header-logo{
@@ -3157,9 +3157,9 @@ body{
 }
 
 .shop-page .header-brand .header-logo{
-  top:83%!important;
+  top:73%!important;
 }
 
 .order-page .header-brand .header-logo{
-  top:83%!important;
+  top:73%!important;
 }
