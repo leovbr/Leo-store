@@ -1638,3 +1638,11 @@
     padding-bottom:18px!important;
   }
 }
+
+
+/* Mobile checkout — breathing room below social footer for sticky summary */
+@media(max-width:680px){
+  .checkout-page .checkout-footer-inline{
+    margin-bottom:180px!important;
+  }
+}
