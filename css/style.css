@@ -3142,3 +3142,24 @@ body{
     filter:contrast(1.22) saturate(1.34) brightness(1.14) drop-shadow(0 0 2px rgba(255,255,255,.44)) drop-shadow(0 5px 17px rgba(62,128,255,.34));
   }
 }
+
+
+/* =========================================================
+   LEOOSTORE — PER-PAGE NAVBAR LOGO POSITION
+   Keep shared size/animation; compensate for page header layouts.
+   ========================================================= */
+.index-page .header-brand .header-logo{
+  top:73%!important;
+}
+
+.checkout-page .header-brand .header-logo{
+  top:73%!important;
+}
+
+.shop-page .header-brand .header-logo{
+  top:83%!important;
+}
+
+.order-page .header-brand .header-logo{
+  top:83%!important;
+}
