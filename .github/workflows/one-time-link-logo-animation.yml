@@ -1,0 +1,47 @@
+name: Link logo animation once
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  link-logo-animation:
+    if: ${{ !contains(github.event.head_commit.message, '[skip logo link]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Add isolated animation stylesheet to all pages
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          files = [Path('index.html'), Path('shop.html'), Path('checkout.html'), Path('order.html')]
+          tag = '<link rel="stylesheet" href="css/logo-animation.css?v=20260925-logo1">'
+          for path in files:
+              text = path.read_text(encoding='utf-8')
+              if 'css/logo-animation.css' not in text:
+                  marker = '</head>'
+                  if marker not in text:
+                      raise SystemExit(f'Missing </head> in {path}')
+                  text = text.replace(marker, f'  {tag}\n{marker}', 1)
+                  path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html shop.html checkout.html order.html
+          git commit -m "Link isolated logo animation to all pages [skip logo link]"
+          git push
+
+      - name: Remove one-time workflow
+        if: success()
+        run: |
+          git rm .github/workflows/one-time-link-logo-animation.yml
+          git commit -m "Remove one-time logo link workflow [skip logo link]"
+          git push
