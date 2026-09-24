@@ -1,41 +1,15 @@
-/* LEOOSTORE — BLACK ECLIPSE / ROYAL DRAGON
-   Isolated logo animation. Does not change layout or positioning. */
-
+/* LEOOSTORE — ICON SIGNATURE ANIMATION
+   Isolated: does not alter navbar layout or positioning.
+*/
 .header-brand .header-logo{
-  animation: leoBlackEclipse 7.2s ease-in-out infinite;
-  transform-origin: center center;
-  will-change: filter;
+  animation: leoLogoSignature 7s ease-in-out infinite;
+  transform-origin:center;
+  will-change:filter,opacity;
 }
-
-@keyframes leoBlackEclipse{
-  0%, 56%, 100%{
-    filter: drop-shadow(0 3px 9px rgba(40,85,150,.18));
-  }
-  62%{
-    filter: drop-shadow(0 3px 12px rgba(45,110,210,.30))
-            brightness(1.05) saturate(1.08);
-  }
-  68%{
-    filter: drop-shadow(0 0 5px rgba(255,255,255,.34))
-            drop-shadow(0 0 14px rgba(55,130,255,.42))
-            brightness(1.13) saturate(1.16);
-  }
-  72%{
-    filter: drop-shadow(0 0 8px rgba(255,255,255,.62))
-            drop-shadow(0 0 22px rgba(45,115,255,.58))
-            drop-shadow(0 0 5px rgba(160,35,45,.28))
-            brightness(1.22) saturate(1.22);
-  }
-  76%{
-    filter: drop-shadow(0 0 4px rgba(255,255,255,.30))
-            drop-shadow(0 0 14px rgba(55,130,255,.38))
-            brightness(1.08) saturate(1.12);
-  }
-  82%{
-    filter: drop-shadow(0 3px 9px rgba(40,85,150,.18));
-  }
-}
-
-@media (prefers-reduced-motion: reduce){
-  .header-brand .header-logo{ animation: none; }
+@keyframes leoLogoSignature{
+  0%,58%,100%{filter:brightness(1) saturate(1) drop-shadow(0 2px 8px rgba(70,120,255,.16));}
+  64%{filter:brightness(1.12) saturate(1.08) drop-shadow(0 0 8px rgba(90,130,255,.32));}
+  70%{filter:brightness(1.34) saturate(1.2) drop-shadow(0 0 5px rgba(255,255,255,.7)) drop-shadow(0 0 18px rgba(75,120,255,.58));}
+  76%{filter:brightness(1.12) saturate(1.08) drop-shadow(0 0 8px rgba(90,130,255,.32));}
+  84%{filter:brightness(1) saturate(1) drop-shadow(0 2px 8px rgba(70,120,255,.16));}
 }
