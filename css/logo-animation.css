@@ -1,34 +1,18 @@
-/* LEOOSTORE — ICON SIGNATURE ANIMATION
-   Isolated: animation only. Navbar layout/position remains untouched.
-*/
-.header-brand .header-logo{
-  animation:leoLogoSignature 7s ease-in-out infinite;
-  transform-origin:center;
-  will-change:filter,opacity;
+/* LEOOSTORE — icon.webp ONLY
+   Targets the current assets/icon.webp logo through its existing .header-logo class.
+   No navbar position, size, transform, or layout changes. */
+img.header-logo[src*="assets/icon.webp"]{
+  animation:leoIconWebpSignature 5s ease-in-out infinite!important;
+  will-change:filter,opacity!important;
 }
-
-@keyframes leoLogoSignature{
-  0%,52%,100%{
-    filter:brightness(1) saturate(1) drop-shadow(0 2px 8px rgba(70,120,255,.16));
-    opacity:1;
-  }
-  58%{
-    filter:brightness(1.16) saturate(1.12) drop-shadow(0 0 9px rgba(70,120,255,.38));
-  }
-  64%{
-    filter:brightness(1.34) saturate(1.24) drop-shadow(0 0 6px rgba(255,255,255,.82)) drop-shadow(0 0 19px rgba(65,115,255,.68));
-  }
-  69%{
-    filter:brightness(1.55) saturate(1.38) drop-shadow(0 0 10px rgba(255,255,255,.96)) drop-shadow(0 0 25px rgba(65,115,255,.82)) drop-shadow(0 0 8px rgba(190,50,70,.36));
-  }
-  74%{
-    filter:brightness(1.3) saturate(1.2) drop-shadow(0 0 6px rgba(255,255,255,.68)) drop-shadow(0 0 17px rgba(65,115,255,.58));
-  }
-  82%{
-    filter:brightness(1.02) saturate(1.02) drop-shadow(0 2px 8px rgba(70,120,255,.16));
-  }
+@keyframes leoIconWebpSignature{
+  0%,45%,100%{filter:brightness(1) saturate(1) drop-shadow(0 2px 7px rgba(70,120,255,.12));opacity:1;}
+  52%{filter:brightness(1.12) saturate(1.08) drop-shadow(0 0 8px rgba(70,120,255,.3));}
+  60%{filter:brightness(1.28) saturate(1.18) drop-shadow(0 0 7px rgba(255,255,255,.7)) drop-shadow(0 0 17px rgba(70,120,255,.55));}
+  67%{filter:brightness(1.5) saturate(1.3) drop-shadow(0 0 10px rgba(255,255,255,.95)) drop-shadow(0 0 24px rgba(70,120,255,.75));}
+  74%{filter:brightness(1.24) saturate(1.14) drop-shadow(0 0 6px rgba(255,255,255,.6)) drop-shadow(0 0 15px rgba(70,120,255,.48));}
+  84%{filter:brightness(1.02) saturate(1.02) drop-shadow(0 2px 7px rgba(70,120,255,.12));}
 }
-
 @media(prefers-reduced-motion:reduce){
-  .header-brand .header-logo{animation:leoLogoSignature 7s ease-in-out infinite!important;}
+  img.header-logo[src*="assets/icon.webp"]{animation:leoIconWebpSignature 5s ease-in-out infinite!important;}
 }
