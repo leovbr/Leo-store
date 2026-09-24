@@ -1,0 +1,41 @@
+/* LEOOSTORE — BLACK ECLIPSE / ROYAL DRAGON
+   Isolated logo animation. Does not change layout or positioning. */
+
+.header-brand .header-logo{
+  animation: leoBlackEclipse 7.2s ease-in-out infinite;
+  transform-origin: center center;
+  will-change: filter;
+}
+
+@keyframes leoBlackEclipse{
+  0%, 56%, 100%{
+    filter: drop-shadow(0 3px 9px rgba(40,85,150,.18));
+  }
+  62%{
+    filter: drop-shadow(0 3px 12px rgba(45,110,210,.30))
+            brightness(1.05) saturate(1.08);
+  }
+  68%{
+    filter: drop-shadow(0 0 5px rgba(255,255,255,.34))
+            drop-shadow(0 0 14px rgba(55,130,255,.42))
+            brightness(1.13) saturate(1.16);
+  }
+  72%{
+    filter: drop-shadow(0 0 8px rgba(255,255,255,.62))
+            drop-shadow(0 0 22px rgba(45,115,255,.58))
+            drop-shadow(0 0 5px rgba(160,35,45,.28))
+            brightness(1.22) saturate(1.22);
+  }
+  76%{
+    filter: drop-shadow(0 0 4px rgba(255,255,255,.30))
+            drop-shadow(0 0 14px rgba(55,130,255,.38))
+            brightness(1.08) saturate(1.12);
+  }
+  82%{
+    filter: drop-shadow(0 3px 9px rgba(40,85,150,.18));
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .header-brand .header-logo{ animation: none; }
+}
