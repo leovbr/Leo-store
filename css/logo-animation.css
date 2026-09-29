@@ -1,63 +1,20 @@
-/* LEOOSTORE — icon.webp ONLY
-   SUPER GLOW edition.
-   No navbar position, size, transform, or layout changes. */
+/* LEOOSTORE — BINARY ANIMATION DIAGNOSTIC
+   Target: assets/icon.webp only.
+   Deliberately obvious opacity pulse to verify that CSS animation executes. */
 
 img.header-logo[src*="assets/icon.webp"]{
-  animation:leoIconWebpSuperGlow 4.8s ease-in-out infinite!important;
-  will-change:filter,opacity!important;
+  animation:leoIconBinaryTest 1.2s linear infinite!important;
+  opacity:1!important;
+  will-change:opacity!important;
 }
 
-@keyframes leoIconWebpSuperGlow{
-  0%,38%,100%{
-    filter:brightness(1) saturate(1) contrast(1)
-      drop-shadow(0 2px 7px rgba(70,120,255,.18));
-    opacity:1;
-  }
-  45%{
-    filter:brightness(1.18) saturate(1.12) contrast(1.03)
-      drop-shadow(0 0 8px rgba(70,120,255,.42))
-      drop-shadow(0 0 16px rgba(70,120,255,.22));
-  }
-  52%{
-    filter:brightness(1.45) saturate(1.28) contrast(1.06)
-      drop-shadow(0 0 8px rgba(255,255,255,.82))
-      drop-shadow(0 0 18px rgba(70,120,255,.72))
-      drop-shadow(0 0 32px rgba(70,120,255,.45));
-  }
-  58%{
-    filter:brightness(1.85) saturate(1.42) contrast(1.08)
-      drop-shadow(0 0 12px rgba(255,255,255,1))
-      drop-shadow(0 0 24px rgba(70,120,255,.95))
-      drop-shadow(0 0 42px rgba(70,120,255,.72))
-      drop-shadow(0 0 62px rgba(70,120,255,.38));
-    opacity:1;
-  }
-  64%{
-    filter:brightness(2.05) saturate(1.5) contrast(1.1)
-      drop-shadow(0 0 15px rgba(255,255,255,1))
-      drop-shadow(0 0 28px rgba(70,120,255,1))
-      drop-shadow(0 0 48px rgba(70,120,255,.82))
-      drop-shadow(0 0 72px rgba(70,120,255,.46));
-  }
-  70%{
-    filter:brightness(1.6) saturate(1.35) contrast(1.07)
-      drop-shadow(0 0 10px rgba(255,255,255,.9))
-      drop-shadow(0 0 22px rgba(70,120,255,.86))
-      drop-shadow(0 0 40px rgba(70,120,255,.6));
-  }
-  78%{
-    filter:brightness(1.2) saturate(1.12) contrast(1.02)
-      drop-shadow(0 0 7px rgba(255,255,255,.5))
-      drop-shadow(0 0 16px rgba(70,120,255,.42));
-  }
-  86%{
-    filter:brightness(1.02) saturate(1.02)
-      drop-shadow(0 2px 7px rgba(70,120,255,.18));
-  }
+@keyframes leoIconBinaryTest{
+  0%,49%{opacity:1!important;}
+  50%,100%{opacity:.15!important;}
 }
 
 @media(prefers-reduced-motion:reduce){
   img.header-logo[src*="assets/icon.webp"]{
-    animation:leoIconWebpSuperGlow 4.8s ease-in-out infinite!important;
+    animation:leoIconBinaryTest 1.2s linear infinite!important;
   }
 }
