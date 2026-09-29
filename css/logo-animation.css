@@ -1,36 +1,63 @@
 /* LEOOSTORE — icon.webp ONLY
-   Targets the current assets/icon.webp logo through its existing .header-logo class.
+   SUPER GLOW edition.
    No navbar position, size, transform, or layout changes. */
 
 img.header-logo[src*="assets/icon.webp"]{
-  animation:leoIconWebpSignature 5s ease-in-out infinite!important;
+  animation:leoIconWebpSuperGlow 4.8s ease-in-out infinite!important;
   will-change:filter,opacity!important;
 }
 
-@keyframes leoIconWebpSignature{
-  0%,45%,100%{
-    filter:brightness(1) saturate(1) drop-shadow(0 2px 7px rgba(70,120,255,.12));
+@keyframes leoIconWebpSuperGlow{
+  0%,38%,100%{
+    filter:brightness(1) saturate(1) contrast(1)
+      drop-shadow(0 2px 7px rgba(70,120,255,.18));
     opacity:1;
   }
+  45%{
+    filter:brightness(1.18) saturate(1.12) contrast(1.03)
+      drop-shadow(0 0 8px rgba(70,120,255,.42))
+      drop-shadow(0 0 16px rgba(70,120,255,.22));
+  }
   52%{
-    filter:brightness(1.12) saturate(1.08) drop-shadow(0 0 8px rgba(70,120,255,.3));
+    filter:brightness(1.45) saturate(1.28) contrast(1.06)
+      drop-shadow(0 0 8px rgba(255,255,255,.82))
+      drop-shadow(0 0 18px rgba(70,120,255,.72))
+      drop-shadow(0 0 32px rgba(70,120,255,.45));
   }
-  60%{
-    filter:brightness(1.28) saturate(1.18) drop-shadow(0 0 7px rgba(255,255,255,.7)) drop-shadow(0 0 17px rgba(70,120,255,.55));
+  58%{
+    filter:brightness(1.85) saturate(1.42) contrast(1.08)
+      drop-shadow(0 0 12px rgba(255,255,255,1))
+      drop-shadow(0 0 24px rgba(70,120,255,.95))
+      drop-shadow(0 0 42px rgba(70,120,255,.72))
+      drop-shadow(0 0 62px rgba(70,120,255,.38));
+    opacity:1;
   }
-  67%{
-    filter:brightness(1.5) saturate(1.3) drop-shadow(0 0 10px rgba(255,255,255,.95)) drop-shadow(0 0 24px rgba(70,120,255,.75));
+  64%{
+    filter:brightness(2.05) saturate(1.5) contrast(1.1)
+      drop-shadow(0 0 15px rgba(255,255,255,1))
+      drop-shadow(0 0 28px rgba(70,120,255,1))
+      drop-shadow(0 0 48px rgba(70,120,255,.82))
+      drop-shadow(0 0 72px rgba(70,120,255,.46));
   }
-  74%{
-    filter:brightness(1.24) saturate(1.14) drop-shadow(0 0 6px rgba(255,255,255,.6)) drop-shadow(0 0 15px rgba(70,120,255,.48));
+  70%{
+    filter:brightness(1.6) saturate(1.35) contrast(1.07)
+      drop-shadow(0 0 10px rgba(255,255,255,.9))
+      drop-shadow(0 0 22px rgba(70,120,255,.86))
+      drop-shadow(0 0 40px rgba(70,120,255,.6));
   }
-  84%{
-    filter:brightness(1.02) saturate(1.02) drop-shadow(0 2px 7px rgba(70,120,255,.12));
+  78%{
+    filter:brightness(1.2) saturate(1.12) contrast(1.02)
+      drop-shadow(0 0 7px rgba(255,255,255,.5))
+      drop-shadow(0 0 16px rgba(70,120,255,.42));
+  }
+  86%{
+    filter:brightness(1.02) saturate(1.02)
+      drop-shadow(0 2px 7px rgba(70,120,255,.18));
   }
 }
 
 @media(prefers-reduced-motion:reduce){
   img.header-logo[src*="assets/icon.webp"]{
-    animation:leoIconWebpSignature 5s ease-in-out infinite!important;
+    animation:leoIconWebpSuperGlow 4.8s ease-in-out infinite!important;
   }
 }
