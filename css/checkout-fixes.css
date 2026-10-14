@@ -1818,3 +1818,17 @@
   .checkout-page .game-hero-benefits{top:310px!important;height:55px!important;min-height:55px!important;padding:6px 3px!important;gap:2px!important;}
   .checkout-page .game-hero-benefits .hero-benefit{font-size:8px!important;gap:2px!important;}
 }
+
+
+/* Match the hero's game-info panel to the Data Akun card surface. */
+.checkout-page .game-hero,
+.checkout-page .game-hero::before,
+.checkout-page .game-hero-benefits{
+  background-color:#112033!important;
+}
+.checkout-page .game-hero::before{
+  background:linear-gradient(145deg,#142338 0%,#101d30 100%)!important;
+}
+.checkout-page .game-hero-benefits{
+  background:linear-gradient(145deg,#142338 0%,#101d30 100%)!important;
+}
