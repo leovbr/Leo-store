@@ -56,6 +56,14 @@
  .site-header .header-brand .header-brand-text,
  .site-header a.header-brand > span.header-brand-text{font-size:17px!important;}
 }
+
+/* TARGETED FIX ONLY: nudge the inner-page text brand right by 10px.
+   These pages use .container > .header-brand (not .header-inner > .header-brand).
+   Do not alter the Home header or any other layout. */
+body:not(.home-page) .site-header > .container > .header-brand,
+body:not(.home-page) .site-header .container > .header-brand {
+  margin-left: 10px !important;
+}
 </style>
 
 </head>
