@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     if (gameHeroBanner) {
       gameHeroBanner.style.backgroundImage = "";
-      gameHeroBanner.style.setProperty("--hero-banner-image", `url("${new URL("assets/banner.webp", document.baseURI).href}")`);
+      gameHeroBanner.style.setProperty("--hero-banner-image", `url("${new URL("banner.webp", document.baseURI).href}")`);
     }
     if (gameIconFallback) {
       gameIconFallback.textContent = product.icon || "🎮";
