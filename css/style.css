@@ -1,16 +1,8 @@
-@font-face {
-  font-family: "Deadbeat";
-  src: url("../assets/Deadbeat.ttf") format("opentype");
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-}
-
-/* Force the locally hosted Deadbeat font on the animated header wordmark. */
+/* Use a system font for the header wordmark on every device. */
 .site-header .header-brand .header-brand-text,
 .site-header a.header-brand > span.header-brand-text {
-  font-family: "Deadbeat", serif !important;
-  font-weight: 400 !important;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+  font-weight: 900 !important;
 }
 
 /* =========================================================
