@@ -3032,11 +3032,12 @@ body{
   -webkit-background-clip:text!important;
   background-clip:text!important;
   -webkit-text-fill-color:transparent!important;
-  font-family:"Plus Jakarta Sans",Arial,sans-serif!important;
+  font-family:Impact,Haettenschweiler,"Arial Narrow Bold",sans-serif!important;
   font-size:clamp(16px,2.3vw,21px)!important;
   font-weight:900!important;
   font-style:normal!important;
-  letter-spacing:-.045em!important;
+  letter-spacing:.025em!important;
+  -webkit-text-stroke:.25px currentColor!important;
   line-height:1.15!important;
   white-space:nowrap!important;
   text-decoration:none!important;
