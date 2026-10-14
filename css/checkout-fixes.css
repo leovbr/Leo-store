@@ -1695,3 +1695,20 @@
     padding:0 14px!important;
   }
 }
+
+
+/* ===== FORCE SINGLE CURRENT HERO BANNER; DISABLE ANY LEGACY IMAGE LAYERS ===== */
+.checkout-page .game-hero{
+  background-image:var(--hero-banner-image)!important;
+  background-repeat:no-repeat!important;
+  background-position:center top!important;
+  background-size:100% 250px!important;
+}
+.checkout-page .game-hero::after{
+  background:
+    linear-gradient(90deg,rgba(5,6,10,.28),rgba(5,6,10,.08),rgba(5,6,10,.02)),
+    linear-gradient(0deg,rgba(5,6,10,.28),transparent 70%)!important;
+}
+.checkout-page .game-hero::before{
+  background:#050609!important;
+}
