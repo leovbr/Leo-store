@@ -2,8 +2,15 @@
   font-family: "Deadbeat";
   src: url("../assets/Deadbeat.ttf") format("opentype");
   font-style: normal;
-  font-weight: 400 900;
+  font-weight: 400;
   font-display: swap;
+}
+
+/* Force the locally hosted Deadbeat font on the animated header wordmark. */
+.site-header .header-brand .header-brand-text,
+.site-header a.header-brand > span.header-brand-text {
+  font-family: "Deadbeat", serif !important;
+  font-weight: 400 !important;
 }
 
 /* =========================================================
