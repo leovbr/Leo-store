@@ -10,7 +10,7 @@
   background-clip:text!important;
   -webkit-text-fill-color:transparent!important;
   clip-path:inset(0 0 0 0);
-  animation:leoSmoothWrite 8s cubic-bezier(.45,0,.2,1) infinite!important;
+  animation:leoSmoothWrite 8s cubic-bezier(.33,1,.68,1) infinite!important;
   will-change:clip-path,filter;
   isolation:isolate;
 }
@@ -69,16 +69,4 @@
   60%{opacity:1}
   72%{background-position:-70% 0;opacity:1}
   77%,100%{background-position:-70% 0;opacity:0}
-}
-@media(prefers-reduced-motion:reduce){
-  .site-header .header-brand .header-brand-text,
-  .site-header a.header-brand > span.header-brand-text,
-  .site-header .header-brand .header-brand-text::before,
-  .site-header a.header-brand > span.header-brand-text::before,
-  .site-header .header-brand .header-brand-text::after,
-  .site-header a.header-brand > span.header-brand-text::after{
-    animation:none!important;
-    filter:none!important;
-    clip-path:none!important;
-  }
 }
