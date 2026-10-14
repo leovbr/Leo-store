@@ -1,5 +1,4 @@
-/* LEOOSTORE.id — brighter, faster combined wordmark motion.
-   Preserves the wordmark, font size, placement and original cyan-blue-purple-pink palette. */
+/* LEOOSTORE.id — type-on reveal, then a synchronized energy/glow sequence. */
 .site-header .header-brand .header-brand-text,
 .site-header a.header-brand > span.header-brand-text{
   position:relative!important;
@@ -10,7 +9,8 @@
   -webkit-background-clip:text!important;
   background-clip:text!important;
   -webkit-text-fill-color:transparent!important;
-  animation:leoGradientFlow 4.6s ease-in-out infinite,leoNeonGlow 2.5s ease-in-out infinite,leoElectricPulse 5.8s linear infinite!important;
+  clip-path:inset(0 0 0 0);
+  animation:leoTypeReveal 11s steps(12,end) infinite,leoGradientFlow 11s ease-in-out infinite,leoNeonGlow 11s ease-in-out infinite,leoElectricPulse 11s linear infinite!important;
   isolation:isolate;
 }
 .site-header .header-brand .header-brand-text::before,
@@ -25,7 +25,7 @@
   background-size:100% 100%;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 54'%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 17 L17 12 L14 22 L25 18 L20 29' stroke='%234edcff' stroke-width='1.8'/%3E%3Cpath d='M48 7 L54 13 L50 18 L59 22' stroke='%23ffffff' stroke-width='1.4'/%3E%3Cpath d='M95 45 L102 37 L99 31 L108 26' stroke='%23ff4fcf' stroke-width='1.8'/%3E%3Cpath d='M154 7 L148 15 L155 19 L149 26' stroke='%234edcff' stroke-width='1.6'/%3E%3Cpath d='M190 38 L198 30 L194 25 L205 20' stroke='%23ffffff' stroke-width='1.5'/%3E%3Cpath d='M212 12 L205 17 L209 22' stroke='%23ff4fcf' stroke-width='1.5'/%3E%3C/g%3E%3C/svg%3E");
   filter:drop-shadow(0 0 3px rgba(78,220,255,.95)) drop-shadow(0 0 6px rgba(255,79,207,.65));
-  animation:leoLightningArc 5.8s steps(1,end) infinite;
+  animation:leoLightningArc 11s steps(1,end) infinite;
 }
 .site-header .header-brand .header-brand-text::after,
 .site-header a.header-brand > span.header-brand-text::after{
@@ -41,42 +41,46 @@
   background-clip:text;
   -webkit-text-fill-color:transparent;
   opacity:0;
-  animation:leoShimmerSweep 4.2s ease-in-out infinite;
+  animation:leoShimmerSweep 11s ease-in-out infinite;
+}
+/* First 5.5 seconds: reveal from L to the final dot. Then hold for the effects. */
+@keyframes leoTypeReveal{
+  0%{clip-path:inset(0 100% 0 0)}
+  49.9%{clip-path:inset(0 0 0 0)}
+  100%{clip-path:inset(0 0 0 0)}
 }
 @keyframes leoGradientFlow{
-  0%,100%{background-position:0% 50%}
-  50%{background-position:100% 50%}
+  0%,49.9%{background-position:0% 50%}
+  75%,100%{background-position:100% 50%}
 }
 @keyframes leoNeonGlow{
-  0%,100%{
-    filter:drop-shadow(0 0 3px rgba(78,220,255,.48)) drop-shadow(0 0 7px rgba(139,124,255,.3));
-  }
-  50%{
-    filter:drop-shadow(0 0 7px rgba(78,220,255,.9)) drop-shadow(0 0 13px rgba(139,124,255,.72)) drop-shadow(0 0 17px rgba(255,79,207,.42));
-  }
+  0%,48%{filter:none}
+  53%{filter:drop-shadow(0 0 4px rgba(78,220,255,.65))}
+  62%{filter:drop-shadow(0 0 8px rgba(78,220,255,.95)) drop-shadow(0 0 14px rgba(139,124,255,.75)) drop-shadow(0 0 18px rgba(255,79,207,.5))}
+  70%{filter:drop-shadow(0 0 5px rgba(78,220,255,.7)) drop-shadow(0 0 10px rgba(139,124,255,.45))}
+  100%{filter:none}
 }
 @keyframes leoShimmerSweep{
-  0%,8%{background-position:150% 0;opacity:0}
-  15%{opacity:1}
-  34%{background-position:-70% 0;opacity:.9}
-  40%,100%{background-position:-70% 0;opacity:0}
+  0%,49%{background-position:150% 0;opacity:0}
+  53%{opacity:1}
+  68%{background-position:-70% 0;opacity:.95}
+  73%,100%{background-position:-70% 0;opacity:0}
 }
-/* Brief irregular-looking electric sparks: bzzzt, then calm again. */
+/* Short double electric flicker after the typing finishes: bzzzt! */
 @keyframes leoLightningArc{
-  0%,66%,67.5%,69%,71%,100%{opacity:0;transform:translateX(0) scale(.98)}
-  66.3%{opacity:1;transform:translateX(-1px) scale(1)}
-  66.7%{opacity:.15;transform:translateX(1px) scale(1.01)}
-  67%{opacity:1;transform:translateX(0) scale(1)}
-  68.2%{opacity:.85;transform:translateX(1px) scale(1)}
-  68.5%{opacity:0}
-  70%{opacity:.9;transform:translateX(-1px) scale(1.01)}
+  0%,51%,53%,55%,57%,100%{opacity:0;transform:translateX(0) scale(.98)}
+  51.5%{opacity:1;transform:translateX(-1px) scale(1)}
+  52%{opacity:.15;transform:translateX(1px) scale(1.01)}
+  52.5%{opacity:1;transform:translateX(0) scale(1)}
+  54%{opacity:.85;transform:translateX(1px) scale(1)}
+  54.5%{opacity:0}
+  56%{opacity:.9;transform:translateX(-1px) scale(1.01)}
 }
-/* A short, more noticeable energy flicker, spaced out to keep the logo readable. */
 @keyframes leoElectricPulse{
-  0%,68%,70%,74%,100%{text-shadow:none}
-  68.5%{text-shadow:0 0 3px rgba(255,255,255,1),0 0 9px rgba(78,220,255,1),0 0 15px rgba(139,124,255,.8)}
-  69%{text-shadow:0 0 2px rgba(255,255,255,.65),0 0 6px rgba(78,220,255,.85)}
-  71%{text-shadow:0 0 4px rgba(255,255,255,1),0 0 12px rgba(78,220,255,1),0 0 18px rgba(255,79,207,.72)}
+  0%,49%,51%,58%,100%{text-shadow:none}
+  52%{text-shadow:0 0 3px rgba(255,255,255,1),0 0 9px rgba(78,220,255,1),0 0 15px rgba(139,124,255,.8)}
+  53%{text-shadow:0 0 2px rgba(255,255,255,.65),0 0 6px rgba(78,220,255,.85)}
+  55%{text-shadow:0 0 4px rgba(255,255,255,1),0 0 12px rgba(78,220,255,1),0 0 18px rgba(255,79,207,.72)}
 }
 @media(prefers-reduced-motion:reduce){
   .site-header .header-brand .header-brand-text,
@@ -84,5 +88,9 @@
   .site-header .header-brand .header-brand-text::before,
   .site-header a.header-brand > span.header-brand-text::before,
   .site-header .header-brand .header-brand-text::after,
-  .site-header a.header-brand > span.header-brand-text::after{animation:none!important;filter:none!important}
+  .site-header a.header-brand > span.header-brand-text::after{
+    animation:none!important;
+    filter:none!important;
+    clip-path:none!important;
+  }
 }
