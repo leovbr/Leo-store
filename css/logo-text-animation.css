@@ -20,6 +20,7 @@
   animation:leoSmoothWrite 8s cubic-bezier(.33,1,.68,1) infinite!important;
   will-change:clip-path,filter;
   isolation:isolate;
+  animation:leoSmoothWrite 8s cubic-bezier(.33,1,.68,1) infinite,leoLightningGlitch 8s steps(1,end) infinite!important;
 }
 .site-header .header-brand .header-brand-text::before,
 .site-header a.header-brand > span.header-brand-text::before{
@@ -51,8 +52,8 @@
   -webkit-text-fill-color:transparent;
   opacity:0;
   filter:drop-shadow(0 0 3px rgba(255,255,255,.95));
-  animation:none!important;
-  display:none!important;
+  animation:leoWhiteShimmer 8s cubic-bezier(.22,1,.36,1) infinite;
+  display:block!important;
 }
 /* Smooth continuous writing reveal, without stepped jumps. */
 @keyframes leoSmoothWrite{
@@ -73,8 +74,21 @@
 }
 /* Clearly visible white highlight sweeps across the whole wordmark. */
 @keyframes leoWhiteShimmer{
-  0%,57%{background-position:160% 0;opacity:0}
-  60%{opacity:1}
+  0%,54%{background-position:160% 0;opacity:0}
+  57%{opacity:.15}
+  59%{opacity:.95}
   72%{background-position:-70% 0;opacity:1}
-  77%,100%{background-position:-70% 0;opacity:0}
+  78%,100%{background-position:-70% 0;opacity:0}
+}
+
+/* Brief electric glitch synced with the lightning strike. */
+@keyframes leoLightningGlitch{
+  0%,57%,64%,100%{transform:translate(0,0);filter:none;text-shadow:none}
+  58%{transform:translate(-1px,0);filter:drop-shadow(2px 0 #fff) drop-shadow(-2px 0 #a970ff);text-shadow:2px 0 rgba(255,255,255,.9),-2px 0 rgba(124,92,255,.95)}
+  58.5%{transform:translate(1px,-1px) skewX(-5deg);filter:drop-shadow(-3px 0 #fff) drop-shadow(3px 0 #7c5cff);text-shadow:-3px 0 #fff,3px 0 #7c5cff}
+  59%{transform:translate(-1px,1px) skewX(4deg);filter:drop-shadow(0 0 7px rgba(255,255,255,.95));text-shadow:2px 0 #fff,-2px 0 #7c5cff}
+  59.5%{transform:translate(1px,0);filter:drop-shadow(0 0 10px rgba(124,92,255,.9));text-shadow:-2px 0 #fff,2px 0 #7c5cff}
+  60%,61%{transform:translate(0,0);filter:drop-shadow(0 0 4px rgba(255,255,255,.85));text-shadow:none}
+  62%{transform:translate(-1px,0);filter:drop-shadow(1px 0 #fff) drop-shadow(-1px 0 #7c5cff)}
+  63%{transform:translate(0,0);filter:none;text-shadow:none}
 }
