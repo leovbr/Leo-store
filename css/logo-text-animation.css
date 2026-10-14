@@ -10,6 +10,12 @@
   background-clip:text!important;
   -webkit-text-fill-color:transparent!important;
   clip-path:inset(0 0 0 0);
+  -webkit-mask-image:linear-gradient(to right,#000 0%,#000 100%);
+  mask-image:linear-gradient(to right,#000 0%,#000 100%);
+  -webkit-mask-size:100% 100%;
+  mask-size:100% 100%;
+  -webkit-mask-repeat:no-repeat;
+  mask-repeat:no-repeat;
   animation:leoSmoothWrite 8s cubic-bezier(.33,1,.68,1) infinite!important;
   will-change:clip-path,filter;
   isolation:isolate;
@@ -48,10 +54,10 @@
 }
 /* Smooth continuous writing reveal, without stepped jumps. */
 @keyframes leoSmoothWrite{
-  0%{clip-path:inset(0 100% 0 0);filter:none}
-  55%{clip-path:inset(0 0 0 0);filter:none}
-  55.1%,77%{clip-path:inset(0 0 0 0);filter:drop-shadow(0 0 3px rgba(169,112,255,.35))}
-  100%{clip-path:inset(0 100% 0 0);filter:none}
+  0%{clip-path:inset(0 100% 0 0);-webkit-mask-size:0% 100%;mask-size:0% 100%;filter:none}
+  55%{clip-path:inset(0 0 0 0);-webkit-mask-size:100% 100%;mask-size:100% 100%;filter:none}
+  55.1%,77%{clip-path:inset(0 0 0 0);-webkit-mask-size:100% 100%;mask-size:100% 100%;filter:drop-shadow(0 0 3px rgba(169,112,255,.35))}
+  100%{clip-path:inset(0 100% 0 0);-webkit-mask-size:0% 100%;mask-size:0% 100%;filter:none}
 }
 /* Strong, short electric arcs after the lettering finishes. */
 @keyframes leoLightningBurst{
