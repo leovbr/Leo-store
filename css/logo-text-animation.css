@@ -64,19 +64,19 @@
 }
 /* Lightning traces along with the writing reveal, then snaps at the end. */
 @keyframes leoWriteLightning{
-  0%,5%,55%,100%{opacity:0;transform:translateX(0) scale(.98);background-position:-20% 0}
-  8%{opacity:.9;transform:translateX(0) scale(1);background-position:0 0}
-  20%{opacity:.8;background-position:25% 0}
-  32%{opacity:1;background-position:50% 0;filter:drop-shadow(0 0 5px rgba(216,180,254,1)) drop-shadow(0 0 12px rgba(124,58,237,1))}
-  44%{opacity:.85;background-position:75% 0}
-  54%{opacity:1;background-position:100% 0;filter:drop-shadow(0 0 7px rgba(255,255,255,1)) drop-shadow(0 0 14px rgba(124,58,237,1))}
-  56%,57%{opacity:0;transform:translateX(0) scale(.98)}
-  58%{opacity:1;transform:translateX(-1px) scale(1);filter:drop-shadow(0 0 5px rgba(216,180,254,1)) drop-shadow(0 0 12px rgba(124,58,237,1))}
-  58.5%{opacity:.25;transform:translateX(1px) scale(1.015)}
-  59%{opacity:1;transform:translateX(0) scale(1.01)}
-  61%{opacity:.95;transform:translateX(1px) scale(1)}
-  61.5%{opacity:0}
-  63%{opacity:1;transform:translateX(-1px) scale(1.015)}
+  0%,32%,100%{opacity:0;transform:translateX(0) scale(.98);background-position:-20% 0}
+  34%{opacity:.9;transform:translateX(0) scale(1);background-position:0 0}
+  37%{opacity:.8;background-position:25% 0}
+  40%{opacity:1;background-position:50% 0;filter:drop-shadow(0 0 5px rgba(216,180,254,1)) drop-shadow(0 0 12px rgba(124,58,237,1))}
+  43%{opacity:.85;background-position:75% 0}
+  45%{opacity:1;background-position:100% 0;filter:drop-shadow(0 0 7px rgba(255,255,255,1)) drop-shadow(0 0 14px rgba(124,58,237,1))}
+  46%,47%{opacity:0;transform:translateX(0) scale(.98)}
+  78%{opacity:1;transform:translateX(-1px) scale(1);filter:drop-shadow(0 0 5px rgba(216,180,254,1)) drop-shadow(0 0 12px rgba(124,58,237,1))}
+  78.5%{opacity:.25;transform:translateX(1px) scale(1.015)}
+  79%{opacity:1;transform:translateX(0) scale(1.01)}
+  81%{opacity:.95;transform:translateX(1px) scale(1)}
+  81.5%{opacity:0}
+  83%{opacity:1;transform:translateX(-1px) scale(1.015)}
 }
 /* Clearly visible white highlight sweeps across the whole wordmark. */
 @keyframes leoWhiteShimmer{
