@@ -34,7 +34,7 @@
   background-size:100% 100%;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 64'%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 24 L16 17 L12 29 L27 22 L21 37 L35 31' stroke='%23d8b4fe' stroke-width='2.8'/%3E%3Cpath d='M42 8 L51 17 L47 24 L58 29' stroke='%23ffffff' stroke-width='2'/%3E%3Cpath d='M82 56 L94 43 L89 34 L105 25' stroke='%23a970ff' stroke-width='2.8'/%3E%3Cpath d='M139 8 L132 19 L143 25 L135 37' stroke='%23ffffff' stroke-width='2'/%3E%3Cpath d='M177 54 L188 41 L183 32 L198 23' stroke='%23c4a1ff' stroke-width='2.8'/%3E%3Cpath d='M213 14 L205 22 L211 29 L203 39' stroke='%23ffffff' stroke-width='2'/%3E%3Cpath d='M226 47 L235 39 L230 32' stroke='%23a970ff' stroke-width='2.4'/%3E%3C/g%3E%3C/svg%3E");
   filter:drop-shadow(0 0 4px rgba(183,138,255,1)) drop-shadow(0 0 9px rgba(124,58,237,.95));
-  animation:leoLightningBurst 8s linear infinite;
+  animation:leoWriteLightning 8s linear infinite;
 }
 .site-header .header-brand .header-brand-text::after,
 .site-header a.header-brand > span.header-brand-text::after{
@@ -62,12 +62,18 @@
   55.1%,77%{clip-path:inset(0 0 0 0);-webkit-mask-size:100% 100%;mask-size:100% 100%;filter:drop-shadow(0 0 3px rgba(169,112,255,.35))}
   100%{clip-path:inset(0 100% 0 0);-webkit-mask-size:0% 100%;mask-size:0% 100%;filter:none}
 }
-/* Strong, short electric arcs after the lettering finishes. */
-@keyframes leoLightningBurst{
-  0%,58%,60%,62%,64%,100%{opacity:0;transform:translateX(0) scale(.98)}
-  58.5%{opacity:1;transform:translateX(-1px) scale(1);filter:drop-shadow(0 0 5px rgba(216,180,254,1)) drop-shadow(0 0 12px rgba(124,58,237,1))}
-  59%{opacity:.25;transform:translateX(1px) scale(1.015)}
-  59.5%{opacity:1;transform:translateX(0) scale(1.01)}
+/* Lightning traces along with the writing reveal, then snaps at the end. */
+@keyframes leoWriteLightning{
+  0%,5%,55%,100%{opacity:0;transform:translateX(0) scale(.98);background-position:-20% 0}
+  8%{opacity:.9;transform:translateX(0) scale(1);background-position:0 0}
+  20%{opacity:.8;background-position:25% 0}
+  32%{opacity:1;background-position:50% 0;filter:drop-shadow(0 0 5px rgba(216,180,254,1)) drop-shadow(0 0 12px rgba(124,58,237,1))}
+  44%{opacity:.85;background-position:75% 0}
+  54%{opacity:1;background-position:100% 0;filter:drop-shadow(0 0 7px rgba(255,255,255,1)) drop-shadow(0 0 14px rgba(124,58,237,1))}
+  56%,57%{opacity:0;transform:translateX(0) scale(.98)}
+  58%{opacity:1;transform:translateX(-1px) scale(1);filter:drop-shadow(0 0 5px rgba(216,180,254,1)) drop-shadow(0 0 12px rgba(124,58,237,1))}
+  58.5%{opacity:.25;transform:translateX(1px) scale(1.015)}
+  59%{opacity:1;transform:translateX(0) scale(1.01)}
   61%{opacity:.95;transform:translateX(1px) scale(1)}
   61.5%{opacity:0}
   63%{opacity:1;transform:translateX(-1px) scale(1.015)}
