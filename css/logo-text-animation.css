@@ -1,16 +1,16 @@
-/* LEOOSTORE.id — combined wordmark motion.
-   Visual-only: preserve the existing text, gradient colors, font size and placement. */
+/* LEOOSTORE.id — brighter, faster combined wordmark motion.
+   Preserves the wordmark, font size, placement and original cyan-blue-purple-pink palette. */
 .site-header .header-brand .header-brand-text,
 .site-header a.header-brand > span.header-brand-text{
   position:relative!important;
   display:inline-block!important;
-  background-image:linear-gradient(100deg,#4edcff 0%,#3f9dff 36%,#8b7cff 68%,#ff4fcf 100%)!important;
-  background-size:240% 100%!important;
+  background-image:linear-gradient(100deg,#4edcff 0%,#3f9dff 28%,#8b7cff 58%,#ff4fcf 82%,#4edcff 100%)!important;
+  background-size:180% 100%!important;
   background-position:0% 50%;
   -webkit-background-clip:text!important;
   background-clip:text!important;
   -webkit-text-fill-color:transparent!important;
-  animation:leoGradientFlow 7s ease-in-out infinite,leoNeonGlow 3.8s ease-in-out infinite,leoElectricPulse 8.5s linear infinite!important;
+  animation:leoGradientFlow 4.6s ease-in-out infinite,leoNeonGlow 2.5s ease-in-out infinite,leoElectricPulse 5.8s linear infinite!important;
   isolation:isolate;
 }
 .site-header .header-brand .header-brand-text::after,
@@ -20,35 +20,39 @@
   inset:0;
   pointer-events:none;
   color:transparent;
-  background:linear-gradient(105deg,transparent 0%,transparent 38%,rgba(255,255,255,.05) 43%,rgba(255,255,255,.92) 49%,rgba(255,255,255,.12) 54%,transparent 61%,transparent 100%);
-  background-size:260% 100%;
+  background:linear-gradient(105deg,transparent 0%,transparent 32%,rgba(255,255,255,.12) 40%,rgba(255,255,255,1) 48%,rgba(255,255,255,.28) 55%,transparent 64%,transparent 100%);
+  background-size:240% 100%;
   background-position:150% 0;
   -webkit-background-clip:text;
   background-clip:text;
   -webkit-text-fill-color:transparent;
   opacity:0;
-  animation:leoShimmerSweep 6.4s ease-in-out infinite;
+  animation:leoShimmerSweep 4.2s ease-in-out infinite;
 }
 @keyframes leoGradientFlow{
   0%,100%{background-position:0% 50%}
   50%{background-position:100% 50%}
 }
 @keyframes leoNeonGlow{
-  0%,100%{filter:drop-shadow(0 0 2px rgba(78,220,255,.24)) drop-shadow(0 0 5px rgba(139,124,255,.14))}
-  50%{filter:drop-shadow(0 0 5px rgba(78,220,255,.65)) drop-shadow(0 0 10px rgba(255,79,207,.42))}
+  0%,100%{
+    filter:drop-shadow(0 0 3px rgba(78,220,255,.48)) drop-shadow(0 0 7px rgba(139,124,255,.3));
+  }
+  50%{
+    filter:drop-shadow(0 0 7px rgba(78,220,255,.9)) drop-shadow(0 0 13px rgba(139,124,255,.72)) drop-shadow(0 0 17px rgba(255,79,207,.42));
+  }
 }
 @keyframes leoShimmerSweep{
-  0%,12%{background-position:150% 0;opacity:0}
-  18%{opacity:.92}
-  36%{background-position:-70% 0;opacity:.68}
-  42%,100%{background-position:-70% 0;opacity:0}
+  0%,8%{background-position:150% 0;opacity:0}
+  15%{opacity:1}
+  34%{background-position:-70% 0;opacity:.9}
+  40%,100%{background-position:-70% 0;opacity:0}
 }
-/* Brief energy flicker, kept subtle so the wordmark remains readable. */
+/* A short, more noticeable energy flicker, spaced out to keep the logo readable. */
 @keyframes leoElectricPulse{
-  0%,91%,93%,96%,100%{text-shadow:none}
-  91.5%{text-shadow:0 0 2px rgba(255,255,255,.9),0 0 8px rgba(78,220,255,.9),0 0 13px rgba(139,124,255,.5)}
-  92%{text-shadow:0 0 1px rgba(255,255,255,.55),0 0 4px rgba(78,220,255,.6)}
-  94%{text-shadow:0 0 3px rgba(255,255,255,.95),0 0 10px rgba(78,220,255,.95),0 0 15px rgba(255,79,207,.55)}
+  0%,68%,70%,74%,100%{text-shadow:none}
+  68.5%{text-shadow:0 0 3px rgba(255,255,255,1),0 0 9px rgba(78,220,255,1),0 0 15px rgba(139,124,255,.8)}
+  69%{text-shadow:0 0 2px rgba(255,255,255,.65),0 0 6px rgba(78,220,255,.85)}
+  71%{text-shadow:0 0 4px rgba(255,255,255,1),0 0 12px rgba(78,220,255,1),0 0 18px rgba(255,79,207,.72)}
 }
 @media(prefers-reduced-motion:reduce){
   .site-header .header-brand .header-brand-text,
