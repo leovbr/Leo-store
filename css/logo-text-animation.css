@@ -10,7 +10,8 @@
   background-clip:text!important;
   -webkit-text-fill-color:transparent!important;
   clip-path:inset(0 0 0 0);
-  animation:leoSmoothWrite 8s ease-in-out infinite!important;
+  animation:leoSmoothWrite 8s cubic-bezier(.45,0,.2,1) infinite!important;
+  will-change:clip-path,filter;
   isolation:isolate;
 }
 .site-header .header-brand .header-brand-text::before,
@@ -48,8 +49,8 @@
 /* Smooth continuous writing reveal, without stepped jumps. */
 @keyframes leoSmoothWrite{
   0%{clip-path:inset(0 100% 0 0);filter:none}
-  58%{clip-path:inset(0 0 0 0);filter:none}
-  72%,90%{clip-path:inset(0 0 0 0);filter:drop-shadow(0 0 3px rgba(169,112,255,.35))}
+  55%{clip-path:inset(0 0 0 0);filter:none}
+  55.1%,77%{clip-path:inset(0 0 0 0);filter:drop-shadow(0 0 3px rgba(169,112,255,.35))}
   100%{clip-path:inset(0 100% 0 0);filter:none}
 }
 /* Strong, short electric arcs after the lettering finishes. */
