@@ -1528,7 +1528,7 @@
 
 /* TARGET LOCK — shared checkout hero banner fallback */
 .checkout-page .game-hero{
-  --hero-banner-image:url("../assets/banner.webp");
+  --hero-banner-image:url("../assets/banner.webp?v=20261015");
 }
 
 
