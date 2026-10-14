@@ -77,6 +77,38 @@
 }
 
 </style>
+
+<style id="leoostore-text-brand-override">
+/* Final override: show text-only LEOOSTORE.id brand on every storefront page. */
+.site-header a.header-brand,
+.site-header .container > a.header-brand,
+.site-header .header-inner > a.header-brand{
+  display:inline-flex!important; align-items:center!important; justify-content:flex-start!important;
+  flex:0 0 auto!important; width:auto!important; min-width:0!important; height:auto!important;
+  max-width:100%!important; overflow:visible!important; gap:0!important;
+}
+.site-header .header-brand img.header-logo{display:none!important; visibility:hidden!important; width:0!important; height:0!important;}
+.site-header .header-brand .header-brand-text,
+.site-header a.header-brand > span.header-brand-text{
+  display:inline-block!important; visibility:visible!important; opacity:1!important;
+  position:static!important; width:auto!important; height:auto!important; max-width:none!important;
+  margin:0!important; padding:0!important; overflow:visible!important;
+  color:#f5f8ff!important;
+  background:linear-gradient(100deg,#4edcff 0%,#3f9dff 36%,#8b7cff 68%,#ff4fcf 100%)!important;
+  -webkit-background-clip:text!important; background-clip:text!important;
+  -webkit-text-fill-color:transparent!important;
+  font-family:'Plus Jakarta Sans',Arial,sans-serif!important;
+  font-size:clamp(16px,2.3vw,21px)!important; font-weight:900!important;
+  font-style:normal!important; letter-spacing:-.045em!important; line-height:1.15!important;
+  white-space:nowrap!important; text-decoration:none!important; text-shadow:none!important;
+  transform:none!important; animation:none!important;
+}
+@media(max-width:600px){
+ .site-header .header-brand .header-brand-text,
+ .site-header a.header-brand > span.header-brand-text{font-size:17px!important;}
+}
+</style>
+
 </head>
 <body class="home-page">
 <header class="site-header home-header">
