@@ -1832,3 +1832,38 @@
 .checkout-page .game-hero-benefits{
   background:linear-gradient(145deg,#142338 0%,#101d30 100%)!important;
 }
+
+
+/* Compact checkout hero: reduce excess space below the banner and tighten benefits row. */
+.checkout-page .game-hero{
+  height:340px!important; min-height:340px!important;
+  background-size:100% 220px!important;
+}
+.checkout-page .game-hero::before{top:220px!important;}
+.checkout-page .game-hero::after{height:220px!important;}
+.checkout-page .game-hero-content::after{top:220px!important;}
+.checkout-page .game-hero-icon{
+  top:180px!important; left:22px!important;
+  width:108px!important; height:108px!important;
+}
+.checkout-page .game-hero-text{top:238px!important;left:144px!important;right:12px!important;}
+.checkout-page .game-hero-benefits{
+  top:292px!important;left:8px!important;right:8px!important;
+  height:42px!important;min-height:42px!important;padding:4px 5px!important;gap:2px!important;
+}
+.checkout-page .game-hero-benefits .hero-benefit{gap:3px!important;font-size:clamp(8px,1.7vw,11px)!important;}
+.checkout-page .game-hero-benefits .hero-benefit-icon{font-size:11px!important;}
+@media(max-width:420px){
+  .checkout-page .game-hero{height:330px!important;min-height:330px!important;background-size:100% 205px!important;}
+  .checkout-page .game-hero::before{top:205px!important;}
+  .checkout-page .game-hero::after{height:205px!important;}
+  .checkout-page .game-hero-content::after{top:205px!important;}
+  .checkout-page .game-hero-icon{top:168px!important;left:16px!important;width:94px!important;height:94px!important;}
+  .checkout-page .game-hero-icon img{border-radius:18px!important;}
+  .checkout-page .game-hero-text{top:222px!important;left:122px!important;right:8px!important;}
+  .checkout-page .game-hero-text h1{font-size:18px!important;}
+  .checkout-page .game-hero-text p{font-size:12px!important;}
+  .checkout-page .game-hero-benefits{top:278px!important;height:42px!important;min-height:42px!important;padding:3px 2px!important;gap:0!important;}
+  .checkout-page .game-hero-benefits .hero-benefit{font-size:8px!important;gap:2px!important;}
+  .checkout-page .game-hero-benefits .hero-benefit-icon{font-size:10px!important;}
+}
