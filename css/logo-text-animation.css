@@ -13,6 +13,20 @@
   animation:leoGradientFlow 4.6s ease-in-out infinite,leoNeonGlow 2.5s ease-in-out infinite,leoElectricPulse 5.8s linear infinite!important;
   isolation:isolate;
 }
+.site-header .header-brand .header-brand-text::before,
+.site-header a.header-brand > span.header-brand-text::before{
+  content:"";
+  position:absolute;
+  inset:-7px -5px;
+  pointer-events:none;
+  z-index:2;
+  opacity:0;
+  background-repeat:no-repeat;
+  background-size:100% 100%;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 54'%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 17 L17 12 L14 22 L25 18 L20 29' stroke='%234edcff' stroke-width='1.8'/%3E%3Cpath d='M48 7 L54 13 L50 18 L59 22' stroke='%23ffffff' stroke-width='1.4'/%3E%3Cpath d='M95 45 L102 37 L99 31 L108 26' stroke='%23ff4fcf' stroke-width='1.8'/%3E%3Cpath d='M154 7 L148 15 L155 19 L149 26' stroke='%234edcff' stroke-width='1.6'/%3E%3Cpath d='M190 38 L198 30 L194 25 L205 20' stroke='%23ffffff' stroke-width='1.5'/%3E%3Cpath d='M212 12 L205 17 L209 22' stroke='%23ff4fcf' stroke-width='1.5'/%3E%3C/g%3E%3C/svg%3E");
+  filter:drop-shadow(0 0 3px rgba(78,220,255,.95)) drop-shadow(0 0 6px rgba(255,79,207,.65));
+  animation:leoLightningArc 5.8s steps(1,end) infinite;
+}
 .site-header .header-brand .header-brand-text::after,
 .site-header a.header-brand > span.header-brand-text::after{
   content:"LEOOSTORE.id";
@@ -47,6 +61,16 @@
   34%{background-position:-70% 0;opacity:.9}
   40%,100%{background-position:-70% 0;opacity:0}
 }
+/* Brief irregular-looking electric sparks: bzzzt, then calm again. */
+@keyframes leoLightningArc{
+  0%,66%,67.5%,69%,71%,100%{opacity:0;transform:translateX(0) scale(.98)}
+  66.3%{opacity:1;transform:translateX(-1px) scale(1)}
+  66.7%{opacity:.15;transform:translateX(1px) scale(1.01)}
+  67%{opacity:1;transform:translateX(0) scale(1)}
+  68.2%{opacity:.85;transform:translateX(1px) scale(1)}
+  68.5%{opacity:0}
+  70%{opacity:.9;transform:translateX(-1px) scale(1.01)}
+}
 /* A short, more noticeable energy flicker, spaced out to keep the logo readable. */
 @keyframes leoElectricPulse{
   0%,68%,70%,74%,100%{text-shadow:none}
@@ -57,6 +81,8 @@
 @media(prefers-reduced-motion:reduce){
   .site-header .header-brand .header-brand-text,
   .site-header a.header-brand > span.header-brand-text,
+  .site-header .header-brand .header-brand-text::before,
+  .site-header a.header-brand > span.header-brand-text::before,
   .site-header .header-brand .header-brand-text::after,
   .site-header a.header-brand > span.header-brand-text::after{animation:none!important;filter:none!important}
 }
