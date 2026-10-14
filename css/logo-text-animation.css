@@ -4,8 +4,12 @@
   position:relative!important;
   display:inline-block!important;
   color:#7c5cff!important;
-  background-image:none!important;
-  -webkit-text-fill-color:#7c5cff!important;
+  background-image:linear-gradient(90deg,#7c5cff 0%,#7c5cff 52%,#c4a1ff 52%,#c4a1ff 100%)!important;
+  background-size:100% 100%!important;
+  background-position:0 50%!important;
+  -webkit-background-clip:text!important;
+  background-clip:text!important;
+  -webkit-text-fill-color:transparent!important;
   clip-path:inset(0 0 0 0);
   -webkit-mask-image:linear-gradient(to right,#000 0%,#000 100%);
   mask-image:linear-gradient(to right,#000 0%,#000 100%);
