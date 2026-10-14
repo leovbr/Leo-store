@@ -1,4 +1,4 @@
-/* LEOOSTORE.id — smooth handwritten-style reveal, purple only. */
+/* LEOOSTORE.id — smooth reveal, visible purple electricity, bright white shimmer. */
 .site-header .header-brand .header-brand-text,
 .site-header a.header-brand > span.header-brand-text{
   position:relative!important;
@@ -13,18 +13,71 @@
   animation:leoSmoothWrite 8s ease-in-out infinite!important;
   isolation:isolate;
 }
-/* A smooth continuous wipe: no stepped frames, no background flare, no lightning. */
+.site-header .header-brand .header-brand-text::before,
+.site-header a.header-brand > span.header-brand-text::before{
+  content:"";
+  position:absolute;
+  inset:-9px -8px;
+  pointer-events:none;
+  z-index:3;
+  opacity:0;
+  background-repeat:no-repeat;
+  background-size:100% 100%;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 64'%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 24 L16 17 L12 29 L27 22 L21 37 L35 31' stroke='%23d8b4fe' stroke-width='2.8'/%3E%3Cpath d='M42 8 L51 17 L47 24 L58 29' stroke='%23ffffff' stroke-width='2'/%3E%3Cpath d='M82 56 L94 43 L89 34 L105 25' stroke='%23a970ff' stroke-width='2.8'/%3E%3Cpath d='M139 8 L132 19 L143 25 L135 37' stroke='%23ffffff' stroke-width='2'/%3E%3Cpath d='M177 54 L188 41 L183 32 L198 23' stroke='%23c4a1ff' stroke-width='2.8'/%3E%3Cpath d='M213 14 L205 22 L211 29 L203 39' stroke='%23ffffff' stroke-width='2'/%3E%3Cpath d='M226 47 L235 39 L230 32' stroke='%23a970ff' stroke-width='2.4'/%3E%3C/g%3E%3C/svg%3E");
+  filter:drop-shadow(0 0 4px rgba(183,138,255,1)) drop-shadow(0 0 9px rgba(124,58,237,.95));
+  animation:leoLightningBurst 8s linear infinite;
+}
+.site-header .header-brand .header-brand-text::after,
+.site-header a.header-brand > span.header-brand-text::after{
+  content:"LEOOSTORE.id";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:4;
+  color:transparent;
+  background:linear-gradient(105deg,transparent 0%,transparent 34%,rgba(255,255,255,.15) 41%,#fff 48%,rgba(255,255,255,.98) 51%,rgba(255,255,255,.38) 57%,transparent 66%,transparent 100%);
+  background-size:260% 100%;
+  background-position:160% 0;
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  opacity:0;
+  filter:drop-shadow(0 0 3px rgba(255,255,255,.95));
+  animation:leoWhiteShimmer 8s ease-in-out infinite;
+}
+/* Smooth continuous writing reveal, without stepped jumps. */
 @keyframes leoSmoothWrite{
   0%{clip-path:inset(0 100% 0 0);filter:none}
   58%{clip-path:inset(0 0 0 0);filter:none}
-  72%,90%{clip-path:inset(0 0 0 0);filter:drop-shadow(0 0 3px rgba(169,112,255,.25))}
+  72%,90%{clip-path:inset(0 0 0 0);filter:drop-shadow(0 0 3px rgba(169,112,255,.35))}
   100%{clip-path:inset(0 100% 0 0);filter:none}
+}
+/* Strong, short electric arcs after the lettering finishes. */
+@keyframes leoLightningBurst{
+  0%,58%,60%,62%,64%,100%{opacity:0;transform:translateX(0) scale(.98)}
+  58.5%{opacity:1;transform:translateX(-1px) scale(1);filter:drop-shadow(0 0 5px rgba(216,180,254,1)) drop-shadow(0 0 12px rgba(124,58,237,1))}
+  59%{opacity:.25;transform:translateX(1px) scale(1.015)}
+  59.5%{opacity:1;transform:translateX(0) scale(1.01)}
+  61%{opacity:.95;transform:translateX(1px) scale(1)}
+  61.5%{opacity:0}
+  63%{opacity:1;transform:translateX(-1px) scale(1.015)}
+}
+/* Clearly visible white highlight sweeps across the whole wordmark. */
+@keyframes leoWhiteShimmer{
+  0%,57%{background-position:160% 0;opacity:0}
+  60%{opacity:1}
+  72%{background-position:-70% 0;opacity:1}
+  77%,100%{background-position:-70% 0;opacity:0}
 }
 @media(prefers-reduced-motion:reduce){
   .site-header .header-brand .header-brand-text,
-  .site-header a.header-brand > span.header-brand-text{
+  .site-header a.header-brand > span.header-brand-text,
+  .site-header .header-brand .header-brand-text::before,
+  .site-header a.header-brand > span.header-brand-text::before,
+  .site-header .header-brand .header-brand-text::after,
+  .site-header a.header-brand > span.header-brand-text::after{
     animation:none!important;
-    clip-path:none!important;
     filter:none!important;
+    clip-path:none!important;
   }
 }
