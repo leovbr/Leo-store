@@ -1,4 +1,4 @@
-/* LEOOSTORE.id — write + lightning, black sweep, then black-hole reset. */
+/* LEOOSTORE.id — smooth write, fast electric flicker, clean white shine, glitch reset. */
 .site-header .header-brand .header-brand-text,
 .site-header a.header-brand > span.header-brand-text{
   position:relative!important;
@@ -43,31 +43,37 @@
   pointer-events:none;
   z-index:4;
   color:transparent;
-  background:linear-gradient(105deg,transparent 0%,transparent 34%,rgba(0,0,0,.3) 41%,#000 48%,#000 51%,rgba(0,0,0,.65) 57%,transparent 66%,transparent 100%);
+  background:linear-gradient(105deg,transparent 0%,transparent 34%,rgba(255,255,255,.15) 41%,#fff 48%,rgba(255,255,255,.98) 51%,rgba(255,255,255,.38) 57%,transparent 66%,transparent 100%);
   background-size:260% 100%;
   background-position:160% 0;
   -webkit-background-clip:text;
   background-clip:text;
   -webkit-text-fill-color:transparent;
   opacity:0;
-  filter:drop-shadow(0 0 3px rgba(0,0,0,.8));
-  animation:leoBlackSweepHole 8s ease-in-out infinite;
+  filter:drop-shadow(0 0 3px rgba(255,255,255,.95));
+  animation:leoWhiteShimmer 8s cubic-bezier(.22,1,.36,1) infinite;
   display:block!important;
 }
-/* Reveal begins immediately; lightning is visible from the first frame and follows the reveal. */
+/* Logo writes on from the left while the lightning flickers rapidly from frame one. */
 @keyframes leoSmoothWrite{
   0%{clip-path:inset(0 100% 0 0);-webkit-mask-size:0% 100%;mask-size:0% 100%;filter:none}
   45%{clip-path:inset(0 0 0 0);-webkit-mask-size:100% 100%;mask-size:100% 100%;filter:drop-shadow(0 0 3px rgba(169,112,255,.4))}
-  70%{clip-path:inset(0 0 0 0);-webkit-mask-size:100% 100%;mask-size:100% 100%;filter:drop-shadow(0 0 3px rgba(169,112,255,.4))}
-  83%{clip-path:inset(0 0 0 0);-webkit-mask-size:100% 100%;mask-size:100% 100%;filter:drop-shadow(0 0 5px rgba(255,255,255,.5))}
+  76%{clip-path:inset(0 0 0 0);-webkit-mask-size:100% 100%;mask-size:100% 100%;filter:drop-shadow(0 0 3px rgba(169,112,255,.4))}
   100%{clip-path:inset(0 100% 0 0);-webkit-mask-size:0% 100%;mask-size:0% 100%;filter:none}
 }
 @keyframes leoWriteLightning{
-  0%{opacity:1;transform:translateX(-2px) scale(.98);background-position:-20% 0}
-  10%{opacity:.95;transform:translateX(0) scale(1);background-position:0 0}
-  22%{opacity:1;background-position:25% 0;filter:drop-shadow(0 0 5px rgba(216,180,254,1)) drop-shadow(0 0 12px rgba(124,58,237,1))}
-  34%{opacity:.95;background-position:55% 0}
-  45%{opacity:1;background-position:100% 0;filter:drop-shadow(0 0 7px rgba(255,255,255,1)) drop-shadow(0 0 14px rgba(124,58,237,1))}
+  0%{opacity:1;transform:translateX(-2px) scale(.98);filter:drop-shadow(0 0 5px #fff) drop-shadow(0 0 12px #7c3aed)}
+  3%{opacity:.12;transform:translateX(1px) scale(1.015)}
+  6%{opacity:1;transform:translateX(-1px) scale(1);filter:drop-shadow(0 0 6px #fff) drop-shadow(0 0 14px #7c3aed)}
+  9%{opacity:.18;transform:translateX(1px) scale(1.01)}
+  12%{opacity:1;transform:translateX(0) scale(1)}
+  16%{opacity:.25}
+  20%{opacity:1;filter:drop-shadow(0 0 7px #fff) drop-shadow(0 0 16px #7c3aed)}
+  26%{opacity:.15}
+  31%{opacity:1}
+  37%{opacity:.4}
+  42%{opacity:1;filter:drop-shadow(0 0 7px #fff) drop-shadow(0 0 14px #7c3aed)}
+  45%{opacity:1;transform:translateX(0) scale(1)}
   46%,76%{opacity:0;transform:translateX(0) scale(.98)}
   78%{opacity:1;transform:translateX(-1px) scale(1);filter:drop-shadow(0 0 5px rgba(216,180,254,1)) drop-shadow(0 0 12px rgba(124,58,237,1))}
   79%{opacity:.2;transform:translateX(1px) scale(1.015)}
@@ -77,19 +83,15 @@
   85%{opacity:1;transform:translateX(-1px) scale(1.015)}
   87%,100%{opacity:0}
 }
-/* A dark shadow-like sweep crosses the letters; it collapses into a black-hole effect before reset. */
-@keyframes leoBlackSweepHole{
-  0%,44%{background-position:160% 0;opacity:0;transform:scale(1);filter:drop-shadow(0 0 0 rgba(0,0,0,0))}
-  48%{opacity:.25}
-  52%{opacity:1}
-  69%{background-position:-70% 0;opacity:1;transform:scale(1);filter:drop-shadow(0 0 4px rgba(0,0,0,.95))}
-  76%{opacity:0;transform:scale(1)}
-  83%{opacity:0;transform:scale(1);background:radial-gradient(ellipse at center,#000 0%,#000 18%,rgba(0,0,0,.95) 32%,transparent 70%);background-size:100% 100%;background-position:center}
-  88%{opacity:1;transform:scale(1);filter:drop-shadow(0 0 8px #000)}
-  96%{opacity:1;transform:scale(.04,.08);filter:drop-shadow(0 0 12px #000)}
-  100%{opacity:0;transform:scale(0);filter:none}
+/* Smooth white highlight sweeps across the finished wordmark; no dark overlay or collapse. */
+@keyframes leoWhiteShimmer{
+  0%,44%{background-position:160% 0;opacity:0}
+  48%{opacity:.2}
+  52%{opacity:.95}
+  68%{background-position:-70% 0;opacity:1}
+  76%,100%{background-position:-70% 0;opacity:0}
 }
-/* Brief electric glitch immediately before the logo collapses and starts writing again. */
+/* Brief electric glitch before a normal clean reset into the next writing cycle. */
 @keyframes leoLightningGlitch{
   0%,76%,100%{transform:translate(0,0);filter:none;text-shadow:none}
   78%{transform:translate(-1px,0);filter:drop-shadow(2px 0 #fff) drop-shadow(-2px 0 #a970ff);text-shadow:2px 0 rgba(255,255,255,.9),-2px 0 rgba(124,92,255,.95)}
