@@ -131,7 +131,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     if (gameHeroBanner) {
       gameHeroBanner.style.backgroundImage = "";
-      gameHeroBanner.style.setProperty("--hero-banner-image", `url("${new URL("banner.webp", document.baseURI).href}")`);
+      const bannerCandidates = ["banner.webp", "assets/banner.webp"];
+      const tryBanner = (index) => {
+        if (index >= bannerCandidates.length) {
+          gameHeroBanner.style.setProperty("--hero-banner-image", "none");
+          return;
+        }
+        const bannerUrl = new URL(bannerCandidates[index], document.baseURI).href;
+        const probe = new Image();
+        probe.onload = () => gameHeroBanner.style.setProperty("--hero-banner-image", `url("${bannerUrl}")`);
+        probe.onerror = () => tryBanner(index + 1);
+        probe.src = bannerUrl + (bannerUrl.includes("?") ? "&" : "?") + "v=20261015";
+      };
+      tryBanner(0);
     }
     if (gameIconFallback) {
       gameIconFallback.textContent = product.icon || "🎮";
