@@ -1,96 +1,30 @@
-/* LEOOSTORE.id — type-on reveal, then a synchronized energy/glow sequence. */
+/* LEOOSTORE.id — smooth handwritten-style reveal, purple only. */
 .site-header .header-brand .header-brand-text,
 .site-header a.header-brand > span.header-brand-text{
   position:relative!important;
   display:inline-block!important;
-  background-image:linear-gradient(100deg,#b78aff 0%,#9b5cff 28%,#7c3aed 58%,#d8b4fe 82%,#b78aff 100%)!important;
-  background-size:180% 100%!important;
-  background-position:0% 50%;
+  background-image:linear-gradient(100deg,#c4a1ff 0%,#a970ff 42%,#8b5cf6 72%,#d8b4fe 100%)!important;
+  background-size:100% 100%!important;
+  background-position:0 50%!important;
   -webkit-background-clip:text!important;
   background-clip:text!important;
   -webkit-text-fill-color:transparent!important;
   clip-path:inset(0 0 0 0);
-  animation:leoTypeReveal 11s steps(12,end) infinite,leoGradientFlow 11s ease-in-out infinite,leoNeonGlow 11s ease-in-out infinite,leoElectricPulse 11s linear infinite!important;
+  animation:leoSmoothWrite 8s ease-in-out infinite!important;
   isolation:isolate;
 }
-.site-header .header-brand .header-brand-text::before,
-.site-header a.header-brand > span.header-brand-text::before{
-  content:"";
-  position:absolute;
-  inset:-7px -5px;
-  pointer-events:none;
-  z-index:2;
-  opacity:0;
-  background-repeat:no-repeat;
-  background-size:100% 100%;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 54'%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 17 L17 12 L14 22 L25 18 L20 29' stroke='%23b78aff' stroke-width='1.8'/%3E%3Cpath d='M48 7 L54 13 L50 18 L59 22' stroke='%23ffffff' stroke-width='1.4'/%3E%3Cpath d='M95 45 L102 37 L99 31 L108 26' stroke='%239b5cff' stroke-width='1.8'/%3E%3Cpath d='M154 7 L148 15 L155 19 L149 26' stroke='%23b78aff' stroke-width='1.6'/%3E%3Cpath d='M190 38 L198 30 L194 25 L205 20' stroke='%23ffffff' stroke-width='1.5'/%3E%3Cpath d='M212 12 L205 17 L209 22' stroke='%239b5cff' stroke-width='1.5'/%3E%3C/g%3E%3C/svg%3E");
-  filter:drop-shadow(0 0 3px rgba(183,138,255,.95)) drop-shadow(0 0 6px rgba(124,58,237,.75));
-  animation:leoLightningArc 11s steps(1,end) infinite;
-}
-.site-header .header-brand .header-brand-text::after,
-.site-header a.header-brand > span.header-brand-text::after{
-  content:"LEOOSTORE.id";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  color:transparent;
-  background:linear-gradient(105deg,transparent 0%,transparent 32%,rgba(255,255,255,.12) 40%,rgba(255,255,255,1) 48%,rgba(255,255,255,.28) 55%,transparent 64%,transparent 100%);
-  background-size:240% 100%;
-  background-position:150% 0;
-  -webkit-background-clip:text;
-  background-clip:text;
-  -webkit-text-fill-color:transparent;
-  opacity:0;
-  animation:leoShimmerSweep 11s ease-in-out infinite;
-}
-/* First 5.5 seconds: reveal from L to the final dot. Then hold for the effects. */
-@keyframes leoTypeReveal{
-  0%{clip-path:inset(0 100% 0 0)}
-  49.9%{clip-path:inset(0 0 0 0)}
-  100%{clip-path:inset(0 0 0 0)}
-}
-@keyframes leoGradientFlow{
-  0%,49.9%{background-position:0% 50%}
-  75%,100%{background-position:100% 50%}
-}
-@keyframes leoNeonGlow{
-  0%,48%{filter:none}
-  53%{filter:drop-shadow(0 0 4px rgba(183,138,255,.7))}
-  62%{filter:drop-shadow(0 0 8px rgba(183,138,255,1)) drop-shadow(0 0 14px rgba(124,58,237,.85)) drop-shadow(0 0 18px rgba(216,180,254,.65))}
-  70%{filter:drop-shadow(0 0 5px rgba(183,138,255,.8)) drop-shadow(0 0 10px rgba(124,58,237,.6))}
-  100%{filter:none}
-}
-@keyframes leoShimmerSweep{
-  0%,49%{background-position:150% 0;opacity:0}
-  53%{opacity:1}
-  68%{background-position:-70% 0;opacity:.95}
-  73%,100%{background-position:-70% 0;opacity:0}
-}
-/* Short double electric flicker after the typing finishes: bzzzt! */
-@keyframes leoLightningArc{
-  0%,51%,53%,55%,57%,100%{opacity:0;transform:translateX(0) scale(.98)}
-  51.5%{opacity:1;transform:translateX(-1px) scale(1)}
-  52%{opacity:.15;transform:translateX(1px) scale(1.01)}
-  52.5%{opacity:1;transform:translateX(0) scale(1)}
-  54%{opacity:.85;transform:translateX(1px) scale(1)}
-  54.5%{opacity:0}
-  56%{opacity:.9;transform:translateX(-1px) scale(1.01)}
-}
-@keyframes leoElectricPulse{
-  0%,49%,51%,58%,100%{text-shadow:none}
-  52%{text-shadow:0 0 3px rgba(255,255,255,1),0 0 9px rgba(183,138,255,1),0 0 15px rgba(124,58,237,.9)}
-  53%{text-shadow:0 0 2px rgba(255,255,255,.65),0 0 6px rgba(183,138,255,.9)}
-  55%{text-shadow:0 0 4px rgba(255,255,255,1),0 0 12px rgba(183,138,255,1),0 0 18px rgba(216,180,254,.85)}
+/* A smooth continuous wipe: no stepped frames, no background flare, no lightning. */
+@keyframes leoSmoothWrite{
+  0%{clip-path:inset(0 100% 0 0);filter:none}
+  58%{clip-path:inset(0 0 0 0);filter:none}
+  72%,90%{clip-path:inset(0 0 0 0);filter:drop-shadow(0 0 3px rgba(169,112,255,.25))}
+  100%{clip-path:inset(0 100% 0 0);filter:none}
 }
 @media(prefers-reduced-motion:reduce){
   .site-header .header-brand .header-brand-text,
-  .site-header a.header-brand > span.header-brand-text,
-  .site-header .header-brand .header-brand-text::before,
-  .site-header a.header-brand > span.header-brand-text::before,
-  .site-header .header-brand .header-brand-text::after,
-  .site-header a.header-brand > span.header-brand-text::after{
+  .site-header a.header-brand > span.header-brand-text{
     animation:none!important;
-    filter:none!important;
     clip-path:none!important;
+    filter:none!important;
   }
 }
