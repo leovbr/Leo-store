@@ -20,7 +20,7 @@
         db.from("store_products").select("id,game_slug,amount,price,category,is_active,sort_order").eq("is_active",true).order("sort_order")
       ]);
       if(gr.error)throw gr.error;if(pr.error)throw pr.error;
-      if(!gr.data||!gr.data.length)throw new Error("Supabase catalog empty; using legacy catalog");
+      if(!gr.data||!gr.data.length)return [];
       const itemsByGame=new Map();
       (pr.data||[]).forEach(p=>{
         if(!itemsByGame.has(p.game_slug))itemsByGame.set(p.game_slug,[]);
@@ -31,9 +31,8 @@
         description:g.description||"",image:g.icon_url||"",banner:g.banner_url||"",icon:"🎮",
         denominations:itemsByGame.get(g.slug)||[]
       })).filter(g=>g.denominations.length);
-      if(!catalog.length)throw new Error("No active products; using legacy catalog");
       return catalog;
-    }catch(e){console.warn("[LEOOSTORE] Supabase catalog unavailable; using legacy catalog.",e);return fallback;}
+    }catch(e){console.error("[LEOOSTORE] Supabase catalog unavailable; hiding catalog to avoid showing stale/inactive products.",e);return [];}
   }
   window.LEOOSTORE_CATALOG={getCatalog};
 })();
