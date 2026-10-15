@@ -377,9 +377,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
       }
       const db = window.supabase.createClient("https://tvdbrqskvuukxvqaqjom.supabase.co", "sb_publishable_2f-IadmcnaYzoCb_8Iko0w_pFp9u8eF");
-      const {data, error} = await db.from("store_promos").select("id,code,discount_type,discount_value,is_active,starts_at,ends_at,usage_limit,usage_count,per_user_limit,min_purchase").eq("code", code).eq("is_active", true).maybeSingle();
+      const {data: promoRows, error} = await db.from("store_promos").select("id,code,discount_type,discount_value,is_active,starts_at,ends_at,usage_limit,usage_count,per_user_limit,min_purchase").eq("is_active", true);
       if (error) throw error;
-      if (!data) throw new Error("Kode promo tidak ditemukan atau nonaktif.");
+      const data = (promoRows || []).find((row) => String(row.code || "").trim().toUpperCase() === code);
+      if (!data) throw new Error("Kode promo tidak ditemukan atau nonaktif. Pastikan kode tersimpan dan statusnya Aktif.");
       const now = Date.now();
       if (data.starts_at && new Date(data.starts_at).getTime() > now) throw new Error("Kode promo belum berlaku.");
       if (data.ends_at && new Date(data.ends_at).getTime() < now) throw new Error("Masa berlaku promo sudah habis.");
