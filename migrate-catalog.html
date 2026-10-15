@@ -15,7 +15,7 @@
 <h2>1. Login admin Supabase</h2>
 <label>Email admin</label><input id="email" type="email" autocomplete="username" placeholder="Email akun admin">
 <label>Password admin</label><input id="password" type="password" autocomplete="current-password" placeholder="Password akun admin">
-<button id="login">Login</button><button id="logout" hidden>Logout</button>
+<button id="login" type="button">Login</button><button id="logout" type="button" hidden>Logout</button>
 <p id="authStatus">Belum login.</p>
 </div>
 <div class="card">
@@ -33,7 +33,7 @@
   const SUPABASE_URL = "https://tvdbrqskvuukxvqaqjom.supabase.co";
   const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_2f-IadmcnaYzoCb_8Iko0w_pFp9u8eF";
   const ADMIN_UID = "3939553f-ef8d-4295-8f2f-39c86ce9ed20";
-  const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+  if (!window.supabase || !window.supabase.createClient) { document.getElementById("authStatus").textContent = "Library Supabase gagal dimuat. Refresh halaman atau coba browser lain."; return; }\n  const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
   const $ = id => document.getElementById(id);
   const log = message => { $("log").textContent += "\n" + message; };
   function setLoggedIn(user) {
@@ -41,7 +41,7 @@
     $("migrate").disabled = !ok;
     $("login").hidden = !!user;
     $("logout").hidden = !user;
-    $("authStatus").textContent = user ? (ok ? "Login admin terverifikasi." : "Akun login bukan UID admin yang diizinkan.") : "Belum login.";
+    $("authStatus").textContent = user ? (ok ? "Login admin terverifikasi." : "Akun login bukan UID admin yang diizinkan.") : "Belum login.";\n    if (!user) $("login").disabled = false;
     if (user && !ok) client.auth.signOut();
   }
   $("login").addEventListener("click", async () => {
