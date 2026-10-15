@@ -4,11 +4,10 @@
 
 "use strict";
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const $ = (id) => document.getElementById(id);
-  const products = typeof PRODUCTS !== "undefined" && Array.isArray(PRODUCTS)
-    ? PRODUCTS
-    : (Array.isArray(window.PRODUCTS) ? window.PRODUCTS : []);
+  const legacyProducts = typeof PRODUCTS !== "undefined" && Array.isArray(PRODUCTS) ? PRODUCTS : (Array.isArray(window.PRODUCTS) ? window.PRODUCTS : []);
+  const products = window.LEOOSTORE_CATALOG ? await window.LEOOSTORE_CATALOG.getCatalog(legacyProducts) : legacyProducts;
 
   const gameSelect = $("game");
   const playerIdInput = $("playerId");
