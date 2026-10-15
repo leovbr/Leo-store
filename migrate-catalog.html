@@ -30,80 +30,76 @@
 <script src="js/products.js"></script>
 <script>
 (() => {
-  const SUPABASE_URL = "https://tvdbrqskvuukxvqaqjom.supabase.co";
-  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_2f-IadmcnaYzoCb_8Iko0w_pFp9u8eF";
-  const ADMIN_UID = "3939553f-ef8d-4295-8f2f-39c86ce9ed20";
-  if (!window.supabase || !window.supabase.createClient) { document.getElementById("authStatus").textContent = "Library Supabase gagal dimuat. Refresh halaman atau coba browser lain."; return; }
-  const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
   const $ = id => document.getElementById(id);
   const log = message => { $("log").textContent += "\n" + message; };
-  function setLoggedIn(user) {
-    const ok = !!user && user.id === ADMIN_UID;
-    $("migrate").disabled = !ok;
-    $("login").hidden = !!user;
-    $("logout").hidden = !user;
-    $("authStatus").textContent = user ? (ok ? "Login admin terverifikasi." : "Akun login bukan UID admin yang diizinkan.") : "Belum login.";
-    if (!user) $("login").disabled = false;
-    if (user && !ok) client.auth.signOut();
+  const URL = "https://tvdbrqskvuukxvqaqjom.supabase.co";
+  const KEY = "sb_publishable_2f-IadmcnaYzoCb_8Iko0w_pFp9u8eF";
+  const ADMIN_UID = "3939553f-ef8d-4295-8f2f-39c86ce9ed20";
+  if (!window.supabase || !window.supabase.createClient) {
+    $("authStatus").textContent = "Library login gagal dimuat. Coba refresh atau buka Chrome.";
+    return;
   }
-  $("login").addEventListener("click", async () => {
-    if (!$("email").value.trim() || !$("password").value) { $("authStatus").textContent = "Isi email dan password admin dulu."; return; }
+  const client = window.supabase.createClient(URL, KEY);
+  function updateSession(user) {
+    const isAdmin = !!user && user.id === ADMIN_UID;
+    $("migrate").disabled = !isAdmin;
+    $("login").hidden = isAdmin;
+    $("logout").hidden = !isAdmin;
+    $("email").disabled = isAdmin;
+    $("password").disabled = isAdmin;
+    $("login").disabled = false;
+    $("authStatus").textContent = !user ? "Belum login. Masukkan email dan password." :
+      isAdmin ? "Login admin berhasil." : "Akun ini bukan admin yang diizinkan.";
+    if (user && !isAdmin) client.auth.signOut();
+  }
+  $("login").addEventListener("click", async function () {
+    const email = $("email").value.trim();
+    const password = $("password").value;
+    if (!email || !password) { $("authStatus").textContent = "Isi email dan password dulu."; return; }
     $("login").disabled = true;
     $("authStatus").textContent = "Sedang login…";
-    const {data,error} = await client.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});
-    if(error){$("authStatus").textContent="Login gagal: "+error.message;$("login").disabled=false;return;}
-    setLoggedIn(data.user);
-    $("login").disabled=false;
+    const {data,error} = await client.auth.signInWithPassword({email,password});
+    $("login").disabled = false;
+    if (error) { $("authStatus").textContent = "Login gagal: " + error.message; return; }
+    updateSession(data.user);
   });
-  $("logout").addEventListener("click", async () => { await client.auth.signOut(); setLoggedIn(null); });
-  client.auth.onAuthStateChange((_event,session)=>setLoggedIn(session?.user||null));
+  $("logout").addEventListener("click", async () => { await client.auth.signOut(); updateSession(null); });
+  client.auth.onAuthStateChange((_event,session) => updateSession(session ? session.user : null));
   $("migrate").addEventListener("click", async () => {
-    if(!Array.isArray(PRODUCTS)||!PRODUCTS.length){$("log").textContent="ERROR: katalog PRODUCTS tidak ditemukan.";return;}
-    $("migrate").disabled=true;
-    $("log").textContent="Memulai migrasi…";
-    try {
-      const games = PRODUCTS.map((p,i)=>({
-        slug:String(p.slug||p.id),
-        name:String(p.name||p.slug||p.id),
-        publisher:String(p.publisher||""),
-        description:String(p.description||""),
-        icon_url:String(p.image||""),
-        banner_url:"",
-        is_active:true,
-        sort_order:i
-      }));
-      const gameResult = await client.from("store_games").upsert(games,{onConflict:"slug"});
-      if(gameResult.error) throw gameResult.error;
-      log("Game berhasil disalin: "+games.length);
-      const products=[];
-      PRODUCTS.forEach((game,gameIndex)=>{
-        (Array.isArray(game.denominations)?game.denominations:[]).forEach((item,itemIndex)=>{
-          products.push({
-            id:String(item.id),
-            game_slug:String(game.slug||game.id),
-            amount:String(item.amount||item.name||item.id),
-            price:Math.max(0,Math.round(Number(item.price)||0)),
-            category:String(item.category||""),
-            is_active:true,
-            sort_order:itemIndex
-          });
-        });
-      });
-      const batchSize=100;
-      for(let i=0;i<products.length;i+=batchSize){
-        const result=await client.from("store_products").upsert(products.slice(i,i+batchSize),{onConflict:"id"});
-        if(result.error) throw result.error;
-        log("Produk tersimpan: "+Math.min(i+batchSize,products.length)+"/"+products.length);
-      }
-      log("SELESAI. Total game: "+games.length+"; total produk: "+products.length+". Katalog lama di file website tetap utuh.");
-    } catch(error) {
-      log("MIGRASI GAGAL: "+(error.message||String(error)));
-      log("Perbaiki error terlebih dahulu, lalu jalankan lagi. Upsert aman untuk data dengan ID yang sama.");
-    } finally {
-      $("migrate").disabled=false;
+    if (typeof PRODUCTS === "undefined" || !Array.isArray(PRODUCTS) || !PRODUCTS.length) {
+      $("log").textContent = "ERROR: katalog produk tidak berhasil dimuat."; return;
     }
+    $("migrate").disabled = true;
+    $("log").textContent = "Memulai migrasi…";
+    try {
+      const games = PRODUCTS.map((p,i) => ({
+        slug:String(p.slug || p.id), name:String(p.name || p.slug || p.id),
+        publisher:String(p.publisher || ""), description:String(p.description || ""),
+        icon_url:String(p.image || ""), banner_url:"", is_active:true, sort_order:i
+      }));
+      const gr = await client.from("store_games").upsert(games,{onConflict:"slug"});
+      if (gr.error) throw gr.error;
+      log("Game tersimpan: " + games.length);
+      const items = [];
+      PRODUCTS.forEach(game => (Array.isArray(game.denominations) ? game.denominations : []).forEach((item,i) => {
+        items.push({id:String(item.id),game_slug:String(game.slug || game.id),
+          amount:String(item.amount || item.name || item.id),price:Math.max(0,Math.round(Number(item.price)||0)),
+          category:String(item.category || ""),is_active:true,sort_order:i});
+      }));
+      for (let i=0;i<items.length;i+=100) {
+        const result = await client.from("store_products").upsert(items.slice(i,i+100),{onConflict:"id"});
+        if (result.error) throw result.error;
+        log("Produk tersimpan: " + Math.min(i+100,items.length) + "/" + items.length);
+      }
+      log("SELESAI — " + games.length + " game dan " + items.length + " produk dimigrasikan.");
+    } catch (e) {
+      log("MIGRASI GAGAL: " + (e.message || String(e)));
+    } finally { $("migrate").disabled = false; }
   });
-  client.auth.getSession().then(({data})=>setLoggedIn(data.session?.user||null));
+  client.auth.getSession().then(({data,error}) => {
+    if (error) $("authStatus").textContent = "Gagal memeriksa sesi: " + error.message;
+    updateSession(data && data.session ? data.session.user : null);
+  });
 })();
 </script>
 </body></html>
