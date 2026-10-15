@@ -64,6 +64,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   let selectedDenomination = null;
   let selectedPayment = null;
   let promoApplied = false;
+  let appliedPromo = null;
 
   const rupiah = (value) => new Intl.NumberFormat("id-ID", {
     style: "currency",
@@ -276,7 +277,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   function getTotal() {
     const total = getBaseTotal() + getPaymentFee();
-    return promoApplied ? Math.max(0, total - 1000) : total;
+    if (!promoApplied || !appliedPromo) return total;
+    const discount = appliedPromo.discount_type === "percent" ? Math.round(getBaseTotal() * Number(appliedPromo.discount_value || 0) / 100) : Number(appliedPromo.discount_value || 0);
+    return Math.max(0, total - discount);
   }
 
   function updateSummary() {
@@ -361,17 +364,32 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  function applyPromo() {
+  async function applyPromo() {
     const code = String(promoInput?.value || "").trim().toUpperCase();
-    if (!code) {
-      promoApplied = false;
-      if (promoMessage) promoMessage.textContent = "Masukkan kode promo.";
-    } else if (code === "LEO1000") {
-      promoApplied = true;
-      if (promoMessage) promoMessage.textContent = "Promo berhasil digunakan — diskon Rp1.000.";
-    } else {
-      promoApplied = false;
-      if (promoMessage) promoMessage.textContent = "Kode promo tidak ditemukan.";
+    promoApplied = false; appliedPromo = null;
+    if (!code) { if (promoMessage) promoMessage.textContent = "Masukkan kode promo."; updateSummary(); return; }
+    try {
+      if (!window.supabase?.createClient) {
+        await new Promise((resolve, reject) => {
+          const script = document.createElement("script");
+          script.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+          script.onload = resolve; script.onerror = reject; document.head.appendChild(script);
+        });
+      }
+      const db = window.supabase.createClient("https://tvdbrqskvuukxvqaqjom.supabase.co", "sb_publishable_2f-IadmcnaYzoCb_8Iko0w_pFp9u8eF");
+      const {data, error} = await db.from("store_promos").select("id,code,discount_type,discount_value,is_active,starts_at,ends_at,usage_limit,usage_count,per_user_limit,min_purchase").eq("code", code).eq("is_active", true).maybeSingle();
+      if (error) throw error;
+      if (!data) throw new Error("Kode promo tidak ditemukan atau nonaktif.");
+      const now = Date.now();
+      if (data.starts_at && new Date(data.starts_at).getTime() > now) throw new Error("Kode promo belum berlaku.");
+      if (data.ends_at && new Date(data.ends_at).getTime() < now) throw new Error("Masa berlaku promo sudah habis.");
+      if (data.usage_limit != null && Number(data.usage_count || 0) >= Number(data.usage_limit)) throw new Error("Kuota promo sudah habis.");
+      if (getBaseTotal() < Number(data.min_purchase || 0)) throw new Error("Minimum transaksi Rp" + Number(data.min_purchase).toLocaleString("id-ID") + ".");
+      if (!["fixed","percent"].includes(data.discount_type) || Number(data.discount_value) <= 0 || (data.discount_type === "percent" && Number(data.discount_value) > 100)) throw new Error("Pengaturan diskon tidak valid.");
+      appliedPromo = data; promoApplied = true;
+      if (promoMessage) promoMessage.textContent = "Kode " + code + " berhasil digunakan.";
+    } catch (err) {
+      if (promoMessage) promoMessage.textContent = err.message || "Gagal memeriksa kode promo.";
     }
     updateSummary();
   }
@@ -437,7 +455,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       price: getTotal(),
       fee: getPaymentFee(),
       total: getTotal(),
-      promo: promoApplied ? "LEO1000" : "",
+      promo: promoApplied && appliedPromo ? appliedPromo.code : "",
       status: "Menunggu Pembayaran",
       createdAt: new Date().toISOString()
     };
