@@ -1,6 +1,7 @@
 /* LEOOSTORE.id — smooth write, fast electric flicker, clean white shine, glitch reset. */
 .site-header .header-brand .header-brand-text,
-.site-header a.header-brand > span.header-brand-text{
+.site-header a.header-brand > span.header-brand-text,
+.side-menu .side-menu-brand-text{
   position:relative!important;
   display:inline-block!important;
   color:#7c5cff!important;
@@ -22,7 +23,8 @@
   animation:leoSmoothWrite 8s linear infinite,leoLightningGlitch 8s steps(1,end) infinite!important;
 }
 .site-header .header-brand .header-brand-text::before,
-.site-header a.header-brand > span.header-brand-text::before{
+.site-header a.header-brand > span.header-brand-text::before,
+.side-menu .side-menu-brand-text::before{
   content:"";
   position:absolute;
   inset:-9px -8px;
@@ -36,7 +38,8 @@
   animation:leoWriteLightning 8s linear infinite;
 }
 .site-header .header-brand .header-brand-text::after,
-.site-header a.header-brand > span.header-brand-text::after{
+.site-header a.header-brand > span.header-brand-text::after,
+.side-menu .side-menu-brand-text::after{
   content:"LEOOSTORE.id";
   position:absolute;
   inset:0;
