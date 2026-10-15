@@ -53,11 +53,11 @@
   $("logout").addEventListener("click", async () => { await client.auth.signOut(); setLoggedIn(null); });
   client.auth.onAuthStateChange((_event,session)=>setLoggedIn(session?.user||null));
   $("migrate").addEventListener("click", async () => {
-    if(!Array.isArray(window.PRODUCTS)||!window.PRODUCTS.length){$("log").textContent="ERROR: katalog PRODUCTS tidak ditemukan.";return;}
+    if(!Array.isArray(PRODUCTS)||!PRODUCTS.length){$("log").textContent="ERROR: katalog PRODUCTS tidak ditemukan.";return;}
     $("migrate").disabled=true;
     $("log").textContent="Memulai migrasi…";
     try {
-      const games = window.PRODUCTS.map((p,i)=>({
+      const games = PRODUCTS.map((p,i)=>({
         slug:String(p.slug||p.id),
         name:String(p.name||p.slug||p.id),
         publisher:String(p.publisher||""),
@@ -71,7 +71,7 @@
       if(gameResult.error) throw gameResult.error;
       log("Game berhasil disalin: "+games.length);
       const products=[];
-      window.PRODUCTS.forEach((game,gameIndex)=>{
+      PRODUCTS.forEach((game,gameIndex)=>{
         (Array.isArray(game.denominations)?game.denominations:[]).forEach((item,itemIndex)=>{
           products.push({
             id:String(item.id),
