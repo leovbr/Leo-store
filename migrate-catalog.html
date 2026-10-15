@@ -33,7 +33,8 @@
   const SUPABASE_URL = "https://tvdbrqskvuukxvqaqjom.supabase.co";
   const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_2f-IadmcnaYzoCb_8Iko0w_pFp9u8eF";
   const ADMIN_UID = "3939553f-ef8d-4295-8f2f-39c86ce9ed20";
-  if (!window.supabase || !window.supabase.createClient) { document.getElementById("authStatus").textContent = "Library Supabase gagal dimuat. Refresh halaman atau coba browser lain."; return; }\n  const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+  if (!window.supabase || !window.supabase.createClient) { document.getElementById("authStatus").textContent = "Library Supabase gagal dimuat. Refresh halaman atau coba browser lain."; return; }
+  const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
   const $ = id => document.getElementById(id);
   const log = message => { $("log").textContent += "\n" + message; };
   function setLoggedIn(user) {
@@ -41,14 +42,18 @@
     $("migrate").disabled = !ok;
     $("login").hidden = !!user;
     $("logout").hidden = !user;
-    $("authStatus").textContent = user ? (ok ? "Login admin terverifikasi." : "Akun login bukan UID admin yang diizinkan.") : "Belum login.";\n    if (!user) $("login").disabled = false;
+    $("authStatus").textContent = user ? (ok ? "Login admin terverifikasi." : "Akun login bukan UID admin yang diizinkan.") : "Belum login.";
+    if (!user) $("login").disabled = false;
     if (user && !ok) client.auth.signOut();
   }
   $("login").addEventListener("click", async () => {
+    if (!$("email").value.trim() || !$("password").value) { $("authStatus").textContent = "Isi email dan password admin dulu."; return; }
+    $("login").disabled = true;
     $("authStatus").textContent = "Sedang login…";
     const {data,error} = await client.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});
-    if(error){$("authStatus").textContent="Login gagal: "+error.message;return;}
+    if(error){$("authStatus").textContent="Login gagal: "+error.message;$("login").disabled=false;return;}
     setLoggedIn(data.user);
+    $("login").disabled=false;
   });
   $("logout").addEventListener("click", async () => { await client.auth.signOut(); setLoggedIn(null); });
   client.auth.onAuthStateChange((_event,session)=>setLoggedIn(session?.user||null));
