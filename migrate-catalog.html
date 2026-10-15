@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Leoostore Catalog Migration</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#080b12;color:#f5f7fb;font:15px/1.5 system-ui,Arial,sans-serif;padding:24px}.wrap{max-width:760px;margin:auto}.card{background:#111722;border:1px solid #283247;border-radius:16px;padding:22px;margin:16px 0}h1{font-size:25px;margin:0 0 8px}p{color:#aab4c5}label{display:block;margin:12px 0 5px}input{width:100%;padding:12px;border:1px solid #354158;border-radius:9px;background:#080b12;color:white}button{padding:12px 16px;border:0;border-radius:9px;background:#7c3aed;color:white;font-weight:700;cursor:pointer;margin:8px 8px 0 0}button:disabled{opacity:.5}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#080b12;border-radius:10px;padding:14px;min-height:70px;color:#c9d4e5}.warn{border-left:3px solid #f4c95d;padding-left:12px}
+</style>
+</head>
+<body><main class="wrap">
+<h1>LEOOSTORE · Migrasi Katalog</h1>
+<p>Alat sementara untuk menyalin katalog yang sekarang ada di js/products.js ke database Supabase. Tidak menghapus data dari website.</p>
+<div class="card">
+<h2>1. Login admin Supabase</h2>
+<label>Email admin</label><input id="email" type="email" autocomplete="username" placeholder="Email akun admin">
+<label>Password admin</label><input id="password" type="password" autocomplete="current-password" placeholder="Password akun admin">
+<button id="login">Login</button><button id="logout" hidden>Logout</button>
+<p id="authStatus">Belum login.</p>
+</div>
+<div class="card">
+<h2>2. Migrasikan katalog</h2>
+<p>Produk dan harga dibaca dari katalog website yang sedang aktif, lalu disalin ke tabel store_games dan store_products. Jalankan hanya setelah login menggunakan akun admin yang UID-nya sudah dipasang pada RLS.</p>
+<p class="warn">Jangan bagikan password. Alat ini menggunakan Publishable Key di browser; hak tulis tetap dibatasi oleh RLS Supabase.</p>
+<button id="migrate" disabled>Mulai migrasi katalog</button>
+<pre id="log">Menunggu login…</pre>
+</div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/products.js"></script>
+<script>
+(() => {
+  const SUPABASE_URL = "https://tvdbrqskvuukxvqaqjom.supabase.co";
+  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_2f-IadmcnaYzoCb_8Iko0w_pFp9u8eF";
+  const ADMIN_UID = "3939553f-ef8d-4295-8f2f-39c86ce9ed20";
+  const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+  const $ = id => document.getElementById(id);
+  const log = message => { $("log").textContent += "\n" + message; };
+  function setLoggedIn(user) {
+    const ok = !!user && user.id === ADMIN_UID;
+    $("migrate").disabled = !ok;
+    $("login").hidden = !!user;
+    $("logout").hidden = !user;
+    $("authStatus").textContent = user ? (ok ? "Login admin terverifikasi." : "Akun login bukan UID admin yang diizinkan.") : "Belum login.";
+    if (user && !ok) client.auth.signOut();
+  }
+  $("login").addEventListener("click", async () => {
+    $("authStatus").textContent = "Sedang login…";
+    const {data,error} = await client.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});
+    if(error){$("authStatus").textContent="Login gagal: "+error.message;return;}
+    setLoggedIn(data.user);
+  });
+  $("logout").addEventListener("click", async () => { await client.auth.signOut(); setLoggedIn(null); });
+  client.auth.onAuthStateChange((_event,session)=>setLoggedIn(session?.user||null));
+  $("migrate").addEventListener("click", async () => {
+    if(!Array.isArray(window.PRODUCTS)||!window.PRODUCTS.length){$("log").textContent="ERROR: katalog PRODUCTS tidak ditemukan.";return;}
+    $("migrate").disabled=true;
+    $("log").textContent="Memulai migrasi…";
+    try {
+      const games = window.PRODUCTS.map((p,i)=>({
+        slug:String(p.slug||p.id),
+        name:String(p.name||p.slug||p.id),
+        publisher:String(p.publisher||""),
+        description:String(p.description||""),
+        icon_url:String(p.image||""),
+        banner_url:"",
+        is_active:true,
+        sort_order:i
+      }));
+      const gameResult = await client.from("store_games").upsert(games,{onConflict:"slug"});
+      if(gameResult.error) throw gameResult.error;
+      log("Game berhasil disalin: "+games.length);
+      const products=[];
+      window.PRODUCTS.forEach((game,gameIndex)=>{
+        (Array.isArray(game.denominations)?game.denominations:[]).forEach((item,itemIndex)=>{
+          products.push({
+            id:String(item.id),
+            game_slug:String(game.slug||game.id),
+            amount:String(item.amount||item.name||item.id),
+            price:Math.max(0,Math.round(Number(item.price)||0)),
+            category:String(item.category||""),
+            is_active:true,
+            sort_order:itemIndex
+          });
+        });
+      });
+      const batchSize=100;
+      for(let i=0;i<products.length;i+=batchSize){
+        const result=await client.from("store_products").upsert(products.slice(i,i+batchSize),{onConflict:"id"});
+        if(result.error) throw result.error;
+        log("Produk tersimpan: "+Math.min(i+batchSize,products.length)+"/"+products.length);
+      }
+      log("SELESAI. Total game: "+games.length+"; total produk: "+products.length+". Katalog lama di file website tetap utuh.");
+    } catch(error) {
+      log("MIGRASI GAGAL: "+(error.message||String(error)));
+      log("Perbaiki error terlebih dahulu, lalu jalankan lagi. Upsert aman untuk data dengan ID yang sama.");
+    } finally {
+      $("migrate").disabled=false;
+    }
+  });
+  client.auth.getSession().then(({data})=>setLoggedIn(data.session?.user||null));
+})();
+</script>
+</body></html>
