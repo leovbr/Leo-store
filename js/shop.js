@@ -10,9 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // products.js defines PRODUCTS with const, so it is not exposed
   // as window.PRODUCTS. Read the shared catalog directly.
-  const products = typeof PRODUCTS !== "undefined" && Array.isArray(PRODUCTS)
-    ? PRODUCTS
-    : [];
+  const legacyProducts = typeof PRODUCTS !== "undefined" && Array.isArray(PRODUCTS) ? PRODUCTS : [];
+  const products = window.LEOOSTORE_CATALOG ? await window.LEOOSTORE_CATALOG.getCatalog(legacyProducts) : legacyProducts;
 
   function escapeHTML(value) {
     return String(value ?? "")
