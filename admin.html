@@ -9,14 +9,35 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Admin Dashboard — Leo Store</title>
+  <title>Admin Dashboard — LEOOSTORE.id</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link
-    rel="stylesheet"
-    href="css/admin.css"
-  >
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/logo-text-animation.css?v=20261015-whiteshine-admin1">
+  <style>
+    .admin-header.site-header{position:relative;z-index:100;overflow:visible}
+    .admin-brand.header-brand{display:flex;align-items:center;gap:14px;text-decoration:none;min-width:0}
+    .admin-brand .brand-icon{display:none!important}
+    .admin-brand .header-brand-text{font-family:Orbitron,system-ui,sans-serif;font-size:clamp(17px,3.2vw,27px);font-weight:900;letter-spacing:-.8px;white-space:nowrap;line-height:1.25}
+    .admin-brand .admin-brand-subtitle{display:block;margin-top:6px;color:#9ca8bd;font:500 12px/1.4 "Plus Jakarta Sans",sans-serif;letter-spacing:.2px}
+    .admin-header-actions{position:relative;display:flex;align-items:center;flex-shrink:0}
+    .admin-menu-toggle{width:52px;height:52px;display:grid;place-items:center;padding:0;border:1px solid #263247;border-radius:15px;background:#101722;color:#f5f7fc;cursor:pointer}
+    .admin-menu-toggle span,.admin-menu-toggle::before,.admin-menu-toggle::after{content:"";display:block;width:21px;height:2px;background:#e8edf7;border-radius:2px;transition:transform .22s ease,opacity .22s ease}
+    .admin-menu-toggle span{margin:4px 0}
+    .admin-menu-toggle[aria-expanded="true"] span{opacity:0}
+    .admin-menu-toggle[aria-expanded="true"]::before{transform:translateY(6px) rotate(45deg)}
+    .admin-menu-toggle[aria-expanded="true"]::after{transform:translateY(-6px) rotate(-45deg)}
+    .admin-menu{position:absolute;top:calc(100% + 12px);right:0;width:min(290px,calc(100vw - 36px));padding:8px;background:#0d1726;border:1px solid #29364a;border-radius:16px;box-shadow:0 18px 48px #0008;display:none;z-index:120}
+    .admin-menu.open{display:block;animation:adminMenuIn .18s ease-out both}
+    .admin-menu a{display:flex;align-items:center;gap:12px;padding:14px 13px;border-radius:10px;color:#edf2fb;text-decoration:none;font-weight:700;font-size:14px}
+    .admin-menu a:hover,.admin-menu a:focus-visible{background:#1b2940;outline:none}
+    .admin-menu a span{width:24px;text-align:center;font-size:17px}
+    .admin-menu .admin-menu-divider{height:1px;background:#263247;margin:5px 8px}
+    @keyframes adminMenuIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+    @media(max-width:480px){.admin-header{gap:10px}.admin-brand{gap:0!important}.admin-brand .header-brand-text{font-size:clamp(15px,4.1vw,20px);letter-spacing:-.9px}.admin-brand .admin-brand-subtitle{font-size:11px}.admin-menu-toggle{width:48px;height:48px}}
+    @media(prefers-reduced-motion:reduce){.admin-menu.open{animation:none}}
+  </style>
 </head>
 
 <body>
@@ -25,34 +46,21 @@
        HEADER
        ===================================== -->
 
-  <header class="admin-header">
-
-    <div class="admin-brand">
-
-      <div class="brand-icon">
-        <img src="assets/logo-1.webp" alt="LEOOSTORE">
-      </div>
-
+  <header class="admin-header site-header">
+    <a class="admin-brand header-brand" href="index.html" aria-label="LEOOSTORE.id — Store">
       <div>
-        <h1>
-          LEOOSTORE
-        </h1>
-
-        <span>
-          Admin Dashboard
-        </span>
+        <span class="header-brand-text">LEOOSTORE.id</span>
+        <span class="admin-brand-subtitle">Admin Dashboard</span>
       </div>
-
-    </div>
-
-
-    <a
-      href="index.html"
-      class="back-store"
-    >
-      ← Store
     </a>
-
+    <div class="admin-header-actions">
+      <button class="admin-menu-toggle" id="adminMenuToggle" type="button" aria-label="Buka menu admin" aria-expanded="false" aria-controls="adminMenu"><span></span></button>
+      <nav class="admin-menu" id="adminMenu" aria-label="Navigasi admin">
+        <a href="index.html"><span>⌂</span> Kembali ke Store</a>
+        <a href="admin.html"><span>▦</span> Dashboard Transaksi</a>
+        <a href="admin-catalog.html"><span>▤</span> Manajemen Katalog</a>
+      </nav>
+    </div>
   </header>
 
 
@@ -367,21 +375,7 @@
        FOOTER
        ===================================== -->
 
-  <footer class="site-footer checkout-footer-inline universal-social-footer">
-  <div class="footer-inner">
-    <div class="footer-links">
-      <div class="footer-column footer-social-column">
-        <h4>Ikuti Kami</h4>
-        <div class="footer-social-row">
-          <a href="https://wa.me/6285823538473" class="social-link social-whatsapp"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v16/icons/whatsapp.svg" alt=""><span>WhatsApp</span></a>
-          <a href="https://www.instagram.com/leoostore791?stkn=MWVhMDNsd3hicWNzbA==" class="social-link social-instagram" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v16/icons/instagram.svg" alt=""><span>Instagram</span></a>
-          <a href="https://www.tiktok.com/@leoostore791?_r=1&_t=ZS-99sj3AXKOcD" class="social-link social-tiktok" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v16/icons/tiktok.svg" alt=""><span>TikTok</span></a>
-          <div class="footer-social-copyright">LEOOSTORE © 2026 · Fast. Trusted. Delivered.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
+
 
 
 
@@ -391,6 +385,22 @@
 
   <script src="js/admin.js"></script>
 
+  <script>
+  (function(){
+    const toggle=document.getElementById("adminMenuToggle");
+    const menu=document.getElementById("adminMenu");
+    if(!toggle||!menu)return;
+    function closeMenu(){menu.classList.remove("open");toggle.setAttribute("aria-expanded","false");}
+    toggle.addEventListener("click",function(){
+      const opening=!menu.classList.contains("open");
+      menu.classList.toggle("open",opening);
+      toggle.setAttribute("aria-expanded",String(opening));
+    });
+    document.addEventListener("click",function(event){if(!menu.contains(event.target)&&!toggle.contains(event.target))closeMenu();});
+    document.addEventListener("keydown",function(event){if(event.key==="Escape")closeMenu();});
+    menu.querySelectorAll("a").forEach(function(link){link.addEventListener("click",closeMenu);});
+  })();
+  </script>
 </body>
 
 </html>
