@@ -2,7 +2,7 @@
    LEOOSTORE — SHOP
    ========================================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const productList = document.getElementById("productList");
   const searchInput = document.getElementById("shopSearch");
 
