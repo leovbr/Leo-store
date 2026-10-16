@@ -108,3 +108,17 @@
   85%{transform:translate(-1px,0);filter:drop-shadow(1px 0 #fff) drop-shadow(-1px 0 #7c5cff)}
   87%{transform:translate(0,0);filter:none;text-shadow:none}
 }
+
+
+/* Shared customer-page footer brand and social layout */
+.universal-social-footer .footer-closure{max-width:760px;margin:0 auto 28px;text-align:left;padding:0 16px;}
+.universal-social-footer .footer-brand-text{font-family:Orbitron,sans-serif!important;font-size:clamp(22px,4vw,30px)!important;font-weight:900!important;letter-spacing:-1.2px!important;text-decoration:none!important;display:inline-block!important;margin:0 0 18px!important;}
+.universal-social-footer .footer-closure h3{margin:0 0 10px;text-align:left;font-size:clamp(18px,2.5vw,22px);line-height:1.35;font-weight:800;color:var(--text,#f4f6ff);}
+.universal-social-footer .footer-closure p{margin:0;text-align:left;color:var(--text-soft,#aab5ca);font-size:13px;line-height:1.8;}
+.universal-social-footer .footer-social-column h4{text-align:left!important;}
+.universal-social-footer .footer-social-row{display:flex!important;justify-content:flex-start!important;align-items:center!important;gap:22px!important;flex-wrap:nowrap!important;width:100%!important;}
+.universal-social-footer .footer-social-row .social-link{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:42px!important;height:42px!important;min-width:42px!important;max-width:42px!important;padding:0!important;border:0!important;background:transparent!important;}
+.universal-social-footer .footer-social-row .social-link img{display:block!important;width:27px!important;height:27px!important;object-fit:contain!important;filter:brightness(0) invert(1)!important;opacity:.95!important;}
+.universal-social-footer .footer-social-row .social-link:hover{transform:translateY(-2px)!important;opacity:.8!important;}
+.universal-social-footer .footer-social-copyright{flex-basis:100%!important;text-align:left!important;}
+@media(max-width:680px){.universal-social-footer .footer-closure{margin-bottom:24px;padding:0 18px;}.universal-social-footer .footer-brand-text{font-size:24px!important;margin-bottom:16px!important;}.universal-social-footer .footer-closure p{font-size:12px;line-height:1.75;}.universal-social-footer .footer-social-row{gap:18px!important;}.universal-social-footer .footer-social-row .social-link{width:44px!important;height:44px!important;min-width:44px!important;max-width:44px!important;}.universal-social-footer .footer-social-row .social-link img{width:30px!important;height:30px!important;}}
