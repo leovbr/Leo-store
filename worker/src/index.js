@@ -19,7 +19,7 @@ const corsOrigin=request=>{const origin=request.headers.get("Origin")||"";return
 const normalizeOrderId=value=>{const id=String(value||"").trim();return /^[A-Za-z0-9._~-]{1,50}$/.test(id)?id:null;};
 
 async function getLiveCatalog(){
-  const headers={"apikey":SUPABASE_PUBLISHABLE_KEY,"Authorization":"Bearer "+SUPABASE_PUBLISHABLE_KEY,"Accept":"application/json","Cache-Control":"no-store"};
+  const headers={"apikey":SUPABASE_PUBLISHABLE_KEY,"Accept":"application/json","Cache-Control":"no-store"};
   const [gamesResponse,productsResponse]=await Promise.all([
     fetch(SUPABASE_URL+"/rest/v1/store_games?select=slug,name,publisher,is_active&is_active=eq.true",{headers}),
     fetch(SUPABASE_URL+"/rest/v1/store_products?select=id,game_slug,amount,price,category,is_active&is_active=eq.true",{headers})
@@ -93,7 +93,7 @@ async function handleCreateOrderUnsafe(request,env){
     let promoResponse;
     try{
       promoResponse=await fetch(SUPABASE_URL+"/rest/v1/store_promos?select=code,discount_type,discount_value,is_active,starts_at,ends_at,usage_limit,usage_count,per_user_limit,min_purchase&is_active=eq.true",{
-        headers:{"apikey":SUPABASE_PUBLISHABLE_KEY,"Authorization":"Bearer "+SUPABASE_PUBLISHABLE_KEY,"Accept":"application/json","Cache-Control":"no-store"}
+        headers:{"apikey":SUPABASE_PUBLISHABLE_KEY,"Accept":"application/json","Cache-Control":"no-store"}
       });
     }catch(error){
       console.error("Supabase promo lookup failed",error);
