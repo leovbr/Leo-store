@@ -53,6 +53,29 @@ async function sha512Hex(value){const d=await crypto.subtle.digest("SHA-512",new
 async function verifyNotification(body,key){if(!key||!body?.signature_key)return false;const raw=String(body.order_id||"")+String(body.status_code||"")+String(body.gross_amount||"")+key;return (await sha512Hex(raw))===String(body.signature_key).toLowerCase();}
 
 async function ensureOrderTable(db){await db.prepare("CREATE TABLE IF NOT EXISTS orders (id TEXT PRIMARY KEY, customer_name TEXT, customer_email TEXT, customer_whatsapp TEXT, product_id TEXT NOT NULL, product_name TEXT NOT NULL, denomination_id TEXT NOT NULL, denomination_name TEXT NOT NULL, player_id TEXT, server_id TEXT, payment_method TEXT NOT NULL, subtotal INTEGER NOT NULL, fee INTEGER NOT NULL, discount INTEGER NOT NULL, total INTEGER NOT NULL, status TEXT NOT NULL, midtrans_transaction_id TEXT, midtrans_status TEXT, snap_token TEXT, snap_redirect_url TEXT, created_at TEXT NOT NULL, updated_at TEXT NOT NULL)").run();}
+async function ensurePromoUsageTable(db){
+  await db.prepare("CREATE TABLE IF NOT EXISTS promo_redemptions (promo_code TEXT NOT NULL, order_id TEXT NOT NULL UNIQUE, customer_key TEXT NOT NULL, status TEXT NOT NULL CHECK(status IN ('reserved','paid','released')), created_at TEXT NOT NULL, updated_at TEXT NOT NULL, PRIMARY KEY(promo_code, order_id))").run();
+  await db.prepare("CREATE INDEX IF NOT EXISTS idx_promo_redemptions_code_status ON promo_redemptions(promo_code,status)").run();
+  await db.prepare("CREATE INDEX IF NOT EXISTS idx_promo_redemptions_customer ON promo_redemptions(promo_code,customer_key,status)").run();
+}
+async function makePromoCustomerKey(email,whatsapp){
+  const identity=email.toLowerCase()||whatsapp.replace(/[^0-9]/g,"");
+  if(!identity)return null;
+  const digest=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(identity));
+  return [...new Uint8Array(digest)].map(b=>b.toString(16).padStart(2,"0")).join("");
+}
+async function reservePromoUsage(db,{code,orderId,customerKey,usageLimit,usageCount,perUserLimit,now}){
+  await ensurePromoUsageTable(db);
+  const totalLimit=usageLimit==null?null:Number(usageLimit);
+  const priorCount=Math.max(0,Number(usageCount)||0);
+  const perLimit=perUserLimit==null?null:Number(perUserLimit);
+  const result=await db.prepare("INSERT OR IGNORE INTO promo_redemptions (promo_code,order_id,customer_key,status,created_at,updated_at) SELECT ?,?,?, 'reserved',?,? WHERE (? IS NULL OR (? + (SELECT COUNT(*) FROM promo_redemptions WHERE promo_code=? AND status IN ('reserved','paid'))) < ?) AND (? IS NULL OR (SELECT COUNT(*) FROM promo_redemptions WHERE promo_code=? AND customer_key=? AND status IN ('reserved','paid')) < ?)").bind(code,orderId,customerKey,now,now,totalLimit,priorCount,code,totalLimit,perLimit,code,customerKey,perLimit).run();
+  return Number(result?.meta?.changes||0)===1;
+}
+async function releasePromoUsage(db,orderId,now){
+  await db.prepare("UPDATE promo_redemptions SET status='released',updated_at=? WHERE order_id=? AND status='reserved'").bind(now,orderId).run();
+}
+
 
 async function handleCreateOrderUnsafe(request,env){
   console.log("POST /api/orders received",{contentType:request.headers.get("Content-Type")||"",origin:request.headers.get("Origin")||""});
@@ -88,7 +111,7 @@ async function handleCreateOrderUnsafe(request,env){
     if(promoRow.starts_at&&nowDate<new Date(promoRow.starts_at))return json({ok:false,error:"Kode promo belum mulai berlaku."},400);
     if(promoRow.ends_at&&nowDate>new Date(promoRow.ends_at))return json({ok:false,error:"Kode promo sudah kedaluwarsa."},400);
     if(Number(promoRow.min_purchase||0)>subtotal)return json({ok:false,error:"Minimum transaksi untuk promo ini belum terpenuhi."},400);
-    if(promoRow.usage_limit!=null&&Number(promoRow.usage_count||0)>=Number(promoRow.usage_limit))return json({ok:false,error:"Kuota promo sudah habis."},400);
+    
     const discountValue=Number(promoRow.discount_value);
     if(!Number.isFinite(discountValue)||discountValue<=0)return json({ok:false,error:"Pengaturan diskon promo tidak valid."},400);
     if(promoRow.discount_type==="percent"){
@@ -99,24 +122,37 @@ async function handleCreateOrderUnsafe(request,env){
     }else return json({ok:false,error:"Jenis diskon promo tidak valid."},400);
     promoDiscount=Math.min(subtotal,Math.max(0,promoDiscount));
   }
-  const totalBeforePaymentFee=Math.max(0,subtotal-promoDiscount),total=getPaymentGross(totalBeforePaymentFee,paymentId),fee=total-totalBeforePaymentFee,now=new Date().toISOString();
+  const totalBeforePaymentFee=Math.max(0,subtotal-promoDiscount),total=getPaymentGross(totalBeforePaymentFee,paymentId),now=new Date().toISOString();
+  const fee=total-totalBeforePaymentFee;
   await ensureOrderTable(env.DB);
   const existing=await env.DB.prepare("SELECT id,snap_token,total,status FROM orders WHERE id = ?").bind(orderId).first();
   if(existing)return json({ok:true,orderId:existing.id,token:existing.snap_token,total:existing.total,status:existing.status,reused:true});
+  let promoReserved=false;
+  if(promo){
+    const promoCustomerKey=await makePromoCustomerKey(email,whatsapp);
+    if(promoRow.per_user_limit!=null&&!promoCustomerKey)return json({ok:false,error:"Masukkan email atau WhatsApp untuk menggunakan promo ini."},400);
+    try{
+      promoReserved=await reservePromoUsage(env.DB,{code:promo,orderId,customerKey:promoCustomerKey||"anonymous:"+orderId,usageLimit:promoRow.usage_limit,usageCount:promoRow.usage_count,perUserLimit:promoRow.per_user_limit,now});
+    }catch(error){
+      console.error("Promo usage reservation failed",error);
+      return json({ok:false,error:"Kuota promo belum dapat diverifikasi. Coba lagi beberapa saat."},503);
+    }
+    if(!promoReserved)return json({ok:false,error:"Kuota promo habis atau batas penggunaan per pelanggan tercapai."},400);
+  }
   const snapPaymentMap={qris:"other_qris",dana:"dana",ovo:"ovo",gopay:"gopay",shopeepay:"shopeepay","bca-va":"bca_va","bri-va":"bri_va","bni-va":"bni_va","mandiri-va":"echannel","permata-va":"permata_va","cimb-va":"cimb_va","danamon-va":"danamon_va","btn-va":"other_va"};
   const snapPayment=snapPaymentMap[paymentId]||paymentId;
   const snapPayload={transaction_details:{order_id:orderId,gross_amount:total},item_details:[{id:denomination.id,price:total,quantity:1,name:product.name+" - "+denomination.amount}],enabled_payments:[snapPayment],callbacks:{finish:"https://leovbr.github.io/Leo-store/order.html?id="+encodeURIComponent(orderId)},custom_field1:product.id,custom_field2:denomination.id,custom_field3:paymentId};
   if(email||whatsapp)snapPayload.customer_details={email:email||undefined,phone:whatsapp||undefined};
   let response;let midtrans={};
   try{const auth=btoa(env.MIDTRANS_SERVER_KEY+":");response=await fetch(MIDTRANS_SANDBOX_URL,{method:"POST",headers:{"Accept":"application/json","Content-Type":"application/json","Authorization":"Basic "+auth},body:JSON.stringify(snapPayload)});midtrans=await response.json().catch(()=>({}));}
-  catch(error){console.error("Midtrans fetch exception",error);return json({ok:false,error:"Tidak dapat terhubung ke Midtrans Sandbox.",stage:"midtrans-fetch"},502);}
-  if(!response.ok||!midtrans.token){console.error("Midtrans create transaction failed",response.status,midtrans);return json({ok:false,error:"Gagal membuat transaksi pembayaran.",stage:"midtrans-response",midtransStatus:response.status},502);}
-  try{await env.DB.prepare("INSERT INTO orders (id,customer_name,customer_email,customer_whatsapp,product_id,product_name,denomination_id,denomination_name,player_id,server_id,payment_method,subtotal,fee,discount,total,status,snap_token,snap_redirect_url,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)").bind(orderId,String(body.customerName||"").trim().slice(0,160)||"Customer",email||null,whatsapp||null,product.id,product.name,denomination.id,denomination.amount,playerId||null,server||null,paymentId,subtotal,fee,promoDiscount,total,"Menunggu Pembayaran",midtrans.token,midtrans.redirect_url||null,now,now).run();}catch(error){console.error("D1 order insert failed",error);return json({ok:false,error:"Gagal menyimpan pesanan ke database.",stage:"d1-insert",message:String(error?.message||error)},500);}
+  catch(error){console.error("Midtrans fetch exception",error);if(promoReserved)await releasePromoUsage(env.DB,orderId,new Date().toISOString());return json({ok:false,error:"Tidak dapat terhubung ke Midtrans Sandbox.",stage:"midtrans-fetch"},502);}
+  if(!response.ok||!midtrans.token){console.error("Midtrans create transaction failed",response.status,midtrans);if(promoReserved)await releasePromoUsage(env.DB,orderId,new Date().toISOString());return json({ok:false,error:"Gagal membuat transaksi pembayaran.",stage:"midtrans-response",midtransStatus:response.status},502);}
+  try{await env.DB.prepare("INSERT INTO orders (id,customer_name,customer_email,customer_whatsapp,product_id,product_name,denomination_id,denomination_name,player_id,server_id,payment_method,subtotal,fee,discount,total,status,snap_token,snap_redirect_url,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)").bind(orderId,String(body.customerName||"").trim().slice(0,160)||"Customer",email||null,whatsapp||null,product.id,product.name,denomination.id,denomination.amount,playerId||null,server||null,paymentId,subtotal,fee,promoDiscount,total,"Menunggu Pembayaran",midtrans.token,midtrans.redirect_url||null,now,now).run();}catch(error){console.error("D1 order insert failed",error);if(promoReserved)await releasePromoUsage(env.DB,orderId,new Date().toISOString());return json({ok:false,error:"Gagal menyimpan pesanan ke database.",stage:"d1-insert",message:String(error?.message||error)},500);}
   return json({ok:true,orderId,token:midtrans.token,redirectUrl:midtrans.redirect_url||null,total,status:"Menunggu Pembayaran"});
 }
 async function handleCreateOrder(request,env){try{return await handleCreateOrderUnsafe(request,env);}catch(error){console.error("Create order unhandled exception",error);return json({ok:false,error:"Terjadi kesalahan saat membuat pesanan.",stage:"create-order-exception",message:String(error?.message||error)},500);}}
 
-async function handleWebhook(request,env){if(!env.DB||!env.MIDTRANS_SERVER_KEY)return json({ok:false,error:"Payment backend belum dikonfigurasi."},503);let body;try{body=await request.json();}catch{return json({ok:false,error:"JSON tidak valid."},400);}if(!await verifyNotification(body,env.MIDTRANS_SERVER_KEY))return json({ok:false,error:"Signature tidak valid."},403);const orderId=normalizeOrderId(body.order_id);if(!orderId)return json({ok:false,error:"Order ID tidak valid."},400);const order=await env.DB.prepare("SELECT id,total,status FROM orders WHERE id = ?").bind(orderId).first();if(!order)return json({ok:true,ignored:true});const notifiedGross=Math.round(Number(body.gross_amount));if(!Number.isFinite(notifiedGross)||notifiedGross!==Number(order.total))return json({ok:false,error:"Nominal transaksi tidak cocok."},400);const tx=String(body.transaction_status||"").toLowerCase(),fraud=String(body.fraud_status||"").toLowerCase();let status="Menunggu Pembayaran";if(isPaid(tx,fraud))status="Pembayaran Berhasil";else if(tx==="expire")status="Kadaluarsa";else if(tx==="cancel"||tx==="deny")status="Dibatalkan";const now=new Date().toISOString(),paidAt=status==="Pembayaran Berhasil"?now:null;await env.DB.prepare("UPDATE orders SET status=?,midtrans_transaction_id=?,midtrans_status=?,updated_at=? WHERE id=?").bind(status,body.transaction_id||null,tx,now,orderId).run();return json({ok:true});}
+async function handleWebhook(request,env){if(!env.DB||!env.MIDTRANS_SERVER_KEY)return json({ok:false,error:"Payment backend belum dikonfigurasi."},503);let body;try{body=await request.json();}catch{return json({ok:false,error:"JSON tidak valid."},400);}if(!await verifyNotification(body,env.MIDTRANS_SERVER_KEY))return json({ok:false,error:"Signature tidak valid."},403);const orderId=normalizeOrderId(body.order_id);if(!orderId)return json({ok:false,error:"Order ID tidak valid."},400);const order=await env.DB.prepare("SELECT id,total,status FROM orders WHERE id = ?").bind(orderId).first();if(!order)return json({ok:true,ignored:true});const notifiedGross=Math.round(Number(body.gross_amount));if(!Number.isFinite(notifiedGross)||notifiedGross!==Number(order.total))return json({ok:false,error:"Nominal transaksi tidak cocok."},400);const tx=String(body.transaction_status||"").toLowerCase(),fraud=String(body.fraud_status||"").toLowerCase();let status="Menunggu Pembayaran";if(isPaid(tx,fraud))status="Pembayaran Berhasil";else if(tx==="expire")status="Kadaluarsa";else if(tx==="cancel"||tx==="deny")status="Dibatalkan";const now=new Date().toISOString();await env.DB.prepare("UPDATE orders SET status=?,midtrans_transaction_id=?,midtrans_status=?,updated_at=? WHERE id=?").bind(status,body.transaction_id||null,tx,now,orderId).run();if(status==="Pembayaran Berhasil")await env.DB.prepare("UPDATE promo_redemptions SET status='paid',updated_at=? WHERE order_id=? AND status='reserved'").bind(now,orderId).run().catch(error=>console.error("Promo redemption confirmation failed",error));else if(status==="Kadaluarsa"||status==="Dibatalkan")await releasePromoUsage(env.DB,orderId,now);return json({ok:true});}
 
 async function handleGetOrder(env,orderId){if(!env.DB)return json({ok:false,error:"Database belum dikonfigurasi."},503);const id=normalizeOrderId(orderId);if(!id)return json({ok:false,error:"Order ID tidak valid."},400);const order=await env.DB.prepare("SELECT id AS orderId,product_id AS productId,product_name AS productName,denomination_id AS denominationId,denomination_name AS denomination,player_id AS playerId,server_id AS server,payment_method AS paymentId,subtotal,fee,discount,total,status,midtrans_transaction_id AS transactionId,midtrans_status AS rawStatus,snap_token AS token,snap_redirect_url AS redirectUrl,customer_email AS email,customer_whatsapp AS whatsapp,created_at AS createdAt,updated_at AS updatedAt FROM orders WHERE id=?").bind(id).first();if(!order)return json({ok:false,error:"Order tidak ditemukan."},404);return json({ok:true,order});}
 
