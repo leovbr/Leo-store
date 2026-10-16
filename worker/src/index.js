@@ -82,7 +82,7 @@ async function handleCreateOrderUnsafe(request,env){
   if(!env.DB||!env.MIDTRANS_SERVER_KEY)return json({ok:false,error:"Payment backend belum dikonfigurasi."},503);
   let body;try{body=await request.json();}catch{return json({ok:false,error:"JSON tidak valid."},400);}
   let liveCatalog;
-  try{liveCatalog=await getLiveCatalog();}catch(error){console.error("Live catalog lookup failed",error);return json({ok:false,error:"Katalog belum dapat diverifikasi. Coba lagi beberapa saat."},503);}
+  try{liveCatalog=await getLiveCatalog();}catch(error){const detail=String(error?.message||error);console.error("Live catalog lookup failed",detail);const match=detail.match(/games=(\d+), products=(\d+)/);return json({ok:false,error:"Katalog belum dapat diverifikasi. Coba lagi beberapa saat.",stage:"supabase-catalog", ...(match?{gamesStatus:Number(match[1]),productsStatus:Number(match[2])}:{diagnostic:detail.slice(0,180)})},503);}
   const orderId=normalizeOrderId(body.orderId),product=getProduct(liveCatalog,body.productId),denomination=getDenomination(product,body.denominationId),paymentId=String(body.paymentId||"").trim(),quantity=Math.max(1,Math.min(99,Math.floor(Number(body.quantity)||1)));
   if(!orderId||!product||!denomination||!PAYMENT_METHODS.has(paymentId))return json({ok:false,error:"Produk atau metode pembayaran tidak valid atau sudah tidak aktif."},400);
   const email=String(body.email||"").trim(),whatsapp=String(body.whatsapp||"").trim(),playerId=String(body.playerId||"").trim().slice(0,120),server=String(body.server||"").trim().slice(0,80),promo=String(body.promo||"").trim().toUpperCase();
