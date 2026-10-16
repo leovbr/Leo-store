@@ -18,9 +18,29 @@ const corsOrigin=request=>{const origin=request.headers.get("Origin")||"";return
 
 const normalizeOrderId=value=>{const id=String(value||"").trim();return /^[A-Za-z0-9._~-]{1,50}$/.test(id)?id:null;};
 
-const getProduct=id=>CATALOG.find(product=>String(product.id)===String(id||"").trim()||String(product.slug||"")===String(id||"").trim())||null;
+async function getLiveCatalog(){
+  const headers={"apikey":SUPABASE_PUBLISHABLE_KEY,"Authorization":"Bearer "+SUPABASE_PUBLISHABLE_KEY,"Accept":"application/json","Cache-Control":"no-store"};
+  const [gamesResponse,productsResponse]=await Promise.all([
+    fetch(SUPABASE_URL+"/rest/v1/store_games?select=slug,name,publisher,is_active&is_active=eq.true",{headers}),
+    fetch(SUPABASE_URL+"/rest/v1/store_products?select=id,game_slug,amount,price,category,is_active&is_active=eq.true",{headers})
+  ]);
+  if(!gamesResponse.ok||!productsResponse.ok)throw new Error("Supabase catalog lookup failed: games="+gamesResponse.status+", products="+productsResponse.status);
+  const [games,products]=await Promise.all([gamesResponse.json(),productsResponse.json()]);
+  if(!Array.isArray(games)||!Array.isArray(products))throw new Error("Supabase catalog response invalid");
+  const activeGames=new Map(games.map(g=>[String(g.slug),g]));
+  const catalog=new Map();
+  for(const item of products){
+    const game=activeGames.get(String(item.game_slug));
+    const id=String(item.id??"").trim(),price=Number(item.price);
+    if(!game||!id||!Number.isSafeInteger(price)||price<1)continue;
+    if(!catalog.has(String(game.slug)))catalog.set(String(game.slug),{id:String(game.slug),slug:String(game.slug),name:String(game.name||game.slug),publisher:game.publisher||"Publisher",denominations:[]});
+    catalog.get(String(game.slug)).denominations.push({id,amount:String(item.amount||id),price,category:item.category||"Top Up"});
+  }
+  return catalog;
+}
 
-const getDenomination=(product,id)=>product?.denominations?.find(item=>item.id===String(id||"").trim())||null;
+const getProduct=(catalog,id)=>catalog.get(String(id||"").trim())||null;
+const getDenomination=(product,id)=>product?.denominations.find(item=>item.id===String(id||"").trim())||null;
 
 const getPaymentName=id=>({qris:"QRIS",dana:"DANA",ovo:"OVO",gopay:"GoPay",shopeepay:"ShopeePay","bca-va":"BCA Virtual Account","bri-va":"BRI Virtual Account","bni-va":"BNI Virtual Account","mandiri-va":"Mandiri Virtual Account","permata-va":"Permata Virtual Account","cimb-va":"CIMB Niaga Virtual Account","danamon-va":"Danamon Virtual Account","btn-va":"BTN Virtual Account"}[id]||id);
 
@@ -38,8 +58,10 @@ async function handleCreateOrderUnsafe(request,env){
   console.log("POST /api/orders received",{contentType:request.headers.get("Content-Type")||"",origin:request.headers.get("Origin")||""});
   if(!env.DB||!env.MIDTRANS_SERVER_KEY)return json({ok:false,error:"Payment backend belum dikonfigurasi."},503);
   let body;try{body=await request.json();}catch{return json({ok:false,error:"JSON tidak valid."},400);}
-  const orderId=normalizeOrderId(body.orderId),product=getProduct(body.productId),denomination=getDenomination(product,body.denominationId),paymentId=String(body.paymentId||"").trim(),quantity=Math.max(1,Math.min(99,Math.floor(Number(body.quantity)||1)));
-  if(!orderId||!product||!denomination||!PAYMENT_METHODS.has(paymentId))return json({ok:false,error:"Data pesanan tidak valid."},400);
+  let liveCatalog;
+  try{liveCatalog=await getLiveCatalog();}catch(error){console.error("Live catalog lookup failed",error);return json({ok:false,error:"Katalog belum dapat diverifikasi. Coba lagi beberapa saat."},503);}
+  const orderId=normalizeOrderId(body.orderId),product=getProduct(liveCatalog,body.productId),denomination=getDenomination(product,body.denominationId),paymentId=String(body.paymentId||"").trim(),quantity=Math.max(1,Math.min(99,Math.floor(Number(body.quantity)||1)));
+  if(!orderId||!product||!denomination||!PAYMENT_METHODS.has(paymentId))return json({ok:false,error:"Produk atau metode pembayaran tidak valid atau sudah tidak aktif."},400);
   const email=String(body.email||"").trim(),whatsapp=String(body.whatsapp||"").trim(),playerId=String(body.playerId||"").trim().slice(0,120),server=String(body.server||"").trim().slice(0,80),promo=String(body.promo||"").trim().toUpperCase();
   if(email&&(email.length>160||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)))return json({ok:false,error:"Email tidak valid."},400);
   const subtotal=denomination.price*quantity;
