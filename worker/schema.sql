@@ -30,3 +30,20 @@ CREATE TABLE IF NOT EXISTS orders (
 CREATE INDEX IF NOT EXISTS idx_orders_status ON orders(status);
 CREATE INDEX IF NOT EXISTS idx_orders_created_at ON orders(created_at);
 CREATE INDEX IF NOT EXISTS idx_orders_transaction_id ON orders(midtrans_transaction_id);
+
+ 
+-- Server-side promo reservations prevent concurrent checkouts from exceeding quotas.
+CREATE TABLE IF NOT EXISTS promo_redemptions (
+  promo_code TEXT NOT NULL,
+  order_id TEXT NOT NULL UNIQUE,
+  customer_key TEXT NOT NULL,
+  status TEXT NOT NULL CHECK(status IN ('reserved', 'paid', 'released')),
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL,
+  PRIMARY KEY (promo_code, order_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_promo_redemptions_code_status
+  ON promo_redemptions(promo_code, status);
+CREATE INDEX IF NOT EXISTS idx_promo_redemptions_customer
+  ON promo_redemptions(promo_code, customer_key, status);
