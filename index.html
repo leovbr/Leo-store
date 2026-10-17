@@ -276,21 +276,25 @@ document.addEventListener("DOMContentLoaded",async function(){
  const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
  try{
   const db=window.supabase.createClient("https://tvdbrqskvuukxvqaqjom.supabase.co","sb_publishable_2f-IadmcnaYzoCb_8Iko0w_pFp9u8eF");
-  const [{data:games,error:gamesError},{data:settings,error:settingsError}]=await Promise.all([
+  const [{data:games,error:gamesError},{data:settings,error:settingsError},{data:products,error:productsError}]=await Promise.all([
    db.from("store_games").select("slug,name,publisher,icon_url,sort_order,is_active").eq("is_active",true).order("sort_order").limit(200),
-   db.from("store_homepage_settings").select("trending_slugs,trending_title,trending_limit,trending_enabled,all_games_title,all_games_initial_limit,all_games_enabled,show_all_games_button").eq("id",1).maybeSingle()
+   db.from("store_homepage_settings").select("trending_slugs,trending_title,trending_limit,trending_enabled,all_games_title,all_games_initial_limit,all_games_enabled,show_all_games_button").eq("id",1).maybeSingle(),
+   db.from("store_products").select("game_slug").eq("is_active",true)
   ]);
   if(gamesError||!games?.length)return;
+  // Hide games with no active products from the storefront, without deleting them from the catalog.
+  const purchasable=new Set(!productsError?(products||[]).map(p=>p.game_slug):games.map(g=>g.slug));
+  const visibleGames=games.filter(g=>purchasable.has(g.slug));
   const cfg=!settingsError&&settings?settings:{trending_slugs:["mobile-legends","free-fire"],trending_title:"Trending",trending_limit:6,trending_enabled:true,all_games_title:"All Games",all_games_initial_limit:12,all_games_enabled:true,show_all_games_button:true};
   const card=g=>'<a href="checkout.html?game='+encodeURIComponent(g.slug)+'" class="home-game-card"><div class="home-game-image"><img src="'+esc(g.icon_url||"assets/icons/mobile-legends.webp")+'" alt="'+esc(g.name)+'" loading="lazy" onerror="this.onerror=null;this.src=\'assets/icons/mobile-legends.webp\'"></div><div class="home-game-info"><strong>'+esc(g.name)+'</strong><span>'+esc(g.publisher||"Game")+'</span></div></a>';
   const selected=new Set(Array.isArray(cfg.trending_slugs)?cfg.trending_slugs:[]);
-  const trending=games.filter(g=>selected.has(g.slug)).slice(0,Math.max(0,Number(cfg.trending_limit)||6));
+  const trending=visibleGames.filter(g=>selected.has(g.slug)).slice(0,Math.max(0,Number(cfg.trending_limit)||6));
   trendingSection.hidden=cfg.trending_enabled===false;allSection.hidden=cfg.all_games_enabled===false;
   document.getElementById("homeTrendingTitle").innerHTML=esc(cfg.trending_title||"Trending")+' <span class="trending-flame" aria-hidden="true">🔥</span>';
   document.getElementById("homeAllGamesTitle").textContent=cfg.all_games_title||"All Games";
   trendingGrid.innerHTML=trending.map(card).join("");
   const initialLimit=Math.max(1,Math.min(200,Number(cfg.all_games_initial_limit)||12));let expanded=false;
-  function renderAll(){allGrid.innerHTML=(expanded?games:games.slice(0,initialLimit)).map(card).join("");const canExpand=games.length>initialLimit&&cfg.show_all_games_button!==false;moreButton.style.display=canExpand?"inline-flex":"none";moreButton.textContent=expanded?"Tampilkan Lebih Sedikit":"Tampilkan Semua Game";}
+  function renderAll(){allGrid.innerHTML=(expanded?visibleGames:visibleGames.slice(0,initialLimit)).map(card).join("");const canExpand=visibleGames.length>initialLimit&&cfg.show_all_games_button!==false;moreButton.style.display=canExpand?"inline-flex":"none";moreButton.textContent=expanded?"Tampilkan Lebih Sedikit":"Tampilkan Semua Game";}
   moreButton.addEventListener("click",()=>{expanded=!expanded;renderAll();});renderAll();
  }catch(e){console.warn("Pengaturan beranda gagal dimuat; memakai daftar bawaan.",e);}
 });
