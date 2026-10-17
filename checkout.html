@@ -51,7 +51,7 @@ body:not(.home-page) .site-header .container > .header-brand {
   margin-left: 10px !important;
 }
 </style>
-<link rel="stylesheet" href="css/logo-text-animation.css?v=20261016-footer-shared">
+<link rel="stylesheet" href="css/logo-text-animation.css?v=20261017-shared-navbar">
 
 
 <style id="leo-language-theme-fix">
@@ -67,18 +67,22 @@ body{top:0!important}.skiptranslate iframe{display:none!important}.goog-logo-lin
 </style>
 </head>
 <body class="checkout-page">
-<header class="site-header"><div class="container">
-<a href="index.html" class="header-brand"><span class="header-brand-text">LEOOSTORE.id</span></a>
-<div class="leo-language-wrap">
+<header class="site-header home-header">
+  <div class="container header-inner"><a href="index.html" class="header-brand">
+  <span class="header-brand-text">LEOOSTORE.id</span>
+</a>
+<div class="header-actions">
+  
+  <button type="button" class="header-action search-button" id="searchButton" aria-label="Cari"><span class="header-icon">⌕</span></button>
+  <div class="leo-language-wrap">
   <button type="button" class="leo-language-button" id="leoLanguageButton" aria-haspopup="true" aria-expanded="false"><span id="leoLanguageFlag">🇮🇩</span><span id="leoLanguageLabel">ID / IDR</span><span class="leo-language-chevron">▾</span></button>
   <div class="leo-language-menu" id="leoLanguageMenu" hidden>
     <button type="button" data-lang="id">🇮🇩 Bahasa Indonesia</button><button type="button" data-lang="en">🇬🇧 English</button><button type="button" data-lang="ms">🇲🇾 Bahasa Melayu</button><button type="button" data-lang="zh-CN">🇨🇳 中文 (Mandarin)</button><button type="button" data-lang="ja">🇯🇵 日本語</button><button type="button" data-lang="ko">🇰🇷 한국어</button><button type="button" data-lang="es">🇪🇸 Español</button>
   </div>
 </div>
-
-
-<nav class="nav"><a href="index.html">Home</a><a href="shop.html" class="active">Top Up</a><a href="order.html">Cek Pesanan</a></nav>
-</div></header>
+  <button type="button" class="header-action menu-button" id="menuButton" aria-label="Buka menu" aria-expanded="false"><span class="menu-icon"><span></span><span></span><span></span></span></button>
+</div></div>
+</header>
 <div id="robloxPreorderModal" class="roblox-preorder-modal" hidden aria-hidden="true">
   <div class="roblox-preorder-backdrop"></div>
   <div class="roblox-preorder-dialog" role="dialog" aria-modal="true">
@@ -89,6 +93,21 @@ body{top:0!important}.skiptranslate iframe{display:none!important}.goog-logo-lin
     </div>
   </div>
 </div>
+<div class="search-panel" id="searchPanel"><div class="search-panel-inner"><input type="search" id="siteSearch" placeholder="Cari game..." autocomplete="off"><button type="button" id="searchClose" aria-label="Tutup pencarian">×</button></div></div>
+<div class="menu-overlay" id="menuOverlay"></div>
+<aside class="side-menu" id="sideMenu" aria-hidden="true">
+  <div class="side-menu-header"><a href="index.html" class="side-menu-brand"><span class="side-menu-brand-text">LEOOSTORE.id</span></a><button type="button" class="side-menu-close" id="menuClose" aria-label="Tutup menu">×</button></div>
+  <div class="side-menu-divider"></div>
+  <nav class="side-menu-nav">
+    <a href="index.html" class="side-menu-item"><span>Home</span><span class="side-menu-icon">⌂</span></a>
+    <a href="shop.html" class="side-menu-item"><span>Top Up</span><span class="side-menu-icon">🛒</span></a>
+    <a href="order.html" class="side-menu-item"><span>Cek Transaksi</span><span class="side-menu-icon">✓</span></a>
+    <a href="#" class="side-menu-item"><span>Leaderboard</span><span class="side-menu-icon">🏆</span></a>
+    <a href="#" class="side-menu-item"><span>Artikel</span><span class="side-menu-icon">📰</span></a>
+    <a href="#" class="side-menu-item"><span>Kalkulator</span><span class="side-menu-arrow">→</span></a>
+    <a href="#" class="side-menu-item side-menu-login"><span>Masuk</span><span class="side-menu-icon">⇥</span></a>
+  </nav>
+</aside>
 <main><section class="checkout-section"><div class="container">
 <div class="game-hero" id="gameHeroBanner"><div class="game-hero-overlay"><div class="game-hero-main"><div class="game-hero-content"><div class="game-hero-icon"><img id="gameImage" src="" alt="Game"><div id="gameIconFallback" class="game-icon-fallback" style="display:none;">🎮</div></div><div class="game-hero-text"><h1 id="gameName">Pilih Game</h1><p id="gameDescription">Pilih publisher</p></div></div><div class="game-hero-benefits"><div class="hero-benefit hero-benefit-fast"><span class="hero-benefit-icon">⚡</span><span>Proses Cepat</span></div><div class="game-hero-divider"></div><div class="hero-benefit hero-benefit-chat"><span class="hero-benefit-icon">💬</span><span>Chat 24/7</span></div><div class="game-hero-divider"></div><div class="hero-benefit hero-benefit-safe"><span class="hero-benefit-icon">🔒</span><span>Pembayaran Aman</span></div></div></div></div></div>
 <div class="checkout-layout">
@@ -140,5 +159,18 @@ body{top:0!important}.skiptranslate iframe{display:none!important}.goog-logo-lin
 
 <a class="leo-floating-admin" href="https://wa.me/6285823538473" aria-label="Chat Admin via WhatsApp" title="Chat Admin via WhatsApp" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13v-1a8 8 0 0 1 16 0v1"/><path d="M4 13v4a2 2 0 0 0 2 2h1v-6H6a2 2 0 0 0-2 2Z"/><path d="M20 13v4a2 2 0 0 1-2 2h-1v-6h1a2 2 0 0 1 2 2Z"/><path d="M15 19c-.7 1-1.7 1.5-3 1.5"/></svg></a>
 <div id="google_translate_element" style="display:none!important"></div><script src="js/language-selector.js?v=20261017-languages3" defer></script>
+
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+ const menuButton=document.getElementById("menuButton"),menuClose=document.getElementById("menuClose"),sideMenu=document.getElementById("sideMenu"),menuOverlay=document.getElementById("menuOverlay"),searchButton=document.getElementById("searchButton"),searchPanel=document.getElementById("searchPanel"),searchClose=document.getElementById("searchClose"),siteSearch=document.getElementById("siteSearch");
+ function openMenu(){sideMenu?.classList.add("active");menuOverlay?.classList.add("active");sideMenu?.setAttribute("aria-hidden","false");menuButton?.setAttribute("aria-expanded","true");document.body.style.overflow="hidden"}
+ function closeMenu(){sideMenu?.classList.remove("active");menuOverlay?.classList.remove("active");sideMenu?.setAttribute("aria-hidden","true");menuButton?.setAttribute("aria-expanded","false");document.body.style.overflow=""}
+ menuButton?.addEventListener("click",openMenu);menuClose?.addEventListener("click",closeMenu);menuOverlay?.addEventListener("click",closeMenu);
+ document.addEventListener("keydown",function(e){if(e.key==="Escape"){closeMenu();searchPanel?.classList.remove("active")}});
+ searchButton?.addEventListener("click",function(){searchPanel?.classList.toggle("active");if(searchPanel?.classList.contains("active"))setTimeout(function(){siteSearch?.focus()},200)});
+ searchClose?.addEventListener("click",function(){searchPanel?.classList.remove("active");if(siteSearch)siteSearch.value=""});
+});
+</script>
+
 </body>
 </html>
