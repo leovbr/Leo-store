@@ -104,6 +104,35 @@
   }
 }
 
+
+/* Premium banner shine — quick diagonal light sweep, image and text stay unchanged. */
+.home-page .home-banner-slide{isolation:isolate;}
+.home-page .home-banner-slide::after{
+  content:"";
+  position:absolute;
+  z-index:2;
+  top:-35%;
+  bottom:-35%;
+  left:-75%;
+  width:38%;
+  pointer-events:none;
+  background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,0) 24%,rgba(255,255,255,.10) 42%,rgba(255,255,255,.48) 50%,rgba(210,226,255,.16) 58%,rgba(255,255,255,0) 76%,transparent 100%);
+  transform:skewX(-18deg);
+  animation:leoBannerShine 4.2s cubic-bezier(.22,.61,.36,1) infinite;
+  opacity:0;
+}
+.home-page .home-banner-slide:nth-child(2)::after{animation-delay:1.4s;}
+.home-page .home-banner-slide:nth-child(3)::after{animation-delay:2.8s;}
+@keyframes leoBannerShine{
+  0%,58%{left:-75%;opacity:0;}
+  61%{opacity:.95;}
+  76%{left:145%;opacity:.7;}
+  77%,100%{left:145%;opacity:0;}
+}
+@media(prefers-reduced-motion:reduce){
+  .home-page .home-banner-slide::after{animation:none;display:none;}
+}
+
 </style>
 
 <style id="leoostore-text-brand-override">
