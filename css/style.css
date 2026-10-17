@@ -3035,3 +3035,9 @@ body{
     margin-left: 10px !important;
   }
 }
+
+/* FORCE visible LEOOSTORE.id wordmark inside the hamburger drawer */
+.side-menu-header .side-menu-brand{display:flex!important;align-items:center!important;flex:1 1 auto!important;min-width:0!important;max-width:calc(100% - 72px)!important;height:auto!important;visibility:visible!important;opacity:1!important;overflow:visible!important}
+.side-menu-header .side-menu-brand-text{display:inline-block!important;visibility:visible!important;opacity:1!important;position:relative!important;font-family:inherit!important;font-size:clamp(20px,5vw,27px)!important;font-weight:900!important;line-height:1.2!important;letter-spacing:-1.2px!important;white-space:nowrap!important;color:#a78bfa!important;background:linear-gradient(90deg,#fff 0%,#f5f3ff 28%,#a78bfa 57%,#7c3aed 100%)!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;text-decoration:none!important;filter:drop-shadow(0 0 7px rgba(124,58,237,.45))!important;clip-path:none!important;mask:none!important;-webkit-mask:none!important}
+.side-menu-header .side-menu-brand-text::before{content:""!important;position:absolute!important;inset:-3px!important;pointer-events:none!important;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.95) 48%,transparent 60%)!important;background-size:220% 100%!important;animation:leoDrawerBrandShine 4s ease-in-out infinite!important}
+@keyframes leoDrawerBrandShine{0%,20%{background-position:180% 0;opacity:0}45%{opacity:.8}75%,100%{background-position:-100% 0;opacity:0}}
