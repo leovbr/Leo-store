@@ -3052,8 +3052,8 @@ body{
 
 
 /* Homepage marketplace tabs and account cards */
-#marketplaceTabsSection{padding-top:34px;}
-#marketplaceTabsSection .marketplace-tabs{margin-bottom:22px;}
+#marketplaceTabsSection{padding:8px 0 12px;}
+#marketplaceTabsSection .marketplace-tabs{margin-bottom:0;}
 #marketPanelAccounts .account-marketplace-layout{width:100%;}
 #marketPanelAccounts .account-listing-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,240px));gap:18px;align-items:start;}
 #marketPanelAccounts .account-empty-card,
@@ -3065,4 +3065,21 @@ body{
 #marketPanelAccounts .account-empty-card .marketplace-primary{width:100%;white-space:normal;line-height:1.35;padding:12px 14px;}
 #marketPanelAccounts .account-show-more{margin-top:20px;}
 #marketPanelAccounts .account-card[hidden]{display:none!important;}
-@media(max-width:520px){#marketplaceTabsSection{padding-top:26px;}#marketPanelAccounts .account-listing-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}#marketPanelAccounts .account-empty-card,#marketPanelAccounts .account-card{padding:14px;border-radius:16px;}}
+@media(max-width:520px){#marketplaceTabsSection{padding:6px 0 10px;}#marketPanelAccounts .account-listing-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}#marketPanelAccounts .account-empty-card,#marketPanelAccounts .account-card{padding:14px;border-radius:16px;}}
+
+
+/* Account marketplace empty state and seller contact */
+#marketPanelAccounts .account-empty-card{justify-content:flex-start;align-items:stretch;gap:14px;padding:20px;}
+#marketPanelAccounts .account-card-topline{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;}
+#marketPanelAccounts .account-empty-icon{flex:0 0 48px;width:48px;height:48px;}
+#marketPanelAccounts .account-status{white-space:nowrap;letter-spacing:.08em;}
+#marketPanelAccounts .account-empty-card h2{font-size:clamp(18px,2vw,22px);overflow-wrap:anywhere;}
+#marketPanelAccounts .account-empty-message{font-size:13px;line-height:1.55;margin:0;color:var(--text-soft);}
+#marketPanelAccounts .account-seller-note{display:grid;gap:5px;padding:12px;border:1px solid rgba(124,92,255,.24);border-radius:12px;background:rgba(124,92,255,.08);}
+#marketPanelAccounts .account-seller-note strong{font-size:13px;color:var(--text);}
+#marketPanelAccounts .account-seller-note span{font-size:12px;line-height:1.55;color:var(--text-soft);}
+#marketPanelAccounts .account-card-actions{display:grid;gap:10px;width:100%;margin-top:auto;}
+#marketPanelAccounts .account-contact-admin{display:flex;align-items:center;justify-content:center;text-align:center;text-decoration:none;min-height:42px;width:100%;padding:10px 12px;white-space:normal;line-height:1.35;}
+#marketPanelAccounts .account-policy-link{border:0;background:transparent;color:var(--text-soft);font-size:12px;text-decoration:underline;text-underline-offset:3px;padding:5px 4px;}
+#marketPanelAccounts .account-policy-link:hover{color:var(--text);}
+@media(max-width:520px){#marketPanelAccounts .account-empty-card{padding:14px;gap:10px;}#marketPanelAccounts .account-seller-note{padding:10px;}#marketPanelAccounts .account-card-actions{gap:7px;}}
