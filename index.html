@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=20261018-account-marketplace2">
+  <link rel="stylesheet" href="css/style.css?v=20261018-account-marketplace3">
   <link rel="stylesheet" href="css/style-pages.css?v=20260919-navy1">
 <link rel="stylesheet" href="css/checkout-fixes.css?v=20260920-games1">
 <style>
@@ -364,21 +364,31 @@ body{top:0!important}.skiptranslate iframe{display:none!important}.goog-logo-lin
   <div class="marketplace-panel" id="marketPanelGames" role="tabpanel" aria-labelledby="marketTabGames" hidden></div>
   <div class="marketplace-panel" id="marketPanelPromos" role="tabpanel" aria-labelledby="marketTabPromos" hidden><h2>Kode Promo Terbaru</h2><p class="marketplace-muted">Daftar kode promo akan ditampilkan di sini setelah fitur promo dihubungkan ke admin.</p></div>
   <div class="marketplace-panel" id="marketPanelAccounts" role="tabpanel" aria-labelledby="marketTabAccounts" hidden>
-   <div class="account-marketplace-layout">
+   <div class="account-subtabs" role="tablist" aria-label="Pilihan jual beli akun">
+    <button type="button" class="account-subtab active" id="buyAccountsTab" role="tab" aria-selected="true">Beli Akun</button>
+    <button type="button" class="account-subtab" id="sellAccountsTab" role="tab" aria-selected="false">Jual Akun</button>
+   </div>
+   <section class="account-subpanel" id="buyAccountsPanel" aria-labelledby="buyAccountsTab">
     <div class="account-listing-grid" id="accountListingGrid" aria-live="polite">
      <article class="account-empty-card">
-      <div class="account-card-topline"><div class="account-empty-icon" aria-hidden="true">🎮</div><span class="account-status">INFO STOK</span></div>
-      <h2>Jual/Beli Akun Game</h2>
-      <p class="account-empty-message">Belum ada akun yang tersedia saat ini.</p>
-      <div class="account-seller-note"><strong>Mau jual akun game?</strong><span>Hubungi admin untuk menanyakan proses penjualan. Fitur chat langsung 24/7 akan disiapkan berikutnya.</span></div>
-      <div class="account-card-actions">
-       <a class="marketplace-primary account-contact-admin" href="https://wa.me/6285823538473?text=Halo%20Admin%20LEOOSTORE%2C%20saya%20ingin%20menawarkan%20akun%20game." target="_blank" rel="noopener noreferrer">Tawarkan Akun ke Admin</a>
-       <button type="button" class="account-policy-link" id="openAccountPolicy">Baca ketentuan transaksi</button>
-      </div>
+      <div class="account-empty-icon" aria-hidden="true">🎮</div>
+      <span class="account-status">STOK AKUN</span>
+      <h2>Belum Ada Akun</h2>
+      <p class="account-empty-message">Stok akun sedang kosong. Cek kembali nanti untuk melihat akun yang tersedia.</p>
      </article>
     </div>
     <button type="button" class="marketplace-primary account-show-more" id="showMoreAccounts" hidden>Cek akun lainnya</button>
-   </div>
+   </section>
+   <section class="account-subpanel" id="sellAccountsPanel" aria-labelledby="sellAccountsTab" hidden>
+    <article class="account-sell-card">
+     <div class="account-empty-icon" aria-hidden="true">🤝</div>
+     <span class="account-status">JUAL AKUN</span>
+     <h2>Mau Menawarkan Akun?</h2>
+     <p class="account-empty-message">Hubungi admin LEOOSTORE untuk menawarkan akun game. Admin akan membantu menjelaskan proses dan ketentuan sebelum akun ditampilkan.</p>
+     <a class="marketplace-primary account-contact-admin" href="https://wa.me/6285823538473?text=Halo%20Admin%20LEOOSTORE%2C%20saya%20ingin%20menawarkan%20akun%20game." target="_blank" rel="noopener noreferrer">Hubungi Admin</a>
+     <p class="account-chat-note">Chat admin langsung 24/7 akan disiapkan sebagai fitur berikutnya.</p>
+    </article>
+   </section>
   </div>
  </div>
 </section>
@@ -420,23 +430,41 @@ document.addEventListener("DOMContentLoaded",async function(){
 <script>
 document.addEventListener("DOMContentLoaded",function(){
  const allGamesSection=document.getElementById("homeAllGamesSection");
- const allGamesTitle=document.getElementById("homeAllGamesTitle");
- const gamePanel=document.getElementById("marketPanelGames");
  const tabs=[...document.querySelectorAll("[data-market-tab]")];
  const panels={promos:document.getElementById("marketPanelPromos"),accounts:document.getElementById("marketPanelAccounts")};
- if(allGamesTitle)allGamesTitle.textContent="Koleksi Game";
- if(gamePanel)gamePanel.hidden=true;
+ const modal=document.getElementById("accountPolicyModal");
+ if(document.getElementById("homeAllGamesTitle"))document.getElementById("homeAllGamesTitle").textContent="All Games";
  function selectMarketplaceTab(key){
   tabs.forEach(t=>{const active=t.dataset.marketTab===key;t.classList.toggle("active",active);t.setAttribute("aria-selected",String(active));});
   if(allGamesSection)allGamesSection.hidden=key!=="games";
   Object.entries(panels).forEach(([name,panel])=>{if(panel)panel.hidden=name!==key;});
-  if(key==="accounts")document.getElementById("accountPolicyModal").hidden=false;
  }
  tabs.forEach(tab=>tab.addEventListener("click",()=>selectMarketplaceTab(tab.dataset.marketTab)));
  selectMarketplaceTab("games");
- const modal=document.getElementById("accountPolicyModal");
- const close=()=>{modal.hidden=true;};
- document.getElementById("openAccountPolicy")?.addEventListener("click",()=>{modal.hidden=false;});
+ const buyTab=document.getElementById("buyAccountsTab"),sellTab=document.getElementById("sellAccountsTab");
+ const buyPanel=document.getElementById("buyAccountsPanel"),sellPanel=document.getElementById("sellAccountsPanel");
+ function selectAccountMode(mode){
+  const buying=mode==="buy";
+  buyTab?.classList.toggle("active",buying);sellTab?.classList.toggle("active",!buying);
+  buyTab?.setAttribute("aria-selected",String(buying));sellTab?.setAttribute("aria-selected",String(!buying));
+  if(buyPanel)buyPanel.hidden=!buying;if(sellPanel)sellPanel.hidden=buying;
+ }
+ buyTab?.addEventListener("click",()=>selectAccountMode("buy"));
+ sellTab?.addEventListener("click",()=>selectAccountMode("sell"));
+ const grid=document.getElementById("accountListingGrid"),more=document.getElementById("showMoreAccounts");
+ if(grid&&more){
+  function updateAccountCards(expand=false){
+   const cards=[...grid.querySelectorAll(".account-listing-card")];
+   cards.forEach((card,index)=>card.hidden=!expand&&index>=4);
+   more.hidden=cards.length<=4;
+   more.dataset.expanded=String(expand);
+   more.textContent=expand?"Tampilkan lebih sedikit":"Cek akun lainnya";
+  }
+  more.addEventListener("click",()=>updateAccountCards(more.dataset.expanded!=="true"));
+  updateAccountCards(false);
+ }
+ const close=()=>{if(modal)modal.hidden=true;};
+ document.getElementById("openAccountPolicy")?.addEventListener("click",()=>{if(modal)modal.hidden=false;});
  document.getElementById("closeAccountPolicy")?.addEventListener("click",close);
  document.getElementById("dismissAccountPolicy")?.addEventListener("click",close);
  document.getElementById("acceptAccountPolicy")?.addEventListener("click",close);
@@ -487,31 +515,5 @@ document.addEventListener("DOMContentLoaded",async function(){
   const initialLimit=Math.max(1,Math.min(200,Number(cfg.all_games_initial_limit)||12));
   function renderAll(){allGrid.innerHTML=visibleGames.slice(0,initialLimit).map(card).join("");const canGoShop=visibleGames.length>initialLimit&&cfg.show_all_games_button!==false;moreButton.style.display=canGoShop?"inline-flex":"none";}renderAll();
  }catch(e){console.warn("Pengaturan beranda gagal dimuat; memakai daftar bawaan.",e);}
-});
-</script><script>
-document.addEventListener("DOMContentLoaded",function(){
- const tabs=[...document.querySelectorAll("[data-market-tab]")];
- const panels={games:document.getElementById("marketPanelGames"),promos:document.getElementById("marketPanelPromos"),accounts:document.getElementById("marketPanelAccounts")};
- tabs.forEach(tab=>tab.addEventListener("click",function(){
-  const active=tab.dataset.marketTab;
-  tabs.forEach(item=>{const yes=item===tab;item.classList.toggle("active",yes);item.setAttribute("aria-selected",String(yes));});
-  Object.entries(panels).forEach(([key,panel])=>{if(panel)panel.hidden=key!==active;});
- }));
- const grid=document.getElementById("accountListingGrid"),more=document.getElementById("showMoreAccounts");
- if(grid&&more){
-  const cards=()=>[...grid.querySelectorAll(".account-card")];
-  const refresh=()=>{
-   const items=cards(); more.hidden=items.length<=3;
-   items.forEach((item,index)=>item.hidden=index>=3);
-   more.dataset.expanded="false";
-  };
-  more.addEventListener("click",()=>{
-   const items=cards(),expanded=more.dataset.expanded==="true";
-   items.forEach((item,index)=>item.hidden=!expanded&&index>=3);
-   more.dataset.expanded=String(!expanded);
-   more.textContent=expanded?"Cek akun lainnya":"Tampilkan lebih sedikit";
-  });
-  refresh();
- }
 });
 </script></body></html>
