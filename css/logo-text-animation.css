@@ -140,3 +140,10 @@
 .leo-language-menu button:hover,.leo-language-menu button.selected{background:rgba(124,58,237,.24)}
 .goog-te-banner-frame,.skiptranslate iframe{display:none!important}body{top:0!important}.goog-te-gadget{font-size:0!important}.goog-logo-link,.goog-te-gadget span{display:none!important}
 @media(max-width:600px){.leo-language-button{min-height:32px;padding:6px 8px;font-size:11px}.leo-language-menu{right:0;width:205px}}
+
+/* Interaction safety override for language menu */
+.site-header .container{position:relative}
+.site-header .leo-language-wrap{position:relative!important;z-index:10050!important;pointer-events:auto!important}
+.site-header .leo-language-button{position:relative!important;z-index:10051!important;pointer-events:auto!important;touch-action:manipulation!important;cursor:pointer!important}
+.site-header .leo-language-menu{position:absolute!important;z-index:10052!important;pointer-events:auto!important}
+.site-header .leo-language-menu button{pointer-events:auto!important;touch-action:manipulation!important;cursor:pointer!important}
