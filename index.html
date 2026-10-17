@@ -187,6 +187,32 @@
   .home-page .home-banner-slide::after{animation:none;display:none;}
 }
 
+ 
+/* Homepage marketplace tabs */
+.marketplace-tabs{display:flex;gap:8px;overflow-x:auto;padding:4px 0 14px;margin-bottom:14px;scrollbar-width:none}
+.marketplace-tabs::-webkit-scrollbar{display:none}
+.marketplace-tab{flex:1 0 auto;border:1px solid rgba(150,130,200,.25);border-radius:12px;padding:12px 16px;background:#0d192b;color:#cbd5e1;font:inherit;font-weight:700;cursor:pointer}
+.marketplace-tab.active{background:linear-gradient(135deg,#7c3aed,#4f46e5);border-color:#a78bfa;color:#fff;box-shadow:0 0 18px rgba(124,58,237,.22)}
+.marketplace-panel{padding:16px;border:1px solid rgba(150,130,200,.18);border-radius:16px;background:rgba(13,25,43,.7)}
+.marketplace-panel h2{margin:0 0 10px;font-size:clamp(20px,5vw,28px)}
+.marketplace-muted{margin:0;color:#aab6ca;line-height:1.6}
+.marketplace-primary,.marketplace-secondary{border-radius:11px;padding:12px 16px;font:inherit;font-weight:700;cursor:pointer}
+.marketplace-primary{border:1px solid #a78bfa;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff}
+.marketplace-secondary{border:1px solid rgba(160,170,200,.3);background:#111d30;color:#e2e8f0}
+.account-policy-backdrop{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(2,6,18,.82);backdrop-filter:blur(8px);overflow-y:auto}
+.account-policy-backdrop[hidden],.marketplace-panel[hidden]{display:none!important}
+.account-policy-card{position:relative;width:min(100%,620px);max-height:min(88dvh,850px);overflow:auto;border:1px solid rgba(167,139,250,.45);border-radius:20px;padding:24px;background:linear-gradient(160deg,#101b31,#07101e);color:#f8fafc;box-shadow:0 24px 80px rgba(0,0,0,.55)}
+.account-policy-close{position:absolute;top:12px;right:14px;width:38px;height:38px;border:1px solid rgba(255,255,255,.18);border-radius:50%;background:#18243a;color:#fff;font-size:27px;line-height:1;cursor:pointer}
+.account-policy-eyebrow{display:block;margin:0 42px 8px 0;color:#b9a0ff;font-size:11px;letter-spacing:1.5px;font-weight:800}
+.account-policy-card h2{margin:0 38px 10px 0;font-size:clamp(22px,5.5vw,30px);line-height:1.2}
+.account-policy-intro,.account-policy-note{color:#b9c5d8;font-size:13px;line-height:1.6}
+.account-policy-item{padding:12px 0;border-bottom:1px solid rgba(255,255,255,.09)}
+.account-policy-item h3{margin:0 0 5px;font-size:15px}
+.account-policy-item p{margin:0;color:#d1d9e7;font-size:13px;line-height:1.6}
+.account-policy-promise{margin:16px 0 8px;padding:14px;border-left:3px solid #9b72ff;border-radius:0 10px 10px 0;background:rgba(124,58,237,.12);font-size:14px;line-height:1.65;font-weight:700}
+.account-policy-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.account-policy-actions button{flex:1}
+@media(max-width:480px){.account-policy-card{padding:20px 16px;border-radius:16px}.marketplace-tab{padding:11px 13px;font-size:13px}}
 </style>
 
 <style id="leoostore-text-brand-override">
@@ -329,7 +355,34 @@ body{top:0!important}.skiptranslate iframe{display:none!important}.goog-logo-lin
 <a href="checkout.html?game=free-fire" class="home-game-card"><div class="home-game-image"><img src="assets/icons/free-fire.webp" alt="Free Fire" loading="lazy"></div><div class="home-game-info"><strong>Free Fire</strong><span>Garena</span></div></a></div></div></section>
 <section class="home-games-section all-games-section" id="homeAllGamesSection"><div class="container"><div class="section-heading"><span class="eyebrow">KOLEKSI GAME</span><h2 id="homeAllGamesTitle">All Games</h2></div><div class="home-game-grid" id="homeAllGames">
 <a href="checkout.html?game=mobile-legends" class="home-game-card"><div class="home-game-image"><img src="assets/icons/mobile-legends.webp" alt="Mobile Legends" loading="lazy"></div><div class="home-game-info"><strong>Mobile Legends</strong><span>Moonton</span></div></a>
-<a href="checkout.html?game=free-fire" class="home-game-card"><div class="home-game-image"><img src="assets/icons/free-fire.webp" alt="Free Fire" loading="lazy"></div><div class="home-game-info"><strong>Free Fire</strong><span>Garena</span></div></a></div><div class="home-all-games-actions"><a href="shop.html" id="showAllGames" class="home-all-games-cta" style="display:none">Tampilkan Semua Game <span aria-hidden="true">→</span></a></div></div></section></main>
+<a href="checkout.html?game=free-fire" class="home-game-card"><div class="home-game-image"><img src="assets/icons/free-fire.webp" alt="Free Fire" loading="lazy"></div><div class="home-game-info"><strong>Free Fire</strong><span>Garena</span></div></a></div><div class="home-all-games-actions"><a href="shop.html" id="showAllGames" class="home-all-games-cta" style="display:none">Tampilkan Semua Game <span aria-hidden="true">→</span></a></div></div></section>
+<section class="home-games-section" id="marketplaceTabsSection">
+ <div class="container">
+  <div class="marketplace-tabs" role="tablist" aria-label="Pilihan beranda">
+   <button type="button" class="marketplace-tab active" id="marketTabGames" role="tab" aria-selected="true" data-market-tab="games">Koleksi Game</button>
+   <button type="button" class="marketplace-tab" id="marketTabPromos" role="tab" aria-selected="false" data-market-tab="promos">Kode Promo Terbaru</button>
+   <button type="button" class="marketplace-tab" id="marketTabAccounts" role="tab" aria-selected="false" data-market-tab="accounts">Jual/Beli Akun</button>
+  </div>
+  <div class="marketplace-panel" id="marketPanelGames"><p class="marketplace-muted">Jelajahi game favoritmu di bagian Koleksi Game di atas.</p></div>
+  <div class="marketplace-panel" id="marketPanelPromos" hidden><h2>Kode Promo Terbaru</h2><p class="marketplace-muted">Daftar kode promo akan ditampilkan di sini setelah fitur promo dihubungkan ke admin.</p></div>
+  <div class="marketplace-panel" id="marketPanelAccounts" hidden><h2>Jual/Beli Akun Game</h2><p class="marketplace-muted">Sayangnya, stok akun sedang kosong.</p><button type="button" class="marketplace-primary" id="openAccountPolicy">Baca ketentuan sebelum transaksi</button></div>
+ </div>
+</section>
+<div class="account-policy-backdrop" id="accountPolicyModal" role="dialog" aria-modal="true" aria-labelledby="accountPolicyTitle" hidden>
+ <div class="account-policy-card">
+  <button type="button" class="account-policy-close" id="closeAccountPolicy" aria-label="Tutup ketentuan">×</button>
+  <span class="account-policy-eyebrow">PENTING · BACA SEBELUM TRANSAKSI</span>
+  <h2 id="accountPolicyTitle">Ketentuan Garansi Jual/Beli Akun</h2>
+  <p class="account-policy-intro">Mohon baca ketentuan berikut sebelum melakukan transaksi melalui LEOOSTORE.id.</p>
+  <div class="account-policy-item"><h3>🛡️ Garansi 30–60 hari</h3><p>Masa garansi dihitung sejak akun diserahterimakan kepada pembeli. Durasi garansi yang berlaku akan dicantumkan pada setiap listing.</p></div>
+  <div class="account-policy-item"><h3>🧾 Bukti kepemilikan dan transaksi</h3><p>Simpan ID listing, waktu transaksi, bukti serah terima, dan catatan verifikasi penjual. Hindari membagikan atau menyimpan password serta dokumen sensitif tanpa kebutuhan yang jelas.</p></div>
+  <div class="account-policy-item"><h3>🤝 Kompensasi yang jelas</h3><p>Jika akun direbut kembali dan terbukti memenuhi syarat garansi, pembeli dapat memperoleh penggantian akun setara atau pengembalian dana sesuai kebijakan tertulis yang berlaku.</p></div>
+  <div class="account-policy-item"><h3>🎧 CS yang bertanggung jawab</h3><p>Pembeli dapat mengajukan klaim, mengirim bukti yang relevan, dan meminta informasi perkembangan penanganan kasusnya melalui CS.</p></div>
+  <p class="account-policy-promise">LEOOSTORE.id tidak hanya bertanggung jawab sampai pembayaran selesai. Kami berkomitmen membantu pelanggan ketika masalah yang termasuk dalam garansi terjadi.</p>
+  <p class="account-policy-note">Catatan: garansi tunduk pada hasil pemeriksaan dan ketentuan tertulis untuk setiap transaksi. Pastikan jual-beli akun diperbolehkan oleh aturan game atau platform terkait.</p>
+  <div class="account-policy-actions"><button type="button" class="marketplace-primary" id="acceptAccountPolicy">Saya sudah membaca</button><button type="button" class="marketplace-secondary" id="dismissAccountPolicy">Tutup</button></div>
+ </div>
+</div></main>
 <footer class="site-footer checkout-footer-inline universal-social-footer"><div class="footer-inner"><div class="footer-closure"><a href="index.html" class="footer-brand-text" aria-label="LEOOSTORE.id">LEOOSTORE.id</a><h3>Top Up Game Favoritmu dengan Lebih Mudah</h3><p>LEOOSTORE.id menyediakan berbagai pilihan top up game, mulai dari diamond, Robux, hingga produk game lainnya. Dipercaya oleh 10.000+ pelanggan, kami menawarkan beragam pilihan produk dengan harga yang jelas dan proses pemesanan yang mudah untuk menemani pengalaman bermainmu.</p></div><div class="footer-links"><div class="footer-column footer-social-column"><h4>Ikuti Kami</h4><div class="footer-social-row"><a href="https://wa.me/6285823538473" class="social-link social-whatsapp"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v16/icons/whatsapp.svg" alt=""></a><a href="https://www.instagram.com/leoostore791?stkn=MWVhMDNsd3hicWNzbA==" class="social-link social-instagram" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v16/icons/instagram.svg" alt=""></a><a href="https://www.tiktok.com/@leoostore791?_r=1&_t=ZS-99sj3AXKOcD" class="social-link social-tiktok" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v16/icons/tiktok.svg" alt=""></a><div class="footer-social-copyright">LEOOSTORE.id © 2026 · Fast. Trusted. Delivered.</div></div></div></div></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -345,6 +398,26 @@ document.addEventListener("DOMContentLoaded",async function(){
   prev?.addEventListener("click",goPrev);next?.addEventListener("click",goNext);
   if(carousel){carousel.style.touchAction="pan-y";carousel.addEventListener("pointerdown",e=>{if(e.pointerType==="mouse"&&e.button!==0)return;startX=e.clientX;startY=e.clientY;dragging=true;suppressClick=false;},{passive:true});carousel.addEventListener("pointerup",e=>{if(!dragging)return;dragging=false;const dx=e.clientX-startX,dy=e.clientY-startY;if(Math.abs(dx)>42&&Math.abs(dx)>Math.abs(dy)*1.25){suppressClick=true;dx<0?goNext():goPrev();setTimeout(()=>{suppressClick=false;},350);}},{passive:true});carousel.addEventListener("pointercancel",()=>{dragging=false;},{passive:true});carousel.addEventListener("click",e=>{if(suppressClick){e.preventDefault();e.stopPropagation();suppressClick=false;}},true);}
   if(slides.length>1)setInterval(goNext,5000);update();
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+ const tabs=[...document.querySelectorAll("[data-market-tab]")];
+ const panels={games:document.getElementById("marketPanelGames"),promos:document.getElementById("marketPanelPromos"),accounts:document.getElementById("marketPanelAccounts")};
+ tabs.forEach(tab=>tab.addEventListener("click",()=>{
+  const key=tab.dataset.marketTab;
+  tabs.forEach(t=>{const active=t===tab;t.classList.toggle("active",active);t.setAttribute("aria-selected",String(active));});
+  Object.entries(panels).forEach(([name,panel])=>{if(panel)panel.hidden=name!==key;});
+  if(key==="accounts")document.getElementById("accountPolicyModal").hidden=false;
+ }));
+ const modal=document.getElementById("accountPolicyModal");
+ const close=()=>{modal.hidden=true;};
+ document.getElementById("openAccountPolicy")?.addEventListener("click",()=>{modal.hidden=false;});
+ document.getElementById("closeAccountPolicy")?.addEventListener("click",close);
+ document.getElementById("dismissAccountPolicy")?.addEventListener("click",close);
+ document.getElementById("acceptAccountPolicy")?.addEventListener("click",close);
+ modal?.addEventListener("click",e=>{if(e.target===modal)close();});
+ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&modal&&!modal.hidden)close();});
 });
 </script>
 <script>
