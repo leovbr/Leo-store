@@ -32,7 +32,7 @@ td small{display:inline-block;max-width:360px;overflow-wrap:anywhere;color:#9caa
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
 (() => {
 const URL="https://tvdbrqskvuukxvqaqjom.supabase.co", KEY="sb_publishable_2f-IadmcnaYzoCb_8Iko0w_pFp9u8eF", ADMIN_UID="3939553f-ef8d-4295-8f2f-39c86ce9ed20";
-const db=window.supabase.createClient(URL,KEY), $=id=>document.getElementById(id); let games=[],products=[],promos=[],images=[],homepageSettings=null;
+const db=window.supabase.createClient(URL,KEY), $=id=>document.getElementById(id); let games=[],products=[],promos=[],images=[],homepageSettings=null,editingPromoId=null;
 const say=m=>$("status").textContent=m; const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const price=n=>"Rp"+Number(n||0).toLocaleString("id-ID");
 function auth(user){const ok=!!user&&user.id===ADMIN_UID;$("loginPanel").classList.toggle("hidden",ok);$("app").classList.toggle("hidden",!ok);$("signout").classList.toggle("hidden",!ok);if(user&&!ok){$("authStatus").textContent="Akun ini bukan UID admin yang diizinkan.";db.auth.signOut();return;}if(ok)loadAll();}
