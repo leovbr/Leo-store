@@ -363,7 +363,20 @@ body{top:0!important}.skiptranslate iframe{display:none!important}.goog-logo-lin
   </div>
   <div class="marketplace-panel" id="marketPanelGames" role="tabpanel" aria-labelledby="marketTabGames" hidden></div>
   <div class="marketplace-panel" id="marketPanelPromos" role="tabpanel" aria-labelledby="marketTabPromos" hidden><h2>Kode Promo Terbaru</h2><p class="marketplace-muted">Daftar kode promo akan ditampilkan di sini setelah fitur promo dihubungkan ke admin.</p></div>
-  <div class="marketplace-panel" id="marketPanelAccounts" role="tabpanel" aria-labelledby="marketTabAccounts" hidden><h2>Jual/Beli Akun Game</h2><p class="marketplace-muted">Sayangnya, stok akun sedang kosong.</p><button type="button" class="marketplace-primary" id="openAccountPolicy">Baca ketentuan sebelum transaksi</button></div>
+  <div class="marketplace-panel" id="marketPanelAccounts" role="tabpanel" aria-labelledby="marketTabAccounts" hidden>
+   <div class="account-marketplace-layout">
+    <div class="account-listing-grid" id="accountListingGrid" aria-live="polite">
+     <article class="account-empty-card">
+      <div class="account-empty-icon" aria-hidden="true">🎮</div>
+      <span class="account-status">INFO STOK</span>
+      <h2>Jual/Beli Akun Game</h2>
+      <p>Sayangnya, stok akun sedang kosong.</p>
+      <button type="button" class="marketplace-primary" id="openAccountPolicy">Baca ketentuan sebelum transaksi</button>
+     </article>
+    </div>
+    <button type="button" class="marketplace-primary account-show-more" id="showMoreAccounts" hidden>Cek akun lainnya</button>
+   </div>
+  </div>
  </div>
 </section>
 <section class="home-games-section all-games-section" id="homeAllGamesSection"><div class="container"><div class="section-heading"><h2 id="homeAllGamesTitle">Koleksi Game</h2></div><div class="home-game-grid" id="homeAllGames">
@@ -471,5 +484,31 @@ document.addEventListener("DOMContentLoaded",async function(){
   const initialLimit=Math.max(1,Math.min(200,Number(cfg.all_games_initial_limit)||12));
   function renderAll(){allGrid.innerHTML=visibleGames.slice(0,initialLimit).map(card).join("");const canGoShop=visibleGames.length>initialLimit&&cfg.show_all_games_button!==false;moreButton.style.display=canGoShop?"inline-flex":"none";}renderAll();
  }catch(e){console.warn("Pengaturan beranda gagal dimuat; memakai daftar bawaan.",e);}
+});
+</script><script>
+document.addEventListener("DOMContentLoaded",function(){
+ const tabs=[...document.querySelectorAll("[data-market-tab]")];
+ const panels={games:document.getElementById("marketPanelGames"),promos:document.getElementById("marketPanelPromos"),accounts:document.getElementById("marketPanelAccounts")};
+ tabs.forEach(tab=>tab.addEventListener("click",function(){
+  const active=tab.dataset.marketTab;
+  tabs.forEach(item=>{const yes=item===tab;item.classList.toggle("active",yes);item.setAttribute("aria-selected",String(yes));});
+  Object.entries(panels).forEach(([key,panel])=>{if(panel)panel.hidden=key!==active;});
+ }));
+ const grid=document.getElementById("accountListingGrid"),more=document.getElementById("showMoreAccounts");
+ if(grid&&more){
+  const cards=()=>[...grid.querySelectorAll(".account-card")];
+  const refresh=()=>{
+   const items=cards(); more.hidden=items.length<=3;
+   items.forEach((item,index)=>item.hidden=index>=3);
+   more.dataset.expanded="false";
+  };
+  more.addEventListener("click",()=>{
+   const items=cards(),expanded=more.dataset.expanded==="true";
+   items.forEach((item,index)=>item.hidden=!expanded&&index>=3);
+   more.dataset.expanded=String(!expanded);
+   more.textContent=expanded?"Cek akun lainnya":"Tampilkan lebih sedikit";
+  });
+  refresh();
+ }
 });
 </script></body></html>
