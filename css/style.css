@@ -3041,3 +3041,27 @@ body{
 .side-menu-header .side-menu-brand-text{display:inline-block!important;visibility:visible!important;opacity:1!important;position:relative!important;font-family:inherit!important;font-size:clamp(20px,5vw,27px)!important;font-weight:900!important;line-height:1.2!important;letter-spacing:-1.2px!important;white-space:nowrap!important;color:#a78bfa!important;background:linear-gradient(90deg,#fff 0%,#f5f3ff 28%,#a78bfa 57%,#7c3aed 100%)!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;text-decoration:none!important;filter:drop-shadow(0 0 7px rgba(124,58,237,.45))!important;clip-path:none!important;mask:none!important;-webkit-mask:none!important}
 .side-menu-header .side-menu-brand-text::before{content:""!important;position:absolute!important;inset:-3px!important;pointer-events:none!important;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.95) 48%,transparent 60%)!important;background-size:220% 100%!important;animation:leoDrawerBrandShine 4s ease-in-out infinite!important}
 @keyframes leoDrawerBrandShine{0%,20%{background-position:180% 0;opacity:0}45%{opacity:.8}75%,100%{background-position:-100% 0;opacity:0}}
+
+/* FINAL drawer-only animation: isolated names prevent collisions with navbar/footer rules */
+html body .side-menu .side-menu-header .side-menu-brand .side-menu-brand-text{
+  display:inline-block!important;position:relative!important;white-space:nowrap!important;
+  color:#8b5cf6!important;background:linear-gradient(90deg,#fff 0%,#fff 38%,#a78bfa 62%,#7c3aed 100%)!important;
+  -webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;
+  clip-path:inset(0 0 0 0)!important;animation:leoDrawerLogoReveal 6s ease-in-out infinite!important;
+  filter:drop-shadow(0 0 5px rgba(124,58,237,.55))!important;will-change:clip-path,filter!important;
+}
+html body .side-menu .side-menu-header .side-menu-brand .side-menu-brand-text::before{
+  content:""!important;display:block!important;position:absolute!important;inset:-5px -8px!important;z-index:2!important;pointer-events:none!important;
+  background:linear-gradient(110deg,transparent 28%,rgba(255,255,255,.08) 40%,#fff 49%,rgba(196,181,253,.85) 53%,transparent 66%)!important;
+  background-size:260% 100%!important;background-position:160% 0!important;opacity:0!important;
+  animation:leoDrawerLogoShimmer 6s ease-in-out infinite!important;
+}
+html body .side-menu .side-menu-header .side-menu-brand .side-menu-brand-text::after{
+  content:""!important;display:block!important;position:absolute!important;inset:-4px -6px!important;z-index:3!important;pointer-events:none!important;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 64'%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='3'%3E%3Cpath d='M4 24L16 17L12 29L27 22L21 37L35 31M82 56L94 43L89 34L105 25M177 54L188 41L183 32L198 23' stroke='%23c4b5fd'/%3E%3Cpath d='M42 8L51 17L47 24L58 29M139 8L132 19L143 25L135 37M213 14L205 22L211 29L203 39' stroke='%23ffffff'/%3E%3C/g%3E%3C/svg%3E") center/100% 100% no-repeat!important;
+  opacity:0!important;filter:drop-shadow(0 0 5px #a78bfa)!important;animation:leoDrawerLogoLightning 6s steps(1,end) infinite!important;
+}
+@keyframes leoDrawerLogoReveal{0%,8%{clip-path:inset(0 100% 0 0);filter:drop-shadow(0 0 1px #7c3aed)}28%,72%{clip-path:inset(0 0 0 0);filter:drop-shadow(0 0 7px #8b5cf6)}82%,100%{clip-path:inset(0 0 0 0);filter:drop-shadow(0 0 3px #7c3aed)}}
+@keyframes leoDrawerLogoShimmer{0%,30%{opacity:0;background-position:160% 0}40%{opacity:1}62%{opacity:0;background-position:-160% 0}100%{opacity:0;background-position:-160% 0}}
+@keyframes leoDrawerLogoLightning{0%,42%,100%{opacity:0;transform:translateX(0)}44%{opacity:1;transform:translateX(-1px)}46%{opacity:0;transform:translateX(2px)}48%{opacity:1;transform:translateX(0)}51%{opacity:0}}
+@media(prefers-reduced-motion:reduce){html body .side-menu .side-menu-header .side-menu-brand .side-menu-brand-text,html body .side-menu .side-menu-header .side-menu-brand .side-menu-brand-text::before,html body .side-menu .side-menu-header .side-menu-brand .side-menu-brand-text::after{animation:none!important}}
