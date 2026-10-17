@@ -3049,3 +3049,20 @@ body{
 .side-menu .side-menu-header .header-brand .header-brand-text{font-size:clamp(22px,4vw,30px)!important;white-space:nowrap!important;}
 .side-menu .side-menu-header .side-menu-close{position:relative!important;left:auto!important;right:auto!important;top:0!important;flex:0 0 44px!important;margin:0!important;}
 @media(max-width:600px){.side-menu .side-menu-header .header-brand .header-brand-text{font-size:24px!important;}}
+
+
+/* Homepage marketplace tabs and account cards */
+#marketplaceTabsSection{padding-top:34px;}
+#marketplaceTabsSection .marketplace-tabs{margin-bottom:22px;}
+#marketPanelAccounts .account-marketplace-layout{width:100%;}
+#marketPanelAccounts .account-listing-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,240px));gap:18px;align-items:start;}
+#marketPanelAccounts .account-empty-card,
+#marketPanelAccounts .account-card{width:100%;aspect-ratio:3/4;min-width:0;overflow:hidden;border:1px solid var(--border-strong);border-radius:20px;background:linear-gradient(160deg,rgba(124,92,255,.13),rgba(17,21,30,.98) 48%);padding:22px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:12px;box-shadow:var(--shadow);}
+#marketPanelAccounts .account-empty-icon{width:54px;height:54px;display:grid;place-items:center;border-radius:16px;background:var(--primary-soft);font-size:28px;}
+#marketPanelAccounts .account-status{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--text-soft);padding:5px 9px;border:1px solid var(--border-strong);border-radius:999px;}
+#marketPanelAccounts .account-empty-card h2{font-size:clamp(19px,2vw,23px);line-height:1.2;margin:0;}
+#marketPanelAccounts .account-empty-card p{margin:0;color:var(--text-soft);font-size:14px;}
+#marketPanelAccounts .account-empty-card .marketplace-primary{width:100%;white-space:normal;line-height:1.35;padding:12px 14px;}
+#marketPanelAccounts .account-show-more{margin-top:20px;}
+#marketPanelAccounts .account-card[hidden]{display:none!important;}
+@media(max-width:520px){#marketplaceTabsSection{padding-top:26px;}#marketPanelAccounts .account-listing-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}#marketPanelAccounts .account-empty-card,#marketPanelAccounts .account-card{padding:14px;border-radius:16px;}}
