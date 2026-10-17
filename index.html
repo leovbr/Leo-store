@@ -234,12 +234,12 @@ body{top:0!important}.skiptranslate iframe{display:none!important}.goog-logo-lin
     <div class="banner-dots" id="bannerDots"></div>
   </div>
 </div></section>
-<section class="home-games-section"><div class="container"><div class="section-heading"><h2>Trending <span class="trending-flame" aria-hidden="true">🔥</span></h2></div><div class="home-game-grid" id="homeTrendingGames">
+<section class="home-games-section" id="homeTrendingSection"><div class="container"><div class="section-heading"><h2 id="homeTrendingTitle">Trending <span class="trending-flame" aria-hidden="true">🔥</span></h2></div><div class="home-game-grid" id="homeTrendingGames">
 <a href="checkout.html?game=mobile-legends" class="home-game-card"><div class="home-game-image"><img src="assets/icons/mobile-legends.webp" alt="Mobile Legends" loading="lazy"></div><div class="home-game-info"><strong>Mobile Legends</strong><span>Moonton</span></div></a>
 <a href="checkout.html?game=free-fire" class="home-game-card"><div class="home-game-image"><img src="assets/icons/free-fire.webp" alt="Free Fire" loading="lazy"></div><div class="home-game-info"><strong>Free Fire</strong><span>Garena</span></div></a></div></div></section>
-<section class="home-games-section all-games-section"><div class="container"><div class="section-heading"><span class="eyebrow">KOLEKSI GAME</span><h2>All Games</h2></div><div class="home-game-grid" id="homeAllGames">
+<section class="home-games-section all-games-section" id="homeAllGamesSection"><div class="container"><div class="section-heading"><span class="eyebrow">KOLEKSI GAME</span><h2 id="homeAllGamesTitle">All Games</h2></div><div class="home-game-grid" id="homeAllGames">
 <a href="checkout.html?game=mobile-legends" class="home-game-card"><div class="home-game-image"><img src="assets/icons/mobile-legends.webp" alt="Mobile Legends" loading="lazy"></div><div class="home-game-info"><strong>Mobile Legends</strong><span>Moonton</span></div></a>
-<a href="checkout.html?game=free-fire" class="home-game-card"><div class="home-game-image"><img src="assets/icons/free-fire.webp" alt="Free Fire" loading="lazy"></div><div class="home-game-info"><strong>Free Fire</strong><span>Garena</span></div></a></div></div></section></main>
+<a href="checkout.html?game=free-fire" class="home-game-card"><div class="home-game-image"><img src="assets/icons/free-fire.webp" alt="Free Fire" loading="lazy"></div><div class="home-game-info"><strong>Free Fire</strong><span>Garena</span></div></a></div><div class="actions" style="display:flex;justify-content:center;margin-top:22px"><button type="button" id="showAllGames" class="secondary" style="display:none">Tampilkan Semua Game</button></div></div></section></main>
 <footer class="site-footer checkout-footer-inline universal-social-footer"><div class="footer-inner"><div class="footer-closure"><a href="index.html" class="footer-brand-text" aria-label="LEOOSTORE.id">LEOOSTORE.id</a><h3>Top Up Game Favoritmu dengan Lebih Mudah</h3><p>LEOOSTORE.id menyediakan berbagai pilihan top up game, mulai dari diamond, Robux, hingga produk game lainnya. Dipercaya oleh 10.000+ pelanggan, kami menawarkan beragam pilihan produk dengan harga yang jelas dan proses pemesanan yang mudah untuk menemani pengalaman bermainmu.</p></div><div class="footer-links"><div class="footer-column footer-social-column"><h4>Ikuti Kami</h4><div class="footer-social-row"><a href="https://wa.me/6285823538473" class="social-link social-whatsapp"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v16/icons/whatsapp.svg" alt=""></a><a href="https://www.instagram.com/leoostore791?stkn=MWVhMDNsd3hicWNzbA==" class="social-link social-instagram" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v16/icons/instagram.svg" alt=""></a><a href="https://www.tiktok.com/@leoostore791?_r=1&_t=ZS-99sj3AXKOcD" class="social-link social-tiktok" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v16/icons/tiktok.svg" alt=""></a><div class="footer-social-copyright">LEOOSTORE.id © 2026 · Fast. Trusted. Delivered.</div></div></div></div></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -269,15 +269,29 @@ document.addEventListener("DOMContentLoaded",function(){
 <div id="google_translate_element" style="display:none!important"></div><script src="js/language-selector.js?v=20261017-languages3" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
 document.addEventListener("DOMContentLoaded",async function(){
- const grids=[document.getElementById("homeTrendingGames"),document.getElementById("homeAllGames")];
- if(!grids.some(Boolean)||!window.supabase)return;
+ const trendingGrid=document.getElementById("homeTrendingGames"),allGrid=document.getElementById("homeAllGames");
+ const trendingSection=document.getElementById("homeTrendingSection"),allSection=document.getElementById("homeAllGamesSection");
+ const moreButton=document.getElementById("showAllGames");
+ if(!trendingGrid||!allGrid||!window.supabase)return;
+ const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
  try{
   const db=window.supabase.createClient("https://tvdbrqskvuukxvqaqjom.supabase.co","sb_publishable_2f-IadmcnaYzoCb_8Iko0w_pFp9u8eF");
-  const {data,error}=await db.from("store_games").select("slug,name,publisher,icon_url,sort_order,is_active").eq("is_active",true).order("sort_order").limit(100);
-  if(error||!data?.length)return;
-  const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-  const cards=data.map(g=>'<a href="checkout.html?game='+encodeURIComponent(g.slug)+'" class="home-game-card"><div class="home-game-image"><img src="'+esc(g.icon_url||"assets/icons/mobile-legends.webp")+'" alt="'+esc(g.name)+'" loading="lazy" onerror="this.onerror=null;this.src=\'assets/icons/mobile-legends.webp\'"></div><div class="home-game-info"><strong>'+esc(g.name)+'</strong><span>'+esc(g.publisher||"Game")+'</span></div></a>').join("");
-  grids.forEach(grid=>{if(grid)grid.innerHTML=cards;});
- }catch(e){console.warn("Daftar game dinamis gagal dimuat; memakai daftar bawaan.",e);}
+  const [{data:games,error:gamesError},{data:settings,error:settingsError}]=await Promise.all([
+   db.from("store_games").select("slug,name,publisher,icon_url,sort_order,is_active").eq("is_active",true).order("sort_order").limit(200),
+   db.from("store_homepage_settings").select("trending_slugs,trending_title,trending_limit,trending_enabled,all_games_title,all_games_initial_limit,all_games_enabled,show_all_games_button").eq("id",1).maybeSingle()
+  ]);
+  if(gamesError||!games?.length)return;
+  const cfg=!settingsError&&settings?settings:{trending_slugs:["mobile-legends","free-fire"],trending_title:"Trending",trending_limit:6,trending_enabled:true,all_games_title:"All Games",all_games_initial_limit:12,all_games_enabled:true,show_all_games_button:true};
+  const card=g=>'<a href="checkout.html?game='+encodeURIComponent(g.slug)+'" class="home-game-card"><div class="home-game-image"><img src="'+esc(g.icon_url||"assets/icons/mobile-legends.webp")+'" alt="'+esc(g.name)+'" loading="lazy" onerror="this.onerror=null;this.src=\'assets/icons/mobile-legends.webp\'"></div><div class="home-game-info"><strong>'+esc(g.name)+'</strong><span>'+esc(g.publisher||"Game")+'</span></div></a>';
+  const selected=new Set(Array.isArray(cfg.trending_slugs)?cfg.trending_slugs:[]);
+  const trending=games.filter(g=>selected.has(g.slug)).slice(0,Math.max(0,Number(cfg.trending_limit)||6));
+  trendingSection.hidden=cfg.trending_enabled===false;allSection.hidden=cfg.all_games_enabled===false;
+  document.getElementById("homeTrendingTitle").innerHTML=esc(cfg.trending_title||"Trending")+' <span class="trending-flame" aria-hidden="true">🔥</span>';
+  document.getElementById("homeAllGamesTitle").textContent=cfg.all_games_title||"All Games";
+  trendingGrid.innerHTML=trending.map(card).join("");
+  const initialLimit=Math.max(1,Math.min(200,Number(cfg.all_games_initial_limit)||12));let expanded=false;
+  function renderAll(){allGrid.innerHTML=(expanded?games:games.slice(0,initialLimit)).map(card).join("");const canExpand=games.length>initialLimit&&cfg.show_all_games_button!==false;moreButton.style.display=canExpand?"inline-flex":"none";moreButton.textContent=expanded?"Tampilkan Lebih Sedikit":"Tampilkan Semua Game";}
+  moreButton.addEventListener("click",()=>{expanded=!expanded;renderAll();});renderAll();
+ }catch(e){console.warn("Pengaturan beranda gagal dimuat; memakai daftar bawaan.",e);}
 });
 </script></body></html>
