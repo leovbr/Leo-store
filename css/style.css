@@ -3154,3 +3154,50 @@ body{
     font-size:12px!important;
   }
 }
+
+
+/* FINAL account marketplace sizing: empty state matches the seller card.
+   Real listings will use one horizontal card with two 16:9 image slots. */
+#marketPanelAccounts #accountListingGrid{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  width:100%!important;
+  gap:16px!important;
+  align-items:start!important;
+}
+#marketPanelAccounts #accountListingGrid .account-empty-card{
+  width:100%!important;
+  max-width:none!important;
+  aspect-ratio:3/4!important;
+  height:auto!important;
+  min-height:0!important;
+  box-sizing:border-box!important;
+  overflow:hidden!important;
+}
+#marketPanelAccounts #accountListingGrid .account-listing-card{
+  width:100%!important;
+  max-width:none!important;
+  aspect-ratio:auto!important;
+  height:auto!important;
+  min-height:0!important;
+  box-sizing:border-box!important;
+}
+#marketPanelAccounts .account-listing-images{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:10px!important;
+  width:100%!important;
+}
+#marketPanelAccounts .account-listing-images img{
+  display:block!important;
+  width:100%!important;
+  aspect-ratio:16/9!important;
+  height:auto!important;
+  object-fit:cover!important;
+  border-radius:10px!important;
+}
+@media(max-width:520px){
+  #marketPanelAccounts #accountListingGrid{grid-template-columns:minmax(0,1fr)!important;gap:12px!important;}
+  #marketPanelAccounts #accountListingGrid .account-empty-card{aspect-ratio:3/4!important;padding:14px!important;}
+  #marketPanelAccounts .account-listing-images{gap:7px!important;}
+}
