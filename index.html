@@ -194,6 +194,7 @@
 .marketplace-tab{flex:1 0 auto;border:1px solid rgba(150,130,200,.25);border-radius:12px;padding:12px 16px;background:#0d192b;color:#cbd5e1;font:inherit;font-weight:700;cursor:pointer}
 .marketplace-tab.active{background:linear-gradient(135deg,#7c3aed,#4f46e5);border-color:#a78bfa;color:#fff;box-shadow:0 0 18px rgba(124,58,237,.22)}
 .marketplace-panel{padding:16px;border:1px solid rgba(150,130,200,.18);border-radius:16px;background:rgba(13,25,43,.7)}
+.marketplace-panel-heading{margin-bottom:14px}.marketplace-panel-heading h2{margin:0 0 5px}.marketplace-panel-heading p{margin:0}#marketplaceGamesGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}#marketplaceGamesGrid .home-game-card{min-width:0}#marketplaceGamesGrid .home-game-info strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .marketplace-panel h2{margin:0 0 10px;font-size:clamp(20px,5vw,28px)}
 .marketplace-muted{margin:0;color:#aab6ca;line-height:1.6}
 .marketplace-primary,.marketplace-secondary{border-radius:11px;padding:12px 16px;font:inherit;font-weight:700;cursor:pointer}
@@ -358,14 +359,19 @@ body{top:0!important}.skiptranslate iframe{display:none!important}.goog-logo-lin
 <a href="checkout.html?game=free-fire" class="home-game-card"><div class="home-game-image"><img src="assets/icons/free-fire.webp" alt="Free Fire" loading="lazy"></div><div class="home-game-info"><strong>Free Fire</strong><span>Garena</span></div></a></div><div class="home-all-games-actions"><a href="shop.html" id="showAllGames" class="home-all-games-cta" style="display:none">Tampilkan Semua Game <span aria-hidden="true">→</span></a></div></div></section>
 <section class="home-games-section" id="marketplaceTabsSection">
  <div class="container">
+  <div class="section-heading"><span class="eyebrow">PILIHAN LEOOSTORE</span><h2>Jelajahi LEOOSTORE</h2></div>
   <div class="marketplace-tabs" role="tablist" aria-label="Pilihan beranda">
    <button type="button" class="marketplace-tab active" id="marketTabGames" role="tab" aria-selected="true" data-market-tab="games">Koleksi Game</button>
    <button type="button" class="marketplace-tab" id="marketTabPromos" role="tab" aria-selected="false" data-market-tab="promos">Kode Promo Terbaru</button>
    <button type="button" class="marketplace-tab" id="marketTabAccounts" role="tab" aria-selected="false" data-market-tab="accounts">Jual/Beli Akun</button>
   </div>
-  <div class="marketplace-panel" id="marketPanelGames"><p class="marketplace-muted">Jelajahi game favoritmu di bagian Koleksi Game di atas.</p></div>
-  <div class="marketplace-panel" id="marketPanelPromos" hidden><h2>Kode Promo Terbaru</h2><p class="marketplace-muted">Daftar kode promo akan ditampilkan di sini setelah fitur promo dihubungkan ke admin.</p></div>
-  <div class="marketplace-panel" id="marketPanelAccounts" hidden><h2>Jual/Beli Akun Game</h2><p class="marketplace-muted">Sayangnya, stok akun sedang kosong.</p><button type="button" class="marketplace-primary" id="openAccountPolicy">Baca ketentuan sebelum transaksi</button></div>
+  <div class="marketplace-panel" id="marketPanelGames" role="tabpanel" aria-labelledby="marketTabGames">
+   <div class="marketplace-panel-heading"><h2>Koleksi Game</h2><p class="marketplace-muted">Pilih game favoritmu untuk mulai top up.</p></div>
+   <div class="home-game-grid" id="marketplaceGamesGrid"></div>
+   <div class="home-all-games-actions"><a href="shop.html" class="home-all-games-cta" id="marketplaceShowAllGames">Tampilkan Semua Game <span aria-hidden="true">→</span></a></div>
+  </div>
+  <div class="marketplace-panel" id="marketPanelPromos" role="tabpanel" aria-labelledby="marketTabPromos" hidden><h2>Kode Promo Terbaru</h2><p class="marketplace-muted">Daftar kode promo akan ditampilkan di sini setelah fitur promo dihubungkan ke admin.</p></div>
+  <div class="marketplace-panel" id="marketPanelAccounts" role="tabpanel" aria-labelledby="marketTabAccounts" hidden><h2>Jual/Beli Akun Game</h2><p class="marketplace-muted">Sayangnya, stok akun sedang kosong.</p><button type="button" class="marketplace-primary" id="openAccountPolicy">Baca ketentuan sebelum transaksi</button></div>
  </div>
 </section>
 <div class="account-policy-backdrop" id="accountPolicyModal" role="dialog" aria-modal="true" aria-labelledby="accountPolicyTitle" hidden>
@@ -402,6 +408,21 @@ document.addEventListener("DOMContentLoaded",async function(){
 </script>
 <script>
 document.addEventListener("DOMContentLoaded",function(){
+ const originalGames=document.getElementById("homeAllGames");
+ const marketplaceGames=document.getElementById("marketplaceGamesGrid");
+ const allGamesSection=document.getElementById("homeAllGamesSection");
+ const allGamesTitle=document.getElementById("homeAllGamesTitle");
+ const showAllOriginal=document.getElementById("showAllGames");
+ const showAllNew=document.getElementById("marketplaceShowAllGames");
+ function moveGamesIntoTabs(){
+  if(!originalGames||!marketplaceGames)return;
+  marketplaceGames.innerHTML=originalGames.innerHTML;
+  if(allGamesTitle)allGamesTitle.textContent="Koleksi Game";
+  if(allGamesSection)allGamesSection.hidden=true;
+  if(showAllOriginal)showAllOriginal.style.display="none";
+  if(showAllNew&&showAllOriginal)showAllNew.style.display=getComputedStyle(showAllOriginal).display==="none"?"inline-flex":"inline-flex";
+ }
+ moveGamesIntoTabs();
  const tabs=[...document.querySelectorAll("[data-market-tab]")];
  const panels={games:document.getElementById("marketPanelGames"),promos:document.getElementById("marketPanelPromos"),accounts:document.getElementById("marketPanelAccounts")};
  tabs.forEach(tab=>tab.addEventListener("click",()=>{
