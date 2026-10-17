@@ -17,7 +17,7 @@ td small{display:inline-block;max-width:360px;overflow-wrap:anywhere;color:#9caa
 #productsTable td:nth-child(3){min-width:190px}
 #productsTable td:nth-child(4){min-width:135px}
 #status{position:sticky;bottom:8px;z-index:6;box-shadow:0 6px 20px #0005}
-@media(max-width:760px){.tabs{overflow-x:auto;flex-wrap:nowrap}.tabs button{white-space:nowrap}.tablewrap{margin-left:-2px;margin-right:-2px}th,td{padding:8px}.top h1{font-size:20px}}
+@media(max-width:760px){.tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;overflow:visible}.tabs button{min-width:0;white-space:normal;line-height:1.25;padding:12px 8px}.tablewrap{margin-left:-2px;margin-right:-2px}th,td{padding:8px}.top h1{font-size:20px}}
 </style></head><body><main class="shell">
 <header class="top"><div><h1>LEOOSTORE · Catalog Admin</h1><div class="muted">Kelola banner beranda, ikon game, produk, dan harga</div></div><div class="actions"><a href="admin.html"><button class="secondary">Dashboard lama</button></a><button id="signout" class="secondary hidden">Logout</button></div></header>
 <section id="loginPanel" class="panel"><h2>Login Admin</h2><div class="grid"><div class="field"><label>Email admin</label><input id="email" type="email" autocomplete="username"></div><div class="field"><label>Password</label><input id="password" type="password" autocomplete="current-password"></div></div><div class="actions"><button id="login">Login</button></div><p id="authStatus" class="muted">Login dengan akun admin Supabase yang sudah diizinkan.</p></section>
