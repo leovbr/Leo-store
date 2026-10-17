@@ -129,3 +129,14 @@
 .leo-floating-admin svg{width:23px!important;height:23px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.8!important;stroke-linecap:round!important;stroke-linejoin:round!important}
 .leo-floating-admin:hover,.leo-floating-admin:focus-visible{transform:translateY(-3px)!important;box-shadow:0 9px 28px rgba(124,58,237,.65),inset 0 1px 0 rgba(255,255,255,.3)!important;outline:2px solid rgba(216,180,254,.8)!important;outline-offset:3px!important}
 @media(max-width:600px){.leo-floating-admin{width:50px!important;height:50px!important;right:16px!important;bottom:max(18px,calc(env(safe-area-inset-bottom) + 14px))!important}}
+
+/* Seven-language selector */
+.leo-language-wrap{position:relative;display:inline-flex;align-items:center;z-index:10020;flex:0 0 auto;font-family:inherit}
+.leo-language-button{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:36px;padding:7px 10px;border:1px solid rgba(168,140,255,.32);border-radius:999px;background:rgba(17,27,49,.92);color:#e9edff;font-size:12px;font-weight:700;white-space:nowrap;cursor:pointer}
+.leo-language-chevron{font-size:12px;opacity:.8}
+.leo-language-menu{position:absolute;right:0;top:calc(100% + 8px);width:220px;max-width:80vw;padding:6px;border:1px solid rgba(168,140,255,.28);border-radius:14px;background:#0b1425;box-shadow:0 12px 34px rgba(0,0,0,.45);z-index:10030}
+.leo-language-menu[hidden]{display:none!important}
+.leo-language-menu button{display:block;width:100%;padding:10px 11px;border:0;border-radius:9px;background:transparent;color:#e9edff;text-align:left;font-size:13px;font-family:inherit;cursor:pointer}
+.leo-language-menu button:hover,.leo-language-menu button.selected{background:rgba(124,58,237,.24)}
+.goog-te-banner-frame,.skiptranslate iframe{display:none!important}body{top:0!important}.goog-te-gadget{font-size:0!important}.goog-logo-link,.goog-te-gadget span{display:none!important}
+@media(max-width:600px){.leo-language-button{min-height:32px;padding:6px 8px;font-size:11px}.leo-language-menu{right:0;width:205px}}
