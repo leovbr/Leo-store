@@ -144,22 +144,8 @@
   padding:0 25px!important;display:flex!important;align-items:center!important;
   justify-content:space-between!important;gap:12px!important;
 }
-.side-menu .side-menu-brand{
-  position:relative!important;display:inline-flex!important;align-items:center!important;
-  align-self:center!important;min-width:0!important;max-width:calc(100% - 56px)!important;
-  padding:0!important;margin:0!important;line-height:1.15!important;
-  text-decoration:none!important;overflow:visible!important;
-}
-.side-menu .side-menu-brand-text{
-  display:inline-block!important;position:relative!important;align-self:center!important;
-  width:auto!important;height:auto!important;max-width:none!important;
-  margin:0!important;padding:0!important;overflow:visible!important;
-  font-family:'Orbitron','Plus Jakarta Sans',Arial,sans-serif!important;
-  font-size:clamp(16px,2.3vw,21px)!important;font-weight:900!important;
-  font-style:normal!important;letter-spacing:-.045em!important;line-height:1.15!important;
-  white-space:nowrap!important;text-decoration:none!important;
-  /* Keep the navbar's animated write/glitch effect but avoid a second overlaid wordmark. */
-}
+
+
 .side-menu .side-menu-close{
   box-sizing:border-box!important;position:relative!important;top:0!important;
   align-self:center!important;vertical-align:middle!important;transform:none!important;
@@ -177,7 +163,7 @@
 .side-menu .side-menu-icon,.side-menu .side-menu-arrow{flex:0 0 28px!important;text-align:center!important;}
 @media(max-width:600px){
  .side-menu .side-menu-header{min-height:72px!important;height:72px!important;flex-basis:72px!important;padding:0 20px!important;}
- .side-menu .side-menu-brand-text{font-size:17px!important;}
+
  .side-menu .side-menu-divider{width:calc(100% - 40px)!important;}
  .side-menu .side-menu-nav{padding:15px 20px 30px!important;}
  .side-menu .side-menu-item{min-height:60px!important;}
@@ -222,7 +208,7 @@ body{top:0!important}.skiptranslate iframe{display:none!important}.goog-logo-lin
 <div class="search-panel" id="searchPanel"><div class="search-panel-inner"><input type="search" id="siteSearch" placeholder="Cari game..." autocomplete="off"><button type="button" id="searchClose" aria-label="Tutup pencarian">×</button></div></div>
 <div class="menu-overlay" id="menuOverlay"></div>
 <aside class="side-menu" id="sideMenu" aria-hidden="true">
-  <div class="side-menu-header"><a href="index.html" class="side-menu-brand"><span class="side-menu-brand-text">LEOOSTORE.id</span></a><button type="button" class="side-menu-close" id="menuClose" aria-label="Tutup menu">×</button></div>
+  <div class="side-menu-header"><button type="button" class="side-menu-close" id="menuClose" aria-label="Tutup menu">×</button></div>
   <div class="side-menu-divider"></div>
   <nav class="side-menu-nav">
     <a href="index.html" class="side-menu-item"><span>Home</span><span class="side-menu-icon">⌂</span></a>
