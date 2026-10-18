@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chat Admin — LEOOSTORE.id</title>
+<meta name="description" content="Hubungi admin LEOOSTORE untuk bantuan pesanan, top up, promo, dan jual beli akun.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=20261018-account-marketplace3">
+<link rel="stylesheet" href="css/style-pages.css?v=20260919-navy1">
+<style>
+:root{--chat-bg:#080b14;--chat-panel:#111827;--chat-border:#29354b;--chat-purple:#8b5cf6;--chat-text:#f5f7ff;--chat-muted:#a7b3c9}
+body.chat-admin-page{background:radial-gradient(ellipse at 50% 0%,#241347 0%,#0b1020 42%,var(--chat-bg) 78%);color:var(--chat-text);font-family:'Plus Jakarta Sans',sans-serif;min-height:100vh}
+.chat-wrap{width:min(100% - 28px,760px);margin:0 auto;padding:34px 0 70px}
+.chat-back{display:inline-flex;align-items:center;gap:8px;color:#c9b7ff;text-decoration:none;font-weight:700;font-size:13px;margin-bottom:24px}
+.chat-hero{text-align:center;margin:0 auto 25px}
+.chat-mark{width:68px;height:68px;margin:0 auto 16px;border-radius:22px;display:grid;place-items:center;background:linear-gradient(145deg,#a78bfa,#6d28d9);box-shadow:0 12px 38px #7c3aed44;font-size:30px}
+.chat-hero h1{font-family:Orbitron,sans-serif;font-size:clamp(24px,5vw,34px);letter-spacing:-1px;margin:0 0 10px}
+.chat-hero h1 span{color:#b99aff}
+.chat-hero p{max-width:520px;margin:0 auto;color:var(--chat-muted);font-size:14px;line-height:1.8}
+.chat-status{display:flex;align-items:center;justify-content:center;gap:9px;margin:18px auto 0;color:#c6f6d5;font-size:12px;font-weight:700}
+.chat-status i{width:8px;height:8px;border-radius:50%;background:#4ade80;box-shadow:0 0 12px #4ade8077}
+.chat-card{background:linear-gradient(145deg,#151d2d,#0e1421);border:1px solid var(--chat-border);border-radius:22px;padding:clamp(18px,4vw,28px);box-shadow:0 22px 70px #0004}
+.chat-card h2{font-size:18px;margin:0 0 6px}
+.chat-subtitle{color:var(--chat-muted);font-size:12px;line-height:1.7;margin:0 0 22px}
+.chat-field{margin-bottom:17px}
+.chat-field label{display:block;font-size:12px;font-weight:800;color:#d7def0;margin-bottom:8px}
+.chat-field input,.chat-field select,.chat-field textarea{display:block;width:100%;min-height:47px;padding:12px 13px;border:1px solid #344158;border-radius:11px;background:#080e19;color:#f5f7ff;font:500 14px 'Plus Jakarta Sans',sans-serif;outline:none}
+.chat-field textarea{min-height:125px;resize:vertical;line-height:1.65}
+.chat-field input:focus,.chat-field select:focus,.chat-field textarea:focus{border-color:#a78bfa;box-shadow:0 0 0 3px #8b5cf622}
+.chat-field input::placeholder,.chat-field textarea::placeholder{color:#71809a}
+.chat-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.chat-submit{width:100%;min-height:52px;border:0;border-radius:13px;background:linear-gradient(100deg,#7c3aed,#a855f7);color:#fff;font:800 14px 'Plus Jakarta Sans',sans-serif;cursor:pointer;box-shadow:0 10px 26px #7c3aed35;display:flex;align-items:center;justify-content:center;gap:10px}
+.chat-submit:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.chat-note{color:#8f9bb2;font-size:11px;line-height:1.7;text-align:center;margin:13px 0 0}
+.chat-quick{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0 0}
+.chat-quick a{display:flex;align-items:center;gap:9px;padding:13px 12px;border:1px solid var(--chat-border);border-radius:13px;background:#111827;color:#e8eaff;text-decoration:none;font-size:12px;font-weight:800;line-height:1.4}
+.chat-quick a span{font-size:19px}
+.chat-quick a:hover{border-color:#8b5cf6;background:#19162b}
+.chat-faq{margin-top:22px}
+.chat-faq h2{font-size:16px;margin-bottom:12px}
+.chat-faq details{padding:14px 15px;border:1px solid var(--chat-border);border-radius:12px;background:#0f1624;margin-top:8px}
+.chat-faq summary{cursor:pointer;font-size:13px;font-weight:800}
+.chat-faq details p{color:var(--chat-muted);font-size:12px;line-height:1.8;margin:10px 0 0}
+.chat-footer{text-align:center;margin-top:24px;color:#77849c;font-size:11px}
+.chat-footer a{color:#c4b5fd;text-decoration:none}
+@media(max-width:560px){.chat-wrap{padding-top:20px}.chat-grid{grid-template-columns:1fr;gap:0}.chat-quick{grid-template-columns:1fr}.chat-quick a{padding:12px}.chat-hero p{font-size:13px}.chat-card{border-radius:17px}}
+</style>
+</head>
+<body class="chat-admin-page">
+<header class="site-header home-header">
+ <div class="container header-inner"><a href="index.html" class="header-brand"><span class="header-brand-text">LEOOSTORE.id</span></a>
+ <div class="header-actions"><a href="index.html" class="header-action" style="text-decoration:none">← Store</a></div></div>
+</header>
+<main class="chat-wrap">
+ <a class="chat-back" href="index.html">← Kembali ke beranda</a>
+ <section class="chat-hero">
+  <div class="chat-mark" aria-hidden="true">✉</div>
+  <h1>CHAT <span>ADMIN</span></h1>
+  <p>Butuh bantuan soal top up, pesanan, kode promo, atau jual beli akun? Tulis pesanmu di bawah, lalu lanjutkan percakapan langsung lewat WhatsApp.</p>
+  <div class="chat-status"><i></i> Dukungan pelanggan LEOOSTORE</div>
+ </section>
+ <section class="chat-card">
+  <h2>Ada yang bisa kami bantu?</h2>
+  <p class="chat-subtitle">Isi detail seperlunya supaya admin lebih mudah memahami kebutuhanmu. Pesan akan disiapkan di WhatsApp sebelum dikirim.</p>
+  <form id="chatForm">
+   <div class="chat-grid">
+    <div class="chat-field"><label for="chatName">Nama / nama panggilan</label><input id="chatName" name="name" maxlength="60" placeholder="Contoh: Leo (opsional)"></div>
+    <div class="chat-field"><label for="chatTopic">Topik bantuan</label><select id="chatTopic" name="topic" required><option value="Pertanyaan umum">Pertanyaan umum</option><option value="Bantuan top up">Bantuan top up</option><option value="Cek status pesanan">Cek status pesanan</option><option value="Kode promo">Kode promo</option><option value="Jual beli akun">Jual beli akun</option><option value="Kendala pembayaran">Kendala pembayaran</option><option value="Komplain transaksi">Komplain transaksi</option></select></div>
+   </div>
+   <div class="chat-field"><label for="chatOrder">Nomor pesanan (jika ada)</label><input id="chatOrder" name="order" maxlength="80" placeholder="Masukkan ID / nomor pesanan (opsional)"></div>
+   <div class="chat-field"><label for="chatMessage">Pesan kamu</label><textarea id="chatMessage" name="message" maxlength="1500" placeholder="Ceritakan kebutuhan atau kendala yang kamu alami…" required></textarea></div>
+   <button class="chat-submit" type="submit"><span aria-hidden="true">☏</span> Lanjutkan ke WhatsApp</button>
+   <p class="chat-note">Tombol ini membuka WhatsApp dengan pesan yang sudah disiapkan. Kamu tetap perlu menekan Kirim di WhatsApp.</p>
+  </form>
+ </section>
+ <nav class="chat-quick" aria-label="Bantuan cepat">
+  <a href="shop.html"><span>🛒</span><span>Lihat katalog top up</span></a>
+  <a href="order.html"><span>🧾</span><span>Cek transaksi</span></a>
+  <a href="index.html#account-marketplace"><span>🎮</span><span>Jual / beli akun</span></a>
+ </nav>
+ <section class="chat-faq">
+  <h2>Pertanyaan singkat</h2>
+  <details><summary>Apa yang perlu dikirim saat top up bermasalah?</summary><p>Sebutkan nama game, nominal produk, waktu transaksi, dan nomor pesanan jika tersedia. Jangan kirim password atau kode OTP akunmu.</p></details>
+  <details><summary>Bagaimana cara menanyakan status pesanan?</summary><p>Buka halaman Cek Transaksi terlebih dahulu. Jika masih perlu bantuan, pilih topik “Cek status pesanan” dan sertakan nomor pesanan.</p></details>
+  <details><summary>Apakah pesan langsung terkirim saat tombol ditekan?</summary><p>Belum. Tombol akan membuka WhatsApp dengan teks yang sudah diisi. Periksa pesan lalu tekan Kirim di aplikasi WhatsApp.</p></details>
+ </section>
+ <footer class="chat-footer">© <span id="chatYear"></span> <a href="index.html">LEOOSTORE.id</a> · Bantuan pelanggan</footer>
+</main>
+<script>
+(function(){
+ const form=document.getElementById("chatForm");
+ form.addEventListener("submit",function(event){
+  event.preventDefault();
+  const name=document.getElementById("chatName").value.trim();
+  const topic=document.getElementById("chatTopic").value;
+  const order=document.getElementById("chatOrder").value.trim();
+  const message=document.getElementById("chatMessage").value.trim();
+  if(!message){document.getElementById("chatMessage").focus();return;}
+  const parts=["Halo Admin LEOOSTORE, saya ingin meminta bantuan.","Topik: "+topic];
+  if(name)parts.push("Nama: "+name);
+  if(order)parts.push("Nomor pesanan: "+order);
+  parts.push("Pesan: "+message);
+  parts.push("Terima kasih.");
+  window.open("https://wa.me/6285823538473?text="+encodeURIComponent(parts.join("\n")),"_blank","noopener,noreferrer");
+ });
+ document.getElementById("chatYear").textContent=new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
