@@ -387,7 +387,7 @@ body{top:0!important}.skiptranslate iframe{display:none!important}.goog-logo-lin
    <button type="button" class="marketplace-tab" id="marketTabAccounts" role="tab" aria-selected="false" data-market-tab="accounts">Jual/Beli Akun</button>
   </div>
   <div class="marketplace-panel" id="marketPanelGames" role="tabpanel" aria-labelledby="marketTabGames" hidden></div>
-  <div class="marketplace-panel" id="marketPanelPromos" role="tabpanel" aria-labelledby="marketTabPromos" hidden><h2>Kode Promo Terbaru</h2><p class="marketplace-muted">Daftar kode promo akan ditampilkan di sini setelah fitur promo dihubungkan ke admin.</p></div>
+  <div class="marketplace-panel" id="marketPanelPromos" role="tabpanel" aria-labelledby="marketTabPromos" hidden><h2>Kode Promo Terbaru</h2><p class="marketplace-muted">Kode diskon aktif yang tersedia untuk checkout.</p><div id="homePromoCodes" class="home-promo-code-grid" aria-live="polite"><p class="marketplace-muted">Memuat kode promo…</p></div></div>
   <div class="marketplace-panel" id="marketPanelAccounts" role="tabpanel" aria-labelledby="marketTabAccounts" hidden>
    <div class="account-subtabs" role="tablist" aria-label="Pilihan jual beli akun">
     <button type="button" class="account-subtab active" id="buyAccountsTab" role="tab" aria-selected="true">Beli Akun</button>
@@ -573,6 +573,32 @@ document.addEventListener("DOMContentLoaded",async function(){
   grid.addEventListener("keydown",e=>{const img=e.target.closest("[data-account-detail]");if(img&&(e.key==="Enter"||e.key===" ")){e.preventDefault();openDetail(img.dataset.accountDetail,img);}});
   if(more){const cards=[...grid.querySelectorAll(".account-listing-card")];cards.forEach((card,i)=>card.hidden=i>=4);more.hidden=cards.length<=4;more.dataset.expanded="false";more.textContent="Cek akun lainnya";}
  }catch(e){console.warn("Gagal memuat listing akun:",e);}
+});
+</script>
+
+<style id="home-promo-code-styles">
+.home-promo-code-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px;margin-top:14px}
+.home-promo-code-card{padding:16px;border:1px solid #34304e;border-radius:14px;background:linear-gradient(145deg,#15162a,#0c1322);min-width:0}
+.home-promo-code-card strong{display:block;font-size:18px;letter-spacing:.04em;overflow-wrap:anywhere}
+.home-promo-code-card p{margin:7px 0;color:#aebbd0;font-size:13px}
+.home-promo-code-card .home-promo-discount{color:#c4b5fd;font-weight:800;font-size:15px}
+.home-promo-copy{margin-top:10px;padding:8px 12px;border:1px solid #7555c7;border-radius:9px;background:#21183c;color:#fff;font-weight:700;cursor:pointer}
+.home-promo-copy:focus-visible{outline:2px solid #c4b5fd;outline-offset:2px}
+</style>
+<script id="home-promo-code-loader">
+document.addEventListener("DOMContentLoaded",async function(){
+ const grid=document.getElementById("homePromoCodes");if(!grid||!window.supabase)return;
+ const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+ const money=n=>"Rp"+Number(n||0).toLocaleString("id-ID");
+ try{
+  const db=window.supabase.createClient("https://tvdbrqskvuukxvqaqjom.supabase.co","sb_publishable_2f-IadmcnaYzoCb_8Iko0w_pFp9u8eF");
+  const {data,error}=await db.from("store_promos").select("code,title,description,discount_type,discount_value,is_active,starts_at,ends_at,usage_limit,usage_count,min_purchase").eq("is_active",true).not("code","is",null).order("created_at",{ascending:false}).limit(100);
+  if(error)throw error;
+  const now=Date.now(),valid=(data||[]).filter(p=>String(p.code||"").trim()&&(!p.starts_at||new Date(p.starts_at).getTime()<=now)&&(!p.ends_at||new Date(p.ends_at).getTime()>=now)&&(p.usage_limit==null||Number(p.usage_count||0)<Number(p.usage_limit)));
+  if(!valid.length){grid.innerHTML='<p class="marketplace-muted">Belum ada kode promo aktif. Cek kembali nanti.</p>';return;}
+  grid.innerHTML=valid.map(p=>{const discount=p.discount_type==="percent"?Number(p.discount_value||0)+"%":"Potongan "+money(p.discount_value);return '<article class="home-promo-code-card"><span class="marketplace-muted">KODE PROMO</span><strong>'+esc(p.code)+'</strong><p class="home-promo-discount">'+esc(discount)+'</p>'+(p.description&&p.description!==("Kode promo "+p.code)?'<p>'+esc(p.description)+'</p>':'')+'<p>Minimum transaksi: '+money(p.min_purchase)+'</p><button type="button" class="home-promo-copy" data-copy-promo="'+esc(p.code)+'">Salin kode</button></article>';}).join("");
+  grid.addEventListener("click",async function(e){const b=e.target.closest("[data-copy-promo]");if(!b)return;const code=b.dataset.copyPromo;try{await navigator.clipboard.writeText(code);b.textContent="Tersalin ✓";}catch(_){const area=document.createElement("textarea");area.value=code;area.style.position="fixed";area.style.opacity="0";document.body.appendChild(area);area.select();try{document.execCommand("copy");b.textContent="Tersalin ✓";}catch(__){b.textContent=code;}area.remove();}setTimeout(()=>{b.textContent="Salin kode";},1800);});
+ }catch(e){console.warn("Kode promo Home gagal dimuat:",e);grid.innerHTML='<p class="marketplace-muted">Kode promo belum dapat dimuat. Coba refresh halaman.</p>';}
 });
 </script>
 </body></html>
