@@ -131,19 +131,30 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
     if (gameHeroBanner) {
       gameHeroBanner.style.backgroundImage = "";
-      const bannerCandidates = ["banner.webp", "assets/banner.webp"];
-      const tryBanner = (index) => {
-        if (index >= bannerCandidates.length) {
-          gameHeroBanner.style.setProperty("--hero-banner-image", "none");
-          return;
-        }
-        const bannerUrl = new URL(bannerCandidates[index], document.baseURI).href;
+      const configuredBanner = String(product.banner || "").trim();
+      if (configuredBanner) {
         const probe = new Image();
-        probe.onload = () => gameHeroBanner.style.setProperty("--hero-banner-image", `url("${bannerUrl}")`);
-        probe.onerror = () => tryBanner(index + 1);
-        probe.src = bannerUrl + (bannerUrl.includes("?") ? "&" : "?") + "v=20261015";
-      };
-      tryBanner(0);
+        probe.onload = () => gameHeroBanner.style.setProperty("--hero-banner-image", `url("${configuredBanner.replace(/["\\\\]/g, "")}")`);
+        probe.onerror = () => {
+          console.warn("[LEOOSTORE] Banner checkout dari admin gagal dimuat:", configuredBanner);
+          gameHeroBanner.style.setProperty("--hero-banner-image", "none");
+        };
+        probe.src = configuredBanner;
+      } else {
+        const bannerCandidates = ["banner.webp", "assets/banner.webp"];
+        const tryBanner = (index) => {
+          if (index >= bannerCandidates.length) {
+            gameHeroBanner.style.setProperty("--hero-banner-image", "none");
+            return;
+          }
+          const bannerUrl = new URL(bannerCandidates[index], document.baseURI).href;
+          const probe = new Image();
+          probe.onload = () => gameHeroBanner.style.setProperty("--hero-banner-image", `url("${bannerUrl}")`);
+          probe.onerror = () => tryBanner(index + 1);
+          probe.src = bannerUrl + (bannerUrl.includes("?") ? "&" : "?") + "v=20261018";
+        };
+        tryBanner(0);
+      }
     }
     if (gameIconFallback) {
       gameIconFallback.textContent = product.icon || "🎮";
