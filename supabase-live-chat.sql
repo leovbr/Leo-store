@@ -71,3 +71,25 @@ exception when duplicate_object then null; when undefined_object then null; end 
 do $$ begin
   alter publication supabase_realtime add table public.store_chat_messages;
 exception when duplicate_object then null; when undefined_object then null; end $$;
+
+
+-- Keep inbox previews and sorting current whenever a message is sent.
+create or replace function public.store_chat_touch_conversation()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  update public.store_chat_conversations
+     set last_message = left(new.body, 180),
+         last_message_at = new.created_at,
+         updated_at = now()
+   where id = new.conversation_id;
+  return new;
+end;
+$$;
+drop trigger if exists store_chat_message_touch_conversation on public.store_chat_messages;
+create trigger store_chat_message_touch_conversation
+after insert on public.store_chat_messages
+for each row execute function public.store_chat_touch_conversation();
