@@ -84,6 +84,15 @@ body.chat-admin-page.chat-auth-only .chat-account-bar,body.chat-admin-page.chat-
  .chat-admin-page .site-header.home-header .header-actions{gap:12px!important}
  .chat-admin-page .site-header.home-header .header-action.menu-button{width:52px!important;height:52px!important;min-width:52px!important;min-height:52px!important;border-radius:18px!important}
 }
+
+/* Keep chat composer pinned to the bottom of the available screen. */
+.chat-admin-page .chat-main{height:calc(100dvh - 76px)!important;min-height:0!important;overflow:hidden!important}
+.chat-admin-page .chat-conversation{height:100%!important;max-height:100%!important;min-height:0!important;overflow:hidden!important}
+.chat-admin-page .chat-messages{flex:1 1 auto!important;min-height:0!important;overflow-y:auto!important;overscroll-behavior:contain}
+.chat-admin-page .chat-composer{position:sticky!important;bottom:0!important;z-index:20!important;flex:0 0 auto!important;padding-bottom:calc(13px + env(safe-area-inset-bottom,0px))!important}
+.chat-admin-page .site-header .header-brand,.chat-admin-page .site-header .container>a.header-brand,.chat-admin-page .site-header .header-inner>a.header-brand{display:inline-flex!important;align-items:center!important;justify-content:flex-start!important;flex:0 0 auto!important;width:auto!important;min-width:0!important;height:auto!important;max-width:100%!important;overflow:visible!important;gap:0!important}
+.chat-admin-page .site-header .header-brand .header-brand-text,.chat-admin-page .site-header a.header-brand>span.header-brand-text{display:inline-block!important;visibility:visible!important;opacity:1!important;position:relative!important;width:auto!important;height:auto!important;max-width:none!important;margin:0!important;padding:0!important;overflow:visible!important;color:#f5f8ff!important;background:linear-gradient(100deg,#b78aff 0%,#9b5cff 36%,#7c3aed 68%,#d8b4fe 100%)!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;font-family:'Orbitron','Plus Jakarta Sans',Arial,sans-serif!important;font-size:clamp(16px,2.3vw,21px)!important;font-weight:900!important;font-style:normal!important;letter-spacing:-.045em!important;line-height:1.15!important;white-space:nowrap!important;text-decoration:none!important;text-shadow:none!important;transform:none!important}
+@media(max-width:600px){.chat-admin-page .chat-composer{padding-bottom:calc(10px + env(safe-area-inset-bottom,0px))!important}.chat-admin-page .site-header .header-brand .header-brand-text,.chat-admin-page .site-header a.header-brand>span.header-brand-text{font-size:17px!important}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
