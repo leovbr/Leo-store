@@ -26,7 +26,7 @@ create index if not exists store_chat_messages_conversation_idx on public.store_
 alter table public.store_chat_conversations enable row level security;
 alter table public.store_chat_messages enable row level security;
 grant select, insert, update on public.store_chat_conversations to authenticated;
-grant select, insert on public.store_chat_messages to authenticated;
+grant select, insert, delete on public.store_chat_messages to authenticated;
 
 drop policy if exists "chat customer reads own conversation or admin reads all" on public.store_chat_conversations;
 create policy "chat customer reads own conversation or admin reads all" on public.store_chat_conversations for select to authenticated
@@ -118,3 +118,8 @@ with check (
   )
 );
 
+
+-- Allow customers to delete only their own messages; admin can delete messages in any chat.
+drop policy if exists "chat participants delete messages" on public.store_chat_messages;
+create policy "chat participants delete messages" on public.store_chat_messages for delete to authenticated
+using (exists (select 1 from public.store_chat_conversations c where c.id = conversation_id and (auth.uid() = '3939553f-ef8d-4295-8f2f-39c86ce9ed20'::uuid or (c.customer_id = auth.uid() and sender_id = auth.uid() and sender_role = 'customer')));
