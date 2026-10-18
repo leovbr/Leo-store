@@ -51,6 +51,7 @@ body.chat-admin-page{min-height:100vh;background:#080c15;color:#f5f7ff;font-fami
 @media(min-width:760px){.chat-admin-page .chat-main{padding-top:28px}.chat-profile{padding:18px 22px}.chat-messages{min-height:340px;padding:24px}.chat-presets{padding:18px 20px}.chat-composer{padding:15px 18px}}
 @media(max-width:480px){.chat-admin-page .chat-main{width:calc(100% - 18px);padding-top:13px}.chat-profile{padding:13px}.chat-avatar{width:48px;height:48px;flex-basis:48px}.chat-profile-name{font-size:14px}.chat-messages{min-height:245px;max-height:42vh;padding:15px 10px}.chat-bubble-row{max-width:94%}.chat-bubble{font-size:12px;padding:10px 12px}.chat-presets{padding:13px 10px}.chat-preset{font-size:11px;padding:8px 10px}.chat-composer{gap:7px;padding:10px}.chat-send{width:43px;height:43px;flex-basis:43px}.chat-support-menu{padding-top:75px}}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="chat-admin-page">
 <header class="site-header home-header">
@@ -84,7 +85,7 @@ body.chat-admin-page{min-height:100vh;background:#080c15;color:#f5f7ff;font-fami
    <button type="button" class="chat-preset" data-preset="Halo admin, saya ingin menyampaikan komplain transaksi.">🛟 Bantuan/komplain</button>
   </div></div>
   <form class="chat-composer" id="chatForm"><textarea id="chatMessageInput" maxlength="1500" rows="1" placeholder="Ketikkan pesan ke admin…" aria-label="Ketikkan pesan" required></textarea><button class="chat-send" type="submit" aria-label="Kirim pesan">➤</button></form>
-  <div class="chat-composer-note">Pesan akan dibuka di WhatsApp admin agar bisa diteruskan. Periksa lalu tekan Kirim di WhatsApp. Jangan kirim password atau kode OTP.</div>
+  <div class="chat-composer-note" id="chatStatus" role="status">Menghubungkan chat… Jangan kirim password atau kode OTP.</div>
  </section>
  <footer class="chat-foot">LEOOSTORE.id · Chat Admin</footer>
 </main>
@@ -102,18 +103,29 @@ body.chat-admin-page{min-height:100vh;background:#080c15;color:#f5f7ff;font-fami
 </div>
 <script>
 (function(){
- const $=id=>document.getElementById(id), menu=$("chatSupportMenu"), menuButton=$("chatMenuButton"), input=$("chatMessageInput"), messages=$("chatMessages");
+ const URL="https://tvdbrqskvuukxvqaqjom.supabase.co",KEY="sb_publishable_2f-IadmcnaYzoCb_8Iko0w_pFp9u8eF";
+ const db=window.supabase.createClient(URL,KEY),$=id=>document.getElementById(id);
+ const menu=$("chatSupportMenu"),menuButton=$("chatMenuButton"),input=$("chatMessageInput"),messages=$("chatMessages"),status=$("chatStatus");
+ let user=null,conversation=null,channel=null,known=new Set();
  function openMenu(){menu.classList.add("open");menu.setAttribute("aria-hidden","false");menuButton.setAttribute("aria-expanded","true");}
  function closeMenu(){menu.classList.remove("open");menu.setAttribute("aria-hidden","true");menuButton.setAttribute("aria-expanded","false");}
  menuButton.addEventListener("click",()=>menu.classList.contains("open")?closeMenu():openMenu());
  $("chatMoreButton").addEventListener("click",openMenu);$("chatSupportClose").addEventListener("click",closeMenu);
- menu.addEventListener("click",e=>{if(e.target===menu)closeMenu();});
- document.addEventListener("keydown",e=>{if(e.key==="Escape")closeMenu();});
+ menu.addEventListener("click",e=>{if(e.target===menu)closeMenu();});document.addEventListener("keydown",e=>{if(e.key==="Escape")closeMenu();});
  $("chatSearchButton").addEventListener("click",()=>{window.location.href="index.html#searchButton";});
  document.querySelectorAll("[data-preset]").forEach(b=>b.addEventListener("click",()=>{input.value=b.dataset.preset;input.focus();input.style.height="auto";input.style.height=Math.min(input.scrollHeight,130)+"px";}));
  input.addEventListener("input",()=>{input.style.height="auto";input.style.height=Math.min(input.scrollHeight,130)+"px";});
- function bubble(text){const row=document.createElement("div");row.className="chat-bubble-row outgoing";const box=document.createElement("div");box.className="chat-bubble";box.textContent=text;const time=document.createElement("span");time.className="chat-time";time.textContent="Pesan disiapkan untuk WhatsApp";box.appendChild(time);row.appendChild(box);messages.appendChild(row);messages.scrollTop=messages.scrollHeight;}
- $("chatForm").addEventListener("submit",e=>{e.preventDefault();const text=input.value.trim();if(!text)return;bubble(text);const url="https://wa.me/6285823538473?text="+encodeURIComponent("Halo Admin LEOOSTORE (Leovbriansyh), saya ingin menghubungi admin.\n\n"+text);const win=window.open(url,"_blank","noopener,noreferrer");if(!win)window.location.href=url;input.value="";input.style.height="auto";messages.scrollTop=messages.scrollHeight;});
+ function renderMessage(m){if(known.has(m.id))return;known.add(m.id);const row=document.createElement("div");row.className="chat-bubble-row"+(m.sender_role==="customer"?" outgoing":"");if(m.sender_role!=="customer"){const av=document.createElement("div");av.className="chat-mini-avatar";av.textContent="LV";row.appendChild(av);}const box=document.createElement("div");box.className="chat-bubble";box.textContent=m.body;const time=document.createElement("span");time.className="chat-time";const d=new Date(m.created_at);time.textContent=(m.sender_role==="admin"?"Leovbriansyh · Admin":"Kamu")+" · "+d.toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});box.appendChild(time);row.appendChild(box);messages.appendChild(row);messages.scrollTop=messages.scrollHeight;}
+ async function loadMessages(){const {data,error}=await db.from("store_chat_messages").select("id,conversation_id,sender_role,body,created_at").eq("conversation_id",conversation.id).order("created_at",{ascending:true}).limit(300);if(error)throw error;messages.innerHTML="";known.clear();(data||[]).forEach(renderMessage);}
+ async function start(){status.textContent="Menghubungkan chat aman…";let {data:{session}}=await db.auth.getSession();if(!session){const {data,error}=await db.auth.signInAnonymously();if(error)throw error;session=data.session;}user=session.user;
+ const {data:existing,error:findError}=await db.from("store_chat_conversations").select("id,status,customer_name").eq("customer_id",user.id).in("status",["open","pending"]).order("created_at",{ascending:false}).limit(1).maybeSingle();if(findError)throw findError;
+ if(existing)conversation=existing;else{const {data,error}=await db.from("store_chat_conversations").insert({customer_id:user.id,customer_name:"Customer LEOOSTORE",status:"open"}).select("id,status,customer_name").single();if(error)throw error;conversation=data;}
+ await loadMessages();
+ channel=db.channel("customer-chat-"+conversation.id).on("postgres_changes",{event:"INSERT",schema:"public",table:"store_chat_messages",filter:"conversation_id=eq."+conversation.id},payload=>renderMessage(payload.new)).subscribe();
+ status.textContent="Chat tersambung · pesan masuk akan muncul otomatis."; 
+ }
+ $("chatForm").addEventListener("submit",async e=>{e.preventDefault();const body=input.value.trim();if(!body||!conversation)return;const btn=e.submitter||$("chatForm").querySelector("button[type=submit]");btn.disabled=true;try{const {error}=await db.from("store_chat_messages").insert({conversation_id:conversation.id,sender_id:user.id,sender_role:"customer",body});if(error)throw error;input.value="";input.style.height="auto";status.textContent="Pesan terkirim."; }catch(err){status.textContent="Pesan gagal dikirim: "+err.message;}finally{btn.disabled=false;input.focus();}});
+ start().catch(err=>{status.textContent="Chat belum aktif: "+err.message+". Admin perlu menjalankan SQL setup dan mengaktifkan Anonymous Sign-Ins di Supabase Authentication.";console.error("[LEOOSTORE chat]",err);});
 })();
 </script>
 </body>
