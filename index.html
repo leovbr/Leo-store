@@ -230,6 +230,15 @@
 .account-detail-meta{margin:14px 0}
 @media(max-width:380px){.account-listing-actions,.account-detail-actions{gap:6px}.account-listing-actions>a,.account-detail-actions>a{padding:10px 6px;font-size:12px}}
 
+
+/* Photo-only lightbox: tapping an account photo enlarges that exact image. */
+.account-image-lightbox{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;min-height:35vh}
+.account-lightbox-image{display:block;width:100%;max-height:72dvh;object-fit:contain;border-radius:12px}
+.account-image-lightbox p{margin:0;color:#b9c5d8;font-size:12px;text-align:center}
+.account-detail-card:has(.account-image-lightbox){width:min(100%,900px);background:rgba(5,10,22,.97);border-color:rgba(167,139,250,.3)}
+.account-detail-card:has(.account-image-lightbox) .account-policy-eyebrow{display:none}
+.account-detail-card:has(.account-image-lightbox) #accountDetailContent h2{display:none}
+
 </style>
 
 <style id="leoostore-text-brand-override">
@@ -552,17 +561,16 @@ document.addEventListener("DOMContentLoaded",async function(){
   if(error){console.warn("Listing akun belum tersedia dari database:",error.message);return;}
   const accounts=data||[];
   if(!accounts.length){grid.innerHTML='<article class="account-empty-card"><div class="account-empty-icon" aria-hidden="true">🎮</div><span class="account-status">STOK AKUN</span><h2>Belum Ada Akun</h2><p class="account-empty-message">Stok akun sedang kosong. Cek kembali nanti untuk melihat akun yang tersedia.</p></article>';if(more)more.hidden=true;return;}
-  const openDetail=id=>{
+  const openDetail=(id,clickedImage)=>{
    const a=accounts.find(item=>String(item.id)===String(id));if(!a)return;
-   const images=[a.image1_url,a.image2_url].filter(Boolean);
-   const photoHtml=images.map((url,i)=>'<img class="account-detail-photo" src="'+esc(url)+'" alt="'+esc(a.account_name)+' — foto '+(i+1)+'" loading="lazy">').join("");
-   const message="Halo Admin LEOOSTORE, saya ingin bertanya tentang akun #"+a.id+" ("+a.account_name+"). Bisa jelaskan detail akun ini?";
-   document.getElementById("accountDetailContent").innerHTML='<h2 id="accountDetailTitle">'+esc(a.account_name)+'</h2><p class="account-detail-game">'+esc(a.game_name)+'</p><div class="account-detail-photos">'+photoHtml+'</div><p class="account-detail-description">'+esc(a.description||"Detail tambahan dapat ditanyakan langsung kepada admin.")+'</p><div class="account-listing-meta account-detail-meta"><span>Stok: '+Number(a.stock)+'</span><span>Garansi: '+Number(a.warranty_days)+' hari</span></div><strong class="account-listing-price">'+money(a.price)+'</strong><div class="account-detail-actions"><a class="marketplace-primary" href="'+adminUrl+'?text='+encodeURIComponent("Halo Admin LEOOSTORE, saya ingin membeli listing akun #"+a.id+" ("+a.account_name+"). Apakah stok masih tersedia?")+'" target="_blank" rel="noopener noreferrer">Beli Akun</a><a class="marketplace-secondary" href="'+adminUrl+'?text='+encodeURIComponent(message)+'" target="_blank" rel="noopener noreferrer">Tanya Admin</a></div>';
+   const src=clickedImage?.getAttribute("src");if(!src)return;
+   const alt=clickedImage?.getAttribute("alt")||a.account_name;
+   document.getElementById("accountDetailContent").innerHTML='<div class="account-image-lightbox"><img class="account-lightbox-image" src="'+esc(src)+'" alt="'+esc(alt)+'"><p>Ketuk area gelap atau tombol × untuk menutup</p></div>';
    detailModal.hidden=false;
   };
   grid.innerHTML=accounts.map(a=>'<article class="account-listing-card"><div class="account-listing-images">'+[a.image1_url,a.image2_url].map((url,i)=>url?'<img src="'+esc(url)+'" alt="'+esc(a.account_name)+' — foto '+(i+1)+'; tekan untuk detail" loading="lazy" role="button" tabindex="0" data-account-detail="'+esc(a.id)+'" aria-label="Lihat detail '+esc(a.account_name)+'">':'').join("")+'</div><div class="account-listing-body"><span class="account-status">'+esc(a.game_name)+'</span><h2>'+esc(a.account_name)+'</h2><p class="account-listing-description">'+esc(a.description||"Detail akun dapat ditanyakan kepada admin.")+'</p><div class="account-listing-meta"><span>Stok: '+Number(a.stock)+'</span><span>Garansi: '+Number(a.warranty_days)+' hari</span></div><strong class="account-listing-price">'+money(a.price)+'</strong><div class="account-listing-actions"><a class="marketplace-primary account-buy-link" href="'+adminUrl+'?text='+encodeURIComponent("Halo Admin LEOOSTORE, saya ingin membeli listing akun #"+a.id+" ("+a.account_name+"). Apakah stok masih tersedia?")+'" target="_blank" rel="noopener noreferrer">Beli Akun</a><a class="marketplace-secondary account-ask-link" href="'+adminUrl+'?text='+encodeURIComponent("Halo Admin LEOOSTORE, saya ingin bertanya tentang listing akun #"+a.id+" ("+a.account_name+"). Bisa jelaskan detail akun ini?")+'" target="_blank" rel="noopener noreferrer">Tanya Admin</a></div></div></article>').join("");
-  grid.addEventListener("click",e=>{const img=e.target.closest("[data-account-detail]");if(img)openDetail(img.dataset.accountDetail);});
-  grid.addEventListener("keydown",e=>{const img=e.target.closest("[data-account-detail]");if(img&&(e.key==="Enter"||e.key===" ")){e.preventDefault();openDetail(img.dataset.accountDetail);}});
+  grid.addEventListener("click",e=>{const img=e.target.closest("[data-account-detail]");if(img)openDetail(img.dataset.accountDetail,img);});
+  grid.addEventListener("keydown",e=>{const img=e.target.closest("[data-account-detail]");if(img&&(e.key==="Enter"||e.key===" ")){e.preventDefault();openDetail(img.dataset.accountDetail,img);}});
   if(more){const cards=[...grid.querySelectorAll(".account-listing-card")];cards.forEach((card,i)=>card.hidden=i>=4);more.hidden=cards.length<=4;more.dataset.expanded="false";more.textContent="Cek akun lainnya";}
  }catch(e){console.warn("Gagal memuat listing akun:",e);}
 });
