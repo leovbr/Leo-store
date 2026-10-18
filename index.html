@@ -516,4 +516,17 @@ document.addEventListener("DOMContentLoaded",async function(){
   function renderAll(){allGrid.innerHTML=visibleGames.slice(0,initialLimit).map(card).join("");const canGoShop=visibleGames.length>initialLimit&&cfg.show_all_games_button!==false;moreButton.style.display=canGoShop?"inline-flex":"none";}renderAll();
  }catch(e){console.warn("Pengaturan beranda gagal dimuat; memakai daftar bawaan.",e);}
 });
-</script></body></html>
+</script>
+<script>
+// LEOOSTORE account marketplace: public listings are sourced from Supabase.
+document.addEventListener("DOMContentLoaded",async function(){
+ const grid=document.getElementById("accountListingGrid"),more=document.getElementById("showMoreAccounts");if(!grid||!window.supabase)return;
+ const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+ const money=n=>"Rp"+Number(n||0).toLocaleString("id-ID");
+ try{const db=window.supabase.createClient("https://tvdbrqskvuukxvqaqjom.supabase.co","sb_publishable_2f-IadmcnaYzoCb_8Iko0w_pFp9u8eF");const {data,error}=await db.from("store_accounts").select("id,account_name,game_name,description,price,stock,warranty_days,image1_url,image2_url,sort_order,is_active,created_at").eq("is_active",true).gt("stock",0).order("sort_order",{ascending:true}).order("created_at",{ascending:false});if(error){console.warn("Listing akun belum tersedia dari database:",error.message);return;}const accounts=data||[];if(!accounts.length){grid.innerHTML='<article class="account-empty-card"><div class="account-empty-icon" aria-hidden="true">🎮</div><span class="account-status">STOK AKUN</span><h2>Belum Ada Akun</h2><p class="account-empty-message">Stok akun sedang kosong. Cek kembali nanti untuk melihat akun yang tersedia.</p></article>';if(more)more.hidden=true;return;}
+ grid.innerHTML=accounts.map(a=>'<article class="account-listing-card"><div class="account-listing-images"><img src="'+esc(a.image1_url)+'" alt="'+esc(a.account_name)+' — foto 1" loading="lazy"><img src="'+esc(a.image2_url)+'" alt="'+esc(a.account_name)+' — foto 2" loading="lazy"></div><div class="account-listing-body"><span class="account-status">'+esc(a.game_name)+'</span><h2>'+esc(a.account_name)+'</h2><p class="account-listing-description">'+esc(a.description||"Detail akun dapat ditanyakan kepada admin.")+'</p><div class="account-listing-meta"><span>Stok: '+Number(a.stock)+'</span><span>Garansi: '+Number(a.warranty_days)+' hari</span></div><strong class="account-listing-price">'+money(a.price)+'</strong><a class="marketplace-primary account-buy-link" href="https://wa.me/6285823538473?text='+encodeURIComponent("Halo Admin LEOOSTORE, saya ingin membeli listing akun #"+a.id+" ("+a.account_name+"). Apakah stok masih tersedia?")+'" target="_blank" rel="noopener noreferrer">Beli Akun</a></div></article>').join("");
+ if(more){function update(expand=false){const cards=[...grid.querySelectorAll(".account-listing-card")];cards.forEach((card,i)=>card.hidden=!expand&&i>=4);more.hidden=cards.length<=4;more.dataset.expanded=String(expand);more.textContent=expand?"Tampilkan lebih sedikit":"Cek akun lainnya";}more.onclick=()=>update(more.dataset.expanded!=="true");update(false);}
+ }catch(e){console.warn("Gagal memuat listing akun:",e);}
+});
+</script>
+</body></html>
