@@ -3201,3 +3201,16 @@ body{
   #marketPanelAccounts #accountListingGrid .account-empty-card{aspect-ratio:3/4!important;padding:14px!important;}
   #marketPanelAccounts .account-listing-images{gap:7px!important;}
 }
+
+
+/* Account marketplace listing cards populated from Supabase */
+#marketPanelAccounts .account-listing-card{display:flex;flex-direction:column;gap:14px;padding:16px;border:1px solid var(--border-color,rgba(255,255,255,.12));border-radius:16px;background:var(--card-bg,rgba(255,255,255,.025));min-width:0;}
+#marketPanelAccounts .account-listing-card[hidden]{display:none!important;}
+#marketPanelAccounts .account-listing-body{display:flex;flex-direction:column;align-items:flex-start;gap:10px;min-width:0;}
+#marketPanelAccounts .account-listing-card h2{margin:0;font-size:clamp(17px,2.5vw,22px);line-height:1.3;overflow-wrap:anywhere;}
+#marketPanelAccounts .account-listing-description{margin:0;color:var(--text-muted,#aeb8ca);font-size:13px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere;}
+#marketPanelAccounts .account-listing-meta{display:flex;flex-wrap:wrap;gap:8px;font-size:12px;color:var(--text-muted,#aeb8ca);}
+#marketPanelAccounts .account-listing-meta span{padding:5px 8px;border-radius:8px;background:rgba(255,255,255,.05);}
+#marketPanelAccounts .account-listing-price{font-size:21px;font-weight:850;color:var(--text-color,#fff);}
+#marketPanelAccounts .account-buy-link{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;min-height:42px;padding:10px 16px;border-radius:10px;}
+@media(max-width:520px){#marketPanelAccounts .account-listing-card{padding:12px;gap:11px}#marketPanelAccounts .account-listing-price{font-size:19px}}
