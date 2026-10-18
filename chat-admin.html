@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css?v=20261018-account-marketplace3"><link rel="stylesheet" href="css/style-pages.css?v=20260919-navy1"><link rel="stylesheet" href="css/logo-text-animation.css?v=20261017-navbar-matched-drawer1">
 <style>
+body.chat-admin-page [hidden]{display:none!important}
 body.chat-admin-page{min-height:100vh;background:#080c15;color:#f5f7ff;font-family:'Plus Jakarta Sans',sans-serif}
 .chat-admin-page .site-header{z-index:30}
 .chat-admin-page .chat-main{width:min(100% - 24px,900px);max-width:900px;margin:0 auto;padding:0;height:calc(100dvh - 76px);min-height:0;display:flex;flex-direction:column}
@@ -66,7 +67,7 @@ body.chat-admin-page.chat-auth-only .chat-account-bar,body.chat-admin-page.chat-
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body class="chat-admin-page">
+<body class="chat-admin-page chat-auth-only">
 <header class="site-header home-header">
  <div class="container header-inner">
   <a href="index.html" class="header-brand"><span class="header-brand-text">LEOOSTORE.id</span></a>
