@@ -1,112 +1,119 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Chat Admin — LEOOSTORE.id</title>
-<meta name="description" content="Hubungi admin LEOOSTORE untuk bantuan pesanan, top up, promo, dan jual beli akun.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<meta name="description" content="Chat dengan admin LEOOSTORE.id untuk bantuan top up dan pesanan.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=20261018-account-marketplace3">
-<link rel="stylesheet" href="css/style-pages.css?v=20260919-navy1">
+<link rel="stylesheet" href="css/style.css?v=20261018-account-marketplace3"><link rel="stylesheet" href="css/style-pages.css?v=20260919-navy1"><link rel="stylesheet" href="css/logo-text-animation.css?v=20261017-navbar-matched-drawer1">
 <style>
-:root{--chat-bg:#080b14;--chat-panel:#111827;--chat-border:#29354b;--chat-purple:#8b5cf6;--chat-text:#f5f7ff;--chat-muted:#a7b3c9}
-body.chat-admin-page{background:radial-gradient(ellipse at 50% 0%,#241347 0%,#0b1020 42%,var(--chat-bg) 78%);color:var(--chat-text);font-family:'Plus Jakarta Sans',sans-serif;min-height:100vh}
-.chat-wrap{width:min(100% - 28px,760px);margin:0 auto;padding:34px 0 70px}
-.chat-back{display:inline-flex;align-items:center;gap:8px;color:#c9b7ff;text-decoration:none;font-weight:700;font-size:13px;margin-bottom:24px}
-.chat-hero{text-align:center;margin:0 auto 25px}
-.chat-mark{width:68px;height:68px;margin:0 auto 16px;border-radius:22px;display:grid;place-items:center;background:linear-gradient(145deg,#a78bfa,#6d28d9);box-shadow:0 12px 38px #7c3aed44;font-size:30px}
-.chat-hero h1{font-family:Orbitron,sans-serif;font-size:clamp(24px,5vw,34px);letter-spacing:-1px;margin:0 0 10px}
-.chat-hero h1 span{color:#b99aff}
-.chat-hero p{max-width:520px;margin:0 auto;color:var(--chat-muted);font-size:14px;line-height:1.8}
-.chat-status{display:flex;align-items:center;justify-content:center;gap:9px;margin:18px auto 0;color:#c6f6d5;font-size:12px;font-weight:700}
-.chat-status i{width:8px;height:8px;border-radius:50%;background:#4ade80;box-shadow:0 0 12px #4ade8077}
-.chat-card{background:linear-gradient(145deg,#151d2d,#0e1421);border:1px solid var(--chat-border);border-radius:22px;padding:clamp(18px,4vw,28px);box-shadow:0 22px 70px #0004}
-.chat-card h2{font-size:18px;margin:0 0 6px}
-.chat-subtitle{color:var(--chat-muted);font-size:12px;line-height:1.7;margin:0 0 22px}
-.chat-field{margin-bottom:17px}
-.chat-field label{display:block;font-size:12px;font-weight:800;color:#d7def0;margin-bottom:8px}
-.chat-field input,.chat-field select,.chat-field textarea{display:block;width:100%;min-height:47px;padding:12px 13px;border:1px solid #344158;border-radius:11px;background:#080e19;color:#f5f7ff;font:500 14px 'Plus Jakarta Sans',sans-serif;outline:none}
-.chat-field textarea{min-height:125px;resize:vertical;line-height:1.65}
-.chat-field input:focus,.chat-field select:focus,.chat-field textarea:focus{border-color:#a78bfa;box-shadow:0 0 0 3px #8b5cf622}
-.chat-field input::placeholder,.chat-field textarea::placeholder{color:#71809a}
-.chat-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
-.chat-submit{width:100%;min-height:52px;border:0;border-radius:13px;background:linear-gradient(100deg,#7c3aed,#a855f7);color:#fff;font:800 14px 'Plus Jakarta Sans',sans-serif;cursor:pointer;box-shadow:0 10px 26px #7c3aed35;display:flex;align-items:center;justify-content:center;gap:10px}
-.chat-submit:hover{filter:brightness(1.08);transform:translateY(-1px)}
-.chat-note{color:#8f9bb2;font-size:11px;line-height:1.7;text-align:center;margin:13px 0 0}
-.chat-quick{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0 0}
-.chat-quick a{display:flex;align-items:center;gap:9px;padding:13px 12px;border:1px solid var(--chat-border);border-radius:13px;background:#111827;color:#e8eaff;text-decoration:none;font-size:12px;font-weight:800;line-height:1.4}
-.chat-quick a span{font-size:19px}
-.chat-quick a:hover{border-color:#8b5cf6;background:#19162b}
-.chat-faq{margin-top:22px}
-.chat-faq h2{font-size:16px;margin-bottom:12px}
-.chat-faq details{padding:14px 15px;border:1px solid var(--chat-border);border-radius:12px;background:#0f1624;margin-top:8px}
-.chat-faq summary{cursor:pointer;font-size:13px;font-weight:800}
-.chat-faq details p{color:var(--chat-muted);font-size:12px;line-height:1.8;margin:10px 0 0}
-.chat-footer{text-align:center;margin-top:24px;color:#77849c;font-size:11px}
-.chat-footer a{color:#c4b5fd;text-decoration:none}
-@media(max-width:560px){.chat-wrap{padding-top:20px}.chat-grid{grid-template-columns:1fr;gap:0}.chat-quick{grid-template-columns:1fr}.chat-quick a{padding:12px}.chat-hero p{font-size:13px}.chat-card{border-radius:17px}}
+body.chat-admin-page{min-height:100vh;background:#080c15;color:#f5f7ff;font-family:'Plus Jakarta Sans',sans-serif}
+.chat-admin-page .site-header{z-index:30}
+.chat-admin-page .chat-main{width:min(100% - 24px,900px);margin:0 auto;padding:22px 0 28px}
+.chat-profile{display:flex;align-items:center;gap:13px;padding:16px 17px;border:1px solid #29354a;border-radius:17px;background:linear-gradient(110deg,#151e30,#101725);box-shadow:0 10px 30px #0002}
+.chat-avatar{position:relative;flex:0 0 54px;width:54px;height:54px;display:grid;place-items:center;border-radius:50%;background:linear-gradient(145deg,#c4b5fd,#7c3aed 70%,#4c1d95);color:#fff;font:900 16px Orbitron,sans-serif;box-shadow:0 0 0 3px #8b5cf633}
+.chat-avatar:after{content:"";position:absolute;right:0;bottom:1px;width:12px;height:12px;border:2px solid #151e30;border-radius:50%;background:#4ade80}
+.chat-profile-info{min-width:0;flex:1}.chat-profile-name{font-size:16px;font-weight:800;letter-spacing:.1px}.chat-profile-label{margin-top:4px;color:#9eacc2;font-size:12px}.chat-profile-label span{color:#86efac}
+.chat-profile-menu{width:40px;height:40px;border:1px solid #344157;border-radius:12px;background:#0b1220;color:#e8eaff;font-size:24px;cursor:pointer}
+.chat-conversation{margin-top:15px;border:1px solid #273248;border-radius:18px;background:linear-gradient(180deg,#0e1522,#0a101b);overflow:hidden}
+.chat-conversation-head{display:flex;align-items:center;gap:9px;padding:13px 17px;border-bottom:1px solid #273248;color:#aebbd0;font-size:12px}
+.chat-conversation-head .chat-lock{color:#c4b5fd;font-size:15px}
+.chat-messages{min-height:270px;max-height:46vh;overflow:auto;display:flex;flex-direction:column;gap:13px;padding:20px 16px}
+.chat-date{text-align:center;color:#75839b;font-size:11px;margin:0 0 3px}
+.chat-bubble-row{display:flex;align-items:flex-end;gap:8px;max-width:88%}
+.chat-bubble-row.outgoing{align-self:flex-end;justify-content:flex-end}
+.chat-mini-avatar{width:27px;height:27px;flex:0 0 27px;border-radius:50%;display:grid;place-items:center;background:#6d3bd6;color:white;font-size:10px;font-weight:900}
+.chat-bubble{padding:12px 14px;border:1px solid #2c394f;border-radius:15px 15px 15px 4px;background:#182235;color:#e8edf8;font-size:13px;line-height:1.7;overflow-wrap:anywhere;white-space:pre-wrap}
+.outgoing .chat-bubble{background:linear-gradient(135deg,#6536bf,#5129a1);border-color:#7952d4;border-radius:15px 15px 4px 15px;color:white}
+.chat-time{display:block;text-align:right;color:#b9a5ee;font-size:10px;margin-top:5px}
+.chat-presets{padding:16px;border-top:1px solid #202b3d;background:#0d1420}
+.chat-presets-title{font-size:12px;font-weight:800;color:#aab7cc;margin:0 0 10px}
+.chat-preset-list{display:flex;flex-wrap:wrap;gap:8px}
+.chat-preset{padding:9px 12px;border:1px solid #493875;border-radius:999px;background:#19152b;color:#d9ccff;font:700 12px 'Plus Jakarta Sans',sans-serif;cursor:pointer;touch-action:manipulation}
+.chat-preset:hover,.chat-preset:focus-visible{background:#2b1e4a;border-color:#9b7aea;outline:none}
+.chat-composer{display:flex;align-items:flex-end;gap:10px;padding:13px;border-top:1px solid #263247;background:#111a29}
+.chat-composer textarea{flex:1;min-width:0;max-height:130px;min-height:46px;resize:vertical;padding:13px 14px;border:1px solid #35425a;border-radius:14px;background:#080e18;color:#f5f7ff;font:13px/1.55 'Plus Jakarta Sans',sans-serif;outline:none}
+.chat-composer textarea:focus{border-color:#9b7aea;box-shadow:0 0 0 3px #8b5cf622}
+.chat-composer textarea::placeholder{color:#75839a}
+.chat-send{width:47px;height:47px;flex:0 0 47px;border:0;border-radius:14px;background:linear-gradient(145deg,#9b6bff,#6d28d9);color:#fff;font-size:21px;cursor:pointer;box-shadow:0 7px 20px #7c3aed33}
+.chat-send:disabled{opacity:.4;cursor:not-allowed}
+.chat-composer-note{padding:0 15px 13px;background:#111a29;color:#7f8ca2;font-size:10px;line-height:1.6}
+.chat-support-menu{position:fixed;inset:0;z-index:80;background:#030712a8;display:none;align-items:flex-start;justify-content:flex-end;padding:82px 14px 14px}
+.chat-support-menu.open{display:flex}
+.chat-support-panel{width:min(330px,100%);padding:10px;border:1px solid #344158;border-radius:17px;background:#111a29;box-shadow:0 22px 60px #0009}
+.chat-support-title{display:flex;align-items:center;justify-content:space-between;padding:10px 9px 13px;font-weight:800}
+.chat-support-close{border:0;background:transparent;color:#b9c3d4;font-size:24px;cursor:pointer}
+.chat-support-link{display:flex;align-items:center;gap:12px;padding:13px 11px;border-radius:11px;color:#eef2ff;text-decoration:none;font-size:13px;font-weight:700}
+.chat-support-link:hover{background:#202b40}.chat-support-link span{width:30px;text-align:center;font-size:19px}.chat-support-link small{display:block;margin-top:3px;color:#9aa8bf;font-size:11px;font-weight:500}
+.chat-faq-block{padding:13px 11px;border-radius:11px;color:#e8edfa}.chat-faq-block summary{cursor:pointer;font-size:13px;font-weight:800}.chat-faq-block p{font-size:12px;color:#a8b4c8;line-height:1.7}
+.chat-foot{text-align:center;color:#6f7d94;font-size:10px;padding:16px 0 0}
+@media(min-width:760px){.chat-admin-page .chat-main{padding-top:28px}.chat-profile{padding:18px 22px}.chat-messages{min-height:340px;padding:24px}.chat-presets{padding:18px 20px}.chat-composer{padding:15px 18px}}
+@media(max-width:480px){.chat-admin-page .chat-main{width:calc(100% - 18px);padding-top:13px}.chat-profile{padding:13px}.chat-avatar{width:48px;height:48px;flex-basis:48px}.chat-profile-name{font-size:14px}.chat-messages{min-height:245px;max-height:42vh;padding:15px 10px}.chat-bubble-row{max-width:94%}.chat-bubble{font-size:12px;padding:10px 12px}.chat-presets{padding:13px 10px}.chat-preset{font-size:11px;padding:8px 10px}.chat-composer{gap:7px;padding:10px}.chat-send{width:43px;height:43px;flex-basis:43px}.chat-support-menu{padding-top:75px}}
 </style>
 </head>
 <body class="chat-admin-page">
 <header class="site-header home-header">
- <div class="container header-inner"><a href="index.html" class="header-brand"><span class="header-brand-text">LEOOSTORE.id</span></a>
- <div class="header-actions"><a href="index.html" class="header-action" style="text-decoration:none">← Store</a></div></div>
+ <div class="container header-inner">
+  <a href="index.html" class="header-brand"><span class="header-brand-text">LEOOSTORE.id</span></a>
+  <div class="header-actions">
+   <button type="button" class="header-action search-button" id="chatSearchButton" aria-label="Cari di store"><span class="header-icon">⌕</span></button>
+   <a href="index.html" class="header-action" aria-label="Kembali ke beranda" style="text-decoration:none">⌂</a>
+   <button type="button" class="header-action menu-button" id="chatMenuButton" aria-label="Buka menu chat admin" aria-expanded="false"><span class="menu-icon"><span></span><span></span><span></span></span></button>
+  </div>
+ </div>
 </header>
-<main class="chat-wrap">
- <a class="chat-back" href="index.html">← Kembali ke beranda</a>
- <section class="chat-hero">
-  <div class="chat-mark" aria-hidden="true">✉</div>
-  <h1>CHAT <span>ADMIN</span></h1>
-  <p>Butuh bantuan soal top up, pesanan, kode promo, atau jual beli akun? Tulis pesanmu di bawah, lalu lanjutkan percakapan langsung lewat WhatsApp.</p>
-  <div class="chat-status"><i></i> Dukungan pelanggan LEOOSTORE</div>
+<main class="chat-main">
+ <section class="chat-profile" aria-label="Profil admin">
+  <div class="chat-avatar" aria-hidden="true">LV</div>
+  <div class="chat-profile-info"><div class="chat-profile-name">Leovbriansyh</div><div class="chat-profile-label"><span>●</span> Admin LEOOSTORE · Pusat bantuan</div></div>
+  <button type="button" class="chat-profile-menu" id="chatMoreButton" aria-label="Buka pusat bantuan">⋮</button>
  </section>
- <section class="chat-card">
-  <h2>Ada yang bisa kami bantu?</h2>
-  <p class="chat-subtitle">Isi detail seperlunya supaya admin lebih mudah memahami kebutuhanmu. Pesan akan disiapkan di WhatsApp sebelum dikirim.</p>
-  <form id="chatForm">
-   <div class="chat-grid">
-    <div class="chat-field"><label for="chatName">Nama / nama panggilan</label><input id="chatName" name="name" maxlength="60" placeholder="Contoh: Leo (opsional)"></div>
-    <div class="chat-field"><label for="chatTopic">Topik bantuan</label><select id="chatTopic" name="topic" required><option value="Pertanyaan umum">Pertanyaan umum</option><option value="Bantuan top up">Bantuan top up</option><option value="Cek status pesanan">Cek status pesanan</option><option value="Kode promo">Kode promo</option><option value="Jual beli akun">Jual beli akun</option><option value="Kendala pembayaran">Kendala pembayaran</option><option value="Komplain transaksi">Komplain transaksi</option></select></div>
-   </div>
-   <div class="chat-field"><label for="chatOrder">Nomor pesanan (jika ada)</label><input id="chatOrder" name="order" maxlength="80" placeholder="Masukkan ID / nomor pesanan (opsional)"></div>
-   <div class="chat-field"><label for="chatMessage">Pesan kamu</label><textarea id="chatMessage" name="message" maxlength="1500" placeholder="Ceritakan kebutuhan atau kendala yang kamu alami…" required></textarea></div>
-   <button class="chat-submit" type="submit"><span aria-hidden="true">☏</span> Lanjutkan ke WhatsApp</button>
-   <p class="chat-note">Tombol ini membuka WhatsApp dengan pesan yang sudah disiapkan. Kamu tetap perlu menekan Kirim di WhatsApp.</p>
-  </form>
+ <section class="chat-conversation" aria-label="Percakapan dengan admin">
+  <div class="chat-conversation-head"><span class="chat-lock">✦</span> Percakapan bantuan <span style="margin-left:auto">LEOOSTORE.id</span></div>
+  <div class="chat-messages" id="chatMessages" aria-live="polite">
+   <div class="chat-date">Mulai percakapan</div>
+   <div class="chat-bubble-row"><div class="chat-mini-avatar">LV</div><div class="chat-bubble">Halo! 👋 Selamat datang di LEOOSTORE. Ada yang bisa gw bantu? Pilih salah satu topik di bawah atau langsung ketik pesanmu, ya.<span class="chat-time">Leovbriansyh · Admin</span></div></div>
+  </div>
+  <div class="chat-presets"><p class="chat-presets-title">Pesan cepat · pilih salah satu</p><div class="chat-preset-list">
+   <button type="button" class="chat-preset" data-preset="Halo admin, saya ingin bertanya tentang top up game.">🎮 Tanya top up</button>
+   <button type="button" class="chat-preset" data-preset="Halo admin, saya ingin mengecek status pesanan saya.">🧾 Cek pesanan</button>
+   <button type="button" class="chat-preset" data-preset="Halo admin, apakah ada kode promo yang masih aktif?">🏷️ Kode promo</button>
+   <button type="button" class="chat-preset" data-preset="Halo admin, saya ingin bertanya tentang jual beli akun game.">🛍️ Jual/beli akun</button>
+   <button type="button" class="chat-preset" data-preset="Halo admin, saya mengalami kendala pembayaran.">💳 Kendala pembayaran</button>
+   <button type="button" class="chat-preset" data-preset="Halo admin, saya ingin menyampaikan komplain transaksi.">🛟 Bantuan/komplain</button>
+  </div></div>
+  <form class="chat-composer" id="chatForm"><textarea id="chatMessageInput" maxlength="1500" rows="1" placeholder="Ketikkan pesan ke admin…" aria-label="Ketikkan pesan" required></textarea><button class="chat-send" type="submit" aria-label="Kirim pesan">➤</button></form>
+  <div class="chat-composer-note">Pesan akan dibuka di WhatsApp admin agar bisa diteruskan. Periksa lalu tekan Kirim di WhatsApp. Jangan kirim password atau kode OTP.</div>
  </section>
- <nav class="chat-quick" aria-label="Bantuan cepat">
-  <a href="shop.html"><span>🛒</span><span>Lihat katalog top up</span></a>
-  <a href="order.html"><span>🧾</span><span>Cek transaksi</span></a>
-  <a href="index.html#account-marketplace"><span>🎮</span><span>Jual / beli akun</span></a>
- </nav>
- <section class="chat-faq">
-  <h2>Pertanyaan singkat</h2>
-  <details><summary>Apa yang perlu dikirim saat top up bermasalah?</summary><p>Sebutkan nama game, nominal produk, waktu transaksi, dan nomor pesanan jika tersedia. Jangan kirim password atau kode OTP akunmu.</p></details>
-  <details><summary>Bagaimana cara menanyakan status pesanan?</summary><p>Buka halaman Cek Transaksi terlebih dahulu. Jika masih perlu bantuan, pilih topik “Cek status pesanan” dan sertakan nomor pesanan.</p></details>
-  <details><summary>Apakah pesan langsung terkirim saat tombol ditekan?</summary><p>Belum. Tombol akan membuka WhatsApp dengan teks yang sudah diisi. Periksa pesan lalu tekan Kirim di aplikasi WhatsApp.</p></details>
- </section>
- <footer class="chat-footer">© <span id="chatYear"></span> <a href="index.html">LEOOSTORE.id</a> · Bantuan pelanggan</footer>
+ <footer class="chat-foot">LEOOSTORE.id · Chat Admin</footer>
 </main>
+<div class="chat-support-menu" id="chatSupportMenu" aria-hidden="true">
+ <div class="chat-support-panel">
+  <div class="chat-support-title">Menu Chat Admin <button class="chat-support-close" id="chatSupportClose" aria-label="Tutup menu">×</button></div>
+  <a class="chat-support-link" href="chat-admin.html"><span>💬</span><div>Chat Admin<small>Mulai atau lanjutkan pesan</small></div></a>
+  <a class="chat-support-link" href="order.html"><span>🧾</span><div>Pusat bantuan pesanan<small>Cek transaksi dan siapkan ID pesanan</small></div></a>
+  <a class="chat-support-link" href="shop.html"><span>🎮</span><div>Pusat bantuan top up<small>Cari game dan produk</small></div></a>
+  <a class="chat-support-link" href="index.html#homePromoCodes"><span>🏷️</span><div>Promo & diskon<small>Lihat kode promo yang tersedia</small></div></a>
+  <div class="chat-faq-block"><details><summary>FAQ · Berapa lama pesanan diproses?</summary><p>Waktu proses bergantung pada produk dan status pembayaran. Sertakan nomor pesanan jika perlu bantuan admin.</p></details></div>
+  <div class="chat-faq-block"><details><summary>FAQ · Data apa yang perlu disiapkan?</summary><p>Siapkan nama game, nominal, ID pesanan, dan keterangan kendala. Jangan pernah membagikan password atau kode OTP.</p></details></div>
+  <a class="chat-support-link" href="index.html"><span>⌂</span><div>Kembali ke Home<small>Kembali ke halaman utama store</small></div></a>
+ </div>
+</div>
 <script>
 (function(){
- const form=document.getElementById("chatForm");
- form.addEventListener("submit",function(event){
-  event.preventDefault();
-  const name=document.getElementById("chatName").value.trim();
-  const topic=document.getElementById("chatTopic").value;
-  const order=document.getElementById("chatOrder").value.trim();
-  const message=document.getElementById("chatMessage").value.trim();
-  if(!message){document.getElementById("chatMessage").focus();return;}
-  const parts=["Halo Admin LEOOSTORE, saya ingin meminta bantuan.","Topik: "+topic];
-  if(name)parts.push("Nama: "+name);
-  if(order)parts.push("Nomor pesanan: "+order);
-  parts.push("Pesan: "+message);
-  parts.push("Terima kasih.");
-  window.open("https://wa.me/6285823538473?text="+encodeURIComponent(parts.join("\n")),"_blank","noopener,noreferrer");
- });
- document.getElementById("chatYear").textContent=new Date().getFullYear();
+ const $=id=>document.getElementById(id), menu=$("chatSupportMenu"), menuButton=$("chatMenuButton"), input=$("chatMessageInput"), messages=$("chatMessages");
+ function openMenu(){menu.classList.add("open");menu.setAttribute("aria-hidden","false");menuButton.setAttribute("aria-expanded","true");}
+ function closeMenu(){menu.classList.remove("open");menu.setAttribute("aria-hidden","true");menuButton.setAttribute("aria-expanded","false");}
+ menuButton.addEventListener("click",()=>menu.classList.contains("open")?closeMenu():openMenu());
+ $("chatMoreButton").addEventListener("click",openMenu);$("chatSupportClose").addEventListener("click",closeMenu);
+ menu.addEventListener("click",e=>{if(e.target===menu)closeMenu();});
+ document.addEventListener("keydown",e=>{if(e.key==="Escape")closeMenu();});
+ $("chatSearchButton").addEventListener("click",()=>{window.location.href="index.html#searchButton";});
+ document.querySelectorAll("[data-preset]").forEach(b=>b.addEventListener("click",()=>{input.value=b.dataset.preset;input.focus();input.style.height="auto";input.style.height=Math.min(input.scrollHeight,130)+"px";}));
+ input.addEventListener("input",()=>{input.style.height="auto";input.style.height=Math.min(input.scrollHeight,130)+"px";});
+ function bubble(text){const row=document.createElement("div");row.className="chat-bubble-row outgoing";const box=document.createElement("div");box.className="chat-bubble";box.textContent=text;const time=document.createElement("span");time.className="chat-time";time.textContent="Pesan disiapkan untuk WhatsApp";box.appendChild(time);row.appendChild(box);messages.appendChild(row);messages.scrollTop=messages.scrollHeight;}
+ $("chatForm").addEventListener("submit",e=>{e.preventDefault();const text=input.value.trim();if(!text)return;bubble(text);const url="https://wa.me/6285823538473?text="+encodeURIComponent("Halo Admin LEOOSTORE (Leovbriansyh), saya ingin menghubungi admin.\n\n"+text);const win=window.open(url,"_blank","noopener,noreferrer");if(!win)window.location.href=url;input.value="";input.style.height="auto";messages.scrollTop=messages.scrollHeight;});
 })();
 </script>
 </body>
