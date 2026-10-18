@@ -93,3 +93,28 @@ drop trigger if exists store_chat_message_touch_conversation on public.store_cha
 create trigger store_chat_message_touch_conversation
 after insert on public.store_chat_messages
 for each row execute function public.store_chat_touch_conversation();
+
+
+-- Allow authenticated chat participants to upload media only under chat/<conversation-id>/<uploader-id>/...
+-- Customer uploads are restricted to their own conversation. Admin may upload to a conversation folder.
+drop policy if exists "chat participants upload chat media" on storage.objects;
+create policy "chat participants upload chat media"
+on storage.objects for insert to authenticated
+with check (
+  bucket_id = 'leo-store-images'
+  and (storage.foldername(name))[1] = 'chat'
+  and (
+    (
+      auth.uid() <> '3939553f-ef8d-4295-8f2f-39c86ce9ed20'::uuid
+      and (storage.foldername(name))[3] = auth.uid()::text
+      and exists (
+        select 1 from public.store_chat_conversations c
+        where c.id::text = (storage.foldername(name))[2]
+          and c.customer_id = auth.uid()
+          and c.status <> 'closed'
+      )
+    )
+    or auth.uid() = '3939553f-ef8d-4295-8f2f-39c86ce9ed20'::uuid
+  )
+);
+
