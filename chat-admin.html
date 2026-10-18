@@ -10,11 +10,11 @@
 <style>
 body.chat-admin-page{min-height:100vh;background:#080c15;color:#f5f7ff;font-family:'Plus Jakarta Sans',sans-serif}
 .chat-admin-page .site-header{z-index:30}
-.chat-admin-page .chat-main{width:min(100% - 24px,900px);margin:0 auto;padding:22px 0 28px}
+.chat-admin-page .chat-main{width:100%;max-width:none;margin:0;padding:16px 0 28px}
 body.chat-admin-page.chat-auth-only .chat-account-bar,body.chat-admin-page.chat-auth-only .chat-profile,body.chat-admin-page.chat-auth-only .chat-conversation{display:none!important}
 .chat-account-bar{display:none!important}
 .chat-conversation-head{display:none!important}
-.chat-conversation{margin-top:0}
+.chat-conversation{margin-top:0;border-radius:0;border-left:0;border-right:0}
 .chat-profile{margin:0;border:0;border-bottom:1px solid #273248;border-radius:0;background:linear-gradient(110deg,#151e30,#101725);box-shadow:none}
 .chat-profile .chat-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
 .chat-avatar.has-photo{background:#1b2436}
@@ -25,7 +25,7 @@ body.chat-admin-page.chat-auth-only .chat-account-bar,body.chat-admin-page.chat-
 .chat-avatar{position:relative;flex:0 0 54px;width:54px;height:54px;display:grid;place-items:center;border-radius:50%;background:linear-gradient(145deg,#c4b5fd,#7c3aed 70%,#4c1d95);color:#fff;font:900 16px Orbitron,sans-serif;box-shadow:0 0 0 3px #8b5cf633}
 .chat-avatar:after{content:"";position:absolute;right:0;bottom:1px;width:12px;height:12px;border:2px solid #151e30;border-radius:50%;background:#4ade80}
 .chat-profile-info{min-width:0;flex:1}.chat-profile-name{font-size:16px;font-weight:800;letter-spacing:.1px}.chat-profile-label{margin-top:4px;color:#9eacc2;font-size:12px}.chat-profile-label span{color:#86efac}
-.chat-profile-menu{width:40px;height:40px;border:1px solid #344157;border-radius:12px;background:#0b1220;color:#e8eaff;font-size:24px;cursor:pointer}
+.chat-profile-menu{display:none!important}
 .chat-conversation{margin-top:15px;border:1px solid #273248;border-radius:18px;background:linear-gradient(180deg,#0e1522,#0a101b);overflow:hidden}
 .chat-conversation-head{display:flex;align-items:center;gap:9px;padding:13px 17px;border-bottom:1px solid #273248;color:#aebbd0;font-size:12px}
 .chat-conversation-head .chat-lock{color:#c4b5fd;font-size:15px}
@@ -59,7 +59,7 @@ body.chat-admin-page.chat-auth-only .chat-account-bar,body.chat-admin-page.chat-
 .chat-faq-block{padding:13px 11px;border-radius:11px;color:#e8edfa}.chat-faq-block summary{cursor:pointer;font-size:13px;font-weight:800}.chat-faq-block p{font-size:12px;color:#a8b4c8;line-height:1.7}
 .chat-foot{text-align:center;color:#6f7d94;font-size:10px;padding:16px 0 0}
 @media(min-width:760px){.chat-admin-page .chat-main{padding-top:28px}.chat-profile{padding:18px 22px}.chat-messages{min-height:340px;padding:24px}.chat-presets{padding:18px 20px}.chat-composer{padding:15px 18px}}
-@media(max-width:480px){.chat-admin-page .chat-main{width:calc(100% - 18px);padding-top:13px}.chat-profile{padding:13px}.chat-avatar{width:48px;height:48px;flex-basis:48px}.chat-profile-name{font-size:14px}.chat-messages{min-height:245px;max-height:42vh;padding:15px 10px}.chat-bubble-row{max-width:94%}.chat-bubble{font-size:12px;padding:10px 12px}.chat-presets{padding:13px 10px}.chat-preset{font-size:11px;padding:8px 10px}.chat-composer{gap:7px;padding:10px}.chat-send{width:43px;height:43px;flex-basis:43px}.chat-support-menu{padding-top:75px}}
+@media(max-width:480px){.chat-admin-page .chat-main{width:100%;padding-top:10px}.chat-profile{padding:13px}.chat-avatar{width:48px;height:48px;flex-basis:48px}.chat-profile-name{font-size:14px}.chat-messages{min-height:245px;max-height:42vh;padding:15px 10px}.chat-bubble-row{max-width:94%}.chat-bubble{font-size:12px;padding:10px 12px}.chat-presets{padding:13px 10px}.chat-preset{font-size:11px;padding:8px 10px}.chat-composer{gap:7px;padding:10px}.chat-send{width:43px;height:43px;flex-basis:43px}.chat-support-menu{padding-top:75px}}
 
 .chat-auth{margin:0 0 15px;padding:18px;border:1px solid #29354a;border-radius:17px;background:linear-gradient(110deg,#151e30,#101725)}.chat-auth h2{margin:0 0 6px;font-size:18px}.chat-auth p{margin:0 0 14px;color:#9eacc2;font-size:12px;line-height:1.7}.chat-auth-tabs{display:flex;gap:8px;margin-bottom:14px}.chat-auth-tabs button{flex:1;padding:10px;border:1px solid #35425a;border-radius:10px;background:#0b1220;color:#c6d0e2;font-weight:800;cursor:pointer}.chat-auth-tabs button.active{background:#37215e;border-color:#8b5cf6;color:#fff}.chat-auth label{display:block;margin:10px 0 5px;color:#bac6da;font-size:12px;font-weight:700}.chat-auth input{width:100%;padding:12px;border:1px solid #35425a;border-radius:10px;background:#080e18;color:#fff}.chat-auth-submit{width:100%;margin-top:14px;padding:12px;border:0;border-radius:11px;background:linear-gradient(145deg,#9b6bff,#6d28d9);color:white;font-weight:900;cursor:pointer}.chat-auth-status{margin-top:10px;color:#aab7cc;font-size:12px;line-height:1.6}.chat-account-bar{display:flex;align-items:center;gap:10px;margin:0 0 12px;padding:10px 13px;border:1px solid #29354a;border-radius:12px;background:#111a29;font-size:12px}.chat-account-bar span{flex:1;color:#cbd5e1;overflow-wrap:anywhere}.chat-account-bar button{padding:7px 10px;border:1px solid #35425a;border-radius:9px;background:#0b1220;color:#e5e7eb;cursor:pointer}
 </style>
@@ -82,8 +82,7 @@ body.chat-admin-page.chat-auth-only .chat-account-bar,body.chat-admin-page.chat-
  <section class="chat-conversation" id="conversationPanel" aria-label="Percakapan dengan admin" hidden>
  <section class="chat-profile" id="chatPanel" aria-label="Profil admin" hidden>
   <div class="chat-avatar" aria-hidden="true">LV</div>
-  <div class="chat-profile-info"><div class="chat-profile-name">Leovbriansyh</div><div class="chat-profile-label"><span>●</span> Admin LEOOSTORE · Pusat bantuan</div></div>
-  <button type="button" class="chat-profile-menu" id="chatMoreButton" aria-label="Buka pusat bantuan">⋮</button>
+  <div class="chat-profile-info"><div class="chat-profile-name">Leovbriansyh</div><div class="chat-profile-label"><span>●</span> Admin LEOOSTORE</div></div>
  </section>
 
   <div class="chat-messages" id="chatMessages" aria-live="polite">
@@ -124,7 +123,7 @@ body.chat-admin-page.chat-auth-only .chat-account-bar,body.chat-admin-page.chat-
  function openMenu(){menu.classList.add("open");menu.setAttribute("aria-hidden","false");menuButton.setAttribute("aria-expanded","true");}
  function closeMenu(){menu.classList.remove("open");menu.setAttribute("aria-hidden","true");menuButton.setAttribute("aria-expanded","false");}
  menuButton.addEventListener("click",()=>menu.classList.contains("open")?closeMenu():openMenu());
- $("chatMoreButton").addEventListener("click",openMenu);$("chatSupportClose").addEventListener("click",closeMenu);
+ $("chatSupportClose").addEventListener("click",closeMenu);
  menu.addEventListener("click",e=>{if(e.target===menu)closeMenu();});document.addEventListener("keydown",e=>{if(e.key==="Escape")closeMenu();});
  $("chatSearchButton").addEventListener("click",()=>{window.location.href="index.html#searchButton";});
  document.querySelectorAll("[data-preset]").forEach(b=>b.addEventListener("click",()=>{input.value=b.dataset.preset;input.focus();input.style.height="auto";input.style.height=Math.min(input.scrollHeight,130)+"px";}));
