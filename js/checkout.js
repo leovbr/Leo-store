@@ -171,8 +171,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     const isFreeFire = id === "free-fire" || id === "freefire";
     const isValorant = id === "valorant";
 
-    if (serverField) serverField.style.display = (isRoblox || isPubg || isFreeFire || isValorant) ? "none" : "";
-    if (serverInput && (isRoblox || isPubg || isFreeFire || isValorant)) serverInput.value = "";
+    const useId = product?.useId !== false;
+    const useServer = product?.useServer !== false && !(isRoblox || isPubg || isFreeFire || isValorant);
+    const playerField = playerIdInput?.closest(".form-group");
+    if (playerField) playerField.style.display = (isRoblox || useId) ? "" : "none";
+    if (serverField) serverField.style.display = useServer ? "" : "none";
+    if (serverInput && !useServer) serverInput.value = "";
+    if (playerIdInput && !useId && !isRoblox) playerIdInput.value = "";
     if (accountTitle) accountTitle.textContent = "Data Akun";
     if (accountDescription) accountDescription.textContent = (isRobloxLogin || isRobloxUsername)
       ? "Masukkan username dan password."
@@ -422,12 +427,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         robloxPassword?.focus();
         return;
       }
-    } else if (!playerIdInput?.value.trim()) {
+    } else if (selectedProduct.useId !== false && !playerIdInput?.value.trim()) {
       alert("Silakan masukkan Player ID.");
       playerIdInput?.focus();
       return;
     }
-    if (!isRoblox && selectedProduct.id !== "pubg-mobile" && selectedProduct.id !== "free-fire" && selectedProduct.id !== "freefire" && selectedProduct.id !== "valorant" && !serverInput?.value.trim()) {
+    if (!isRoblox && selectedProduct.useServer !== false && selectedProduct.id !== "pubg-mobile" && selectedProduct.id !== "free-fire" && selectedProduct.id !== "freefire" && selectedProduct.id !== "valorant" && !serverInput?.value.trim()) {
       alert("Silakan masukkan Server.");
       serverInput?.focus();
       return;
