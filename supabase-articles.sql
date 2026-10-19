@@ -7,6 +7,7 @@ create table if not exists public.store_articles (
   excerpt text not null default '',
   category text not null default 'Panduan',
   thumbnail_url text,
+  source_url text,
   content text not null default '',
   status text not null default 'draft' check (status in ('draft','published')),
   author_id uuid references auth.users(id) on delete set null,
@@ -42,3 +43,6 @@ drop policy if exists "Authenticated users can delete articles" on public.store_
 create policy "Authenticated users can delete articles"
   on public.store_articles for delete to authenticated
   using (auth.uid() = author_id);
+
+-- Safe upgrade for an existing article table.
+alter table public.store_articles add column if not exists source_url text;
