@@ -23,6 +23,10 @@ drop policy if exists "Published articles are public" on public.store_articles;
 create policy "Published articles are public"
   on public.store_articles for select to anon, authenticated
   using (status = 'published' and published_at is not null and published_at <= now());
+drop policy if exists "Authors can view their own articles" on public.store_articles;
+create policy "Authors can view their own articles"
+  on public.store_articles for select to authenticated
+  using (auth.uid() = author_id);
 -- NOTE: The management policies below permit authenticated Supabase users to manage
 -- articles. If the project has multiple user accounts, restrict these policies to
 -- the owner's verified auth.uid() or an admin allowlist before enabling public signup.
