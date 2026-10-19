@@ -95,7 +95,7 @@ body.article-detail-page .site-header a.header-brand>span.header-brand-text{
   position:relative!important;width:auto!important;height:auto!important;max-width:none!important;
   margin:0!important;padding:0!important;overflow:visible!important;
   font-family:'Orbitron',sans-serif!important;
-  font-size:23px!important;font-weight:900!important;letter-spacing:-1px!important;-webkit-text-stroke:.25px currentColor;
+  font-size:19px!important;font-weight:900!important;letter-spacing:-1px!important;-webkit-text-stroke:.25px currentColor;
   line-height:1.15!important;white-space:nowrap!important;text-decoration:none!important;
 }
 @media(max-width:600px){
@@ -103,18 +103,18 @@ body.article-detail-page .site-header a.header-brand>span.header-brand-text{
   body.article-list-page .site-header a.header-brand>span.header-brand-text,
   body.article-detail-page .site-header .header-brand .header-brand-text,
   body.article-detail-page .site-header a.header-brand>span.header-brand-text{
-    font-size:22px!important;letter-spacing:-.95px!important;
+    font-size:18px!important;letter-spacing:-.95px!important;
   }
 }
 /* Footer logo khusus daftar artikel; footer detail artikel sengaja tidak disentuh. */
 body.article-list-page .universal-social-footer .footer-brand-text{
   display:inline-block!important;font-family:'Orbitron',sans-serif!important;
-  font-size:31px!important;font-weight:900!important;letter-spacing:-1.3px!important;-webkit-text-stroke:.25px currentColor;
+  font-size:27px!important;font-weight:900!important;letter-spacing:-1.3px!important;-webkit-text-stroke:.25px currentColor;
   line-height:1.2!important;margin:0 0 18px!important;text-decoration:none!important;
 }
 @media(max-width:680px){
   body.article-list-page .universal-social-footer .footer-brand-text{
-    font-size:27px!important;letter-spacing:-1.1px!important;margin-bottom:16px!important;
+    font-size:23px!important;letter-spacing:-1.1px!important;margin-bottom:16px!important;
   }
 }
 </style>
@@ -157,4 +157,34 @@ document.addEventListener("DOMContentLoaded",async function(){
 });
 </script><script>
 (()=>{const db=window.supabase.createClient("https://tvdbrqskvuukxvqaqjom.supabase.co","sb_publishable_2f-IadmcnaYzoCb_8Iko0w_pFp9u8eF");const grid=document.getElementById("articleGrid"),search=document.getElementById("articleSearch"),category=document.getElementById("articleCategory");let articles=[];const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));const date=s=>s?new Date(s).toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"}):"";function render(){const q=search.value.trim().toLowerCase(),cat=category.value;const rows=articles.filter(a=>(!cat||a.category===cat)&&(!q||[a.title,a.excerpt,a.content,a.category].join(" ").toLowerCase().includes(q)));grid.innerHTML=rows.length?rows.map(a=>'<article class="article-card">'+(a.thumbnail_url?'<a href="artikel-detail.html?slug='+encodeURIComponent(a.slug)+'"><img loading="lazy" src="'+esc(a.thumbnail_url)+'" alt="'+esc(a.title)+'"></a>':'')+'<div class="article-card-body"><span class="article-category">'+esc(a.category||"Panduan")+'</span><h2><a href="artikel-detail.html?slug='+encodeURIComponent(a.slug)+'">'+esc(a.title)+'</a></h2><p class="article-muted">'+esc(a.excerpt||"")+'</p><p class="article-muted" style="font-size:12px">'+date(a.published_at)+'</p><a class="article-read" href="artikel-detail.html?slug='+encodeURIComponent(a.slug)+'">Baca selengkapnya →</a></div></article>').join(""):'<p class="article-empty">Belum ada artikel yang cocok. Coba kata kunci lain atau cek kembali nanti.</p>'}search.addEventListener("input",render);category.addEventListener("change",render);db.from("store_articles").select("id,slug,title,excerpt,category,thumbnail_url,published_at").eq("status","published").order("published_at",{ascending:false,nullsFirst:false}).then(({data,error})=>{if(error){grid.innerHTML='<p class="article-empty">Artikel belum bisa dimuat. Admin perlu menyelesaikan setup database artikel.</p>';console.error(error);return;}articles=data||[];render()});})();
-</script><script src="js/language-selector.js?v=20261017-languages3" defer></script><script src="js/app.js"></script><script>document.addEventListener("DOMContentLoaded",function(){const menuButton=document.getElementById("menuButton"),menuClose=document.getElementById("menuClose"),sideMenu=document.getElementById("sideMenu"),menuOverlay=document.getElementById("menuOverlay"),searchButton=document.getElementById("searchButton"),searchPanel=document.getElementById("searchPanel"),searchClose=document.getElementById("searchClose"),siteSearch=document.getElementById("siteSearch");function openMenu(){sideMenu?.classList.add("active");menuOverlay?.classList.add("active");sideMenu?.setAttribute("aria-hidden","false");menuButton?.setAttribute("aria-expanded","true");document.body.style.overflow="hidden"}function closeMenu(){sideMenu?.classList.remove("active");menuOverlay?.classList.remove("active");sideMenu?.setAttribute("aria-hidden","true");menuButton?.setAttribute("aria-expanded","false");document.body.style.overflow=""}menuButton?.addEventListener("click",openMenu);menuClose?.addEventListener("click",closeMenu);menuOverlay?.addEventListener("click",closeMenu);document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeMenu();searchPanel?.classList.remove("active")}});searchButton?.addEventListener("click",()=>{searchPanel?.classList.toggle("active");if(searchPanel?.classList.contains("active"))setTimeout(()=>siteSearch?.focus(),200)});searchClose?.addEventListener("click",()=>{searchPanel?.classList.remove("active");if(siteSearch)siteSearch.value=""});});</script></body></html>
+</script><script src="js/language-selector.js?v=20261017-languages3" defer></script><script src="js/app.js"></script><script>document.addEventListener("DOMContentLoaded",function(){const menuButton=document.getElementById("menuButton"),menuClose=document.getElementById("menuClose"),sideMenu=document.getElementById("sideMenu"),menuOverlay=document.getElementById("menuOverlay"),searchButton=document.getElementById("searchButton"),searchPanel=document.getElementById("searchPanel"),searchClose=document.getElementById("searchClose"),siteSearch=document.getElementById("siteSearch");function openMenu(){sideMenu?.classList.add("active");menuOverlay?.classList.add("active");sideMenu?.setAttribute("aria-hidden","false");menuButton?.setAttribute("aria-expanded","true");document.body.style.overflow="hidden"}function closeMenu(){sideMenu?.classList.remove("active");menuOverlay?.classList.remove("active");sideMenu?.setAttribute("aria-hidden","true");menuButton?.setAttribute("aria-expanded","false");document.body.style.overflow=""}menuButton?.addEventListener("click",openMenu);menuClose?.addEventListener("click",closeMenu);menuOverlay?.addEventListener("click",closeMenu);document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeMenu();searchPanel?.classList.remove("active")}});searchButton?.addEventListener("click",()=>{searchPanel?.classList.toggle("active");if(searchPanel?.classList.contains("active"))setTimeout(()=>siteSearch?.focus(),200)});searchClose?.addEventListener("click",()=>{searchPanel?.classList.remove("active");if(siteSearch)siteSearch.value=""});});</script><script id="article-category-picker-functionality">
+(function(){
+ const select=document.getElementById('articleCategory');
+ const picker=document.getElementById('articleCategoryPicker');
+ const trigger=document.getElementById('articleCategoryTrigger');
+ const menu=document.getElementById('articleCategoryOptions');
+ const current=document.getElementById('articleCategoryCurrent');
+ if(!select||!picker||!trigger||!menu||!current)return;
+ function close(){menu.hidden=true;trigger.setAttribute('aria-expanded','false')}
+ trigger.addEventListener('click',function(){
+   const willOpen=menu.hidden;
+   menu.hidden=!willOpen;
+   trigger.setAttribute('aria-expanded',String(willOpen));
+ });
+ menu.querySelectorAll('.article-category-option').forEach(function(btn){
+   btn.addEventListener('click',function(){
+     select.value=btn.dataset.value;
+     current.textContent=btn.textContent.trim();
+     menu.querySelectorAll('.article-category-option').forEach(function(option){
+       const active=option===btn;
+       option.classList.toggle('active',active);
+       option.setAttribute('aria-selected',String(active));
+     });
+     select.dispatchEvent(new Event('change',{bubbles:true}));
+     close();
+   });
+ });
+ document.addEventListener('click',function(event){if(!picker.contains(event.target))close()});
+ document.addEventListener('keydown',function(event){if(event.key==='Escape')close()});
+})();
+</script></body></html>
