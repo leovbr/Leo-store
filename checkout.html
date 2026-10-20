@@ -184,8 +184,8 @@ body{top:0!important}.skiptranslate iframe{display:none!important}.goog-logo-lin
 <script>
 document.addEventListener("DOMContentLoaded",function(){
  const menuButton=document.getElementById("menuButton"),menuClose=document.getElementById("menuClose"),sideMenu=document.getElementById("sideMenu"),menuOverlay=document.getElementById("menuOverlay"),searchButton=document.getElementById("searchButton"),searchPanel=document.getElementById("searchPanel"),searchClose=document.getElementById("searchClose"),siteSearch=document.getElementById("siteSearch");
- function openMenu(){sideMenu?.classList.add("active");menuOverlay?.classList.add("active");sideMenu?.setAttribute("aria-hidden","false");menuButton?.setAttribute("aria-expanded","true");document.body.style.overflow="hidden"}
- function closeMenu(){sideMenu?.classList.remove("active");menuOverlay?.classList.remove("active");sideMenu?.setAttribute("aria-hidden","true");menuButton?.setAttribute("aria-expanded","false");document.body.style.overflow=""}
+ function openMenu(){sideMenu?.classList.add("active");menuOverlay?.classList.add("active");document.body.classList.add("checkout-menu-open");sideMenu?.setAttribute("aria-hidden","false");menuButton?.setAttribute("aria-expanded","true");document.body.style.overflow="hidden"}
+ function closeMenu(){sideMenu?.classList.remove("active");menuOverlay?.classList.remove("active");document.body.classList.remove("checkout-menu-open");sideMenu?.setAttribute("aria-hidden","true");menuButton?.setAttribute("aria-expanded","false");document.body.style.overflow=""}
  menuButton?.addEventListener("click",openMenu);menuClose?.addEventListener("click",closeMenu);menuOverlay?.addEventListener("click",closeMenu);
  document.addEventListener("keydown",function(e){if(e.key==="Escape"){closeMenu();searchPanel?.classList.remove("active")}});
  searchButton?.addEventListener("click",function(){searchPanel?.classList.toggle("active");if(searchPanel?.classList.contains("active"))setTimeout(function(){siteSearch?.focus()},200)});
