@@ -1889,3 +1889,24 @@
 .checkout-page .site-header{
   z-index:auto!important;
 }
+
+
+/* Ensure the checkout drawer visually replaces the sticky order summary while open. */
+body.checkout-menu-open.checkout-page .checkout-sidebar{
+  visibility:hidden!important;
+  pointer-events:none!important;
+}
+body.checkout-menu-open.checkout-page .menu-overlay{
+  position:fixed!important;
+  inset:0!important;
+  display:block!important;
+  z-index:2147483000!important;
+}
+body.checkout-menu-open.checkout-page .side-menu{
+  position:fixed!important;
+  inset:0 0 0 auto!important;
+  height:100vh!important;
+  height:100dvh!important;
+  max-height:100dvh!important;
+  z-index:2147483001!important;
+}
