@@ -1867,3 +1867,15 @@
   .checkout-page .game-hero-benefits .hero-benefit{font-size:8px!important;gap:2px!important;}
   .checkout-page .game-hero-benefits .hero-benefit-icon{font-size:10px!important;}
 }
+
+/* CHECKOUT MOBILE MENU — keep navigation above the fixed order summary. */
+.checkout-page .site-header{
+  position:relative!important;
+  z-index:1102!important;
+}
+.checkout-page .menu-overlay{
+  z-index:1100!important;
+}
+.checkout-page .side-menu{
+  z-index:1101!important;
+}
