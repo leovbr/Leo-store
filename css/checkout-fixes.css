@@ -1910,3 +1910,22 @@ body.checkout-menu-open.checkout-page .side-menu{
   max-height:100dvh!important;
   z-index:2147483001!important;
 }
+
+
+/* CHECKOUT: search drawer must be closed on first load; only .active may reveal it. */
+body.checkout-page #searchPanel:not(.active){
+  transform:translateY(-120%)!important;
+  visibility:hidden!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+body.checkout-page #searchPanel.active{
+  transform:translateY(0)!important;
+  visibility:visible!important;
+  opacity:1!important;
+  pointer-events:auto!important;
+  z-index:1500!important;
+}
+body.checkout-page #menuOverlay:not(.active){visibility:hidden!important;opacity:0!important;pointer-events:none!important;}
+body.checkout-page #sideMenu:not(.active){visibility:hidden!important;pointer-events:none!important;}
+body.checkout-page #sideMenu.active{visibility:visible!important;pointer-events:auto!important;}
