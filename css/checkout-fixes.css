@@ -1929,3 +1929,44 @@ body.checkout-page #searchPanel.active{
 body.checkout-page #menuOverlay:not(.active){visibility:hidden!important;opacity:0!important;pointer-events:none!important;}
 body.checkout-page #sideMenu:not(.active){visibility:hidden!important;pointer-events:none!important;}
 body.checkout-page #sideMenu.active{visibility:visible!important;pointer-events:auto!important;}
+
+
+/* CHECKOUT NAVBAR DOMINANCE: opaque, elevated, readable above scrolling content. */
+body.checkout-page .site-header.home-header{
+  position:sticky!important;
+  top:0!important;
+  z-index:2147482000!important;
+  isolation:isolate!important;
+  background:#07111f!important;
+  background-color:#07111f!important;
+  background-image:none!important;
+  opacity:1!important;
+  visibility:visible!important;
+  border-bottom:1px solid rgba(148,163,184,.28)!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.48)!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+}
+body.checkout-page .site-header.home-header::before,
+body.checkout-page .site-header.home-header::after{
+  background:#07111f!important;
+  opacity:1!important;
+}
+body.checkout-page .site-header.home-header > .container,
+body.checkout-page .site-header.home-header .header-inner{
+  position:relative!important;
+  z-index:1!important;
+  background:#07111f!important;
+  background-color:#07111f!important;
+}
+body.checkout-page .site-header.home-header .header-brand,
+body.checkout-page .site-header.home-header .header-actions{
+  position:relative!important;
+  z-index:2!important;
+}
+body.checkout-page .site-header.home-header .header-action,
+body.checkout-page .site-header.home-header .leo-language-button{
+  opacity:1!important;
+  background-color:#101e31!important;
+  border-color:rgba(148,163,184,.28)!important;
+}
