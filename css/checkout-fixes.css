@@ -1964,9 +1964,15 @@ body.checkout-page .site-header.home-header .header-actions{
   position:relative!important;
   z-index:2!important;
 }
-body.checkout-page .site-header.home-header .header-action,
+/* Keep search and currency controls on the same visual styling as shop.html. */
+body.checkout-page .site-header.home-header .search-button{
+  background:transparent!important;
+  background-color:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
 body.checkout-page .site-header.home-header .leo-language-button{
-  opacity:1!important;
-  background-color:#101e31!important;
-  border-color:rgba(148,163,184,.28)!important;
+  background:linear-gradient(135deg,#17233b,#0a1221)!important;
+  border:1px solid #6d4bd1!important;
+  box-shadow:0 0 14px #713cff35!important;
 }
