@@ -521,7 +521,7 @@ document.addEventListener("DOMContentLoaded",async function(){
   const db=window.supabase.createClient("https://tvdbrqskvuukxvqaqjom.supabase.co","sb_publishable_2f-IadmcnaYzoCb_8Iko0w_pFp9u8eF");
   const [{data:games,error:gamesError},{data:settings,error:settingsError},{data:products,error:productsError}]=await Promise.all([
    db.from("store_games").select("slug,name,publisher,icon_url,sort_order,is_active").eq("is_active",true).order("sort_order").limit(200),
-   db.from("store_homepage_settings").select("trending_slugs,trending_title,trending_limit,trending_enabled,all_games_title,all_games_initial_limit,all_games_enabled,show_all_games_button").eq("id",1).maybeSingle(),
+   db.from("store_homepage_settings").select("trending_slugs,trending_title,trending_limit,trending_enabled,all_games_title,all_games_initial_limit,all_games_enabled,show_all_games_button,all_games_slugs").eq("id",1).maybeSingle(),
    db.from("store_products").select("game_slug").eq("is_active",true)
   ]);
   if(gamesError||!games?.length)return;
@@ -537,7 +537,10 @@ document.addEventListener("DOMContentLoaded",async function(){
   document.getElementById("homeAllGamesTitle").textContent=cfg.all_games_title||"All Games";
   trendingGrid.innerHTML=trending.map(card).join("");
   const initialLimit=Math.max(1,Math.min(200,Number(cfg.all_games_initial_limit)||12));
-  function renderAll(){allGrid.innerHTML=visibleGames.slice(0,initialLimit).map(card).join("");const canGoShop=visibleGames.length>initialLimit&&cfg.show_all_games_button!==false;moreButton.style.display=canGoShop?"inline-flex":"none";}renderAll();
+  const gameBySlug=new Map(visibleGames.map(g=>[g.slug,g]));
+  const configuredSlugs=Array.isArray(cfg.all_games_slugs)?cfg.all_games_slugs:[];
+  const allGames=configuredSlugs.length?configuredSlugs.map(slug=>gameBySlug.get(slug)).filter(Boolean):visibleGames;
+  function renderAll(){allGrid.innerHTML=allGames.slice(0,initialLimit).map(card).join("");const canGoShop=allGames.length>initialLimit&&cfg.show_all_games_button!==false;moreButton.style.display=canGoShop?"inline-flex":"none";}renderAll();
  }catch(e){console.warn("Pengaturan beranda gagal dimuat; memakai daftar bawaan.",e);}
 });
 </script>
