@@ -1868,15 +1868,14 @@
   .checkout-page .game-hero-benefits .hero-benefit-icon{font-size:10px!important;}
 }
 
-/* CHECKOUT MOBILE MENU — overlay the entire viewport, including sticky order summary. */
-.checkout-page .site-header{
-  position:relative!important;
-  z-index:auto!important;
+/* CHECKOUT MOBILE MENU — put menu above the sticky summary sidebar. */
+.checkout-page .checkout-sidebar{
+  z-index:900!important;
 }
 .checkout-page .menu-overlay{
   position:fixed!important;
   inset:0!important;
-  z-index:2000!important;
+  z-index:2147483000!important;
 }
 .checkout-page .side-menu{
   position:fixed!important;
@@ -1885,5 +1884,8 @@
   bottom:0!important;
   height:100vh!important;
   height:100dvh!important;
-  z-index:2001!important;
+  z-index:2147483001!important;
+}
+.checkout-page .site-header{
+  z-index:auto!important;
 }
