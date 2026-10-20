@@ -4,7 +4,7 @@
    ========================================================= */
 
 const ORDERS_KEY = "LEOOSTORE_orders";
-const LAST_ORDER_KEY = "LEOOSTORE_last_orders";
+const LAST_ORDER_KEY = "LEOOSTORE_last_order";
 const PAYMENT_API = "https://spring-surf-a6a7.leovbriansyh791.workers.dev";
 
 
