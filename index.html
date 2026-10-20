@@ -540,7 +540,7 @@ document.addEventListener("DOMContentLoaded",async function(){
   const gameBySlug=new Map(visibleGames.map(g=>[g.slug,g]));
   const configuredSlugs=Array.isArray(cfg.all_games_slugs)?cfg.all_games_slugs:[];
   const allGames=configuredSlugs.length?configuredSlugs.map(slug=>gameBySlug.get(slug)).filter(Boolean):visibleGames;
-  function renderAll(){allGrid.innerHTML=allGames.slice(0,initialLimit).map(card).join("");const canGoShop=allGames.length>initialLimit&&cfg.show_all_games_button!==false;moreButton.style.display=canGoShop?"inline-flex":"none";}renderAll();
+  function renderAll(){allGrid.innerHTML=allGames.slice(0,initialLimit).map(card).join("");const canGoShop=visibleGames.length>initialLimit&&cfg.show_all_games_button!==false;moreButton.style.display=canGoShop?"inline-flex":"none";}renderAll();
  }catch(e){console.warn("Pengaturan beranda gagal dimuat; memakai daftar bawaan.",e);}
 });
 </script>
