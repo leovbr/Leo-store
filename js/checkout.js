@@ -511,6 +511,22 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       const result = await response.json().catch(() => ({}));
       if (!response.ok || !result.ok) {
+        if (result.stage === "supabase-catalog") {
+          const gamesCode = Number.isFinite(Number(result.gamesStatus)) ? result.gamesStatus : "tidak diketahui";
+          const productsCode = Number.isFinite(Number(result.productsStatus)) ? result.productsStatus : "tidak diketahui";
+          console.error("Checkout catalog verification failed:", {
+            httpStatus: response.status,
+            gamesStatus: result.gamesStatus,
+            productsStatus: result.productsStatus,
+            diagnostic: result.diagnostic
+          });
+          throw new Error(
+            "Katalog belum dapat diverifikasi (HTTP " + response.status +
+            "; store_games: " + gamesCode +
+            "; store_products: " + productsCode +
+            "). Kirim kode ini ke admin agar bisa diperbaiki."
+          );
+        }
         throw new Error(result.error || "Gagal membuat pembayaran.");
       }
 
