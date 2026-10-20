@@ -173,7 +173,7 @@ function maskLeaderboardIdentity(email,whatsapp){
     if(value.length<=2)return value.charAt(0)+"***";
     return value.slice(0,2)+"***"+value.slice(-1);
   }
-  const digits=String(whatsapp||"").replace(/\\D/g,"");
+  const digits=String(whatsapp||"").replace(/\D/g,"");
   return "Pelanggan ••••"+digits.slice(-4);
 }
 async function handleLeaderboard(env,url){
