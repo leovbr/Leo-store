@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   "LEOOSTORE_orders";
 
 const LAST_ORDER_KEY =
-  "LEOOSTORE_last_orders";
+  "LEOOSTORE_last_order";
 
 
   const params =
@@ -448,7 +448,7 @@ function saveOrder(order) {
     "LEOOSTORE_orders";
 
   const LAST_ORDER_KEY =
-    "LEOOSTORE_last_orders";
+    "LEOOSTORE_last_order";
 
 
   let orders = [];
