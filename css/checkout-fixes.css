@@ -1929,25 +1929,3 @@ body.checkout-page #searchPanel.active{
 body.checkout-page #menuOverlay:not(.active){visibility:hidden!important;opacity:0!important;pointer-events:none!important;}
 body.checkout-page #sideMenu:not(.active){visibility:hidden!important;pointer-events:none!important;}
 body.checkout-page #sideMenu.active{visibility:visible!important;pointer-events:auto!important;}
-
-
-/* CHECKOUT NAVBAR: restore a solid navy surface so product cards don't show through it. */
-body.checkout-page .site-header{
-  background:#07111f!important;
-  background-color:#07111f!important;
-  background-image:none!important;
-  border-bottom:1px solid rgba(148,163,184,.20)!important;
-  box-shadow:0 8px 24px rgba(0,0,0,.22)!important;
-  -webkit-backdrop-filter:none!important;
-  backdrop-filter:none!important;
-}
-body.checkout-page .site-header .header-inner,
-body.checkout-page .site-header .container{
-  background:transparent!important;
-}
-body.checkout-page .site-header .header-action,
-body.checkout-page .site-header .leo-language-button{
-  background:#0f1d30!important;
-  border-color:rgba(148,163,184,.24)!important;
-  box-shadow:none!important;
-}
