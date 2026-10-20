@@ -156,7 +156,36 @@ async function handleWebhook(request,env){if(!env.DB||!env.MIDTRANS_SERVER_KEY)r
 
 async function handleGetOrder(env,orderId){if(!env.DB)return json({ok:false,error:"Database belum dikonfigurasi."},503);const id=normalizeOrderId(orderId);if(!id)return json({ok:false,error:"Order ID tidak valid."},400);const order=await env.DB.prepare("SELECT id AS orderId,product_id AS productId,product_name AS productName,denomination_id AS denominationId,denomination_name AS denomination,player_id AS playerId,server_id AS server,payment_method AS paymentId,subtotal,fee,discount,total,status,midtrans_transaction_id AS transactionId,midtrans_status AS rawStatus,snap_token AS token,snap_redirect_url AS redirectUrl,customer_email AS email,customer_whatsapp AS whatsapp,created_at AS createdAt,updated_at AS updatedAt FROM orders WHERE id=?").bind(id).first();if(!order)return json({ok:false,error:"Order tidak ditemukan."},404);return json({ok:true,order});}
 
-export default {async fetch(request,env){const origin=corsOrigin(request);if(request.method==="OPTIONS")return new Response(null,{status:204,headers:{"access-control-allow-origin":origin,"access-control-allow-methods":"GET,POST,OPTIONS","access-control-allow-headers":"Content-Type, Authorization","access-control-max-age":"86400","vary":"Origin"}});const url=new URL(request.url);try{if(url.pathname==="/health"&&request.method==="GET")return json({ok:true,service:"LEOOSTORE Payment API",environment:"sandbox"});if(url.pathname==="/api/orders"&&request.method==="GET")return json({ok:true,service:"LEOOSTORE Payment API",endpoint:"orders",method:"POST",message:"Endpoint aktif. Gunakan POST untuk membuat pembayaran."});
+
+function getJakartaPeriodStart(period,now=new Date()){
+  const shifted=new Date(now.getTime()+7*60*60*1000);
+  let year=shifted.getUTCFullYear(),month=shifted.getUTCMonth(),day=shifted.getUTCDate();
+  if(period==="week"){const weekday=new Date(Date.UTC(year,month,day)).getUTCDay();day-=((weekday+6)%7);}
+  if(period==="month")day=1;
+  return new Date(Date.UTC(year,month,day)-7*60*60*1000).toISOString();
+}
+function maskLeaderboardIdentity(email,whatsapp){
+  const value=String(email||"").trim().split("@")[0];
+  if(value){
+    if(value.length<=2)return value.charAt(0)+"***";
+    return value.slice(0,2)+"***"+value.slice(-1);
+  }
+  const digits=String(whatsapp||"").replace(/\\D/g,"");
+  return "Pelanggan ••••"+digits.slice(-4);
+}
+async function handleLeaderboard(env,url){
+  if(!env.DB)return json({ok:false,error:"Database belum dikonfigurasi."},503);
+  const period=String(url.searchParams.get("period")||"today");
+  if(!["today","week","month"].includes(period))return json({ok:false,error:"Periode leaderboard tidak valid."},400);
+  await ensureOrderTable(env.DB);
+  const since=getJakartaPeriodStart(period);
+  const identity="CASE WHEN trim(COALESCE(customer_whatsapp,''))<>'' THEN lower(replace(replace(replace(replace(replace(replace(customer_whatsapp,'+',''),' ',''),'-',''),'(',''),')',''),'.','')) ELSE lower(trim(COALESCE(customer_email,''))) END";
+  const rows=await env.DB.prepare("SELECT "+identity+" AS customerKey, MAX(customer_email) AS email, MAX(customer_whatsapp) AS whatsapp, COUNT(*) AS transactionCount, MAX(updated_at) AS lastPaidAt FROM orders WHERE status='Pembayaran Berhasil' AND updated_at>=? GROUP BY customerKey ORDER BY transactionCount DESC,lastPaidAt ASC LIMIT 50").bind(since).all();
+  const entries=(rows.results||[]).filter(row=>row.customerKey).map(row=>({label:maskLeaderboardIdentity(row.email,row.whatsapp),transactionCount:Number(row.transactionCount)||0,lastPaidAt:row.lastPaidAt||null}));
+  return json({ok:true,period,since,ranking:"successful_transaction_count",entries});
+}
+
+export default {async fetch(request,env){const origin=corsOrigin(request);if(request.method==="OPTIONS")return new Response(null,{status:204,headers:{"access-control-allow-origin":origin,"access-control-allow-methods":"GET,POST,OPTIONS","access-control-allow-headers":"Content-Type, Authorization","access-control-max-age":"86400","vary":"Origin"}});const url=new URL(request.url);try{if(url.pathname==="/health"&&request.method==="GET")return json({ok:true,service:"LEOOSTORE Payment API",environment:"sandbox"});if(url.pathname==="/api/orders"&&request.method==="GET")return json({ok:true,service:"LEOOSTORE Payment API",endpoint:"orders",method:"POST",message:"Endpoint aktif. Gunakan POST untuk membuat pembayaran."});if(url.pathname==="/api/leaderboard"&&request.method==="GET")return handleLeaderboard(env,url);
 
 
 if(url.pathname==="/api/orders"&&request.method==="POST")return handleCreateOrder(request,env);if(url.pathname==="/api/midtrans/webhook"&&request.method==="POST")return handleWebhook(request,env);const m=url.pathname.match(/^\/api\/orders\/([^/]+)$/);if(m&&request.method==="GET")return handleGetOrder(env,decodeURIComponent(m[1]));return json({ok:false,error:"Endpoint tidak ditemukan."},404);}catch(error){console.error("Worker error",error);return json({ok:false,error:"Terjadi kesalahan server."},500);}}};
