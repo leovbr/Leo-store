@@ -5,52 +5,42 @@ body.wr-page{min-height:100vh;background:#07111f;color:#f8fafc;padding-bottom:40
 <header class="site-header home-header"><div class="container header-inner"><a href="index.html" class="header-brand"><span class="header-brand-text">LEOOSTORE.id</span></a><div class="header-actions"><div class="leo-language-wrap"><button type="button" class="leo-language-button" id="leoLanguageButton" aria-haspopup="true" aria-expanded="false"><span id="leoLanguageFlag">🇮🇩</span><span id="leoLanguageLabel">ID / IDR</span><span class="leo-language-chevron">▾</span></button><div class="leo-language-menu" id="leoLanguageMenu" hidden><button type="button" data-lang="id">🇮🇩 Bahasa Indonesia</button><button type="button" data-lang="en">🇬🇧 English</button><button type="button" data-lang="ms">🇲🇾 Bahasa Melayu</button><button type="button" data-lang="zh-CN">🇨🇳 中文</button><button type="button" data-lang="ja">🇯🇵 日本語</button><button type="button" data-lang="ko">🇰🇷 한국어</button></div></div><button type="button" class="header-action menu-button" id="menuButton" aria-label="Buka menu" aria-expanded="false"><span class="menu-icon"><span></span><span></span><span></span></span></button></div></div></header>
 <div class="menu-overlay" id="menuOverlay"></div><aside class="side-menu" id="sideMenu" aria-hidden="true"><div class="side-menu-header"><a href="index.html" class="header-brand"><span class="header-brand-text">LEOOSTORE.id</span></a><button type="button" class="side-menu-close" id="menuClose" aria-label="Tutup menu">×</button></div><div class="side-menu-divider"></div><nav class="side-menu-nav"><a href="index.html" class="side-menu-item"><span>Home</span><span class="side-menu-icon">⌂</span></a><a href="shop.html" class="side-menu-item"><span>Top Up</span><span class="side-menu-icon">🛒</span></a><a href="order.html" class="side-menu-item"><span>Cek Transaksi</span><span class="side-menu-icon">✓</span></a><a href="leaderboard.html" class="side-menu-item"><span>Leaderboard</span><span class="side-menu-icon">🏆</span></a><a href="artikel.html" class="side-menu-item"><span>Artikel</span><span class="side-menu-icon">📰</span></a><a href="kalkulator.html" class="side-menu-item active"><span>Kalkulator Win Rate</span><span class="side-menu-arrow">→</span></a><a href="chat-admin.html" class="side-menu-item side-menu-login"><span>Login</span><span class="side-menu-icon">⇥</span></a></nav></aside>
 <main class="wr-wrap">
-<section class="wr-hero"><span class="wr-badge">MOBILE LEGENDS: BANG BANG</span><h1>Kalkulator Win Rate Hero</h1><p>Hitung win rate pertandingan hero MLBB kamu dan cari berapa match tambahan yang dibutuhkan untuk mencapai target win rate.</p></section>
+<section class="wr-hero"><h1>Kalkulator Win Rate Hero</h1><p>Hitung win rate pertandingan hero MLBB kamu dan cari berapa match tambahan yang dibutuhkan untuk mencapai target win rate.</p></section>
 <div class="wr-grid">
 <section class="wr-card"><h2>🎮 Statistik Hero</h2>
-<label class="wr-field"><span>Total pertandingan saat ini</span><input id="matches" type="number" min="0" step="1" inputmode="numeric" placeholder="Contoh: 120" value="120"></label>
-<label class="wr-field"><span>Win rate saat ini (%)</span><input id="currentRate" type="number" min="0" max="100" step="0.01" inputmode="decimal" placeholder="Contoh: 62.5" value="62.5"></label>
-<label class="wr-field"><span>Target win rate (%)</span><input id="targetRate" type="number" min="0.01" max="100" step="0.01" inputmode="decimal" value="70"></label>
-<div class="wr-actions"><button class="wr-btn" id="reset" type="button">Reset</button><button class="wr-btn secondary" id="example" type="button">Contoh 120 match</button></div>
-<p class="wr-note">Win rate dalam game dapat dibulatkan, jadi perkiraan jumlah win/loss bisa sedikit berbeda dari statistik asli.</p>
+<label class="wr-field"><span>Total pertandingan saat ini</span><input id="matches" type="number" min="0" step="1" inputmode="numeric" placeholder="Contoh: 120" value=""></label>
+<label class="wr-field"><span>Win rate saat ini (%)</span><input id="currentRate" type="number" min="0" max="100" step="0.01" inputmode="decimal" placeholder="Contoh: 62.5" value=""></label>
+<label class="wr-field"><span>Target win rate (%)</span><input id="targetRate" type="number" min="0.01" max="100" step="0.01" inputmode="decimal" value=""></label>
+<div class="wr-actions"><button class="wr-btn" id="reset" type="button">Reset</button></div>
+
 </section>
 <section class="wr-card"><h2>📈 Hasil Perhitungan</h2><div class="wr-results">
-<div class="wr-stat"><small>Win rate saat ini</small><strong id="rateOut">62,50%</strong></div>
-<div class="wr-stat"><small>Total pertandingan</small><strong id="matchesOut">120</strong></div>
-<div class="wr-stat"><small>Perkiraan menang</small><strong id="winsOut">75</strong></div>
-<div class="wr-stat"><small>Perkiraan kalah</small><strong id="lossesOut">45</strong></div>
-</div><div class="wr-bar"><span id="bar"></span></div><p class="wr-note" id="status">Masukkan statistik hero untuk menghitung target.</p><div class="wr-stat" style="margin-top:14px"><small>Match tambahan untuk mencapai target</small><strong id="neededOut">—</strong><p class="wr-note" id="neededNote">Asumsi semua match berikutnya menang tanpa kalah.</p></div></section>
+<div class="wr-stat"><small>Win rate saat ini</small><strong id="rateOut">0,00%</strong></div>
+<div class="wr-stat"><small>Total pertandingan</small><strong id="matchesOut">0</strong></div>
+<div class="wr-stat"><small>Perkiraan menang</small><strong id="winsOut">0</strong></div>
+<div class="wr-stat"><small>Perkiraan kalah</small><strong id="lossesOut">0</strong></div>
+</div><div class="wr-bar"><span id="bar"></span></div><p class="wr-note" id="status">Masukkan statistik hero untuk menghitung target.</p><div class="wr-stat" style="margin-top:14px"><small>Match tambahan untuk mencapai target</small><strong id="neededOut">0</strong><p class="wr-note" id="neededNote">Hasil akan muncul setelah formulir diisi.</p></div></section>
 </div>
 <p class="wr-note">Perkiraan ini mengasumsikan win rate saat ini akurat dan semua pertandingan berikutnya menang. Jika ada match kalah, jumlah pertandingan yang dibutuhkan akan bertambah.</p>
 </main>
 <script>
 (function(){
-const $=id=>document.getElementById(id);
-const num=id=>Number($(id).value);
+const $=id=>document.getElementById(id), raw=id=>$(id).value.trim(), num=id=>Number(raw(id));
 const fmt=n=>n.toLocaleString("id-ID",{maximumFractionDigits:2,minimumFractionDigits:2});
 function calc(){
- const m=Math.max(0,Math.floor(num("matches")||0));
- const r=Math.min(100,Math.max(0,num("currentRate")||0));
- const t=Math.min(100,Math.max(0,num("targetRate")||0));
- const wins=m*r/100, losses=m-wins;
- $("rateOut").textContent=fmt(r)+"%";
- $("matchesOut").textContent=m.toLocaleString("id-ID");
- $("winsOut").textContent=fmt(wins);
- $("lossesOut").textContent=fmt(losses);
- $("bar").style.width=r+"%";
- if(m===0){$("status").textContent="Masukkan total pertandingan lebih dari 0."; $("neededOut").textContent="—";$("neededNote").textContent="Belum ada pertandingan.";return;}
- if(t<=0||t>100){$("status").textContent="Target harus lebih dari 0% dan maksimal 100%."; $("neededOut").textContent="—";return;}
- if(r>=t){$("status").textContent="Target "+fmt(t)+"% sudah tercapai."; $("neededOut").textContent="0 match";$("neededNote").textContent="Win rate saat ini sudah mencapai atau melewati target.";return;}
- if(t===100){$("status").textContent="Target 100% tidak bisa dicapai jika sudah pernah kalah."; $("neededOut").textContent="Tidak bisa";$("neededNote").textContent="Match menang tambahan tidak dapat menghapus kekalahan sebelumnya.";return;}
+ const ready=raw("matches")!==""&&raw("currentRate")!==""&&raw("targetRate")!=="";
+ const m=Math.max(0,Math.floor(num("matches")||0)),r=Math.min(100,Math.max(0,num("currentRate")||0)),t=Math.min(100,Math.max(0,num("targetRate")||0)),wins=m*r/100,losses=m-wins;
+ $("rateOut").textContent=ready?fmt(r)+"%":"0,00%";$("matchesOut").textContent=ready?m.toLocaleString("id-ID"):"0";$("winsOut").textContent=ready?fmt(wins):"0";$("lossesOut").textContent=ready?fmt(losses):"0";$("bar").style.width=(ready?r:0)+"%";
+ if(!ready){$("status").textContent="Isi formulir statistik hero di atas untuk melihat hasil.";$("neededOut").textContent="0";$("neededNote").textContent="Hasil akan muncul setelah formulir diisi.";return}
+ if(m<=0){$("status").textContent="Masukkan total pertandingan lebih dari 0.";$("neededOut").textContent="0";$("neededNote").textContent="Masukkan total pertandingan untuk menghitung target.";return}
+ if(t<=0||t>100){$("status").textContent="Target harus lebih dari 0% dan maksimal 100%.";$("neededOut").textContent="0";$("neededNote").textContent="Masukkan target win rate yang valid.";return}
+ if(r>=t){$("status").textContent="Target "+fmt(t)+"% sudah tercapai.";$("neededOut").textContent="0";$("neededNote").textContent="Win rate saat ini sudah mencapai atau melewati target.";return}
+ if(t===100){$("status").textContent="Target 100% tidak bisa dicapai jika sudah pernah kalah.";$("neededOut").textContent="0";$("neededNote").textContent="Match menang tambahan tidak dapat menghapus kekalahan sebelumnya.";return}
  const need=Math.max(0,Math.ceil((t*m/100-wins)/(1-t/100)-1e-9));
- $("status").textContent="Win rate saat ini "+fmt(r)+"%; target "+fmt(t)+"%.";
- $("neededOut").textContent=need.toLocaleString("id-ID")+" win";
- $("neededNote").textContent="Perlu sekitar "+need+" kemenangan berturut-turut tanpa kalah untuk mencapai target.";
+ $("status").textContent="Win rate saat ini "+fmt(r)+"%; target "+fmt(t)+"%.";$("neededOut").textContent=need.toLocaleString("id-ID");$("neededNote").textContent="Perlu sekitar "+need+" kemenangan berturut-turut tanpa kalah untuk mencapai target.";
 }
 ["matches","currentRate","targetRate"].forEach(id=>$(id).addEventListener("input",calc));
-$("reset").addEventListener("click",()=>{$("matches").value=0;$("currentRate").value=0;$("targetRate").value=70;calc()});
-$("example").addEventListener("click",()=>{$("matches").value=120;$("currentRate").value=62.5;$("targetRate").value=70;calc()});
-calc();
+$("reset").addEventListener("click",()=>{$("matches").value="";$("currentRate").value="";$("targetRate").value="";calc()});calc();
 })();
 </script><script src="js/language-selector.js?v=20261017-languages3" defer></script><script src="js/header-auth.js?v=20261020-auth1" defer></script><script>
 document.addEventListener("DOMContentLoaded",function(){var b=document.getElementById("menuButton"),c=document.getElementById("menuClose"),m=document.getElementById("sideMenu"),o=document.getElementById("menuOverlay");function close(){m.classList.remove("active");o.classList.remove("active");m.setAttribute("aria-hidden","true");b.setAttribute("aria-expanded","false");document.body.style.overflow=""}function open(){m.classList.add("active");o.classList.add("active");m.setAttribute("aria-hidden","false");b.setAttribute("aria-expanded","true");document.body.style.overflow="hidden"}b.addEventListener("click",open);c.addEventListener("click",close);o.addEventListener("click",close);document.addEventListener("keydown",function(e){if(e.key==="Escape")close()})});
