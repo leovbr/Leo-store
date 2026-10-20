@@ -95,11 +95,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  renderHistoryPage(
-    container,
-    orders
+  const sortedOrders = [...orders].sort(
+    (a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0)
   );
 
+  renderHistoryPage(
+    container,
+    sortedOrders
+  );
 
   renderHistoryList(sortedOrders);
   syncHistoryOrders(sortedOrders);
