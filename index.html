@@ -524,7 +524,9 @@ document.addEventListener("DOMContentLoaded",async function(){
    db.from("store_homepage_settings").select("trending_slugs,trending_title,trending_limit,trending_enabled,all_games_title,all_games_initial_limit,all_games_enabled,show_all_games_button,all_games_slugs").eq("id",1).maybeSingle(),
    db.from("store_products").select("game_slug").eq("is_active",true)
   ]);
-  if(gamesError||!games?.length)return;
+  if(gamesError){console.error("Homepage gagal memuat store_games:",gamesError);throw new Error("Data game gagal dimuat dari Supabase.");}
+  if(!games?.length){trendingGrid.innerHTML='<p class="home-data-status">Belum ada game aktif di katalog.</p>';allGrid.innerHTML='<p class="home-data-status">Belum ada game aktif di katalog.</p>';moreButton.style.display="none";return;}
+  if(settingsError||!settings){console.error("Homepage gagal memuat store_homepage_settings:",settingsError);throw new Error("Pengaturan beranda gagal dimuat dari Supabase.");}
   // Hide games with no active products from the storefront, without deleting them from the catalog.
   const purchasable=new Set(!productsError?(products||[]).map(p=>p.game_slug):games.map(g=>g.slug));
   const visibleGames=games.filter(g=>purchasable.has(g.slug));
@@ -541,7 +543,7 @@ document.addEventListener("DOMContentLoaded",async function(){
   const configuredSlugs=Array.isArray(cfg.all_games_slugs)?cfg.all_games_slugs:[];
   const allGames=configuredSlugs.length?configuredSlugs.map(slug=>gameBySlug.get(slug)).filter(Boolean):visibleGames;
   function renderAll(){allGrid.innerHTML=allGames.slice(0,initialLimit).map(card).join("");const canGoShop=visibleGames.length>initialLimit&&cfg.show_all_games_button!==false;moreButton.style.display=canGoShop?"inline-flex":"none";}renderAll();
- }catch(e){console.warn("Pengaturan beranda gagal dimuat; memakai daftar bawaan.",e);}
+ }catch(e){console.error("Homepage gagal memuat data Supabase:",e);const message='<p class="home-data-status">Data beranda belum bisa dimuat. Periksa koneksi lalu muat ulang halaman.</p>';trendingGrid.innerHTML=message;allGrid.innerHTML=message;moreButton.style.display="none";}
 });
 </script>
 <script>
