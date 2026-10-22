@@ -286,28 +286,10 @@
 
         <!-- GAME FILTER -->
 
-        <select
-          id="gameFilter"
-          class="admin-filter"
-        >
-
-          <option value="all">
-            Semua Game
-          </option>
-
-          <option value="mobile-legends">
-            Mobile Legends
-          </option>
-
-          <option value="free-fire">
-            Free Fire
-          </option>
-
-          <option value="pubg-mobile">
-            PUBG Mobile
-          </option>
-
-        </select>
+        <div class="leo-select" id="gameFilterCustom">
+<select id="gameFilter" class="admin-filter leo-select-native" aria-label="Filter game"><option value="all">Semua Game</option></select>
+<button class="leo-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false"><span class="leo-select-value"><span class="leo-select-icon">🎮</span><span class="leo-select-label">Semua Game</span></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+<div class="leo-select-menu" role="listbox" aria-label="Pilih game" hidden></div></div>
 
 
 
