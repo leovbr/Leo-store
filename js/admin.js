@@ -202,21 +202,7 @@ function getStatusClass(status) {
 }
 
 function getGameIcon(order) {
-  const slug = getGameSlug(order);
-  const imageSlug = slug.startsWith("roblox-") ? "roblox" : slug;
-  const knownGames = new Set([
-    "mobile-legends", "free-fire", "pubg-mobile", "valorant", "roblox",
-    "genshin-impact", "honkai-star-rail", "honkai-impact-3",
-    "arena-of-valor", "call-of-duty-mobile", "honor-of-kings",
-    "wuthering-waves", "blood-strike", "efootball", "ea-sports-fc-mobile",
-    "league-of-legends-wild-rift", "marvel-rivals", "lifeafter",
-    "point-blank", "delta-force", "black-clover-m", "speed-drifters",
-    "zenless-zone-zero"
-  ]);
-  if (knownGames.has(imageSlug)) {
-    return '<img src="assets/icons/' + escapeHTML(imageSlug) + '.webp" alt="' + escapeHTML(getGameName(order)) + '" loading="lazy" onerror="this.style.display=\'none\'">';
-  }
-  return '<span class="admin-game-icon-fallback">🎮</span>';
+  return '<span class="admin-game-icon-fallback" aria-label="Ikon game dikelola dari katalog Admin">🎮</span>';
 }
 
 // ================================
