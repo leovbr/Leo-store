@@ -26,4 +26,5 @@ function subscribeList(){listChannel=db.channel("admin-chat-inbox").on("postgres
 db.auth.onAuthStateChange((event,session)=>{if(event==="SIGNED_OUT"){showApp(false);user=null;}});
 checkSession().catch(e=>$("loginStatus").textContent="Gagal memuat: "+e.message);
 })();
-</script></body></html>
+</script>  <script src="js/custom-selects.js?v=20261023-icons1" defer></script>
+</body></html>
