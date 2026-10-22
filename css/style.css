@@ -3227,3 +3227,15 @@ body{
 .admin-status-select{appearance:none;-webkit-appearance:none;display:block;width:100%;max-width:100%;min-height:44px;padding:10px 38px 10px 12px;border:1px solid rgba(148,163,184,.25);border-radius:12px;background-color:#101725;color:#edf2ff;font:600 13px/1.4 'Plus Jakarta Sans',system-ui,sans-serif;}
 .admin-status-control{max-width:100%;min-width:0;}
 .leo-shared-select{min-width:0;max-width:100%;}
+
+/* Checkout country-code selector: compact, store-themed, accessible. */
+.whatsapp-input{display:flex;align-items:stretch;gap:10px;min-width:0}
+.whatsapp-input .leo-shared-select{flex:0 0 158px;width:158px;max-width:45%;}
+.whatsapp-input .leo-shared-trigger{min-height:56px;padding:9px 10px;border-radius:18px;background:linear-gradient(145deg,#151a27,#0d121c);border:1px solid #293548;color:#e9edff;box-shadow:none;}
+.whatsapp-input .leo-shared-value{gap:7px;font-size:13px;}
+.whatsapp-input .leo-shared-icon{flex-basis:25px;width:25px;height:25px;background:rgba(124,92,255,.12);color:#b5a5ff;}
+.whatsapp-input .leo-shared-icon svg{width:16px;height:16px;}
+.whatsapp-input .leo-shared-menu{max-height:280px;min-width:220px;left:0;right:auto;width:max-content;max-width:min(84vw,320px);}
+.whatsapp-input .leo-shared-option{min-height:40px;font-size:13px;}
+.whatsapp-input #contactWhatsapp{flex:1;min-width:0;width:0;}
+@media(max-width:420px){.whatsapp-input{gap:8px}.whatsapp-input .leo-shared-select{flex-basis:142px;width:142px}.whatsapp-input .leo-shared-trigger{min-height:54px;padding:8px}.whatsapp-input .leo-shared-value{font-size:12px}}
