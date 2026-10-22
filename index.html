@@ -376,9 +376,7 @@ body{top:0!important}.skiptranslate iframe{display:none!important}.goog-logo-lin
     <div class="banner-dots" id="bannerDots"></div>
   </div>
 </div></section>
-<section class="home-games-section" id="homeTrendingSection"><div class="container"><div class="section-heading"><h2 id="homeTrendingTitle">Trending <span class="trending-flame" aria-hidden="true">🔥</span></h2></div><div class="home-game-grid" id="homeTrendingGames">
-<a href="checkout.html?game=mobile-legends" class="home-game-card"><div class="home-game-image"><img src="assets/icons/mobile-legends.webp" alt="Mobile Legends" loading="lazy"></div><div class="home-game-info"><strong>Mobile Legends</strong><span>Moonton</span></div></a>
-<a href="checkout.html?game=free-fire" class="home-game-card"><div class="home-game-image"><img src="assets/icons/free-fire.webp" alt="Free Fire" loading="lazy"></div><div class="home-game-info"><strong>Free Fire</strong><span>Garena</span></div></a></div></div></section>
+<section class="home-games-section" id="homeTrendingSection"><div class="container"><div class="section-heading"><h2 id="homeTrendingTitle">Trending <span class="trending-flame" aria-hidden="true">🔥</span></h2></div><div class="home-game-grid" id="homeTrendingGames"></div></div></section>
 <section class="home-games-section" id="marketplaceTabsSection">
  <div class="container">
   <div class="marketplace-tabs" role="tablist" aria-label="Pilihan beranda">
@@ -416,9 +414,7 @@ body{top:0!important}.skiptranslate iframe{display:none!important}.goog-logo-lin
   </div>
  </div>
 </section>
-<section class="home-games-section all-games-section" id="homeAllGamesSection"><div class="container"><div class="section-heading"><h2 id="homeAllGamesTitle">Koleksi Game</h2></div><div class="home-game-grid" id="homeAllGames">
-<a href="checkout.html?game=mobile-legends" class="home-game-card"><div class="home-game-image"><img src="assets/icons/mobile-legends.webp" alt="Mobile Legends" loading="lazy"></div><div class="home-game-info"><strong>Mobile Legends</strong><span>Moonton</span></div></a>
-<a href="checkout.html?game=free-fire" class="home-game-card"><div class="home-game-image"><img src="assets/icons/free-fire.webp" alt="Free Fire" loading="lazy"></div><div class="home-game-info"><strong>Free Fire</strong><span>Garena</span></div></a></div><div class="home-all-games-actions"><a href="shop.html" id="showAllGames" class="home-all-games-cta" style="display:none">Tampilkan Semua Game <span aria-hidden="true">→</span></a></div></div></section>
+<section class="home-games-section all-games-section" id="homeAllGamesSection"><div class="container"><div class="section-heading"><h2 id="homeAllGamesTitle">Koleksi Game</h2></div><div class="home-game-grid" id="homeAllGames"></div><div class="home-all-games-actions"><a href="shop.html" id="showAllGames" class="home-all-games-cta" style="display:none">Tampilkan Semua Game <span aria-hidden="true">→</span></a></div></div></section>
 <div class="account-policy-backdrop" id="accountPolicyModal" role="dialog" aria-modal="true" aria-labelledby="accountPolicyTitle" hidden>
  <div class="account-policy-card">
   <button type="button" class="account-policy-close" id="closeAccountPolicy" aria-label="Tutup ketentuan">×</button>
@@ -530,7 +526,7 @@ document.addEventListener("DOMContentLoaded",async function(){
   // Hide games with no active products from the storefront, without deleting them from the catalog.
   const purchasable=new Set(!productsError?(products||[]).map(p=>p.game_slug):games.map(g=>g.slug));
   const visibleGames=games.filter(g=>purchasable.has(g.slug));
-  const cfg=!settingsError&&settings?settings:{trending_slugs:["mobile-legends","free-fire"],trending_title:"Trending",trending_limit:6,trending_enabled:true,all_games_title:"All Games",all_games_initial_limit:12,all_games_enabled:true,show_all_games_button:true};
+  const cfg=settings;
   const card=g=>'<a href="checkout.html?game='+encodeURIComponent(g.slug)+'" class="home-game-card"><div class="home-game-image"><img src="'+esc(g.icon_url||"assets/icons/mobile-legends.webp")+'" alt="'+esc(g.name)+'" loading="lazy" onerror="this.onerror=null;this.src=\'assets/icons/mobile-legends.webp\'"></div><div class="home-game-info"><strong>'+esc(g.name)+'</strong><span>'+esc(g.publisher||"Game")+'</span></div></a>';
   const configuredTrending=Array.isArray(cfg.trending_slugs)?cfg.trending_slugs:[];
   const gameBySlugForTrending=new Map(visibleGames.map(g=>[g.slug,g]));
