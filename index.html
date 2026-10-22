@@ -511,9 +511,21 @@ document.addEventListener("DOMContentLoaded",async function(){
  const trendingGrid=document.getElementById("homeTrendingGames"),allGrid=document.getElementById("homeAllGames");
  const trendingSection=document.getElementById("homeTrendingSection"),allSection=document.getElementById("homeAllGamesSection");
  const moreButton=document.getElementById("showAllGames");
- if(!trendingGrid||!allGrid||!window.supabase)return;
+ if(!trendingGrid||!allGrid){console.error("Elemen grid homepage tidak ditemukan.");return;}
  const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
  try{
+  // Recover if the primary Supabase CDN did not load on this device.
+  if(!window.supabase){
+   trendingGrid.innerHTML='<p class="home-data-status">Menghubungkan ke database…</p>';
+   allGrid.innerHTML='<p class="home-data-status">Menghubungkan ke database…</p>';
+   await new Promise(resolve=>{
+    const script=document.createElement("script");
+    script.src="https://unpkg.com/@supabase/supabase-js@2";
+    script.onload=resolve;script.onerror=resolve;
+    document.head.appendChild(script);
+   });
+  }
+  if(!window.supabase)throw new Error("Library database gagal dimuat dari CDN. Coba jaringan lain atau nonaktifkan pemblokir konten.");
   const db=window.supabase.createClient("https://tvdbrqskvuukxvqaqjom.supabase.co","sb_publishable_2f-IadmcnaYzoCb_8Iko0w_pFp9u8eF");
   const [{data:games,error:gamesError},{data:settings,error:settingsError},{data:products,error:productsError}]=await Promise.all([
    db.from("store_games").select("slug,name,publisher,icon_url,sort_order,is_active").eq("is_active",true).order("sort_order").limit(200),
@@ -541,7 +553,7 @@ document.addEventListener("DOMContentLoaded",async function(){
   const configuredSlugs=Array.isArray(cfg.all_games_slugs)?cfg.all_games_slugs:[];
   const allGames=configuredSlugs.length?configuredSlugs.map(slug=>gameBySlug.get(slug)).filter(Boolean):visibleGames;
   function renderAll(){allGrid.innerHTML=allGames.slice(0,initialLimit).map(card).join("");const canGoShop=visibleGames.length>initialLimit&&cfg.show_all_games_button!==false;moreButton.style.display=canGoShop?"inline-flex":"none";}renderAll();
- }catch(e){console.error("Homepage gagal memuat data Supabase:",e);const message='<p class="home-data-status">Data beranda belum bisa dimuat. Periksa koneksi lalu muat ulang halaman.</p>';trendingGrid.innerHTML=message;allGrid.innerHTML=message;if(moreButton)moreButton.style.display="none";}
+ }catch(e){console.error("Homepage gagal memuat data Supabase:",e);const detail=String(e?.message||e||"Kesalahan tidak diketahui");const message='<p class="home-data-status">Data beranda gagal dimuat: '+esc(detail)+'. Muat ulang halaman setelah memeriksa koneksi.</p>';trendingGrid.innerHTML=message;allGrid.innerHTML=message;if(moreButton)moreButton.style.display="none";}
 });
 </script>
 <script>
