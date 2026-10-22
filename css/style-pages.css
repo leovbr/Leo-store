@@ -1054,15 +1054,17 @@
 .order-page {
   min-height: 100vh;
 
-  /* Match the storefront's subtle purple glow on the dark navy background. */
-  background:
+  /* Keep one continuous storefront background; fixed attachment can split
+     the gradient during mobile browser scrolling. */
+  background-color: var(--bg);
+  background-image:
     radial-gradient(
       circle at 85% 0%,
       rgba(124, 92, 255, 0.10),
       transparent 28%
-    ),
-    var(--bg);
-  background-attachment: fixed;
+    );
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 
 .order-section {
