@@ -369,7 +369,7 @@ body{top:0!important}.skiptranslate iframe{display:none!important}.goog-logo-lin
   <div class="section-heading"><span class="eyebrow">EVENT & PROMO</span></div>
   <div class="banner-carousel">
     <div class="banner-track">
-      <a href="checkout.html?game=mobile-legends" class="home-banner-slide"><img src="assets/icons/mobile-legends.webp" alt="Mobile Legends"><div class="home-banner-overlay"><div><span>TOP UP SEKARANG</span><strong>Mobile Legends</strong></div><b>→</b></div></a>
+      <!-- Banner beranda dimuat hanya dari Event & Promo yang diatur melalui Admin. -->
       <a href="checkout.html?game=free-fire" class="home-banner-slide"><img src="assets/icons/free-fire.webp" alt="Free Fire"><div class="home-banner-overlay"><div><span>TOP UP SEKARANG</span><strong>Free Fire</strong></div><b>→</b></div></a>
       <a href="checkout.html?game=pubg-mobile" class="home-banner-slide"><img src="assets/icons/pubg-mobile.webp" alt="PUBG Mobile"><div class="home-banner-overlay"><div><span>TOP UP SEKARANG</span><strong>PUBG Mobile</strong></div><b>→</b></div></a>
     </div>
@@ -545,7 +545,7 @@ document.addEventListener("DOMContentLoaded",async function(){
   if(!window.supabase)throw new Error("Library database gagal dimuat dari CDN. Coba jaringan lain atau nonaktifkan pemblokir konten.");
   const db=window.supabase.createClient("https://tvdbrqskvuukxvqaqjom.supabase.co","sb_publishable_2f-IadmcnaYzoCb_8Iko0w_pFp9u8eF");
   const [{data:games,error:gamesError},{data:settings,error:settingsError},{data:products,error:productsError}]=await Promise.all([
-   db.from("store_games").select("slug,name,publisher,icon_url,sort_order,is_active").eq("is_active",true).order("sort_order").limit(200),
+   db.from("store_games").select("slug,name,publisher,icon_url,banner_url,sort_order,is_active").eq("is_active",true).order("sort_order").limit(200),
    db.from("store_homepage_settings").select("trending_slugs,trending_title,trending_limit,trending_enabled,all_games_title,all_games_initial_limit,all_games_enabled,show_all_games_button,all_games_slugs").eq("id",1).maybeSingle(),
    db.from("store_products").select("game_slug").eq("is_active",true)
   ]);
@@ -557,7 +557,7 @@ document.addEventListener("DOMContentLoaded",async function(){
   if(productsError)console.warn("Produk aktif gagal dimuat; katalog game tetap ditampilkan:",productsError);
   const visibleGames=games;
   const cfg=settings;
-  const card=g=>'<a href="checkout.html?game='+encodeURIComponent(g.slug)+'" class="home-game-card"><div class="home-game-image"><img src="'+esc(g.icon_url||"assets/icons/mobile-legends.webp")+'" alt="'+esc(g.name)+'" loading="lazy" onerror="this.onerror=null;this.src=\'assets/icons/mobile-legends.webp\'"></div><div class="home-game-info"><strong>'+esc(g.name)+'</strong><span>'+esc(g.publisher||"Game")+'</span></div></a>';
+  const card=g=>'<a href="checkout.html?game='+encodeURIComponent(g.slug)+'" class="home-game-card"><div class="home-game-image">'+(g.icon_url?'<img src="'+esc(g.icon_url)+'" alt="'+esc(g.name)+'" loading="lazy" onerror="this.remove()">':'<span class="game-icon-empty" aria-label="Ikon belum diatur">🎮</span>')+'</div><div class="home-game-info"><strong>'+esc(g.name)+'</strong><span>'+esc(g.publisher||"Game")+'</span></div></a>';
   const configuredTrending=Array.isArray(cfg.trending_slugs)?cfg.trending_slugs:[];
   const gameBySlugForTrending=new Map(visibleGames.map(g=>[g.slug,g]));
   const trending=configuredTrending.map(slug=>gameBySlugForTrending.get(slug)).filter(Boolean).slice(0,Math.max(0,Number(cfg.trending_limit)||6));
