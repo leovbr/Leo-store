@@ -10,7 +10,7 @@ const PRODUCTS = [
     id: "mobile-legends",
     slug: "mobile-legends",
     name: "Mobile Legends",
-    image: "assets/icons/mobile-legends.webp",
+    image: "",
     icon: "🎮",
     publisher: "Moonton",
 
