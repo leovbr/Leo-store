@@ -107,13 +107,53 @@ function getOrderId(order) {
   return order.orderId || "";
 }
 
+function normalizeGameSlug(value) {
+  return String(value || "")
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
 function getGameSlug(order) {
-  return String(
-    order.gameSlug ||
-    order.productId ||
-    order.game ||
-    ""
-  ).toLowerCase();
+  // Prefer a real game slug when the order schema provides one.
+  const explicit = order.gameSlug || order.game_slug || order.gameSlugId;
+  if (explicit) return normalizeGameSlug(explicit);
+
+  // Product IDs can be SKU/UUIDs, so don't treat them as game slugs.
+  const name = order.gameName || order.game_name || order.game || order.productName || "";
+  const normalizedName = normalizeGameSlug(name);
+  const aliases = {
+    "mobile-legends-bang-bang": "mobile-legends",
+    "mlbb": "mobile-legends",
+    "free-fire-battlegrounds": "free-fire",
+    "pubg-mobile-global": "pubg-mobile",
+    "honor-of-kings-global": "honor-of-kings",
+    "roblox-via-login": "roblox",
+    "roblox-via-username": "roblox"
+  };
+  return aliases[normalizedName] || normalizedName || normalizeGameSlug(order.productId || "");
+}
+
+function populateGameFilter(orders) {
+  if (!gameFilterEl) return;
+  const current = gameFilterEl.value || "all";
+  const games = new Map();
+
+  orders.forEach(order => {
+    const slug = getGameSlug(order);
+    const name = getGameName(order);
+    if (slug && name && slug !== "game") {
+      const existing = games.get(slug);
+      if (!existing || name.length < existing.length) games.set(slug, name);
+    }
+  });
+
+  const sorted = [...games.entries()].sort((a, b) => a[1].localeCompare(b[1], "id"));
+  gameFilterEl.innerHTML = '<option value="all">🎮 Semua Game</option>' +
+    sorted.map(([slug, name]) => '<option value="' + escapeHTML(slug) + '">' + escapeHTML(name) + '</option>').join("");
+
+  gameFilterEl.value = games.has(current) || current === "all" ? current : "all";
 }
 
 function getGameName(order) {
@@ -557,6 +597,7 @@ function render() {
   const orders =
     getOrders();
 
+  populateGameFilter(orders);
   updateStats(orders);
 
   const filteredOrders =
@@ -693,7 +734,7 @@ async function loadRemoteOrders(){
     const response=await fetch(ADMIN_API_URL+"?limit=100",{method:"GET",headers:{Authorization:"Bearer "+token,Accept:"application/json"},cache:"no-store"});
     const data=await response.json().catch(()=>({}));
     if(!response.ok||!data.ok)throw new Error(data.error||("HTTP "+response.status));
-    remoteOrders=(Array.isArray(data.orders)?data.orders:[]).map(order=>({...order,_remote:true,gameSlug:order.productId,amount:order.denomination,price:order.total,paidAt:order.status==="Pembayaran Berhasil"?order.updatedAt:""}));
+    remoteOrders=(Array.isArray(data.orders)?data.orders:[]).map(order=>({...order,_remote:true,gameSlug:order.gameSlug || order.game_slug || "",gameName:order.gameName || order.game_name || order.game || order.productName || order.product_name || "",amount:order.denomination || order.denomination_name,price:order.total,paidAt:order.status==="Pembayaran Berhasil"?order.updatedAt:""}));
     sessionStorage.setItem("LEOOSTORE_admin_api_token",token);
     if(adminApiStatusEl)adminApiStatusEl.textContent="Terhubung · "+remoteOrders.length+" transaksi dari database pusat";
     render();
