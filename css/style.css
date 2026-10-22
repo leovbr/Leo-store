@@ -3251,3 +3251,8 @@ body{
 .contact-fields .whatsapp-input>#contactWhatsapp:focus{outline:none!important;border-color:#8b7cff!important;box-shadow:0 0 0 3px rgba(124,92,255,.15)!important;}
 .contact-fields .whatsapp-input>.leo-shared-select .leo-shared-menu{width:min(300px,80vw)!important;min-width:0!important;max-width:80vw!important;}
 @media(max-width:360px){.contact-fields .whatsapp-input{grid-template-columns:minmax(100px,40%) minmax(0,1fr)!important;gap:8px!important}.contact-fields .whatsapp-input>#contactWhatsapp{padding:0 10px!important;font-size:13px!important}}
+
+/* Country selector closed state: flag + calling code only; menu keeps full country names. */
+.whatsapp-input .leo-shared-select .leo-country-compact{display:block;white-space:nowrap;font-size:13px;font-weight:600;line-height:1.2;letter-spacing:.1px;}
+.whatsapp-input .leo-shared-select .leo-shared-value{justify-content:center;overflow:hidden;}
+.whatsapp-input .leo-shared-select .leo-shared-arrow{margin-left:auto;}
