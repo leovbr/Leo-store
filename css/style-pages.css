@@ -1054,7 +1054,15 @@
 .order-page {
   min-height: 100vh;
 
-  background: var(--bg);
+  /* Match the storefront's subtle purple glow on the dark navy background. */
+  background:
+    radial-gradient(
+      circle at 85% 0%,
+      rgba(124, 92, 255, 0.10),
+      transparent 28%
+    ),
+    var(--bg);
+  background-attachment: fixed;
 }
 
 .order-section {
