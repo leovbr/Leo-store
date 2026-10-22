@@ -3239,3 +3239,15 @@ body{
 .whatsapp-input .leo-shared-option{min-height:40px;font-size:13px;}
 .whatsapp-input #contactWhatsapp{flex:1;min-width:0;width:0;}
 @media(max-width:420px){.whatsapp-input{gap:8px}.whatsapp-input .leo-shared-select{flex-basis:142px;width:142px}.whatsapp-input .leo-shared-trigger{min-height:54px;padding:8px}.whatsapp-input .leo-shared-value{font-size:12px}}
+
+/* FIX: WhatsApp country code + phone number must sit side by side. */
+.contact-fields .whatsapp-input{display:grid!important;grid-template-columns:minmax(112px, 38%) minmax(0,1fr)!important;align-items:stretch!important;gap:10px!important;width:100%!important;}
+.contact-fields .whatsapp-input>.leo-shared-select{display:block!important;position:relative!important;flex:none!important;width:100%!important;max-width:100%!important;min-width:0!important;}
+.contact-fields .whatsapp-input>.leo-shared-select .leo-shared-trigger{width:100%!important;min-width:0!important;height:56px!important;min-height:56px!important;padding:0 10px!important;border-radius:18px!important;background:#111827!important;border:1px solid #293548!important;box-shadow:none!important;}
+.contact-fields .whatsapp-input>.leo-shared-select .leo-shared-value{min-width:0!important;gap:5px!important;font-size:12px!important;}
+.contact-fields .whatsapp-input>.leo-shared-select .leo-shared-icon{display:none!important;}
+.contact-fields .whatsapp-input>.leo-shared-select .leo-shared-arrow{flex:0 0 18px!important;}
+.contact-fields .whatsapp-input>#contactWhatsapp{display:block!important;box-sizing:border-box!important;flex:none!important;width:100%!important;min-width:0!important;max-width:100%!important;height:56px!important;min-height:56px!important;margin:0!important;padding:0 16px!important;border-radius:18px!important;background:#152235!important;border:1px solid #293548!important;color:#eef2ff!important;font:400 14px/1.4 'Plus Jakarta Sans',system-ui,sans-serif!important;}
+.contact-fields .whatsapp-input>#contactWhatsapp:focus{outline:none!important;border-color:#8b7cff!important;box-shadow:0 0 0 3px rgba(124,92,255,.15)!important;}
+.contact-fields .whatsapp-input>.leo-shared-select .leo-shared-menu{width:min(300px,80vw)!important;min-width:0!important;max-width:80vw!important;}
+@media(max-width:360px){.contact-fields .whatsapp-input{grid-template-columns:minmax(100px,40%) minmax(0,1fr)!important;gap:8px!important}.contact-fields .whatsapp-input>#contactWhatsapp{padding:0 10px!important;font-size:13px!important}}
