@@ -139,21 +139,40 @@ function populateGameFilter(orders) {
   if (!gameFilterEl) return;
   const current = gameFilterEl.value || "all";
   const games = new Map();
-
   orders.forEach(order => {
-    const slug = getGameSlug(order);
-    const name = getGameName(order);
+    const slug = getGameSlug(order), name = getGameName(order);
     if (slug && name && slug !== "game") {
       const existing = games.get(slug);
       if (!existing || name.length < existing.length) games.set(slug, name);
     }
   });
-
-  const sorted = [...games.entries()].sort((a, b) => a[1].localeCompare(b[1], "id"));
-  gameFilterEl.innerHTML = '<option value="all">🎮 Semua Game</option>' +
-    sorted.map(([slug, name]) => '<option value="' + escapeHTML(slug) + '">' + escapeHTML(name) + '</option>').join("");
-
+  const sorted = [...games.entries()].sort((a,b)=>a[1].localeCompare(b[1],"id"));
+  gameFilterEl.innerHTML = '<option value="all">Semua Game</option>' + sorted.map(([slug,name])=>'<option value="'+escapeHTML(slug)+'">'+escapeHTML(name)+'</option>').join("");
   gameFilterEl.value = games.has(current) || current === "all" ? current : "all";
+  renderGameFilterOptions();
+}
+function renderGameFilterOptions() {
+  const root=document.getElementById("gameFilterCustom");
+  if(!root||!gameFilterEl)return;
+  const menu=root.querySelector(".leo-select-menu"), label=root.querySelector(".leo-select-label");
+  if(!menu||!label)return;
+  const selected=gameFilterEl.options[gameFilterEl.selectedIndex];
+  label.textContent=selected?selected.textContent.trim():"Semua Game";
+  menu.innerHTML=Array.from(gameFilterEl.options).map(option=>{
+    const value=escapeHTML(option.value), text=escapeHTML(option.textContent.trim()), active=option.value===gameFilterEl.value;
+    return '<button type="button" class="leo-select-option'+(active?' is-selected':'')+'" role="option" aria-selected="'+active+'" data-value="'+value+'"><span class="leo-option-game-icon">🎮</span><span class="leo-option-text">'+text+'</span>'+(active?'<span class="leo-option-check">✓</span>':'')+'</button>';
+  }).join("");
+}
+function initGameFilterDropdown() {
+  const root=document.getElementById("gameFilterCustom");
+  if(!root||!gameFilterEl||root.dataset.ready==="true")return;
+  root.dataset.ready="true";
+  const trigger=root.querySelector(".leo-select-trigger"),menu=root.querySelector(".leo-select-menu");
+  const close=()=>{menu.hidden=true;trigger.setAttribute("aria-expanded","false");root.classList.remove("is-open");};
+  trigger.addEventListener("click",()=>{const open=menu.hidden;menu.hidden=!open;trigger.setAttribute("aria-expanded",String(open));root.classList.toggle("is-open",open);});
+  menu.addEventListener("click",event=>{const option=event.target.closest(".leo-select-option");if(!option)return;gameFilterEl.value=option.dataset.value;renderGameFilterOptions();close();render();});
+  document.addEventListener("click",event=>{if(!root.contains(event.target))close();});
+  document.addEventListener("keydown",event=>{if(event.key==="Escape")close();});
 }
 
 function getGameName(order) {
@@ -754,4 +773,5 @@ if(adminApiTokenEl){
 // INITIAL
 // ================================
 
+initGameFilterDropdown();
 render();
