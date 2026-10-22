@@ -532,8 +532,9 @@ document.addEventListener("DOMContentLoaded",async function(){
   const visibleGames=games.filter(g=>purchasable.has(g.slug));
   const cfg=!settingsError&&settings?settings:{trending_slugs:["mobile-legends","free-fire"],trending_title:"Trending",trending_limit:6,trending_enabled:true,all_games_title:"All Games",all_games_initial_limit:12,all_games_enabled:true,show_all_games_button:true};
   const card=g=>'<a href="checkout.html?game='+encodeURIComponent(g.slug)+'" class="home-game-card"><div class="home-game-image"><img src="'+esc(g.icon_url||"assets/icons/mobile-legends.webp")+'" alt="'+esc(g.name)+'" loading="lazy" onerror="this.onerror=null;this.src=\'assets/icons/mobile-legends.webp\'"></div><div class="home-game-info"><strong>'+esc(g.name)+'</strong><span>'+esc(g.publisher||"Game")+'</span></div></a>';
-  const selected=new Set(Array.isArray(cfg.trending_slugs)?cfg.trending_slugs:[]);
-  const trending=visibleGames.filter(g=>selected.has(g.slug)).slice(0,Math.max(0,Number(cfg.trending_limit)||6));
+  const configuredTrending=Array.isArray(cfg.trending_slugs)?cfg.trending_slugs:[];
+  const gameBySlugForTrending=new Map(visibleGames.map(g=>[g.slug,g]));
+  const trending=configuredTrending.map(slug=>gameBySlugForTrending.get(slug)).filter(Boolean).slice(0,Math.max(0,Number(cfg.trending_limit)||6));
   trendingSection.hidden=cfg.trending_enabled===false;allSection.hidden=cfg.all_games_enabled===false;
   document.getElementById("homeTrendingTitle").innerHTML=esc(cfg.trending_title||"Trending")+' <span class="trending-flame" aria-hidden="true">🔥</span>';
   document.getElementById("homeAllGamesTitle").textContent=cfg.all_games_title||"All Games";
