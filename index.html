@@ -512,6 +512,23 @@ document.addEventListener("DOMContentLoaded",async function(){
  const trendingSection=document.getElementById("homeTrendingSection"),allSection=document.getElementById("homeAllGamesSection");
  const moreButton=document.getElementById("showAllGames");
  if(!trendingGrid||!allGrid){console.error("Elemen grid homepage tidak ditemukan.");return;}
+ // Visible load status is useful even when Admin data eventually loads successfully.
+ let status=document.getElementById("homeDataLoadStatus");
+ if(!status){
+  status=document.createElement("div");status.id="homeDataLoadStatus";
+  status.setAttribute("role","status");status.setAttribute("aria-live","polite");
+  status.style.cssText="margin:10px 0 16px;padding:10px 12px;border:1px solid #35304f;border-radius:10px;background:#111827;color:#cbd5e1;font-size:12px;line-height:1.5";
+  const anchor=trendingGrid.parentElement;
+  if(anchor)anchor.insertBefore(status,trendingGrid);
+ }
+ const setStatus=(message,kind="loading")=>{
+  if(!status)return;
+  status.textContent=message;
+  status.style.display="block";
+  status.style.borderColor=kind==="ok"?"#237a57":kind==="error"?"#b45353":"#6550a4";
+  status.style.color=kind==="ok"?"#a7f3d0":kind==="error"?"#fecaca":"#ddd6fe";
+ };
+ setStatus("Memuat pengaturan Admin dan katalog game dari Supabase…");
  const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
  try{
   // Recover if the primary Supabase CDN did not load on this device.
@@ -552,8 +569,9 @@ document.addEventListener("DOMContentLoaded",async function(){
   const gameBySlug=new Map(visibleGames.map(g=>[g.slug,g]));
   const configuredSlugs=Array.isArray(cfg.all_games_slugs)?cfg.all_games_slugs:[];
   const allGames=configuredSlugs.length?configuredSlugs.map(slug=>gameBySlug.get(slug)).filter(Boolean):visibleGames;
-  function renderAll(){allGrid.innerHTML=allGames.slice(0,initialLimit).map(card).join("");const canGoShop=visibleGames.length>initialLimit&&cfg.show_all_games_button!==false;moreButton.style.display=canGoShop?"inline-flex":"none";}renderAll();
- }catch(e){console.error("Homepage gagal memuat data Supabase:",e);const detail=String(e?.message||e||"Kesalahan tidak diketahui");const message='<p class="home-data-status">Data beranda gagal dimuat: '+esc(detail)+'. Muat ulang halaman setelah memeriksa koneksi.</p>';trendingGrid.innerHTML=message;allGrid.innerHTML=message;if(moreButton)moreButton.style.display="none";}
+  function renderAll(){allGrid.innerHTML=allGames.slice(0,initialLimit).map(card).join("");const canGoShop=visibleGames.length>initialLimit&&cfg.show_all_games_button!==false;if(moreButton)moreButton.style.display=canGoShop?"inline-flex":"none";}renderAll();
+  setStatus("Berhasil dimuat dari Supabase • "+games.length+" game aktif • pengaturan Admin diterapkan.", "ok");
+ }catch(e){console.error("Homepage gagal memuat data Supabase:",e);const detail=String(e?.message||e||"Kesalahan tidak diketahui");setStatus("Gagal memuat data: "+detail,"error");const message='<p class="home-data-status">'+esc(detail)+'</p>';trendingGrid.innerHTML=message;allGrid.innerHTML=message;if(moreButton)moreButton.style.display="none";}
 });
 </script>
 <script>
