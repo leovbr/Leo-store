@@ -47,3 +47,18 @@ CREATE INDEX IF NOT EXISTS idx_promo_redemptions_code_status
   ON promo_redemptions(promo_code, status);
 CREATE INDEX IF NOT EXISTS idx_promo_redemptions_customer
   ON promo_redemptions(promo_code, customer_key, status);
+
+
+-- Idempotency/audit log for Resend order notifications.
+CREATE TABLE IF NOT EXISTS email_notifications (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  order_id TEXT NOT NULL,
+  event_type TEXT NOT NULL,
+  recipient TEXT NOT NULL,
+  status TEXT NOT NULL DEFAULT 'pending',
+  attempts INTEGER NOT NULL DEFAULT 0,
+  last_error TEXT,
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL,
+  UNIQUE(order_id, event_type, recipient)
+);
