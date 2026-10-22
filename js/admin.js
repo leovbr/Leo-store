@@ -104,6 +104,7 @@ function getOrderId(order) {
 function getGameSlug(order) {
   return String(
     order.gameSlug ||
+    order.productId ||
     order.game ||
     ""
   ).toLowerCase();
@@ -112,6 +113,7 @@ function getGameSlug(order) {
 function getGameName(order) {
   return (
     order.gameName ||
+    order.productName ||
     order.game ||
     "Game"
   );
@@ -162,18 +164,18 @@ function updateStats(orders) {
 
   const revenue = orders.reduce(
     (sum, order) =>
-      sum + (Number(order.price) || 0),
+      sum + (Number(order.total ?? order.price) || 0),
     0
   );
 
   const success = orders.filter(
     order =>
-      order.status === "Top Up Berhasil"
+      ["Top Up Berhasil", "Pembayaran Berhasil"].includes(order.status)
   ).length;
 
   const pending = orders.filter(
     order =>
-      order.status !== "Top Up Berhasil"
+      !["Top Up Berhasil", "Pembayaran Berhasil"].includes(order.status)
   ).length;
 
   if (totalOrdersEl) {
@@ -366,13 +368,14 @@ function createOrderCard(order) {
     order.server || "-";
 
   const amount =
-    order.amount || "-";
+    order.amount || order.denomination || order.denominationName || "-";
 
   const payment =
-    order.payment || "-";
+    order.payment || order.paymentId || order.paymentMethod || "-";
 
+  // Prefer the amount recorded by the payment backend; never use the current catalog price.
   const price =
-    Number(order.price) || 0;
+    Number(order.total ?? order.price ?? order.paidAmount) || 0;
 
   const status =
     order.status ||
