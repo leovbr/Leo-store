@@ -524,7 +524,7 @@ document.addEventListener("DOMContentLoaded",async function(){
  const setStatus=(message,kind="loading")=>{
   if(!status)return;
   status.textContent=message;
-  status.style.display="block";
+  status.style.display=kind==="ok"?"none":"block";
   status.style.borderColor=kind==="ok"?"#237a57":kind==="error"?"#b45353":"#6550a4";
   status.style.color=kind==="ok"?"#a7f3d0":kind==="error"?"#fecaca":"#ddd6fe";
  };
