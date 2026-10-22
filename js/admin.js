@@ -755,17 +755,25 @@ async function loadRemoteOrders(){
     if(!response.ok||!data.ok)throw new Error(data.error||("HTTP "+response.status));
     remoteOrders=(Array.isArray(data.orders)?data.orders:[]).map(order=>({...order,_remote:true,gameSlug:order.gameSlug || order.game_slug || "",gameName:order.gameName || order.game_name || order.game || order.productName || order.product_name || "",amount:order.denomination || order.denomination_name,price:order.total,paidAt:order.status==="Pembayaran Berhasil"?order.updatedAt:""}));
     sessionStorage.setItem("LEOOSTORE_admin_api_token",token);
-    if(adminApiStatusEl)adminApiStatusEl.textContent="Terhubung · "+remoteOrders.length+" transaksi dari database pusat";
+    const connectPanel=document.querySelector(".admin-api-connect");
+    if(connectPanel)connectPanel.hidden=true;
+    if(adminApiStatusEl)adminApiStatusEl.textContent="";
     render();
   }catch(error){
     remoteOrders=null;
-    if(adminApiStatusEl)adminApiStatusEl.textContent="Gagal: "+(error.message||"Gagal menghubungkan database");
+    const connectPanel=document.querySelector(".admin-api-connect");
+    if(connectPanel)connectPanel.hidden=false;
+    if(adminApiStatusEl)adminApiStatusEl.textContent="Gagal terhubung: "+(error.message||"Periksa token dan koneksi.");
     render();
   }
 }
 if(connectAdminApiEl)connectAdminApiEl.addEventListener("click",loadRemoteOrders);
 if(adminApiTokenEl){
   adminApiTokenEl.value=sessionStorage.getItem("LEOOSTORE_admin_api_token")||"";
+  adminApiTokenEl.addEventListener("input",()=>{
+    if(adminApiStatusEl)adminApiStatusEl.hidden=!!adminApiTokenEl.value.trim();
+  });
+  if(adminApiStatusEl)adminApiStatusEl.hidden=!!adminApiTokenEl.value.trim();
   adminApiTokenEl.addEventListener("keydown",event=>{if(event.key==="Enter")loadRemoteOrders();});
 }
 
