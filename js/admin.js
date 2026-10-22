@@ -26,12 +26,18 @@ const gameFilterEl = document.getElementById("gameFilter");
 const adminStatusFilterEl = document.getElementById("adminStatusFilter");
 const adminOrderListEl = document.getElementById("adminOrderList");
 const refreshBtnEl = document.getElementById("refreshBtn");
+const adminApiTokenEl = document.getElementById("adminApiToken");
+const connectAdminApiEl = document.getElementById("connectAdminApi");
+const adminApiStatusEl = document.getElementById("adminApiStatus");
+const ADMIN_API_URL = "https://spring-surf-a6a7.leovbriansyh791.workers.dev/api/admin/orders";
+let remoteOrders = null;
 
 // ================================
 // STORAGE
 // ================================
 
 function getOrders() {
+  if (Array.isArray(remoteOrders)) return remoteOrders;
   try {
     const orders = JSON.parse(
       localStorage.getItem(ORDERS_KEY) || "[]"
@@ -138,6 +144,7 @@ function getStatusClass(status) {
 
 function getGameIcon(order) {
   const slug = getGameSlug(order);
+  const imageSlug = slug.startsWith("roblox-") ? "roblox" : slug;
   const knownGames = new Set([
     "mobile-legends", "free-fire", "pubg-mobile", "valorant", "roblox",
     "genshin-impact", "honkai-star-rail", "honkai-impact-3",
@@ -147,11 +154,9 @@ function getGameIcon(order) {
     "point-blank", "delta-force", "black-clover-m", "speed-drifters",
     "zenless-zone-zero"
   ]);
-
-  if (knownGames.has(slug)) {
-    return '<img src="assets/icons/' + escapeHTML(slug) + '.webp" alt="' + escapeHTML(getGameName(order)) + '" loading="lazy">';
+  if (knownGames.has(imageSlug)) {
+    return '<img src="assets/icons/' + escapeHTML(imageSlug) + '.webp" alt="' + escapeHTML(getGameName(order)) + '" loading="lazy" onerror="this.style.display=\'none\'">';
   }
-
   return '<span class="admin-game-icon-fallback">🎮</span>';
 }
 
@@ -316,6 +321,7 @@ function updateOrderStatus(
 // ================================
 
 function createStatusSelect(order) {
+  if (order._remote) return `<div class="admin-status-control"><span class="status-control-label">Status dari database pusat · ${escapeHTML(order.rawStatus || order.status || "-")}</span></div>`;
   const orderId =
     getOrderId(order);
 
@@ -495,7 +501,7 @@ function createOrderCard(order) {
           </span>
 
           <span class="admin-detail-value">
-            ${formatDate(order.paidAt)}
+            ${formatDate(order.paidAt || (order.status === "Pembayaran Berhasil" ? order.updatedAt : ""))}
           </span>
         </div>
 
@@ -657,7 +663,7 @@ if (adminStatusFilterEl) {
 if (refreshBtnEl) {
   refreshBtnEl.addEventListener(
     "click",
-    render
+    () => { if (Array.isArray(remoteOrders)) loadRemoteOrders(); else render(); }
   );
 }
 
@@ -677,6 +683,31 @@ window.addEventListener(
     }
   }
 );
+
+
+async function loadRemoteOrders(){
+  const token=String(adminApiTokenEl?.value || sessionStorage.getItem("LEOOSTORE_admin_api_token") || "").trim();
+  if(!token){if(adminApiStatusEl)adminApiStatusEl.textContent="Masukkan token admin untuk mengambil transaksi pusat.";return;}
+  if(adminApiStatusEl)adminApiStatusEl.textContent="Mengambil transaksi dari database...";
+  try{
+    const response=await fetch(ADMIN_API_URL+"?limit=100",{method:"GET",headers:{Authorization:"Bearer "+token,Accept:"application/json"},cache:"no-store"});
+    const data=await response.json().catch(()=>({}));
+    if(!response.ok||!data.ok)throw new Error(data.error||("HTTP "+response.status));
+    remoteOrders=(Array.isArray(data.orders)?data.orders:[]).map(order=>({...order,_remote:true,gameSlug:order.productId,amount:order.denomination,price:order.total,paidAt:order.status==="Pembayaran Berhasil"?order.updatedAt:""}));
+    sessionStorage.setItem("LEOOSTORE_admin_api_token",token);
+    if(adminApiStatusEl)adminApiStatusEl.textContent="Terhubung · "+remoteOrders.length+" transaksi dari database pusat";
+    render();
+  }catch(error){
+    remoteOrders=null;
+    if(adminApiStatusEl)adminApiStatusEl.textContent="Gagal: "+(error.message||"Gagal menghubungkan database");
+    render();
+  }
+}
+if(connectAdminApiEl)connectAdminApiEl.addEventListener("click",loadRemoteOrders);
+if(adminApiTokenEl){
+  adminApiTokenEl.value=sessionStorage.getItem("LEOOSTORE_admin_api_token")||"";
+  adminApiTokenEl.addEventListener("keydown",event=>{if(event.key==="Enter")loadRemoteOrders();});
+}
 
 // ================================
 // INITIAL
