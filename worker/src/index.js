@@ -21,7 +21,7 @@ const normalizeOrderId=value=>{const id=String(value||"").trim();return /^[A-Za-
 async function getLiveCatalog(){
   const headers={"apikey":SUPABASE_PUBLISHABLE_KEY,"Accept":"application/json","Cache-Control":"no-store"};
   const [gamesResponse,productsResponse]=await Promise.all([
-    fetch(SUPABASE_URL+"/rest/v1/store_games?select=slug,name,publisher,is_active&is_active=eq.true",{headers}),
+    fetch(SUPABASE_URL+"/rest/v1/store_games?select=slug,name,publisher,icon_url,banner_url,is_active&is_active=eq.true",{headers}),
     fetch(SUPABASE_URL+"/rest/v1/store_products?select=id,game_slug,amount,price,category,is_active&is_active=eq.true",{headers})
   ]);
   if(!gamesResponse.ok||!productsResponse.ok)throw new Error("Supabase catalog lookup failed: games="+gamesResponse.status+", products="+productsResponse.status);
@@ -33,7 +33,7 @@ async function getLiveCatalog(){
     const game=activeGames.get(String(item.game_slug));
     const id=String(item.id??"").trim(),price=Number(item.price);
     if(!game||!id||!Number.isSafeInteger(price)||price<1)continue;
-    if(!catalog.has(String(game.slug)))catalog.set(String(game.slug),{id:String(game.slug),slug:String(game.slug),name:String(game.name||game.slug),publisher:game.publisher||"Publisher",denominations:[]});
+    if(!catalog.has(String(game.slug)))catalog.set(String(game.slug),{id:String(game.slug),slug:String(game.slug),name:String(game.name||game.slug),publisher:game.publisher||"Publisher",icon:game.icon_url||"",image:game.icon_url||"",banner:game.banner_url||"",denominations:[]});
     catalog.get(String(game.slug)).denominations.push({id,amount:String(item.amount||id),price,category:item.category||"Top Up"});
   }
   return catalog;
