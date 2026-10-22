@@ -93,4 +93,5 @@ $("imagesTable").onclick=async e=>{const del=e.target.closest("[data-delete-imag
 document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-tab]").forEach(x=>x.classList.toggle("active",x===b));["products","games","add-game","homepage","promos","images"].forEach(t=>$("tab-"+t).classList.toggle("hidden",t!==b.dataset.tab));b.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"});});
 db.auth.getSession().then(({data,error})=>{if(error){$("authStatus").textContent=error.message;return;}auth(data.session?data.session.user:null);});
 })();
-</script></body></html>
+</script>  <script src="js/custom-selects.js?v=20261023-icons1" defer></script>
+</body></html>
