@@ -1154,3 +1154,16 @@ body {
  .admin-tools{gap:10px!important}
  .admin-filter{min-height:50px!important;font-size:14px!important}
 }
+
+
+/* Custom LEOOSTORE game dropdown */
+.leo-select{position:relative;width:100%;min-width:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;z-index:20}
+.leo-select-native{position:absolute!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important;clip-path:inset(50%)!important;overflow:hidden!important}
+.leo-select-trigger{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:50px;padding:0 15px;border:1px solid rgba(148,163,184,.2);border-radius:14px;background:linear-gradient(145deg,#171b27,#10131c);color:#f1f5ff;font:650 13px/1.3 'Plus Jakarta Sans',system-ui,sans-serif;text-align:left;box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 8px 22px rgba(0,0,0,.16);transition:border-color .18s,box-shadow .18s;cursor:pointer}
+.leo-select-trigger:focus-visible,.leo-select.is-open .leo-select-trigger{outline:none;border-color:#9182ff;box-shadow:0 0 0 3px rgba(124,92,255,.17),0 8px 22px rgba(0,0,0,.18)}
+.leo-select-value{display:flex;align-items:center;gap:10px;min-width:0}.leo-select-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.leo-select-icon{display:grid;place-items:center;width:28px;height:28px;flex:0 0 28px;border-radius:9px;background:rgba(124,92,255,.14);font-size:15px}
+.leo-select-trigger>svg{width:18px;height:18px;flex:0 0 18px;fill:none;stroke:#a5b4fc;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .18s}.leo-select.is-open .leo-select-trigger>svg{transform:rotate(180deg)}
+.leo-select-menu{position:absolute;left:0;right:0;top:calc(100% + 8px);max-height:min(340px,55vh);overflow-y:auto;padding:7px;border:1px solid rgba(148,163,184,.2);border-radius:16px;background:#171a24;box-shadow:0 20px 55px rgba(0,0,0,.48);z-index:1000;overscroll-behavior:contain}.leo-select-menu[hidden]{display:none!important}
+.leo-select-option{display:flex;align-items:center;gap:11px;width:100%;min-height:48px;padding:9px 10px;border:0;border-radius:10px;background:transparent;color:#dce2f0;text-align:left;font:600 13px/1.35 'Plus Jakarta Sans',system-ui,sans-serif;cursor:pointer;transition:background .15s,color .15s}.leo-select-option+.leo-select-option{margin-top:2px}.leo-select-option:hover,.leo-select-option:focus-visible{outline:none;background:rgba(124,92,255,.12);color:#fff}.leo-select-option.is-selected{background:linear-gradient(100deg,rgba(124,92,255,.22),rgba(124,92,255,.08));color:#fff}
+.leo-option-game-icon{display:grid;place-items:center;width:30px;height:30px;flex:0 0 30px;border-radius:9px;background:rgba(255,255,255,.055);font-size:15px}.leo-option-text{flex:1;min-width:0;overflow-wrap:anywhere}.leo-option-check{display:grid;place-items:center;width:22px;height:22px;flex:0 0 22px;border-radius:50%;background:#7965f2;color:white;font-size:12px;font-weight:900}
+@media(max-width:600px){.leo-select-trigger{min-height:52px;font-size:14px}.leo-select-menu{max-height:45vh;border-radius:14px}.leo-select-option{min-height:50px;font-size:14px}}
