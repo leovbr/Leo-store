@@ -19,9 +19,15 @@
     await navigator.serviceWorker.ready;
     let subscription = await registration.pushManager.getSubscription();
     if (!subscription) subscription = await registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64ToBytes(keyData.publicKey) });
+    let customerKey = (localStorage.getItem("leo_push_customer_key") || "").trim().toLowerCase();
+    if (!customerKey) {
+      customerKey = (prompt("Email yang dipakai saat checkout (opsional, untuk notifikasi transaksi):") || "").trim().toLowerCase();
+      if (customerKey && /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(customerKey)) localStorage.setItem("leo_push_customer_key", customerKey);
+      else customerKey = "";
+    }
     const response = await fetch(api("/api/push/subscribe"), {
       method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ subscription: subscription.toJSON(), customerKey: (localStorage.getItem("leo_push_customer_key") || prompt("Email yang dipakai saat checkout (opsional, untuk notifikasi transaksi):") || "").trim().toLowerCase() })
+      body: JSON.stringify({ subscription: subscription.toJSON(), customerKey })
     });
     const result = await response.json();
     if (!response.ok) throw new Error(result.error || "Gagal menyimpan perangkat.");
