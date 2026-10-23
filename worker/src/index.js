@@ -190,7 +190,7 @@ async function handleCreateOrder(request,env){try{return await handleCreateOrder
 async function handleWebhook(request,env){if(!env.DB||!env.MIDTRANS_SERVER_KEY)return json({ok:false,error:"Payment backend belum dikonfigurasi."},503);let body;try{body=await request.json();}catch{return json({ok:false,error:"JSON tidak valid."},400);}if(!await verifyNotification(body,env.MIDTRANS_SERVER_KEY))return json({ok:false,error:"Signature tidak valid."},403);const orderId=normalizeOrderId(body.order_id);if(!orderId)return json({ok:false,error:"Order ID tidak valid."},400);const order=await env.DB.prepare("SELECT id,total,status,customer_name,customer_email,customer_whatsapp,product_name,denomination_name FROM orders WHERE id = ?").bind(orderId).first();if(!order)return json({ok:true,ignored:true});const notifiedGross=Math.round(Number(body.gross_amount));if(!Number.isFinite(notifiedGross)||notifiedGross!==Number(order.total))return json({ok:false,error:"Nominal transaksi tidak cocok."},400);const tx=String(body.transaction_status||"").toLowerCase(),fraud=String(body.fraud_status||"").toLowerCase();let status="Menunggu Pembayaran";if(isPaid(tx,fraud))status="Pembayaran Berhasil";else if(tx==="expire")status="Kadaluarsa";else if(tx==="cancel"||tx==="deny")status="Dibatalkan";const now=new Date().toISOString();
 // Never downgrade a confirmed payment when an older/retried pending or failure webhook arrives.
 if(order.status==="Pembayaran Berhasil"&&status!=="Pembayaran Berhasil"&&tx!=="refund"&&tx!=="chargeback")return json({ok:true,preservedPaidStatus:true});
-await env.DB.prepare("UPDATE orders SET status=?,midtrans_transaction_id=?,midtrans_status=?,updated_at=? WHERE id=?").bind(status,body.transaction_id||null,tx,now,orderId).run();await ensurePromoUsageTable(env.DB);if(status==="Pembayaran Berhasil"){await env.DB.prepare("UPDATE promo_redemptions SET status='paid',updated_at=? WHERE order_id=? AND status='reserved'").bind(now,orderId).run();if(order.status!=="Pembayaran Berhasil"){await sendOrderEmail(env,{...order,total:order.total,status}, "paid_admin").catch(error=>console.error("Admin payment email logging failed",String(error?.message||error)));await sendOrderEmail(env,{...order,total:order.total,status}, "paid").catch(error=>console.error("Customer payment email logging failed",String(error?.message||error)));}}else if(status==="Kadaluarsa"||status==="Dibatalkan")await releasePromoUsage(env.DB,orderId,now);return json({ok:true});}
+await env.DB.prepare("UPDATE orders SET status=?,midtrans_transaction_id=?,midtrans_status=?,updated_at=? WHERE id=?").bind(status,body.transaction_id||null,tx,now,orderId).run();await ensurePromoUsageTable(env.DB);if(status==="Pembayaran Berhasil"){await env.DB.prepare("UPDATE promo_redemptions SET status='paid',updated_at=? WHERE order_id=? AND status='reserved'").bind(now,orderId).run();if(order.status!=="Pembayaran Berhasil"){await sendOrderEmail(env,{...order,total:order.total,status}, "paid_admin").catch(error=>console.error("Admin payment email logging failed",String(error?.message||error)));await sendOrderEmail(env,{...order,total:order.total,status}, "paid").catch(error=>console.error("Customer payment email logging failed",String(error?.message||error)));await sendPushToCustomer(env,order.customer_email,{title:"Pembayaran berhasil",body:"Pesanan "+order.id+" kamu sudah berhasil dibayar.",url:"/Leo-store/order.html?order="+encodeURIComponent(order.id),tag:"order-"+order.id}).catch(error=>console.error("Customer payment push failed",String(error?.message||error)));}}else if(status==="Kadaluarsa"||status==="Dibatalkan")await releasePromoUsage(env.DB,orderId,now);return json({ok:true});}
 
 
 async function handleAdminOrders(request,env){
@@ -286,6 +286,33 @@ async function sendWebPush(env,subscription,payload) {
     return false;
   }
 }
+
+async function sendPushToCustomer(env,customerKey,payload) {
+  const key=String(customerKey||"").trim().toLowerCase();
+  if(!key || !env.DB) return {sent:0};
+  await ensurePushTable(env.DB);
+  const rows=await env.DB.prepare("SELECT endpoint,subscription_json FROM push_subscriptions WHERE lower(customer_key)=?").bind(key).all();
+  let sent=0;
+  for(const row of rows.results||[]) {
+    let sub; try{sub=JSON.parse(row.subscription_json);}catch{continue;}
+    if(await sendWebPush(env,sub,payload)) sent++;
+  }
+  return {sent};
+}
+async function handlePushEvent(request,env) {
+  const expected=String(env.PUSH_EVENT_TOKEN||"");
+  if(!expected) return json({ok:false,error:"Push event belum dikonfigurasi."},503);
+  if(request.headers.get("Authorization")!=="Bearer "+expected) return json({ok:false,error:"Akses ditolak."},401);
+  let body; try{body=await request.json();}catch{return json({ok:false,error:"JSON tidak valid."},400);}
+  const type=String(body.type||"");
+  if(!["chat","promo"].includes(type)) return json({ok:false,error:"Jenis event tidak didukung."},400);
+  const title=type==="chat"?"Pesan chat baru":"Promo terbaru di LEOOSTORE";
+  const text=String(body.body|| (type==="chat"?"Ada pesan baru di chat LEOOSTORE.":"Cek promo terbaru di LEOOSTORE.")).replace(/[<>]/g,"").slice(0,160);
+  const path=type==="chat"?"/Leo-store/chat-admin.html":"/Leo-store/";
+  const result=await sendPushToAll(env,{title,body:text,url:path,tag:type+"-"+Date.now()});
+  return json({ok:true,...result});
+}
+
 async function sendPushToAll(env,payload) {
   if(!env.DB) return {sent:0,failed:0};
   await ensurePushTable(env.DB);
@@ -301,6 +328,7 @@ async function sendPushToAll(env,payload) {
 export default {async fetch(request,env){const origin=corsOrigin(request);if(request.method==="OPTIONS")return new Response(null,{status:204,headers:{"access-control-allow-origin":origin,"access-control-allow-methods":"GET,POST,OPTIONS","access-control-allow-headers":"Content-Type, Authorization","access-control-max-age":"86400","vary":"Origin"}});const url=new URL(request.url);try{if(url.pathname==="/api/push/public-key"&&request.method==="GET")return handlePushPublicKey(env);
 if(url.pathname==="/api/push/subscribe"&&request.method==="POST")return handlePushSubscribe(request,env);
 if(url.pathname==="/api/push/unsubscribe"&&request.method==="POST")return handlePushUnsubscribe(request,env);
+if(url.pathname==="/api/push/event"&&request.method==="POST")return handlePushEvent(request,env);
 if(url.pathname==="/health"&&request.method==="GET")return json({ok:true,service:"LEOOSTORE Payment API",environment:"sandbox"});if(url.pathname==="/api/orders"&&request.method==="GET")return json({ok:true,service:"LEOOSTORE Payment API",endpoint:"orders",method:"POST",message:"Endpoint aktif. Gunakan POST untuk membuat pembayaran."});if(url.pathname==="/api/leaderboard"&&request.method==="GET")return handleLeaderboard(env,url);
 
 
