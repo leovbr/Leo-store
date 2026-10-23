@@ -1,7 +1,7 @@
 /* LEOOSTORE Web Push opt-in helper */
 (() => {
   "use strict";
-  const WORKER_URL = "https://spring-surf-a6a7.<YOUR_ACCOUNT_SUBDOMAIN>.workers.dev";
+  const WORKER_URL = "https://spring-surf-a6a7.leovbriansyh791.workers.dev";
   const scriptUrl = document.currentScript?.src || location.href;
   const base = new URL("../", scriptUrl);
   const api = path => WORKER_URL + path;
@@ -21,7 +21,7 @@
     if (!subscription) subscription = await registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64ToBytes(keyData.publicKey) });
     const response = await fetch(api("/api/push/subscribe"), {
       method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ subscription: subscription.toJSON(), customerKey: localStorage.getItem("leo_push_customer_key") || "" })
+      body: JSON.stringify({ subscription: subscription.toJSON(), customerKey: (localStorage.getItem("leo_push_customer_key") || prompt("Email yang dipakai saat checkout (opsional, untuk notifikasi transaksi):") || "").trim().toLowerCase() })
     });
     const result = await response.json();
     if (!response.ok) throw new Error(result.error || "Gagal menyimpan perangkat.");
