@@ -1,3 +1,4 @@
+import webpush from "web-push";
 const ALLOWED_ORIGIN = "https://leovbr.github.io";
 
 // Public Supabase key is intended for browser/server public-data access.
@@ -239,7 +240,68 @@ async function handleLeaderboard(env,url){
   return json({ok:true,period,since,ranking:"successful_transaction_count",entries});
 }
 
-export default {async fetch(request,env){const origin=corsOrigin(request);if(request.method==="OPTIONS")return new Response(null,{status:204,headers:{"access-control-allow-origin":origin,"access-control-allow-methods":"GET,POST,OPTIONS","access-control-allow-headers":"Content-Type, Authorization","access-control-max-age":"86400","vary":"Origin"}});const url=new URL(request.url);try{if(url.pathname==="/health"&&request.method==="GET")return json({ok:true,service:"LEOOSTORE Payment API",environment:"sandbox"});if(url.pathname==="/api/orders"&&request.method==="GET")return json({ok:true,service:"LEOOSTORE Payment API",endpoint:"orders",method:"POST",message:"Endpoint aktif. Gunakan POST untuk membuat pembayaran."});if(url.pathname==="/api/leaderboard"&&request.method==="GET")return handleLeaderboard(env,url);
+
+async function ensurePushTable(db) {
+  await db.prepare("CREATE TABLE IF NOT EXISTS push_subscriptions (endpoint TEXT PRIMARY KEY, subscription_json TEXT NOT NULL, customer_key TEXT, created_at TEXT NOT NULL, updated_at TEXT NOT NULL)").run();
+  await db.prepare("CREATE INDEX IF NOT EXISTS idx_push_subscriptions_customer ON push_subscriptions(customer_key)").run();
+}
+function handlePushPublicKey(env) {
+  const key=String(env.VAPID_PUBLIC_KEY||"").trim();
+  if(!key) return json({ok:false,error:"Web Push belum dikonfigurasi di Cloudflare."},503);
+  return json({ok:true,publicKey:key});
+}
+async function handlePushSubscribe(request,env) {
+  if(!env.DB) return json({ok:false,error:"Database belum dikonfigurasi."},503);
+  let body; try { body=await request.json(); } catch { return json({ok:false,error:"JSON tidak valid."},400); }
+  const sub=body?.subscription;
+  if(!sub || typeof sub.endpoint!=="string" || !sub.endpoint.startsWith("https://") || !sub.keys?.p256dh || !sub.keys?.auth) return json({ok:false,error:"Subscription perangkat tidak valid."},400);
+  if(sub.endpoint.length>2048 || JSON.stringify(sub).length>10000) return json({ok:false,error:"Subscription terlalu besar."},400);
+  const customerKey=String(body.customerKey||"").trim().slice(0,180) || null;
+  const now=new Date().toISOString();
+  await ensurePushTable(env.DB);
+  await env.DB.prepare("INSERT INTO push_subscriptions(endpoint,subscription_json,customer_key,created_at,updated_at) VALUES(?,?,?,?,?) ON CONFLICT(endpoint) DO UPDATE SET subscription_json=excluded.subscription_json,customer_key=excluded.customer_key,updated_at=excluded.updated_at").bind(sub.endpoint,JSON.stringify(sub),customerKey,now,now).run();
+  return json({ok:true,saved:true});
+}
+async function handlePushUnsubscribe(request,env) {
+  if(!env.DB) return json({ok:false,error:"Database belum dikonfigurasi."},503);
+  let body; try { body=await request.json(); } catch { return json({ok:false,error:"JSON tidak valid."},400); }
+  const endpoint=String(body?.endpoint||"");
+  if(!endpoint.startsWith("https://") || endpoint.length>2048) return json({ok:false,error:"Endpoint tidak valid."},400);
+  await ensurePushTable(env.DB);
+  await env.DB.prepare("DELETE FROM push_subscriptions WHERE endpoint=?").bind(endpoint).run();
+  return json({ok:true,removed:true});
+}
+async function sendWebPush(env,subscription,payload) {
+  if(!env.VAPID_PUBLIC_KEY || !env.VAPID_PRIVATE_KEY || !env.VAPID_SUBJECT) {
+    console.warn("Web Push skipped: VAPID variables are not configured."); return false;
+  }
+  webpush.setVapidDetails(String(env.VAPID_SUBJECT),String(env.VAPID_PUBLIC_KEY),String(env.VAPID_PRIVATE_KEY));
+  try {
+    await webpush.sendNotification(subscription,JSON.stringify(payload),{TTL:60,urgency:"normal"});
+    return true;
+  } catch(error) {
+    const status=Number(error?.statusCode||0);
+    if(status===404 || status===410) await env.DB.prepare("DELETE FROM push_subscriptions WHERE endpoint=?").bind(subscription.endpoint).run().catch(()=>{});
+    console.error("Web Push delivery failed",status,String(error?.message||error));
+    return false;
+  }
+}
+async function sendPushToAll(env,payload) {
+  if(!env.DB) return {sent:0,failed:0};
+  await ensurePushTable(env.DB);
+  const rows=await env.DB.prepare("SELECT endpoint,subscription_json FROM push_subscriptions").all();
+  let sent=0,failed=0;
+  for(const row of rows.results||[]) {
+    let subscription; try { subscription=JSON.parse(row.subscription_json); } catch { failed++; continue; }
+    if(await sendWebPush(env,subscription,payload)) sent++; else failed++;
+  }
+  return {sent,failed};
+}
+
+export default {async fetch(request,env){const origin=corsOrigin(request);if(request.method==="OPTIONS")return new Response(null,{status:204,headers:{"access-control-allow-origin":origin,"access-control-allow-methods":"GET,POST,OPTIONS","access-control-allow-headers":"Content-Type, Authorization","access-control-max-age":"86400","vary":"Origin"}});const url=new URL(request.url);try{if(url.pathname==="/api/push/public-key"&&request.method==="GET")return handlePushPublicKey(env);
+if(url.pathname==="/api/push/subscribe"&&request.method==="POST")return handlePushSubscribe(request,env);
+if(url.pathname==="/api/push/unsubscribe"&&request.method==="POST")return handlePushUnsubscribe(request,env);
+if(url.pathname==="/health"&&request.method==="GET")return json({ok:true,service:"LEOOSTORE Payment API",environment:"sandbox"});if(url.pathname==="/api/orders"&&request.method==="GET")return json({ok:true,service:"LEOOSTORE Payment API",endpoint:"orders",method:"POST",message:"Endpoint aktif. Gunakan POST untuk membuat pembayaran."});if(url.pathname==="/api/leaderboard"&&request.method==="GET")return handleLeaderboard(env,url);
 
 
 if(url.pathname==="/api/admin/orders"&&request.method==="GET")return handleAdminOrders(request,env);if(url.pathname==="/api/orders"&&request.method==="POST")return handleCreateOrder(request,env);if(url.pathname==="/api/midtrans/webhook"&&request.method==="POST")return handleWebhook(request,env);const m=url.pathname.match(/^\/api\/orders\/([^/]+)$/);if(m&&request.method==="GET")return handleGetOrder(env,decodeURIComponent(m[1]));return json({ok:false,error:"Endpoint tidak ditemukan."},404);}catch(error){console.error("Worker error",error);return json({ok:false,error:"Terjadi kesalahan server."},500);}}};
