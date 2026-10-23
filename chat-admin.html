@@ -149,6 +149,33 @@ body.chat-admin-page.chat-auth-only .chat-account-bar,body.chat-admin-page.chat-
  </div>
 </div>
 <script>
+/* Fallback controls for Masuk/Daftar, independent from chat initialization. */
+(function(){
+  function initAuthTabs(){
+    const login=document.getElementById("authLoginTab");
+    const register=document.getElementById("authRegisterTab");
+    const nameWrap=document.getElementById("authNameWrap");
+    const submit=document.getElementById("authSubmit");
+    const password=document.getElementById("authPassword");
+    const status=document.getElementById("authStatus");
+    if(!login||!register||!nameWrap||!submit||!password)return;
+    function setMode(mode){
+      const isRegister=mode==="register";
+      nameWrap.hidden=!isRegister;
+      login.classList.toggle("active",!isRegister);
+      register.classList.toggle("active",isRegister);
+      submit.textContent=isRegister?"Buat akun dan mulai chat":"Masuk dan buka chat";
+      password.autocomplete=isRegister?"new-password":"current-password";
+      if(status)status.textContent=isRegister?"Gunakan email aktif. Jika diminta, verifikasi email sebelum login.":"Login untuk melanjutkan percakapan.";
+    }
+    login.addEventListener("click",function(){setMode("login");});
+    register.addEventListener("click",function(){setMode("register");});
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",initAuthTabs,{once:true});
+  else initAuthTabs();
+})();
+</script>
+<script>
 (function(){
  const URL="https://tvdbrqskvuukxvqaqjom.supabase.co",KEY="sb_publishable_2f-IadmcnaYzoCb_8Iko0w_pFp9u8eF";
  const db=window.supabase.createClient(URL,KEY),$=id=>document.getElementById(id);
