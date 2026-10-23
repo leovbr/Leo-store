@@ -167,6 +167,51 @@ body.chat-admin-page.chat-auth-only .chat-account-bar,body.chat-admin-page.chat-
 })();
 </script>
 <script>
+/* Independent login submit fallback: authenticates, then reloads so the main chat restores the session. */
+(function(){
+  function initAuthSubmit(){
+    const form=document.getElementById("authForm");
+    const submit=document.getElementById("authSubmit");
+    const status=document.getElementById("authStatus");
+    if(!form||!submit||!status||!window.supabase)return;
+    const URL="https://tvdbrqskvuukxvqaqjom.supabase.co";
+    const KEY="sb_publishable_2f-IadmcnaYzoCb_8Iko0w_pFp9u8eF";
+    const client=window.supabase.createClient(URL,KEY);
+    form.addEventListener("submit",async function(event){
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      const email=document.getElementById("authEmail").value.trim();
+      const password=document.getElementById("authPassword").value;
+      const registering=!document.getElementById("authNameWrap").hidden;
+      const name=document.getElementById("authName").value.trim();
+      submit.disabled=true;
+      status.textContent=registering?"Membuat akun…":"Memproses login…";
+      try{
+        let result;
+        if(registering){
+          if(!name)throw new Error("Isi nama panggilan terlebih dahulu.");
+          result=await client.auth.signUp({email,password,options:{data:{full_name:name},emailRedirectTo:"https://leovbr.github.io/Leo-store/chat-admin.html"}});
+          if(result.error)throw result.error;
+          if(!result.data.session){
+            status.textContent="Akun dibuat. Cek email untuk verifikasi, lalu masuk kembali.";
+            document.getElementById("authLoginTab").click();
+            return;
+          }
+        }else{
+          result=await client.auth.signInWithPassword({email,password});
+          if(result.error)throw result.error;
+        }
+        status.textContent="Login berhasil. Membuka chat…";
+        window.location.reload();
+      }catch(error){
+        status.textContent="Gagal: "+(error&&error.message?error.message:"Periksa koneksi lalu coba lagi.");
+      }finally{submit.disabled=false;}
+    },true);
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",initAuthSubmit,{once:true});else initAuthSubmit();
+})();
+</script>
+<script>
 /* Fallback controls for Masuk/Daftar, independent from chat initialization. */
 (function(){
   function initAuthTabs(){
