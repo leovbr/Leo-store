@@ -62,37 +62,73 @@
     return result;
   }
   window.LEOOSTOREPush = { enable };
-  function mountButton() {
-    if (document.getElementById("leo-push-enable")) return;
-    const b = document.createElement("button"); b.id = "leo-push-enable"; b.type = "button"; b.textContent = "Memeriksa Notifikasi...";
-    b.setAttribute("aria-label", "Aktifkan notifikasi LEOOSTORE");
-    Object.assign(b.style, {position:"fixed",right:"14px",bottom:"14px",zIndex:"9999",border:"1px solid #8b5cf6",borderRadius:"999px",padding:"11px 15px",background:"#17112b",color:"#fff",font:"600 13px system-ui",boxShadow:"0 5px 24px #0003"});
-    b.addEventListener("click", async () => { b.disabled=true; const old=b.textContent; b.textContent="Mengaktifkan..."; try { await enable(); b.textContent="Notifikasi Aktif ✓"; } catch(e) { b.textContent=old === "Memeriksa Notifikasi..." ? "Aktifkan Notifikasi" : old; alert(e.message || "Notifikasi belum bisa diaktifkan."); } finally { b.disabled=false; } });
-    document.body.appendChild(b);
-    refreshButtonState(b);
+  function injectPromptStyles() {
+    if (document.getElementById("leo-push-prompt-style")) return;
+    const style = document.createElement("style");
+    style.id = "leo-push-prompt-style";
+    style.textContent = `
+      #leo-push-prompt-overlay{position:fixed;inset:0;z-index:100000;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(3,6,18,.72);backdrop-filter:blur(7px)}
+      #leo-push-prompt{width:min(100%,380px);box-sizing:border-box;border:1px solid rgba(167,139,250,.35);border-radius:22px;padding:24px;background:linear-gradient(145deg,#17152a,#0b1020);color:#f8fafc;box-shadow:0 24px 80px #0008;font-family:system-ui,-apple-system,sans-serif;text-align:center}
+      #leo-push-prompt .leo-push-icon{width:54px;height:54px;display:grid;place-items:center;margin:0 auto 14px;border-radius:17px;background:rgba(139,92,246,.18);font-size:27px}
+      #leo-push-prompt h2{font-size:20px;line-height:1.3;margin:0 0 9px;font-weight:800}
+      #leo-push-prompt p{font-size:14px;line-height:1.6;color:#c4c8d6;margin:0 0 20px}
+      #leo-push-prompt button{width:100%;border:0;border-radius:12px;padding:13px 16px;font-size:14px;font-weight:750;cursor:pointer}
+      #leo-push-prompt .leo-push-primary{background:linear-gradient(100deg,#8b5cf6,#6d5dfc);color:white}
+      #leo-push-prompt .leo-push-secondary{margin-top:8px;background:transparent;color:#c4c8d6}
+      #leo-push-prompt button:disabled{opacity:.65;cursor:wait}
+    `;
+    document.head.appendChild(style);
   }
-  async function refreshButtonState(button) {
+  async function showLoginPrompt(user) {
+    if (!user || user.is_anonymous || !user.email || !document.body) return;
+    if (Notification.permission === "denied") return;
     try {
-      if (!("serviceWorker" in navigator) || !("PushManager" in window) || !("Notification" in window)) {
-        button.textContent = "Notifikasi Tidak Didukung";
-        button.disabled = true;
+      const registration = await navigator.serviceWorker?.getRegistration(base.pathname);
+      if (registration && await registration.pushManager.getSubscription()) {
+        await saveSubscription(registration, user.email.trim().toLowerCase());
         return;
       }
-      if (Notification.permission !== "granted") {
-        button.textContent = "Aktifkan Notifikasi";
-        return;
+    } catch (_) {}
+    try { if (sessionStorage.getItem("leo-push-prompt-dismissed") === "1") return; } catch (_) {}
+    if (document.getElementById("leo-push-prompt-overlay")) return;
+    injectPromptStyles();
+    const overlay = document.createElement("div");
+    overlay.id = "leo-push-prompt-overlay";
+    overlay.innerHTML = '<section id="leo-push-prompt" role="dialog" aria-modal="true" aria-labelledby="leo-push-prompt-title"><div class="leo-push-icon" aria-hidden="true">🔔</div><h2 id="leo-push-prompt-title">Aktifkan Notifikasi?</h2><p>Dapatkan kabar pesanan, balasan chat, dan promo LEOOSTORE. Email mengikuti akun yang sedang kamu gunakan.</p><button type="button" class="leo-push-primary" id="leo-push-prompt-enable">Aktifkan Notifikasi</button><button type="button" class="leo-push-secondary" id="leo-push-prompt-later">Nanti saja</button></section>';
+    document.body.appendChild(overlay);
+    const close = () => { try { sessionStorage.setItem("leo-push-prompt-dismissed", "1"); } catch (_) {} overlay.remove(); };
+    overlay.querySelector("#leo-push-prompt-later").addEventListener("click", close);
+    overlay.addEventListener("click", event => { if (event.target === overlay) close(); });
+    overlay.querySelector("#leo-push-prompt-enable").addEventListener("click", async event => {
+      const button = event.currentTarget;
+      button.disabled = true;
+      button.textContent = "Mengaktifkan...";
+      try {
+        await enable();
+        button.textContent = "Notifikasi Aktif ✓";
+        try { sessionStorage.setItem("leo-push-prompt-dismissed", "1"); } catch (_) {}
+        setTimeout(() => overlay.remove(), 900);
+      } catch (error) {
+        button.disabled = false;
+        button.textContent = "Coba Lagi";
+        alert(error.message || "Notifikasi belum bisa diaktifkan.");
       }
-      const registration = await navigator.serviceWorker.getRegistration(base.pathname);
-      const subscription = registration && await registration.pushManager.getSubscription();
-      button.textContent = subscription ? "Notifikasi Aktif ✓" : "Aktifkan Notifikasi";
-    } catch (_) {
-      button.textContent = "Aktifkan Notifikasi";
-    }
+    });
+  }
+  function mountButton() {
+    // No floating button: the opt-in prompt appears after login instead.
   }
   async function syncSignedInEmail() {
     try {
       const auth = await loadSupabaseAuth();
+      const { data } = await auth.auth.getSession();
+      if (data?.session?.user && !data.session.user.is_anonymous) {
+        setTimeout(() => showLoginPrompt(data.session.user), 700);
+      }
       auth.auth.onAuthStateChange((event, session) => {
+        if (event === "SIGNED_IN" && session?.user && !session.user.is_anonymous) {
+          setTimeout(() => showLoginPrompt(session.user), 700);
+        }
         if (event === "SIGNED_IN" || event === "TOKEN_REFRESHED" || event === "USER_UPDATED" || event === "SIGNED_OUT") {
           setTimeout(async () => {
             try {
