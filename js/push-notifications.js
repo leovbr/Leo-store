@@ -81,8 +81,10 @@
   }
   async function showLoginPrompt(user, force = false) {
     if (!user || user.is_anonymous || !user.email || !document.body) return;
-    if (!("Notification" in window) || !("serviceWorker" in navigator) || !("PushManager" in window)) return;
-    if (Notification.permission === "denied") return;
+    // Always show the opt-in prompt after login; validate Web Push support only when the user enables it.
+    if ("Notification" in window && Notification.permission === "denied") {
+      // Keep the prompt visible so the user can see the setting and choose another time.
+    }
     try {
       const registration = await navigator.serviceWorker?.getRegistration(base.pathname);
       if (registration && await registration.pushManager.getSubscription()) {
