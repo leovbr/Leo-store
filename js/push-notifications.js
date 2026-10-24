@@ -1,36 +1,64 @@
-/* LEOOSTORE Web Push opt-in helper */
+/* LEOOSTORE Web Push opt-in helper — uses the signed-in Supabase account email. */
 (() => {
   "use strict";
   const WORKER_URL = "https://spring-surf-a6a7.leovbriansyh791.workers.dev";
+  const SUPABASE_URL = "https://tvdbrqskvuukxvqaqjom.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_2f-IadmcnaYzoCb_8Iko0w_pFp9u8eF";
   const scriptUrl = document.currentScript?.src || location.href;
   const base = new URL("../", scriptUrl);
   const api = path => WORKER_URL + path;
+  let authClientPromise;
+  function loadSupabaseAuth() {
+    if (authClientPromise) return authClientPromise;
+    authClientPromise = new Promise((resolve, reject) => {
+      const ready = () => {
+        try {
+          if (!window.supabase?.createClient) throw new Error("Komponen login belum tersedia.");
+          resolve(window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+            auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+          }));
+        } catch (e) { reject(e); }
+      };
+      if (window.supabase?.createClient) { ready(); return; }
+      const script = document.createElement("script");
+      script.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+      script.onload = ready;
+      script.onerror = () => reject(new Error("Gagal memuat layanan akun."));
+      document.head.appendChild(script);
+    });
+    return authClientPromise;
+  }
   const b64ToBytes = value => {
     const raw = atob(value.replace(/-/g, "+").replace(/_/g, "/"));
     return Uint8Array.from(raw, c => c.charCodeAt(0));
   };
+  async function saveSubscription(registration, customerKey) {
+    const subscription = await registration.pushManager.getSubscription();
+    if (!subscription) throw new Error("Langganan notifikasi belum terbentuk. Tekan Aktifkan Notifikasi lagi.");
+    const response = await fetch(api("/api/push/subscribe"), {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ subscription: subscription.toJSON(), customerKey: customerKey || "" })
+    });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || "Gagal menyimpan perangkat.");
+    return result;
+  }
   async function enable() {
     if (!("serviceWorker" in navigator) || !("PushManager" in window) || !("Notification" in window)) throw new Error("Browser ini belum mendukung Web Push.");
+    const auth = await loadSupabaseAuth();
+    const { data: sessionData, error: sessionError } = await auth.auth.getSession();
+    if (sessionError) throw new Error("Gagal memeriksa akun login: " + sessionError.message);
+    const user = sessionData?.session?.user;
+    if (!user || user.is_anonymous || !user.email) throw new Error("Login atau daftar dulu menggunakan email, lalu aktifkan notifikasi.");
     const keyResponse = await fetch(api("/api/push/public-key"), { cache: "no-store" });
     const keyData = await keyResponse.json();
     if (!keyResponse.ok || !keyData.publicKey) throw new Error(keyData.error || "Konfigurasi push belum siap.");
-    if (await Notification.requestPermission() !== "granted") throw new Error("Izin notifikasi belum diberikan.");
+    if (Notification.permission !== "granted" && await Notification.requestPermission() !== "granted") throw new Error("Izin notifikasi belum diberikan.");
     const registration = await navigator.serviceWorker.register(new URL("service-worker.js", base).href, { scope: base.pathname });
     await navigator.serviceWorker.ready;
     let subscription = await registration.pushManager.getSubscription();
     if (!subscription) subscription = await registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64ToBytes(keyData.publicKey) });
-    let customerKey = (localStorage.getItem("leo_push_customer_key") || "").trim().toLowerCase();
-    if (!customerKey) {
-      customerKey = (prompt("Email yang dipakai saat checkout (opsional, untuk notifikasi transaksi):") || "").trim().toLowerCase();
-      if (customerKey && /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(customerKey)) localStorage.setItem("leo_push_customer_key", customerKey);
-      else customerKey = "";
-    }
-    const response = await fetch(api("/api/push/subscribe"), {
-      method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ subscription: subscription.toJSON(), customerKey })
-    });
-    const result = await response.json();
-    if (!response.ok) throw new Error(result.error || "Gagal menyimpan perangkat.");
+    const result = await saveSubscription(registration, user.email.trim().toLowerCase());
     return result;
   }
   window.LEOOSTOREPush = { enable };
@@ -42,5 +70,23 @@
     b.addEventListener("click", async () => { b.disabled=true; const old=b.textContent; b.textContent="Mengaktifkan..."; try { await enable(); b.textContent="Notifikasi Aktif ✓"; } catch(e) { b.textContent=old; alert(e.message || "Notifikasi belum bisa diaktifkan."); } finally { b.disabled=false; } });
     document.body.appendChild(b);
   }
+  async function syncSignedInEmail() {
+    try {
+      const auth = await loadSupabaseAuth();
+      auth.auth.onAuthStateChange((event, session) => {
+        if (event === "SIGNED_IN" || event === "TOKEN_REFRESHED" || event === "USER_UPDATED" || event === "SIGNED_OUT") {
+          setTimeout(async () => {
+            try {
+              const registration = await navigator.serviceWorker?.getRegistration(base.pathname);
+              if (!registration || !(await registration.pushManager.getSubscription())) return;
+              const email = session?.user && !session.user.is_anonymous ? (session.user.email || "").trim().toLowerCase() : "";
+              await saveSubscription(registration, email);
+            } catch (e) { console.warn("Gagal memperbarui akun notifikasi:", e); }
+          }, 0);
+        }
+      });
+    } catch (e) { console.warn("Sinkronisasi email akun untuk notifikasi belum tersedia:", e); }
+  }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mountButton, {once:true}); else mountButton();
+  syncSignedInEmail();
 })();
