@@ -39,5 +39,5 @@ $("listings").onclick=async e=>{const b=e.target.closest("button");if(!b)return;
 $("login").onclick=async()=>{const {error}=await db.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});if(error){$("authStatus").textContent=error.message;return;}const {data}=await db.auth.getSession();auth(data.session?.user||null);window.LEOOSTOREPush?.promptAfterLogin(data.session?.user||null);};$("logout").onclick=async()=>{await db.auth.signOut();auth(null);};db.auth.getSession().then(({data,error})=>{if(error){$("authStatus").textContent=error.message;return;}auth(data.session?.user||null);});db.auth.onAuthStateChange((_event,session)=>{auth(session?.user||null);});
 })();
 </script>  <script src="js/custom-selects.js?v=20261023-storetheme3" defer></script>
-<script src="./js/push-notifications.js?v=20261024-login-push-prompt4"></script>
+<script src="./js/push-notifications.js?v=20261024-login-push-prompt5"></script>
 </body></html>
