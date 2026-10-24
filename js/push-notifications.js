@@ -61,7 +61,7 @@
     const result = await saveSubscription(registration, user.email.trim().toLowerCase());
     return result;
   }
-  window.LEOOSTOREPush = { enable };
+  window.LEOOSTOREPush = { enable, promptAfterLogin: user => showLoginPrompt(user, true) };
   function injectPromptStyles() {
     if (document.getElementById("leo-push-prompt-style")) return;
     const style = document.createElement("style");
@@ -79,8 +79,9 @@
     `;
     document.head.appendChild(style);
   }
-  async function showLoginPrompt(user) {
+  async function showLoginPrompt(user, force = false) {
     if (!user || user.is_anonymous || !user.email || !document.body) return;
+    if (!("Notification" in window) || !("serviceWorker" in navigator) || !("PushManager" in window)) return;
     if (Notification.permission === "denied") return;
     try {
       const registration = await navigator.serviceWorker?.getRegistration(base.pathname);
@@ -89,7 +90,7 @@
         return;
       }
     } catch (_) {}
-    try { if (sessionStorage.getItem("leo-push-prompt-dismissed") === "1") return; } catch (_) {}
+    try { if (!force && sessionStorage.getItem("leo-push-prompt-dismissed") === "1") return; } catch (_) {}
     if (document.getElementById("leo-push-prompt-overlay")) return;
     injectPromptStyles();
     const overlay = document.createElement("div");
