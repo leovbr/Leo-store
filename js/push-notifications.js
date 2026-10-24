@@ -64,11 +64,30 @@
   window.LEOOSTOREPush = { enable };
   function mountButton() {
     if (document.getElementById("leo-push-enable")) return;
-    const b = document.createElement("button"); b.id = "leo-push-enable"; b.type = "button"; b.textContent = "Aktifkan Notifikasi";
+    const b = document.createElement("button"); b.id = "leo-push-enable"; b.type = "button"; b.textContent = "Memeriksa Notifikasi...";
     b.setAttribute("aria-label", "Aktifkan notifikasi LEOOSTORE");
     Object.assign(b.style, {position:"fixed",right:"14px",bottom:"14px",zIndex:"9999",border:"1px solid #8b5cf6",borderRadius:"999px",padding:"11px 15px",background:"#17112b",color:"#fff",font:"600 13px system-ui",boxShadow:"0 5px 24px #0003"});
-    b.addEventListener("click", async () => { b.disabled=true; const old=b.textContent; b.textContent="Mengaktifkan..."; try { await enable(); b.textContent="Notifikasi Aktif ✓"; } catch(e) { b.textContent=old; alert(e.message || "Notifikasi belum bisa diaktifkan."); } finally { b.disabled=false; } });
+    b.addEventListener("click", async () => { b.disabled=true; const old=b.textContent; b.textContent="Mengaktifkan..."; try { await enable(); b.textContent="Notifikasi Aktif ✓"; } catch(e) { b.textContent=old === "Memeriksa Notifikasi..." ? "Aktifkan Notifikasi" : old; alert(e.message || "Notifikasi belum bisa diaktifkan."); } finally { b.disabled=false; } });
     document.body.appendChild(b);
+    refreshButtonState(b);
+  }
+  async function refreshButtonState(button) {
+    try {
+      if (!("serviceWorker" in navigator) || !("PushManager" in window) || !("Notification" in window)) {
+        button.textContent = "Notifikasi Tidak Didukung";
+        button.disabled = true;
+        return;
+      }
+      if (Notification.permission !== "granted") {
+        button.textContent = "Aktifkan Notifikasi";
+        return;
+      }
+      const registration = await navigator.serviceWorker.getRegistration(base.pathname);
+      const subscription = registration && await registration.pushManager.getSubscription();
+      button.textContent = subscription ? "Notifikasi Aktif ✓" : "Aktifkan Notifikasi";
+    } catch (_) {
+      button.textContent = "Aktifkan Notifikasi";
+    }
   }
   async function syncSignedInEmail() {
     try {
