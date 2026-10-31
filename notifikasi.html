@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Notifikasi | LEOOSTORE.id</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=20261018-account-marketplace3">
+<link rel="stylesheet" href="css/style-pages.css?v=20260919-navy1">
+<style>
+body.notification-page{min-height:100vh;background:#07111f;color:#f8fafc;padding-bottom:40px;font-family:'Plus Jakarta Sans',system-ui,sans-serif}
+.notif-wrap{width:min(760px,calc(100% - 28px));margin:28px auto}
+.notif-card{border:1px solid #27364b;border-radius:20px;background:linear-gradient(145deg,#111f33,#0b1627);padding:24px;margin-bottom:16px}
+.notif-hero{text-align:center;padding:32px 24px;background:radial-gradient(circle at 50% 0%,#7045c533,transparent 55%),#0e1c2e}
+.notif-icon{width:66px;height:66px;margin:0 auto 15px;display:grid;place-items:center;border:1px solid #60469a;border-radius:20px;background:#281d45;font-size:30px}
+.notif-card h1{font-size:clamp(25px,5vw,34px);margin:0 0 10px}
+.notif-card h2{font-size:18px;margin:0 0 10px}
+.notif-card p{color:#aab8cc;line-height:1.7;margin:8px 0}
+.notif-status{display:flex;align-items:center;gap:10px;margin:18px 0;padding:13px 14px;border:1px solid #2c3b51;border-radius:13px;background:#091426;color:#dbe5f5;font-size:14px;text-align:left}
+.notif-status-dot{width:9px;height:9px;flex:0 0 9px;border-radius:50%;background:#64748b}
+.notif-status[data-state="active"] .notif-status-dot{background:#34d399}
+.notif-status[data-state="error"] .notif-status-dot{background:#fb7185}
+.notif-button{width:100%;border:1px solid #7555c7;border-radius:12px;padding:13px 16px;background:linear-gradient(100deg,#8b5cf6,#6d5dfc);color:white;font-weight:800;cursor:pointer}
+.notif-button:disabled{opacity:.6;cursor:wait}
+.notif-note{font-size:12px!important}
+.notif-list{padding-left:20px;color:#c1ccdc;line-height:1.8}
+@media(max-width:600px){.notif-wrap{margin:16px auto}.notif-card{padding:18px}.notif-hero{padding:26px 18px}}
+</style>
+</head>
+<body class="notification-page">
+<header class="site-header home-header"><div class="container header-inner">
+<a href="index.html" class="header-brand"><span class="header-brand-text">LEOOSTORE.id</span></a>
+<div class="header-actions"><button type="button" class="header-action menu-button" id="menuButton" aria-label="Buka menu" aria-expanded="false"><span class="menu-icon"><span></span><span></span><span></span></span></button></div>
+</div></header>
+<div class="menu-overlay" id="menuOverlay"></div>
+<aside class="side-menu" id="sideMenu" aria-hidden="true"><div class="side-menu-header"><a href="index.html" class="header-brand"><span class="header-brand-text">LEOOSTORE.id</span></a><button type="button" class="side-menu-close" id="menuClose" aria-label="Tutup menu">×</button></div><div class="side-menu-divider"></div>
+<nav class="side-menu-nav">
+<a href="index.html" class="side-menu-item"><span>Home</span><span class="side-menu-icon">⌂</span></a>
+<a href="shop.html" class="side-menu-item"><span>Top Up</span><span class="side-menu-icon">🛒</span></a>
+<a href="order.html" class="side-menu-item"><span>Cek Transaksi</span><span class="side-menu-icon">✓</span></a>
+<a href="leaderboard.html" class="side-menu-item"><span>Leaderboard</span><span class="side-menu-icon">🏆</span></a>
+<a href="artikel.html" class="side-menu-item"><span>Artikel</span><span class="side-menu-icon">📰</span></a>
+<a href="kalkulator.html" class="side-menu-item"><span>Kalkulator Win Rate</span><span class="side-menu-arrow">→</span></a>
+<a href="notifikasi.html" class="side-menu-item active"><span>Notifikasi</span><span class="side-menu-icon">🔔</span></a>
+<a href="chat-admin.html" class="side-menu-item side-menu-login"><span>Masuk / Daftar</span><span class="side-menu-icon">⇥</span></a>
+</nav></aside>
+<main class="notif-wrap">
+<section class="notif-card notif-hero">
+<div class="notif-icon" aria-hidden="true">🔔</div>
+<h1>Notifikasi LEOOSTORE</h1>
+<p>Aktifkan notifikasi agar kamu tidak ketinggalan kabar pesanan, balasan chat, dan promo terbaru dari LEOOSTORE.id.</p>
+<div class="notif-status" id="notifStatus" data-state="checking"><span class="notif-status-dot"></span><span id="notifStatusText">Memeriksa status notifikasi...</span></div>
+<button class="notif-button" id="enableNotifications" type="button">Aktifkan Notifikasi</button>
+<p class="notif-note" id="notifHelp">Login menggunakan akun LEOOSTORE agar notifikasi pesanan dapat dikaitkan dengan email akunmu.</p>
+</section>
+<section class="notif-card">
+<h2>Informasi notifikasi</h2>
+<ul class="notif-list">
+<li>Notifikasi pesanan dan pembayaran akan dikirim ke perangkat yang sudah diaktifkan.</li>
+<li>Balasan chat dan promo dapat muncul sebagai notifikasi jika fitur terkait sudah dikonfigurasi.</li>
+<li>Pastikan izin notifikasi browser tidak diblokir.</li>
+<li>Di iPhone/iPad, Web Push umumnya memerlukan website ditambahkan ke Home Screen.</li>
+</ul>
+</section>
+</main>
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+ const button=document.getElementById("enableNotifications"),status=document.getElementById("notifStatus"),label=document.getElementById("notifStatusText"),help=document.getElementById("notifHelp");
+ const setStatus=(state,message)=>{status.dataset.state=state;label.textContent=message;};
+ async function refresh(){
+  if(!("Notification" in window)||!("serviceWorker" in navigator)||!("PushManager" in window)){setStatus("error","Browser ini belum mendukung Web Push.");button.disabled=true;return;}
+  if(Notification.permission==="denied"){setStatus("error","Izin notifikasi diblokir di pengaturan browser.");help.textContent="Ubah izin notifikasi untuk situs LEOOSTORE.id melalui pengaturan browser, lalu muat ulang halaman.";return;}
+  try{const reg=await navigator.serviceWorker.getRegistration("./");const sub=reg&&await reg.pushManager.getSubscription();if(sub){setStatus("active","Perangkat ini sudah berlangganan notifikasi.");button.textContent="Perbarui Langganan";}else{setStatus("idle",Notification.permission==="granted"?"Izin browser tersedia, notifikasi belum diaktifkan.":"Notifikasi belum diaktifkan di perangkat ini.");}}catch(e){setStatus("idle","Notifikasi belum diaktifkan di perangkat ini.");}
+ }
+ button.addEventListener("click",async()=>{button.disabled=true;button.textContent="Mengaktifkan...";try{if(!window.LEOOSTOREPush)throw new Error("Layanan notifikasi belum siap. Muat ulang halaman.");await window.LEOOSTOREPush.enable();setStatus("active","Notifikasi berhasil diaktifkan untuk perangkat ini.");help.textContent="Perangkat ini siap menerima notifikasi sesuai akun yang digunakan.";button.textContent="Notifikasi Aktif ✓";}catch(e){setStatus("error",e.message||"Notifikasi belum bisa diaktifkan.");button.textContent="Coba Lagi";}finally{button.disabled=false;}});
+ refresh();
+});
+document.addEventListener("DOMContentLoaded",function(){var b=document.getElementById("menuButton"),c=document.getElementById("menuClose"),m=document.getElementById("sideMenu"),o=document.getElementById("menuOverlay");function close(){m.classList.remove("active");o.classList.remove("active");m.setAttribute("aria-hidden","true");b.setAttribute("aria-expanded","false");document.body.style.overflow="";}function open(){m.classList.add("active");o.classList.add("active");m.setAttribute("aria-hidden","false");b.setAttribute("aria-expanded","true");document.body.style.overflow="hidden";}b.addEventListener("click",open);c.addEventListener("click",close);o.addEventListener("click",close);document.addEventListener("keydown",function(e){if(e.key==="Escape")close();});});
+</script>
+<script src="js/header-auth.js?v=20261022-cache-bust1" defer></script>
+<script src="js/push-notifications.js?v=20261024-login-push-prompt5"></script>
+</body></html>
