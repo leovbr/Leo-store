@@ -10,3 +10,4 @@ database_id = "9213b5cc-842d-4967-9506-2000d3418bfe"
 
 # Web Push config: set VAPID_PUBLIC_KEY and VAPID_SUBJECT as variables,
 # and VAPID_PRIVATE_KEY as a secret in Cloudflare Worker settings.
+keep_vars = true
