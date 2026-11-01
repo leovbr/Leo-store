@@ -341,7 +341,7 @@ async function handlePushEvent(request,env) {
   const record=body.record||body.data?.record||body;
   const title=type==="chat"?"Pesan chat baru":"Promo terbaru di LEOOSTORE";
   const fallback=type==="chat"?"Ada pesan baru di chat LEOOSTORE.":"Cek promo terbaru di LEOOSTORE.";
-  const text=String(body.message||body.body||fallback).replace(/[<>]/g,"").slice(0,160);
+  const text=type==="chat"?fallback:String(body.message||fallback).replace(/[<>]/g,"").slice(0,160);
   if(type==="promo") {
     if(record.is_active!==true) return json({ok:true,ignored:true,reason:"promo_not_active"});
     const now=Date.now();
