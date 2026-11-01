@@ -242,33 +242,54 @@ async function handleLeaderboard(env,url){
 
 
 async function ensurePushTable(db) {
-  await db.prepare("CREATE TABLE IF NOT EXISTS push_subscriptions (endpoint TEXT PRIMARY KEY, subscription_json TEXT NOT NULL, customer_key TEXT, created_at TEXT NOT NULL, updated_at TEXT NOT NULL)").run();
+  await db.prepare("CREATE TABLE IF NOT EXISTS push_subscriptions (endpoint TEXT PRIMARY KEY, subscription_json TEXT NOT NULL, customer_key TEXT, subscriber_id TEXT, subscriber_role TEXT NOT NULL DEFAULT 'customer', created_at TEXT NOT NULL, updated_at TEXT NOT NULL)").run();
+  await db.prepare("ALTER TABLE push_subscriptions ADD COLUMN subscriber_id TEXT").run().catch(()=>{});
+  await db.prepare("ALTER TABLE push_subscriptions ADD COLUMN subscriber_role TEXT NOT NULL DEFAULT 'customer'").run().catch(()=>{});
   await db.prepare("CREATE INDEX IF NOT EXISTS idx_push_subscriptions_customer ON push_subscriptions(customer_key)").run();
+  await db.prepare("CREATE INDEX IF NOT EXISTS idx_push_subscriptions_user ON push_subscriptions(subscriber_id,subscriber_role)").run();
 }
 function handlePushPublicKey(env) {
   const key=String(env.VAPID_PUBLIC_KEY||"").trim();
   if(!key) return json({ok:false,error:"Web Push belum dikonfigurasi di Cloudflare."},503);
   return json({ok:true,publicKey:key});
 }
+async function verifyPushUser(request) {
+  const authorization=String(request.headers.get("Authorization")||"");
+  const token=authorization.startsWith("Bearer ")?authorization.slice(7):"";
+  if(!token) return null;
+  try {
+    const response=await fetch(SUPABASE_URL+"/auth/v1/user",{headers:{"apikey":SUPABASE_PUBLISHABLE_KEY,"Authorization":"Bearer "+token}});
+    if(!response.ok) return null;
+    const user=await response.json();
+    if(!user?.id || user.is_anonymous) return null;
+    return user;
+  } catch { return null; }
+}
+const PUSH_ADMIN_UID = "3939553f-ef8d-4295-8f2f-39c86ce9ed20";
 async function handlePushSubscribe(request,env) {
   if(!env.DB) return json({ok:false,error:"Database belum dikonfigurasi."},503);
+  const user=await verifyPushUser(request);
+  if(!user) return json({ok:false,error:"Login tidak valid. Masuk kembali lalu aktifkan notifikasi."},401);
   let body; try { body=await request.json(); } catch { return json({ok:false,error:"JSON tidak valid."},400); }
   const sub=body?.subscription;
   if(!sub || typeof sub.endpoint!=="string" || !sub.endpoint.startsWith("https://") || !sub.keys?.p256dh || !sub.keys?.auth) return json({ok:false,error:"Subscription perangkat tidak valid."},400);
   if(sub.endpoint.length>2048 || JSON.stringify(sub).length>10000) return json({ok:false,error:"Subscription terlalu besar."},400);
-  const customerKey=String(body.customerKey||"").trim().slice(0,180) || null;
+  const role=user.id===PUSH_ADMIN_UID?"admin":"customer";
+  const customerKey=String(user.email||"").trim().toLowerCase().slice(0,180)||null;
   const now=new Date().toISOString();
   await ensurePushTable(env.DB);
-  await env.DB.prepare("INSERT INTO push_subscriptions(endpoint,subscription_json,customer_key,created_at,updated_at) VALUES(?,?,?,?,?) ON CONFLICT(endpoint) DO UPDATE SET subscription_json=excluded.subscription_json,customer_key=excluded.customer_key,updated_at=excluded.updated_at").bind(sub.endpoint,JSON.stringify(sub),customerKey,now,now).run();
-  return json({ok:true,saved:true});
+  await env.DB.prepare("INSERT INTO push_subscriptions(endpoint,subscription_json,customer_key,subscriber_id,subscriber_role,created_at,updated_at) VALUES(?,?,?,?,?,?,?) ON CONFLICT(endpoint) DO UPDATE SET subscription_json=excluded.subscription_json,customer_key=excluded.customer_key,subscriber_id=excluded.subscriber_id,subscriber_role=excluded.subscriber_role,updated_at=excluded.updated_at").bind(sub.endpoint,JSON.stringify(sub),customerKey,user.id,role,now,now).run();
+  return json({ok:true,saved:true,role});
 }
 async function handlePushUnsubscribe(request,env) {
   if(!env.DB) return json({ok:false,error:"Database belum dikonfigurasi."},503);
+  const user=await verifyPushUser(request);
+  if(!user) return json({ok:false,error:"Login tidak valid."},401);
   let body; try { body=await request.json(); } catch { return json({ok:false,error:"JSON tidak valid."},400); }
   const endpoint=String(body?.endpoint||"");
   if(!endpoint.startsWith("https://") || endpoint.length>2048) return json({ok:false,error:"Endpoint tidak valid."},400);
   await ensurePushTable(env.DB);
-  await env.DB.prepare("DELETE FROM push_subscriptions WHERE endpoint=?").bind(endpoint).run();
+  await env.DB.prepare("DELETE FROM push_subscriptions WHERE endpoint=? AND subscriber_id=?").bind(endpoint,user.id).run();
   return json({ok:true,removed:true});
 }
 async function sendWebPush(env,subscription,payload) {
@@ -292,11 +313,21 @@ async function sendPushToCustomer(env,customerKey,payload) {
   if(!key || !env.DB) return {sent:0};
   await ensurePushTable(env.DB);
   const rows=await env.DB.prepare("SELECT endpoint,subscription_json FROM push_subscriptions WHERE lower(customer_key)=?").bind(key).all();
-  let sent=0;
-  for(const row of rows.results||[]) {
-    let sub; try{sub=JSON.parse(row.subscription_json);}catch{continue;}
-    if(await sendWebPush(env,sub,payload)) sent++;
-  }
+  let sent=0; for(const row of rows.results||[]) { let sub; try{sub=JSON.parse(row.subscription_json);}catch{continue;} if(await sendWebPush(env,sub,payload)) sent++; }
+  return {sent};
+}
+async function sendPushToUserId(env,userId,payload) {
+  if(!userId || !env.DB) return {sent:0};
+  await ensurePushTable(env.DB);
+  const rows=await env.DB.prepare("SELECT endpoint,subscription_json FROM push_subscriptions WHERE subscriber_id=? AND subscriber_role='customer'").bind(String(userId)).all();
+  let sent=0; for(const row of rows.results||[]) { let sub; try{sub=JSON.parse(row.subscription_json);}catch{continue;} if(await sendWebPush(env,sub,payload)) sent++; }
+  return {sent};
+}
+async function sendPushToAdmins(env,payload) {
+  if(!env.DB) return {sent:0};
+  await ensurePushTable(env.DB);
+  const rows=await env.DB.prepare("SELECT endpoint,subscription_json FROM push_subscriptions WHERE subscriber_role='admin'").all();
+  let sent=0; for(const row of rows.results||[]) { let sub; try{sub=JSON.parse(row.subscription_json);}catch{continue;} if(await sendWebPush(env,sub,payload)) sent++; }
   return {sent};
 }
 async function handlePushEvent(request,env) {
@@ -306,10 +337,24 @@ async function handlePushEvent(request,env) {
   let body; try{body=await request.json();}catch{return json({ok:false,error:"JSON tidak valid."},400);}
   const type=String(body.type||"");
   if(!["chat","promo"].includes(type)) return json({ok:false,error:"Jenis event tidak didukung."},400);
+  const record=body.record||body.data?.record||body;
   const title=type==="chat"?"Pesan chat baru":"Promo terbaru di LEOOSTORE";
-  const text=String(body.body|| (type==="chat"?"Ada pesan baru di chat LEOOSTORE.":"Cek promo terbaru di LEOOSTORE.")).replace(/[<>]/g,"").slice(0,160);
-  const path=type==="chat"?"/Leo-store/chat-admin.html":"/Leo-store/";
-  const result=await sendPushToAll(env,{title,body:text,url:path,tag:type+"-"+Date.now()});
+  const fallback=type==="chat"?"Ada pesan baru di chat LEOOSTORE.":"Cek promo terbaru di LEOOSTORE.";
+  const text=String(body.message||body.body||fallback).replace(/[<>]/g,"").slice(0,160);
+  if(type==="promo") {
+    const result=await sendPushToAll(env,{title,body:text,url:"/Leo-store/",tag:"promo-"+String(record.id||Date.now())});
+    return json({ok:true,...result});
+  }
+  const conversationId=String(record.conversation_id||"").trim();
+  const senderRole=String(record.sender_role||"").trim().toLowerCase();
+  if(!conversationId || !["customer","admin"].includes(senderRole)) return json({ok:false,error:"Data event chat tidak lengkap."},400);
+  await ensurePushTable(env.DB);
+  let result;
+  if(senderRole==="customer") result=await sendPushToAdmins(env,{title,body:text,url:"/Leo-store/admin-chat.html",tag:"chat-"+conversationId});
+  else {
+    const row=await env.DB.prepare("SELECT customer_id FROM store_chat_conversations WHERE id=?").bind(conversationId).first();
+    result=row?.customer_id?await sendPushToUserId(env,row.customer_id,{title:"Balasan admin LEOOSTORE",body:text,url:"/Leo-store/chat-admin.html",tag:"chat-"+conversationId}):{sent:0};
+  }
   return json({ok:true,...result});
 }
 
