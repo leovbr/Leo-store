@@ -335,13 +335,18 @@ async function handlePushEvent(request,env) {
   if(!expected) return json({ok:false,error:"Push event belum dikonfigurasi."},503);
   if(request.headers.get("Authorization")!=="Bearer "+expected) return json({ok:false,error:"Akses ditolak."},401);
   let body; try{body=await request.json();}catch{return json({ok:false,error:"JSON tidak valid."},400);}
-  const type=String(body.type||"");
+  const eventName=String(body.event_type||body.type||"");
+  const type=body.table==="store_chat_messages"?"chat":body.table==="store_promos"?"promo":eventName;
   if(!["chat","promo"].includes(type)) return json({ok:false,error:"Jenis event tidak didukung."},400);
   const record=body.record||body.data?.record||body;
   const title=type==="chat"?"Pesan chat baru":"Promo terbaru di LEOOSTORE";
   const fallback=type==="chat"?"Ada pesan baru di chat LEOOSTORE.":"Cek promo terbaru di LEOOSTORE.";
   const text=String(body.message||body.body||fallback).replace(/[<>]/g,"").slice(0,160);
   if(type==="promo") {
+    if(record.is_active!==true) return json({ok:true,ignored:true,reason:"promo_not_active"});
+    const now=Date.now();
+    if(record.starts_at && Date.parse(record.starts_at)>now) return json({ok:true,ignored:true,reason:"promo_not_started"});
+    if(record.ends_at && Date.parse(record.ends_at)<now) return json({ok:true,ignored:true,reason:"promo_expired"});
     const result=await sendPushToAll(env,{title,body:text,url:"/Leo-store/",tag:"promo-"+String(record.id||Date.now())});
     return json({ok:true,...result});
   }
