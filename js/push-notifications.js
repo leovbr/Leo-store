@@ -32,12 +32,12 @@
     const raw = atob(value.replace(/-/g, "+").replace(/_/g, "/"));
     return Uint8Array.from(raw, c => c.charCodeAt(0));
   };
-  async function saveSubscription(registration, customerKey) {
+  async function saveSubscription(registration, session) {
     const subscription = await registration.pushManager.getSubscription();
     if (!subscription) throw new Error("Langganan notifikasi belum terbentuk. Tekan Aktifkan Notifikasi lagi.");
     const response = await fetch(api("/api/push/subscribe"), {
-      method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ subscription: subscription.toJSON(), customerKey: customerKey || "" })
+      method: "POST", headers: { "Content-Type": "application/json", "Authorization": "Bearer " + session.access_token },
+      body: JSON.stringify({ subscription: subscription.toJSON() })
     });
     const result = await response.json();
     if (!response.ok) throw new Error(result.error || "Gagal menyimpan perangkat.");
@@ -58,7 +58,7 @@
     await navigator.serviceWorker.ready;
     let subscription = await registration.pushManager.getSubscription();
     if (!subscription) subscription = await registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64ToBytes(keyData.publicKey) });
-    const result = await saveSubscription(registration, user.email.trim().toLowerCase());
+    const result = await saveSubscription(registration, sessionData.session);
     return result;
   }
   window.LEOOSTOREPush = { enable, promptAfterLogin: user => showLoginPrompt(user, true) };
@@ -88,7 +88,9 @@
     try {
       const registration = await navigator.serviceWorker?.getRegistration(base.pathname);
       if (registration && await registration.pushManager.getSubscription()) {
-        await saveSubscription(registration, user.email.trim().toLowerCase());
+        const auth = await loadSupabaseAuth();
+        const { data } = await auth.auth.getSession();
+        if (data?.session) await saveSubscription(registration, data.session);
         return;
       }
     } catch (_) {}
@@ -138,7 +140,7 @@
               const registration = await navigator.serviceWorker?.getRegistration(base.pathname);
               if (!registration || !(await registration.pushManager.getSubscription())) return;
               const email = session?.user && !session.user.is_anonymous ? (session.user.email || "").trim().toLowerCase() : "";
-              await saveSubscription(registration, email);
+              if (session?.access_token) await saveSubscription(registration, session);
             } catch (e) { console.warn("Gagal memperbarui akun notifikasi:", e); }
           }, 0);
         }
