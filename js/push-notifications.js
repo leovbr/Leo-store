@@ -61,7 +61,18 @@
     const result = await saveSubscription(registration, sessionData.session);
     return result;
   }
-  window.LEOOSTOREPush = { enable, promptAfterLogin: user => showLoginPrompt(user, true) };
+  async function sendTest() {
+    const auth = await loadSupabaseAuth();
+    const { data, error } = await auth.auth.getSession();
+    if (error) throw new Error("Gagal memeriksa akun login: " + error.message);
+    const session = data?.session;
+    if (!session?.access_token || session.user?.id !== "3939553f-ef8d-4295-8f2f-39c86ce9ed20") throw new Error("Login menggunakan akun admin terlebih dahulu.");
+    const response = await fetch(api("/api/push/test"), { method:"POST", headers:{ "Authorization":"Bearer "+session.access_token } });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || "Tes push gagal.");
+    return result;
+  }
+  window.LEOOSTOREPush = { enable, sendTest, promptAfterLogin: user => showLoginPrompt(user, true) };
   function injectPromptStyles() {
     if (document.getElementById("leo-push-prompt-style")) return;
     const style = document.createElement("style");
