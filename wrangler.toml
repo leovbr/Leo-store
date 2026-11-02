@@ -8,6 +8,11 @@ binding = "DB"
 database_name = "leoostore"
 database_id = "9213b5cc-842d-4967-9506-2000d3418bfe"
 
-# Web Push config: set VAPID_PUBLIC_KEY and VAPID_SUBJECT as variables,
-# and VAPID_PRIVATE_KEY as a secret in Cloudflare Worker settings.
+# Web Push public configuration. These values are safe to keep in source control.
+[vars]
+VAPID_PUBLIC_KEY = "BIVoJZ90YD0gKplWk8MVx_4eUP3pejxHPri8cDP91lGWzt_kj5Vgm7OC4x3zqvsPjrNiiUlaOwm9Cs43pj2VaSU"
+VAPID_SUBJECT = "mailto:admin@leoostore.id"
+
+# Keep VAPID_PRIVATE_KEY and PUSH_EVENT_TOKEN as Cloudflare secrets.
+# Preserve dashboard variables not declared in this file.
 keep_vars = true
