@@ -2,6 +2,7 @@ name = "spring-surf-a6a7"
 main = "worker/src/index.js"
 compatibility_date = "2026-09-20"
 compatibility_flags = ["nodejs_compat"]
+keep_vars = true
 
 [[d1_databases]]
 binding = "DB"
@@ -13,6 +14,4 @@ database_id = "9213b5cc-842d-4967-9506-2000d3418bfe"
 VAPID_PUBLIC_KEY = "BIVoJZ90YD0gKplWk8MVx_4eUP3pejxHPri8cDP91lGWzt_kj5Vgm7OC4x3zqvsPjrNiiUlaOwm9Cs43pj2VaSU"
 VAPID_SUBJECT = "mailto:admin@leoostore.id"
 
-# Keep VAPID_PRIVATE_KEY and PUSH_EVENT_TOKEN as Cloudflare secrets.
-# Preserve dashboard variables not declared in this file.
-keep_vars = true
+# VAPID_PRIVATE_KEY and PUSH_EVENT_TOKEN must remain Cloudflare secrets.
