@@ -281,6 +281,20 @@ async function handlePushSubscribe(request,env) {
   await env.DB.prepare("INSERT INTO push_subscriptions(endpoint,subscription_json,customer_key,subscriber_id,subscriber_role,created_at,updated_at) VALUES(?,?,?,?,?,?,?) ON CONFLICT(endpoint) DO UPDATE SET subscription_json=excluded.subscription_json,customer_key=excluded.customer_key,subscriber_id=excluded.subscriber_id,subscriber_role=excluded.subscriber_role,updated_at=excluded.updated_at").bind(sub.endpoint,JSON.stringify(sub),customerKey,user.id,role,now,now).run();
   return json({ok:true,saved:true,role});
 }
+async function handlePushTest(request,env) {
+  if(!env.DB) return json({ok:false,error:"Database belum dikonfigurasi."},503);
+  const user=await verifyPushUser(request);
+  if(!user) return json({ok:false,error:"Login tidak valid. Masuk kembali."},401);
+  if(user.id!==PUSH_ADMIN_UID) return json({ok:false,error:"Tes notifikasi hanya tersedia untuk akun admin."},403);
+  await ensurePushTable(env.DB);
+  const rows=await env.DB.prepare("SELECT endpoint,subscription_json FROM push_subscriptions WHERE subscriber_id=? AND subscriber_role='admin'").bind(user.id).all();
+  let sent=0,failed=0;
+  for(const row of rows.results||[]) {
+    let sub; try{sub=JSON.parse(row.subscription_json);}catch{failed++;continue;}
+    if(await sendWebPush(env,sub,{title:"Tes Notifikasi LEOOSTORE",body:"Berhasil! Perangkat admin dapat menerima Web Push.",url:"/Leo-store/notifikasi.html",tag:"leoostore-push-test"})) sent++; else failed++;
+  }
+  return json({ok:true,targeted:(rows.results||[]).length,sent,failed});
+}
 async function handlePushUnsubscribe(request,env) {
   if(!env.DB) return json({ok:false,error:"Database belum dikonfigurasi."},503);
   const user=await verifyPushUser(request);
@@ -377,6 +391,7 @@ async function sendPushToAll(env,payload) {
 
 export default {async fetch(request,env){const origin=corsOrigin(request);if(request.method==="OPTIONS")return new Response(null,{status:204,headers:{"access-control-allow-origin":origin,"access-control-allow-methods":"GET,POST,OPTIONS","access-control-allow-headers":"Content-Type, Authorization","access-control-max-age":"86400","vary":"Origin"}});const url=new URL(request.url);try{if(url.pathname==="/api/push/public-key"&&request.method==="GET")return handlePushPublicKey(env);
 if(url.pathname==="/api/push/subscribe"&&request.method==="POST")return handlePushSubscribe(request,env);
+if(url.pathname==="/api/push/test"&&request.method==="POST")return handlePushTest(request,env);
 if(url.pathname==="/api/push/unsubscribe"&&request.method==="POST")return handlePushUnsubscribe(request,env);
 if(url.pathname==="/api/push/event"&&request.method==="POST")return handlePushEvent(request,env);
 if(url.pathname==="/health"&&request.method==="GET")return json({ok:true,service:"LEOOSTORE Payment API",environment:"sandbox"});if(url.pathname==="/api/orders"&&request.method==="GET")return json({ok:true,service:"LEOOSTORE Payment API",endpoint:"orders",method:"POST",message:"Endpoint aktif. Gunakan POST untuk membuat pembayaran."});if(url.pathname==="/api/leaderboard"&&request.method==="GET")return handleLeaderboard(env,url);
