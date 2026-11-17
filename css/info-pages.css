@@ -54,3 +54,20 @@
  .info-page .universal-social-footer .footer-social-row .social-link{width:44px!important;height:44px!important;min-width:44px!important;max-width:44px!important;}
  .info-page .universal-social-footer .footer-social-row .social-link img{width:30px!important;height:30px!important;}
 }
+
+/* Match hamburger menu typography with index.html / shared storefront typography. */
+.info-page .side-menu,
+.info-page .side-menu .side-menu-nav,
+.info-page .side-menu .side-menu-item,
+.info-page .side-menu .side-menu-item span,
+.info-page .side-menu .side-menu-close{
+  font-family:"Plus Jakarta Sans",ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+}
+.info-page .side-menu .side-menu-item{
+  font-size:16px!important;
+  font-weight:700!important;
+  line-height:1.5!important;
+}
+.info-page .side-menu .side-menu-header .header-brand-text{
+  font-family:"Orbitron",sans-serif!important;
+}
