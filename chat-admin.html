@@ -100,6 +100,35 @@ body.chat-admin-page.chat-auth-only .chat-account-bar,body.chat-admin-page.chat-
 .chat-admin-page .chat-cs-mini svg{width:17px;height:17px;fill:none;stroke:#fff;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .chat-admin-page .site-header{position:relative!important;z-index:100!important}.chat-admin-page .site-header .menu-button{position:relative!important;z-index:101!important;pointer-events:auto!important}.chat-admin-page .chat-support-menu{z-index:1000!important;pointer-events:auto!important}.chat-admin-page .chat-support-menu:not(.open){display:none!important}.chat-admin-page .chat-support-menu.open{display:flex!important}
 
+/* LOGIN TAP FIX: keep the authentication form above decorative/navigation layers. */
+.chat-admin-page.chat-auth-only .chat-main{
+  position:relative!important;
+  z-index:150!important;
+  isolation:isolate!important;
+  pointer-events:auto!important;
+}
+.chat-admin-page.chat-auth-only .chat-auth,
+.chat-admin-page.chat-auth-only #authForm,
+.chat-admin-page.chat-auth-only #authSubmit{
+  position:relative!important;
+  z-index:151!important;
+  pointer-events:auto!important;
+  touch-action:manipulation!important;
+}
+.chat-admin-page.chat-auth-only #authSubmit{
+  display:block!important;
+  cursor:pointer!important;
+}
+.chat-admin-page.chat-auth-only #searchPanel,
+.chat-admin-page.chat-auth-only .menu-overlay:not(.active),
+.chat-admin-page.chat-auth-only .side-menu:not(.active){
+  display:none!important;
+  pointer-events:none!important;
+}
+.chat-admin-page.chat-auth-only .chat-auth::before,
+.chat-admin-page.chat-auth-only .chat-auth::after{
+  pointer-events:none!important;
+}
 /* Login-only layout: remove the support menu and tidy the authentication form. */
 .chat-admin-page.chat-auth-only .site-header{height:76px!important;min-height:76px!important;padding:0!important}
 .chat-admin-page.chat-auth-only .site-header .header-inner{height:76px!important;min-height:76px!important;padding-top:0!important;padding-bottom:0!important}
