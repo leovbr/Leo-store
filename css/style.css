@@ -3380,3 +3380,6 @@ body .universal-social-footer .footer-social-copyright{
 body .universal-social-footer .footer-info-group h4,
 body .universal-social-footer .footer-social-column h4{text-align:center!important;}
 body .universal-social-footer .footer-social-row{justify-content:center!important;}
+
+/* Match the FAQ footer's left-aligned social icon row on every page. */
+body .universal-social-footer .footer-social-row{justify-content:flex-start!important;}
