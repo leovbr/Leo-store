@@ -26,9 +26,7 @@ const gameFilterEl = document.getElementById("gameFilter");
 const adminStatusFilterEl = document.getElementById("adminStatusFilter");
 const adminOrderListEl = document.getElementById("adminOrderList");
 const refreshBtnEl = document.getElementById("refreshBtn");
-const adminApiTokenEl = document.getElementById("adminApiToken");
-const connectAdminApiEl = document.getElementById("connectAdminApi");
-const adminApiStatusEl = document.getElementById("adminApiStatus");
+const adminApiStatusEl = {textContent:"Menunggu sesi admin…"};
 const ADMIN_API_URL = "https://spring-surf-a6a7.leovbriansyh791.workers.dev/api/admin/orders";
 let remoteOrders = null;
 
@@ -731,41 +729,28 @@ window.addEventListener(
 );
 
 
-async function loadRemoteOrders(){
-  const token=String(adminApiTokenEl?.value || sessionStorage.getItem("LEOOSTORE_admin_api_token") || "").trim();
-  if(!token){if(adminApiStatusEl)adminApiStatusEl.textContent="Masukkan token admin untuk mengambil transaksi pusat.";return;}
+async function loadRemoteOrders(session){
+  const token=String(session?.access_token || "").trim();
+  if(!token){if(adminApiStatusEl)adminApiStatusEl.textContent="Sesi admin tidak tersedia. Silakan login kembali.";return;}
   if(adminApiStatusEl)adminApiStatusEl.textContent="Mengambil transaksi dari database...";
   try{
     const response=await fetch(ADMIN_API_URL+"?limit=100",{method:"GET",headers:{Authorization:"Bearer "+token,Accept:"application/json"},cache:"no-store"});
     const data=await response.json().catch(()=>({}));
     if(!response.ok||!data.ok)throw new Error(data.error||("HTTP "+response.status));
     remoteOrders=(Array.isArray(data.orders)?data.orders:[]).map(order=>({...order,_remote:true,gameSlug:order.gameSlug || order.game_slug || "",gameName:order.gameName || order.game_name || order.game || order.productName || order.product_name || "",amount:order.denomination || order.denomination_name,price:order.total,paidAt:order.status==="Pembayaran Berhasil"?order.updatedAt:""}));
-    sessionStorage.setItem("LEOOSTORE_admin_api_token",token);
-    const connectPanel=document.querySelector(".admin-api-connect");
-    if(connectPanel)connectPanel.hidden=true;
     if(adminApiStatusEl)adminApiStatusEl.textContent="";
     render();
   }catch(error){
     remoteOrders=null;
-    const connectPanel=document.querySelector(".admin-api-connect");
-    if(connectPanel)connectPanel.hidden=false;
     if(adminApiStatusEl)adminApiStatusEl.textContent="Gagal terhubung: "+(error.message||"Periksa token dan koneksi.");
     render();
   }
 }
-if(connectAdminApiEl)connectAdminApiEl.addEventListener("click",loadRemoteOrders);
-if(adminApiTokenEl){
-  adminApiTokenEl.value=sessionStorage.getItem("LEOOSTORE_admin_api_token")||"";
-  adminApiTokenEl.addEventListener("input",()=>{
-    if(adminApiStatusEl)adminApiStatusEl.hidden=!!adminApiTokenEl.value.trim();
-  });
-  if(adminApiStatusEl)adminApiStatusEl.hidden=!!adminApiTokenEl.value.trim();
-  adminApiTokenEl.addEventListener("keydown",event=>{if(event.key==="Enter")loadRemoteOrders();});
-}
-
 // ================================
 // INITIAL
 // ================================
 
 initGameFilterDropdown();
 render();
+window.LEOAdminAuth?.ready.then(session=>{if(session)loadRemoteOrders(session);});
+window.addEventListener("leo-admin-ready",event=>{if(event.detail?.session)loadRemoteOrders(event.detail.session);});
