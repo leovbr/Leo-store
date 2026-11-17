@@ -358,7 +358,7 @@ async function sendWebPush(env,subscription,payload) {
   }
   webpush.setVapidDetails(String(env.VAPID_SUBJECT),String(env.VAPID_PUBLIC_KEY),String(env.VAPID_PRIVATE_KEY));
   try {
-    await webpush.sendNotification(subscription,JSON.stringify(payload),{TTL:60,urgency:"normal"});
+    await webpush.sendNotification(subscription,JSON.stringify(payload),{TTL:86400,urgency:"normal"});
     return true;
   } catch(error) {
     const status=Number(error?.statusCode||0);
