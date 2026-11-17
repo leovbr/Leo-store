@@ -3,12 +3,47 @@
 <title>Kebijakan Privasi | LEOOSTORE.id</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=20261117-drawer-brand-unified1">
+<link rel="stylesheet" href="css/style.css?v=20261117-home-brand-size1">
 <link rel="stylesheet" href="css/style-pages.css?v=20261117-shell1">
 
 <link rel="stylesheet" href="css/logo-text-animation.css?v=20261117-drawer-logo-fix3">
 <link rel="stylesheet" href="css/info-pages.css?v=20261117-home-logo-copy1">
 
+<style id="leoostore-text-brand-override">
+/* Final override: show text-only LEOOSTORE.id brand on every storefront page. */
+.site-header a.header-brand,
+.site-header .container > a.header-brand,
+.site-header .header-inner > a.header-brand{
+  display:inline-flex!important; align-items:center!important; justify-content:flex-start!important;
+  flex:0 0 auto!important; width:auto!important; min-width:0!important; height:auto!important;
+  max-width:100%!important; overflow:visible!important; gap:0!important;
+}
+.site-header .header-brand img.header-logo{display:none!important; visibility:hidden!important; width:0!important; height:0!important;}
+.site-header .header-brand .header-brand-text,
+.site-header a.header-brand > span.header-brand-text{
+  display:inline-block!important; visibility:visible!important; opacity:1!important;
+  position:relative!important; width:auto!important; height:auto!important; max-width:none!important;
+  margin:0!important; padding:0!important; overflow:visible!important;
+  color:#f5f8ff!important;
+  background:linear-gradient(100deg,#b78aff 0%,#9b5cff 36%,#7c3aed 68%,#d8b4fe 100%)!important;
+  -webkit-background-clip:text!important; background-clip:text!important;
+  -webkit-text-fill-color:transparent!important;
+  font-family:'Orbitron','Plus Jakarta Sans',Arial,sans-serif!important;
+  font-size:clamp(16px,2.3vw,21px)!important; font-weight:900!important;
+  font-style:normal!important; letter-spacing:-.045em!important; line-height:1.15!important;
+  white-space:nowrap!important; text-decoration:none!important; text-shadow:none!important;
+  transform:none!important;
+}
+@media(max-width:600px){
+ .site-header .header-brand .header-brand-text,
+ .site-header a.header-brand > span.header-brand-text{font-size:17px!important;}
+}
+
+/* HOME ONLY: align text logo with the inner pages; preserve all other positions. */
+.home-page .site-header.home-header .header-inner > a.header-brand{
+  margin-left:10px!important;
+}
+</style>
 </head><body class="info-page"><header class="site-header home-header">
   <div class="container header-inner"><a href="index.html" class="header-brand">
   <span class="header-brand-text">LEOOSTORE.id</span>
