@@ -38,6 +38,7 @@
     @media(max-width:480px){.admin-header{gap:10px}.admin-brand{gap:0!important}.admin-brand .header-brand-text{font-size:17px;letter-spacing:-.045em}.admin-brand .admin-brand-subtitle{font-size:11px}.admin-menu-toggle{width:48px;height:48px}}
     @media(prefers-reduced-motion:reduce){.admin-menu.open{animation:none}}
     body:not(.admin-authenticated) .admin-main{display:none!important}
+    body.admin-authenticated #adminLoginPanel{display:none!important}
     body:not(.admin-authenticated) .admin-menu-toggle{display:none!important}
     .admin-login-wrap{width:min(100% - 32px,460px);margin:clamp(48px,12vh,110px) auto;padding:26px;background:#101a2b;border:1px solid #29364a;border-radius:18px;box-shadow:0 20px 60px #0005;color:#f5f7fb}
     .admin-login-wrap h2{margin:0 0 8px;font-size:22px}.admin-login-wrap p{color:#9caac0;font-size:13px;line-height:1.6}
@@ -126,6 +127,7 @@
       >
         ↻ Refresh
       </button>
+      <span id="adminApiStatus" role="status" style="align-self:center;font-size:12px;color:#9caac0">Menunggu sesi admin…</span>
 
     </section>
 
