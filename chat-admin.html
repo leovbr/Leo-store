@@ -151,7 +151,7 @@ body.chat-admin-page.chat-auth-only .chat-account-bar,body.chat-admin-page.chat-
   </nav>
 </aside>
 
-<div class="search-panel" id="searchPanel"><div class="search-panel-inner"><input type="search" id="siteSearch" placeholder="Cari game..." autocomplete="off"><button type="button" id="searchClose" aria-label="Tutup pencarian">×</button></div></div>
+<div class="search-panel" id="searchPanel" hidden><div class="search-panel-inner"><input type="search" id="siteSearch" placeholder="Cari game..." autocomplete="off"><button type="button" id="searchClose" aria-label="Tutup pencarian">×</button></div></div>
 
 
 <main class="chat-main">
@@ -317,9 +317,9 @@ document.addEventListener("DOMContentLoaded",function(){
  function openMenu(){sideMenu?.classList.add("active");menuOverlay?.classList.add("active");sideMenu?.setAttribute("aria-hidden","false");menuButton?.setAttribute("aria-expanded","true");document.body.style.overflow="hidden";}
  function closeMenu(){sideMenu?.classList.remove("active");menuOverlay?.classList.remove("active");sideMenu?.setAttribute("aria-hidden","true");menuButton?.setAttribute("aria-expanded","false");document.body.style.overflow="";}
  menuButton?.addEventListener("click",openMenu);menuClose?.addEventListener("click",closeMenu);menuOverlay?.addEventListener("click",closeMenu);
- document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeMenu();searchPanel?.classList.remove("active");}});
- searchButton?.addEventListener("click",()=>{searchPanel?.classList.toggle("active");if(searchPanel?.classList.contains("active"))siteSearch?.focus();});
- searchClose?.addEventListener("click",()=>{searchPanel?.classList.remove("active");if(siteSearch)siteSearch.value="";});
+ document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeMenu();searchPanel?.classList.remove("active");if(searchPanel)searchPanel.hidden=true;}});
+ searchButton?.addEventListener("click",()=>{if(!searchPanel)return;const opening=!searchPanel.classList.contains("active");searchPanel.classList.toggle("active",opening);searchPanel.hidden=!opening;if(opening)siteSearch?.focus();});
+ searchClose?.addEventListener("click",()=>{searchPanel?.classList.remove("active");if(searchPanel)searchPanel.hidden=true;if(siteSearch)siteSearch.value="";});
  siteSearch?.addEventListener("keydown",e=>{if(e.key==="Enter"&&siteSearch.value.trim())location.href="shop.html?q="+encodeURIComponent(siteSearch.value.trim());});
 });
 </script>
