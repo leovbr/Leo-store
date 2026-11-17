@@ -3256,3 +3256,15 @@ body{
 .whatsapp-input .leo-shared-select .leo-country-compact{display:block;white-space:nowrap;font-size:13px;font-weight:600;line-height:1.2;letter-spacing:.1px;}
 .whatsapp-input .leo-shared-select .leo-shared-value{justify-content:center;overflow:hidden;}
 .whatsapp-input .leo-shared-select .leo-shared-arrow{margin-left:auto;}
+
+
+/* Customer information links placed immediately before social links */
+.universal-social-footer .footer-info-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:start;margin:0 0 26px;padding:0 16px}
+.universal-social-footer .footer-info-group{min-width:0}
+.universal-social-footer .footer-info-group h4{margin:0 0 10px;color:var(--text,#f5f7fb);font-size:13px;font-weight:800}
+.universal-social-footer .footer-info-group a{display:block;width:fit-content;margin:7px 0;color:var(--text-soft,#aab1bf);font-size:12px;line-height:1.5;text-decoration:none}
+.universal-social-footer .footer-info-group a:hover{color:#c4a5fd}
+.info-footer-inline{display:flex;justify-content:center;gap:9px 18px;flex-wrap:wrap;margin:18px auto 22px;padding:0 16px}
+.info-footer-inline a{color:var(--text-soft,#aab1bf);font-size:12px;text-decoration:none}
+.info-footer-inline a:hover{color:#c4a5fd}
+@media(max-width:600px){.universal-social-footer .footer-info-links{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 12px;padding:0 18px;margin-bottom:24px}.universal-social-footer .footer-info-group h4{font-size:12px}.universal-social-footer .footer-info-group a{font-size:11px}}
