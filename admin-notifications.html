@@ -6,7 +6,15 @@
 @media(max-width:650px){.shell{padding:10px}.panel{padding:14px}.grid{grid-template-columns:1fr}.admin-header.site-header{padding:9px 12px}.admin-brand .header-brand-text{font-size:clamp(15px,4.1vw,20px)}}
 </style><style id="single-admin-login-hide">#loginPanel{display:none!important}</style>
 </head><body>
-<header class="admin-header site-header"><a class="admin-brand header-brand" href="admin.html"><div><span class="header-brand-text">LEOOSTORE.id</span><span class="admin-brand-subtitle">Push Notifikasi</span></div></a><div class="admin-header-actions"><button class="admin-menu-toggle" id="menuToggle" type="button" aria-label="Buka menu admin" aria-expanded="false"><span class="menu-icon"><span></span><span></span><span></span></span></button><nav class="admin-menu" id="adminMenu"><a href="admin.html"><span>▦</span>Dashboard</a><a href="admin-catalog.html"><span>▤</span>Katalog</a><a href="admin-promos.html"><span>%</span>Kode Promo</a><a href="admin-notifications.html"><span>🔔</span>Push Notifikasi</a><a href="index.html"><span>⌂</span>Kembali ke Store</a></nav></div></header>
+<header class="admin-header site-header"><a class="admin-brand header-brand" href="admin.html"><div><span class="header-brand-text">LEOOSTORE.id</span><span class="admin-brand-subtitle">Push Notifikasi</span></div></a><div class="admin-header-actions"><button class="admin-menu-toggle" id="menuToggle" type="button" aria-label="Buka menu admin" aria-expanded="false"><span class="menu-icon"><span></span><span></span><span></span></span></button><nav class="admin-menu" id="adminMenu" aria-label="Navigasi admin">
+<a href="index.html"><span>⌂</span> Kembali ke Store</a>
+<a href="admin.html"><span>▦</span> Dashboard Transaksi</a>
+<a href="admin-catalog.html"><span>▤</span> Manajemen Katalog</a>
+<a href="admin-accounts.html"><span>🎮</span> Manajemen Akun</a>
+<a href="admin-promos.html"><span>%</span> Kode Promo</a>
+<a href="admin-notifications.html"><span>🔔</span> Push Notifikasi</a>
+<a href="admin-artikel.html"><span>📰</span> Kelola Artikel</a>
+</nav></div></header>
 <main class="shell">
 <section id="loginPanel" class="panel"><h2>Login Admin</h2><p class="muted">Gunakan akun admin LEOOSTORE untuk mengelola notifikasi pelanggan.</p><div class="grid"><div class="field"><label>Email admin</label><input id="email" type="email" autocomplete="username"></div><div class="field"><label>Password</label><input id="password" type="password" autocomplete="current-password"></div></div><div class="actions"><button id="login">Login</button></div><p id="authStatus" class="muted" role="status">Belum login.</p></section>
 <section id="app" class="hidden">
