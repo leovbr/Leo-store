@@ -26,9 +26,10 @@ const gameFilterEl = document.getElementById("gameFilter");
 const adminStatusFilterEl = document.getElementById("adminStatusFilter");
 const adminOrderListEl = document.getElementById("adminOrderList");
 const refreshBtnEl = document.getElementById("refreshBtn");
-const adminApiStatusEl = {textContent:"Menunggu sesi admin…"};
+const adminApiStatusEl = document.getElementById("adminApiStatus");
 const ADMIN_API_URL = "https://spring-surf-a6a7.leovbriansyh791.workers.dev/api/admin/orders";
 let remoteOrders = null;
+let lastAdminSessionToken = "";
 
 // ================================
 // STORAGE
@@ -707,7 +708,7 @@ if (adminStatusFilterEl) {
 if (refreshBtnEl) {
   refreshBtnEl.addEventListener(
     "click",
-    () => { if (Array.isArray(remoteOrders)) loadRemoteOrders(); else render(); }
+    () => { if (Array.isArray(remoteOrders)) loadRemoteOrders(window.LEOAdminAuth?.session); else render(); }
   );
 }
 
@@ -732,6 +733,8 @@ window.addEventListener(
 async function loadRemoteOrders(session){
   const token=String(session?.access_token || "").trim();
   if(!token){if(adminApiStatusEl)adminApiStatusEl.textContent="Sesi admin tidak tersedia. Silakan login kembali.";return;}
+  if(token===lastAdminSessionToken&&Array.isArray(remoteOrders))return;
+  lastAdminSessionToken=token;
   if(adminApiStatusEl)adminApiStatusEl.textContent="Mengambil transaksi dari database...";
   try{
     const response=await fetch(ADMIN_API_URL+"?limit=100",{method:"GET",headers:{Authorization:"Bearer "+token,Accept:"application/json"},cache:"no-store"});
