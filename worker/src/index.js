@@ -295,6 +295,41 @@ async function handlePushTest(request,env) {
   }
   return json({ok:true,targeted:(rows.results||[]).length,sent,failed});
 }
+async function handleAdminPushBroadcast(request,env) {
+  if(!env.DB) return json({ok:false,error:"Database belum dikonfigurasi."},503);
+  const user=await verifyPushUser(request);
+  if(!user) return json({ok:false,error:"Login tidak valid. Masuk kembali."},401);
+  if(user.id!==PUSH_ADMIN_UID) return json({ok:false,error:"Akses khusus admin."},403);
+  let body; try { body=await request.json(); } catch { return json({ok:false,error:"JSON tidak valid."},400); }
+  const title=String(body?.title||"").replace(/[<>]/g,"").trim().slice(0,80);
+  const message=String(body?.body||"").replace(/[<>]/g,"").trim().slice(0,180);
+  let target=String(body?.url||"/Leo-store/").trim();
+  if(!title || !message) return json({ok:false,error:"Judul dan isi notifikasi wajib diisi."},400);
+  if(!target.startsWith("/Leo-store/") && !target.startsWith("https://leovbr.github.io/Leo-store/")) target="/Leo-store/";
+  if(!env.VAPID_PUBLIC_KEY || !env.VAPID_PRIVATE_KEY || !env.VAPID_SUBJECT) return json({ok:false,error:"Konfigurasi VAPID belum lengkap di Cloudflare."},503);
+  await ensurePushTable(env.DB);
+  await env.DB.prepare("CREATE TABLE IF NOT EXISTS push_broadcasts (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, body TEXT NOT NULL, target_url TEXT NOT NULL, targeted INTEGER NOT NULL DEFAULT 0, sent INTEGER NOT NULL DEFAULT 0, failed INTEGER NOT NULL DEFAULT 0, admin_id TEXT NOT NULL, created_at TEXT NOT NULL)").run();
+  const rows=await env.DB.prepare("SELECT endpoint,subscription_json FROM push_subscriptions WHERE subscriber_role='customer' OR subscriber_role IS NULL OR subscriber_role=''").all();
+  let sent=0,failed=0;
+  for(const row of rows.results||[]) {
+    let subscription;
+    try { subscription=JSON.parse(row.subscription_json); } catch { failed++; continue; }
+    if(await sendWebPush(env,subscription,{title,body:message,url:target,tag:"leo-broadcast-"+Date.now()})) sent++; else failed++;
+  }
+  const targeted=(rows.results||[]).length;
+  const createdAt=new Date().toISOString();
+  await env.DB.prepare("INSERT INTO push_broadcasts(title,body,target_url,targeted,sent,failed,admin_id,created_at) VALUES(?,?,?,?,?,?,?,?)").bind(title,message,target,targeted,sent,failed,user.id,createdAt).run();
+  return json({ok:true,targeted,sent,failed,createdAt});
+}
+async function handleAdminPushHistory(request,env) {
+  if(!env.DB) return json({ok:false,error:"Database belum dikonfigurasi."},503);
+  const user=await verifyPushUser(request);
+  if(!user) return json({ok:false,error:"Login tidak valid. Masuk kembali."},401);
+  if(user.id!==PUSH_ADMIN_UID) return json({ok:false,error:"Akses khusus admin."},403);
+  await env.DB.prepare("CREATE TABLE IF NOT EXISTS push_broadcasts (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, body TEXT NOT NULL, target_url TEXT NOT NULL, targeted INTEGER NOT NULL DEFAULT 0, sent INTEGER NOT NULL DEFAULT 0, failed INTEGER NOT NULL DEFAULT 0, admin_id TEXT NOT NULL, created_at TEXT NOT NULL)").run();
+  const rows=await env.DB.prepare("SELECT id,title,body,target_url,targeted,sent,failed,created_at FROM push_broadcasts ORDER BY id DESC LIMIT 30").all();
+  return json({ok:true,items:rows.results||[]});
+}
 async function handlePushUnsubscribe(request,env) {
   if(!env.DB) return json({ok:false,error:"Database belum dikonfigurasi."},503);
   const user=await verifyPushUser(request);
@@ -392,6 +427,8 @@ async function sendPushToAll(env,payload) {
 export default {async fetch(request,env){const origin=corsOrigin(request);if(request.method==="OPTIONS")return new Response(null,{status:204,headers:{"access-control-allow-origin":origin,"access-control-allow-methods":"GET,POST,OPTIONS","access-control-allow-headers":"Content-Type, Authorization","access-control-max-age":"86400","vary":"Origin"}});const url=new URL(request.url);try{if(url.pathname==="/api/push/public-key"&&request.method==="GET")return handlePushPublicKey(env);
 if(url.pathname==="/api/push/subscribe"&&request.method==="POST")return handlePushSubscribe(request,env);
 if(url.pathname==="/api/push/test"&&request.method==="POST")return handlePushTest(request,env);
+if(url.pathname==="/api/admin/push/broadcast"&&request.method==="POST")return handleAdminPushBroadcast(request,env);
+if(url.pathname==="/api/admin/push/history"&&request.method==="GET")return handleAdminPushHistory(request,env);
 if(url.pathname==="/api/push/unsubscribe"&&request.method==="POST")return handlePushUnsubscribe(request,env);
 if(url.pathname==="/api/push/event"&&request.method==="POST")return handlePushEvent(request,env);
 if(url.pathname==="/health"&&request.method==="GET")return json({ok:true,service:"LEOOSTORE Payment API",environment:"sandbox"});if(url.pathname==="/api/orders"&&request.method==="GET")return json({ok:true,service:"LEOOSTORE Payment API",endpoint:"orders",method:"POST",message:"Endpoint aktif. Gunakan POST untuk membuat pembayaran."});if(url.pathname==="/api/leaderboard"&&request.method==="GET")return handleLeaderboard(env,url);
