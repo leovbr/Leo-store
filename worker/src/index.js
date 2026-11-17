@@ -321,6 +321,17 @@ async function handleAdminPushBroadcast(request,env) {
   await env.DB.prepare("INSERT INTO push_broadcasts(title,body,target_url,targeted,sent,failed,admin_id,created_at) VALUES(?,?,?,?,?,?,?,?)").bind(title,message,target,targeted,sent,failed,user.id,createdAt).run();
   return json({ok:true,targeted,sent,failed,createdAt});
 }
+async function handleAdminPushDiagnostics(request,env) {
+  if(!env.DB) return json({ok:false,error:"Database belum dikonfigurasi."},503);
+  const user=await verifyPushUser(request);
+  if(!user) return json({ok:false,error:"Login tidak valid. Masuk kembali."},401);
+  if(user.id!==PUSH_ADMIN_UID) return json({ok:false,error:"Akses khusus admin."},403);
+  await ensurePushTable(env.DB);
+  const total=await env.DB.prepare("SELECT COUNT(*) AS count FROM push_subscriptions").first();
+  const roles=await env.DB.prepare("SELECT COALESCE(NULLIF(subscriber_role,''),'(kosong)') AS role, COUNT(*) AS count FROM push_subscriptions GROUP BY COALESCE(NULLIF(subscriber_role,''),'(kosong)') ORDER BY role").all();
+  const recent=await env.DB.prepare("SELECT COUNT(*) AS count FROM push_subscriptions WHERE updated_at >= ?").bind(new Date(Date.now()-7*24*60*60*1000).toISOString()).first();
+  return json({ok:true,total:Number(total?.count||0),roles:roles.results||[],updatedLast7Days:Number(recent?.count||0)});
+}
 async function handleAdminPushHistory(request,env) {
   if(!env.DB) return json({ok:false,error:"Database belum dikonfigurasi."},503);
   const user=await verifyPushUser(request);
@@ -429,6 +440,7 @@ if(url.pathname==="/api/push/subscribe"&&request.method==="POST")return handlePu
 if(url.pathname==="/api/push/test"&&request.method==="POST")return handlePushTest(request,env);
 if(url.pathname==="/api/admin/push/broadcast"&&request.method==="POST")return handleAdminPushBroadcast(request,env);
 if(url.pathname==="/api/admin/push/history"&&request.method==="GET")return handleAdminPushHistory(request,env);
+if(url.pathname==="/api/admin/push/diagnostics"&&request.method==="GET")return handleAdminPushDiagnostics(request,env);
 if(url.pathname==="/api/push/unsubscribe"&&request.method==="POST")return handlePushUnsubscribe(request,env);
 if(url.pathname==="/api/push/event"&&request.method==="POST")return handlePushEvent(request,env);
 if(url.pathname==="/health"&&request.method==="GET")return json({ok:true,service:"LEOOSTORE Payment API",environment:"sandbox"});if(url.pathname==="/api/orders"&&request.method==="GET")return json({ok:true,service:"LEOOSTORE Payment API",endpoint:"orders",method:"POST",message:"Endpoint aktif. Gunakan POST untuk membuat pembayaran."});if(url.pathname==="/api/leaderboard"&&request.method==="GET")return handleLeaderboard(env,url);
