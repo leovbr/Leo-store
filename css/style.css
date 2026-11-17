@@ -3268,3 +3268,22 @@ body{
 .info-footer-inline a{color:var(--text-soft,#aab1bf);font-size:12px;text-decoration:none}
 .info-footer-inline a:hover{color:#c4a5fd}
 @media(max-width:600px){.universal-social-footer .footer-info-links{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 12px;padding:0 18px;margin-bottom:24px}.universal-social-footer .footer-info-group h4{font-size:12px}.universal-social-footer .footer-info-group a{font-size:11px}}
+
+
+/* Hide Google's floating translation banner, tooltip and feedback popup.
+   The language selector remains functional; only Google's injected UI is hidden. */
+.goog-te-banner-frame,
+.goog-te-menu-frame,
+.goog-te-balloon-frame,
+#goog-gt-tt,
+.goog-tooltip,
+.goog-tooltip:hover,
+.goog-te-ftab,
+.VIpgJd-ZVi9od-aZ2wEe,
+.VIpgJd-ZVi9od-aZ2wEe-wOHMyf,
+.VIpgJd-yAWNEb-L7lbkb,
+iframe.goog-te-banner-frame,
+iframe.goog-te-menu-frame{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;}
+html,body{top:0!important;}
+body{position:static!important;}
+.goog-text-highlight{background:transparent!important;box-shadow:none!important;}
