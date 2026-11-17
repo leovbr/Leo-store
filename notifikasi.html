@@ -53,56 +53,27 @@ body.notification-page{min-height:100vh;background:#07111f;color:#f8fafc;padding
 <div class="notif-status" id="notifStatus" data-state="checking"><span class="notif-status-dot"></span><span id="notifStatusText">Memeriksa status notifikasi...</span></div>
 <button class="notif-button" id="enableNotifications" type="button">Aktifkan Notifikasi</button>
 <p class="notif-note" id="notifHelp">Login menggunakan akun LEOOSTORE agar notifikasi pesanan dapat dikaitkan dengan email akunmu.</p>
-<button class="notif-button" id="testPushButton" type="button" style="margin-top:10px;background:linear-gradient(100deg,#0f766e,#0d9488);border-color:#0f766e">Kirim Tes Notifikasi</button>
-<div class="notif-diagnostics" id="notifDiagnostics" aria-live="polite"></div>
 </section>
 <section class="notif-card">
-<h2>Informasi notifikasi</h2>
+<h2>Catatan</h2>
 <ul class="notif-list">
-<li>Notifikasi pesanan dan pembayaran akan dikirim ke perangkat yang sudah diaktifkan.</li>
-<li>Balasan chat dan promo dapat muncul sebagai notifikasi jika fitur terkait sudah dikonfigurasi.</li>
-<li>Pastikan izin notifikasi browser tidak diblokir.</li>
-<li>Di iPhone/iPad, Web Push umumnya memerlukan website ditambahkan ke Home Screen.</li>
+<li>Login ke akun LEOOSTORE.id sebelum mengaktifkan notifikasi.</li>
+<li>Izinkan notifikasi dari browser agar kabar pesanan dapat diterima di perangkat ini.</li>
 </ul>
 </section>
 </main>
 <script>
 document.addEventListener("DOMContentLoaded",function(){
- const button=document.getElementById("enableNotifications"),status=document.getElementById("notifStatus"),label=document.getElementById("notifStatusText"),help=document.getElementById("notifHelp"),diagnostics=document.getElementById("notifDiagnostics"),testButton=document.getElementById("testPushButton");
+ const button=document.getElementById("enableNotifications"),status=document.getElementById("notifStatus"),label=document.getElementById("notifStatusText"),help=document.getElementById("notifHelp");
  const setStatus=(state,message)=>{status.dataset.state=state;label.textContent=message;};
- const showDiagnostics=async(result,error)=>{
-  const lines=["HASIL PEMERIKSAAN LANGGANAN","Izin browser: "+(window.Notification?Notification.permission:"API tidak tersedia")];
-  try{
-   const reg=await navigator.serviceWorker.getRegistration("./");
-   lines.push("Service worker: "+(reg?(reg.active?"aktif":reg.installing?"sedang dipasang":reg.waiting?"menunggu":"terdaftar"):"belum terdaftar"));
-   lines.push("Scope: "+(reg?.scope||"—"));
-   const sub=reg&&await reg.pushManager.getSubscription();
-   lines.push("Subscription di perangkat: "+(sub?"ADA":"TIDAK ADA"));
-   if(sub) lines.push("Endpoint push: "+new URL(sub.endpoint).host);
-  }catch(e){lines.push("Pemeriksaan perangkat: "+(e.message||String(e)));}
-  if(result){lines.push("Server Worker: "+(result.saved?"BERHASIL menyimpan":"merespons tanpa konfirmasi simpan"));lines.push("Peran akun: "+(result.role||"tidak dikembalikan"));}
-  if(error) lines.push("Error: "+(error.message||String(error)));
-  lines.push("", "Catatan: langganan tersimpan belum menjamin pengiriman push. Pengiriman juga bergantung pada event, konfigurasi Worker, dan layanan push.");
-  diagnostics.textContent=lines.join("\\n");diagnostics.dataset.visible="true";
- };
  async function refresh(){
   if(!("Notification" in window)||!("serviceWorker" in navigator)||!("PushManager" in window)){setStatus("error","Browser ini belum mendukung Web Push.");button.disabled=true;return;}
   if(Notification.permission==="denied"){setStatus("error","Izin notifikasi diblokir di pengaturan browser.");help.textContent="Ubah izin notifikasi untuk situs LEOOSTORE.id melalui pengaturan browser, lalu muat ulang halaman.";return;}
   try{const reg=await navigator.serviceWorker.getRegistration("./");const sub=reg&&await reg.pushManager.getSubscription();if(sub){setStatus("active","Perangkat ini sudah berlangganan notifikasi.");button.textContent="Perbarui Langganan";}else{setStatus("idle",Notification.permission==="granted"?"Izin browser tersedia, notifikasi belum diaktifkan.":"Notifikasi belum diaktifkan di perangkat ini.");}}catch(e){setStatus("idle","Notifikasi belum diaktifkan di perangkat ini.");}
  }
- button.addEventListener("click",async()=>{button.disabled=true;button.textContent="Memperbarui...";diagnostics.dataset.visible="false";try{if(!window.LEOOSTOREPush)throw new Error("Layanan notifikasi belum siap. Muat ulang halaman.");const result=await window.LEOOSTOREPush.enable();setStatus("active","Langganan berhasil dikirim dan disimpan oleh server.");help.textContent="Rincian pemeriksaan perangkat dan server ditampilkan di bawah.";button.textContent="Perbarui Langganan";await showDiagnostics(result,null);}catch(e){setStatus("error",e.message||"Notifikasi belum bisa diaktifkan.");help.textContent="Pemeriksaan gagal. Lihat rincian di bawah dan kirim hasilnya.";button.textContent="Coba Lagi";await showDiagnostics(null,e);}finally{button.disabled=false;}});
+ button.addEventListener("click",async()=>{button.disabled=true;button.textContent="Memperbarui...";try{if(!window.LEOOSTOREPush)throw new Error("Layanan notifikasi belum siap. Muat ulang halaman.");const result=await window.LEOOSTOREPush.enable();setStatus("active","Langganan berhasil dikirim dan disimpan oleh server.");help.textContent="Notifikasi sudah terhubung ke akunmu di perangkat ini.";button.textContent="Perbarui Langganan";}catch(e){setStatus("error",e.message||"Notifikasi belum bisa diaktifkan.");help.textContent="Periksa koneksi, izin browser, dan pastikan kamu sudah login. Lalu coba lagi.";button.textContent="Coba Lagi";}finally{button.disabled=false;}});
  refresh();
- testButton.addEventListener("click",async()=>{
-  testButton.disabled=true;testButton.textContent="Mengirim tes...";
-  try{
-   if(!window.LEOOSTOREPush?.sendTest) throw new Error("Layanan notifikasi belum siap. Muat ulang halaman.");
-   const result=await window.LEOOSTOREPush.sendTest();
-   setStatus(result.sent>0?"active":"error",result.sent>0?"Server berhasil mengirim tes push.":"Server tidak berhasil mengirim tes push.");
-   diagnostics.textContent=["HASIL TES PENGIRIMAN","Perangkat admin ditemukan: "+result.targeted,"Pengiriman berhasil: "+result.sent,"Pengiriman gagal: "+result.failed,result.sent>0?"Server menerima pengiriman oleh layanan push. Periksa apakah notifikasi muncul di Android.":"Tidak ada pengiriman yang berhasil. Periksa konfigurasi VAPID dan log Worker."].join("\\n");
-   diagnostics.dataset.visible="true";
-  }catch(e){setStatus("error",e.message||"Tes push gagal.");diagnostics.textContent="TES GAGAL\\n"+(e.message||String(e));diagnostics.dataset.visible="true";}
-  finally{testButton.disabled=false;testButton.textContent="Kirim Tes Notifikasi";}
- });
+
 });
 document.addEventListener("DOMContentLoaded",function(){var b=document.getElementById("menuButton"),c=document.getElementById("menuClose"),m=document.getElementById("sideMenu"),o=document.getElementById("menuOverlay");function close(){m.classList.remove("active");o.classList.remove("active");m.setAttribute("aria-hidden","true");b.setAttribute("aria-expanded","false");document.body.style.overflow="";}function open(){m.classList.add("active");o.classList.add("active");m.setAttribute("aria-hidden","false");b.setAttribute("aria-expanded","true");document.body.style.overflow="hidden";}b.addEventListener("click",open);c.addEventListener("click",close);o.addEventListener("click",close);document.addEventListener("keydown",function(e){if(e.key==="Escape")close();});});
 </script>
