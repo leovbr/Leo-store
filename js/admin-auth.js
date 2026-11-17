@@ -6,6 +6,7 @@
   const db=window.supabase.createClient(URL,KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
   let currentSession=null;
   const $=id=>document.getElementById(id);
+  const duplicateLoginStyle=document.createElement("style");duplicateLoginStyle.textContent="#loginPanel{display:none!important}";document.head.appendChild(duplicateLoginStyle);
   function show(message){const el=$("adminLoginStatus");if(el)el.textContent=message;}
   function activate(session){currentSession=session;document.body.classList.add("admin-authenticated");const menu=$("adminMenu");if(menu&&!menu.querySelector("#adminGlobalLogout")){const divider=document.createElement("div");divider.className="admin-menu-divider";const button=document.createElement("button");button.id="adminGlobalLogout";button.type="button";button.className="secondary";button.textContent="Keluar";button.addEventListener("click",logout);menu.append(divider,button);}window.dispatchEvent(new CustomEvent("leo-admin-ready",{detail:{session}}));}
   function deactivate(){currentSession=null;document.body.classList.remove("admin-authenticated");}
