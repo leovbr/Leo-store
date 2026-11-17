@@ -129,6 +129,28 @@ body.chat-admin-page.chat-auth-only .chat-account-bar,body.chat-admin-page.chat-
 .chat-admin-page.chat-auth-only .chat-auth::after{
   pointer-events:none!important;
 }
+/* Customer login: keep the home-brand logo, hide the store navigation controls. */
+.chat-admin-page.chat-auth-only .site-header .header-actions{
+  display:none!important;
+}
+.chat-admin-page.chat-auth-only #searchButton,
+.chat-admin-page.chat-auth-only .search-button,
+.chat-admin-page.chat-auth-only .leo-language-wrap,
+.chat-admin-page.chat-auth-only #leoLanguageButton,
+.chat-admin-page.chat-auth-only #menuButton,
+.chat-admin-page.chat-auth-only .menu-button,
+.chat-admin-page.chat-auth-only #menuOverlay,
+.chat-admin-page.chat-auth-only #sideMenu{
+  display:none!important;
+  pointer-events:none!important;
+}
+.chat-admin-page.chat-auth-only .site-header .header-inner{
+  justify-content:flex-start!important;
+}
+.chat-admin-page.chat-auth-only .site-header .header-brand{
+  display:inline-flex!important;
+  visibility:visible!important;
+}
 /* Login-only layout: remove the support menu and tidy the authentication form. */
 .chat-admin-page.chat-auth-only .site-header{height:76px!important;min-height:76px!important;padding:0!important}
 .chat-admin-page.chat-auth-only .site-header .header-inner{height:76px!important;min-height:76px!important;padding-top:0!important;padding-bottom:0!important}
