@@ -194,10 +194,9 @@ await env.DB.prepare("UPDATE orders SET status=?,midtrans_transaction_id=?,midtr
 
 
 async function handleAdminOrders(request,env){
-  const expected=String(env.ADMIN_API_TOKEN||"");
-  const authorization=String(request.headers.get("Authorization")||"");
-  if(!expected)return json({ok:false,error:"Admin API belum dikonfigurasi. Tambahkan secret ADMIN_API_TOKEN di Cloudflare Worker."},503);
-  if(authorization!=="Bearer "+expected)return json({ok:false,error:"Akses admin ditolak."},401);
+  const user=await verifyPushUser(request);
+  if(!user)return json({ok:false,error:"Sesi tidak valid atau sudah berakhir. Login kembali."},401);
+  if(user.id!==PUSH_ADMIN_UID)return json({ok:false,error:"Akses khusus admin."},403);
   if(!env.DB)return json({ok:false,error:"Database belum dikonfigurasi."},503);
   await ensureOrderTable(env.DB);
   const url=new URL(request.url);
