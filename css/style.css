@@ -3374,3 +3374,9 @@ body .universal-social-footer .footer-social-copyright{
   }
   body .universal-social-footer .footer-social-row .social-link img{width:30px!important;height:30px!important;}
 }
+
+
+/* Footer heading and social alignment: match the centered mobile reference layout. */
+body .universal-social-footer .footer-info-group h4,
+body .universal-social-footer .footer-social-column h4{text-align:center!important;}
+body .universal-social-footer .footer-social-row{justify-content:center!important;}
