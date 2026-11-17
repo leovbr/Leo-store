@@ -72,8 +72,7 @@
   font-family:"Orbitron",sans-serif!important;
 }
 
-/* Hamburger wordmark: copy the exact typography used by the homepage navbar logo.
-   This targets only the drawer logo, not the drawer navigation labels. */
+/* Hamburger wordmark typography only. Color split and animation are inherited from the shared logo animation stylesheet. */
 html body.info-page aside.side-menu .side-menu-header a.header-brand > span.header-brand-text{
   font-family:"Orbitron","Plus Jakarta Sans",Arial,sans-serif!important;
   font-size:24px!important;
@@ -81,6 +80,5 @@ html body.info-page aside.side-menu .side-menu-header a.header-brand > span.head
   font-style:normal!important;
   letter-spacing:-.045em!important;
   line-height:1.15!important;
-  text-transform:none!important;
   white-space:nowrap!important;
 }
