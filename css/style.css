@@ -3383,3 +3383,43 @@ body .universal-social-footer .footer-social-row{justify-content:center!importan
 
 /* Match the FAQ footer's left-aligned social icon row on every page. */
 body .universal-social-footer .footer-social-row{justify-content:flex-start!important;}
+
+
+/* Mobile footer information: balanced two-column groups with Legal centered below. */
+@media(max-width:760px){
+  body .universal-social-footer .footer-info-links{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    column-gap:22px!important;
+    row-gap:22px!important;
+    align-items:start!important;
+  }
+  body .universal-social-footer .footer-info-group{
+    min-width:0!important;
+    text-align:center!important;
+  }
+  body .universal-social-footer .footer-info-group:nth-child(3){
+    grid-column:1 / -1!important;
+    display:flex!important;
+    flex-wrap:wrap!important;
+    justify-content:center!important;
+    align-items:center!important;
+    column-gap:22px!important;
+    row-gap:4px!important;
+    padding-top:2px!important;
+  }
+  body .universal-social-footer .footer-info-group:nth-child(3) h4{
+    flex:0 0 100%!important;
+    margin-bottom:6px!important;
+    text-align:center!important;
+  }
+  body .universal-social-footer .footer-info-group:nth-child(3) a{
+    display:inline-block!important;
+    margin:4px 0!important;
+  }
+  body .universal-social-footer .footer-info-group a{
+    margin-left:auto!important;
+    margin-right:auto!important;
+    text-align:center!important;
+  }
+}
