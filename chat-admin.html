@@ -103,9 +103,8 @@ body.chat-admin-page.chat-auth-only .chat-account-bar,body.chat-admin-page.chat-
 /* Login-only layout: remove the support menu and tidy the authentication form. */
 .chat-admin-page.chat-auth-only .site-header{height:76px!important;min-height:76px!important;padding:0!important}
 .chat-admin-page.chat-auth-only .site-header .header-inner{height:76px!important;min-height:76px!important;padding-top:0!important;padding-bottom:0!important}
-.chat-admin-page.chat-auth-only .header-actions,
-.chat-admin-page.chat-auth-only #chatMenuButton,
 .chat-admin-page.chat-auth-only #chatSupportMenu{display:none!important}
+.chat-admin-page.chat-auth-only .header-actions{display:flex!important;align-items:center!important;gap:12px!important}
 .chat-admin-page.chat-auth-only .chat-main{width:min(100% - 32px,560px)!important;max-width:560px!important;height:auto!important;min-height:calc(100dvh - 76px)!important;margin:0 auto!important;padding:clamp(26px,6vh,54px) 0 32px!important;display:flex!important;flex-direction:column!important;justify-content:flex-start!important;box-sizing:border-box!important;overflow:visible!important}
 .chat-admin-page.chat-auth-only .chat-auth{width:100%!important;max-width:100%!important;margin:0 auto!important;padding:24px!important;box-sizing:border-box!important;border-radius:20px!important}
 .chat-admin-page.chat-auth-only .chat-auth-tabs{gap:10px!important;margin-bottom:20px!important}
@@ -122,13 +121,52 @@ body.chat-admin-page.chat-auth-only .chat-account-bar,body.chat-admin-page.chat-
 </head>
 <body class="chat-admin-page chat-auth-only">
 <header class="site-header home-header">
- <div class="container header-inner">
-  <a href="index.html" class="header-brand"><span class="header-brand-text">LEOOSTORE.id</span></a>
-  <div class="header-actions">
-   <button type="button" class="header-action menu-button" id="chatMenuButton" aria-label="Buka menu chat admin" aria-expanded="false"><span class="menu-icon"><span></span><span></span><span></span></span></button>
+  <div class="container header-inner"><a href="index.html" class="header-brand">
+  <span class="header-brand-text">LEOOSTORE.id</span>
+</a>
+<div class="header-actions">
+  
+  <button type="button" class="header-action search-button" id="searchButton" aria-label="Cari"><span class="header-icon">⌕</span></button>
+  <div class="leo-language-wrap">
+  <button type="button" class="leo-language-button" id="leoLanguageButton" aria-haspopup="true" aria-expanded="false"><span id="leoLanguageFlag">🇮🇩</span><span id="leoLanguageLabel">ID / IDR</span><span class="leo-language-chevron">▾</span></button>
+  <div class="leo-language-menu" id="leoLanguageMenu" hidden>
+    <button type="button" data-lang="id">🇮🇩 Bahasa Indonesia</button><button type="button" data-lang="en">🇬🇧 English</button><button type="button" data-lang="ms">🇲🇾 Bahasa Melayu</button><button type="button" data-lang="zh-CN">🇨🇳 中文 (Mandarin)</button><button type="button" data-lang="ja">🇯🇵 日本語</button><button type="button" data-lang="ko">🇰🇷 한국어</button><button type="button" data-lang="es">🇪🇸 Español</button>
   </div>
- </div>
+</div>
+  <button type="button" class="header-action menu-button" id="menuButton" aria-label="Buka menu" aria-expanded="false"><span class="menu-icon"><span></span><span></span><span></span></span></button>
+</div></div>
 </header>
+<div class="menu-overlay" id="menuOverlay"></div>
+<aside class="side-menu" id="sideMenu" aria-hidden="true">
+  <div class="side-menu-header"><a href="index.html" class="header-brand"><span class="header-brand-text">LEOOSTORE.id</span></a><button type="button" class="side-menu-close" id="menuClose" aria-label="Tutup menu">×</button></div>
+  <div class="side-menu-divider"></div>
+  <nav class="side-menu-nav">
+    <a href="index.html" class="side-menu-item"><span>Home</span><span class="side-menu-icon">⌂</span></a>
+    <a href="shop.html" class="side-menu-item"><span>Top Up</span><span class="side-menu-icon">🛒</span></a>
+    <a href="order.html" class="side-menu-item"><span>Cek Transaksi</span><span class="side-menu-icon">✓</span></a>
+    <a href="leaderboard.html" class="side-menu-item"><span>Leaderboard</span><span class="side-menu-icon">🏆</span></a>
+    <a href="artikel.html" class="side-menu-item"><span>Artikel</span><span class="side-menu-icon">📰</span></a>
+    <a href="kalkulator.html" class="side-menu-item"><span>Kalkulator Win Rate</span><span class="side-menu-arrow">→</span></a><a href="notifikasi.html" class="side-menu-item"><span>Notifikasi</span><span class="side-menu-icon">🔔</span></a>
+    <a href="chat-admin.html" class="side-menu-item side-menu-login"><span>Masuk / Daftar</span><span class="side-menu-icon">⇥</span></a>
+  </nav>
+</aside>
+
+<div class="search-panel" id="searchPanel"><div class="search-panel-inner"><input type="search" id="siteSearch" placeholder="Cari game..." autocomplete="off"><button type="button" id="searchClose" aria-label="Tutup pencarian">×</button></div></div>
+<div class="menu-overlay" id="menuOverlay"></div>
+<aside class="side-menu" id="sideMenu" aria-hidden="true">
+  <div class="side-menu-header"><a href="index.html" class="header-brand"><span class="header-brand-text">LEOOSTORE.id</span></a><button type="button" class="side-menu-close" id="menuClose" aria-label="Tutup menu">×</button></div>
+  <div class="side-menu-divider"></div>
+  <nav class="side-menu-nav">
+    <a href="index.html" class="side-menu-item"><span>Home</span><span class="side-menu-icon">⌂</span></a>
+    <a href="shop.html" class="side-menu-item"><span>Top Up</span><span class="side-menu-icon">🛒</span></a>
+    <a href="order.html" class="side-menu-item"><span>Cek Transaksi</span><span class="side-menu-icon">✓</span></a>
+    <a href="leaderboard.html" class="side-menu-item"><span>Leaderboard</span><span class="side-menu-icon">🏆</span></a>
+    <a href="artikel.html" class="side-menu-item"><span>Artikel</span><span class="side-menu-icon">📰</span></a>
+    <a href="kalkulator.html" class="side-menu-item"><span>Kalkulator Win Rate</span><span class="side-menu-arrow">→</span></a><a href="notifikasi.html" class="side-menu-item"><span>Notifikasi</span><span class="side-menu-icon">🔔</span></a>
+    <a href="chat-admin.html" class="side-menu-item side-menu-login"><span>Masuk / Daftar</span><span class="side-menu-icon">⇥</span></a>
+  </nav>
+</aside>
+
 <main class="chat-main">
  <section class="chat-auth" id="chatAuth"><div class="chat-auth-tabs"><button type="button" id="authLoginTab" class="active">Masuk</button><button type="button" id="authRegisterTab">Daftar akun</button></div><form id="authForm"><div id="authNameWrap" hidden><label for="authName">Nama panggilan</label><input id="authName" maxlength="60" autocomplete="name" placeholder="Nama yang akan dilihat admin"></div><label for="authEmail">Email</label><input id="authEmail" type="email" required autocomplete="email" placeholder="nama@email.com"><label for="authPassword">Password</label><input id="authPassword" type="password" required minlength="8" autocomplete="current-password" placeholder="Minimal 8 karakter"><button class="chat-auth-submit" id="authSubmit" type="submit">Masuk</button></form><div class="chat-auth-status" id="authStatus" role="status">Masuk atau buat akun LEOOSTORE.id.</div></section>
  <div class="chat-account-bar" id="chatAccountBar" hidden><span id="chatAccountLabel"></span><button type="button" id="enableChatNotifications">🔔 Aktifkan notifikasi</button><button type="button" id="chatLogout">Keluar</button></div>
@@ -155,6 +193,8 @@ body.chat-admin-page.chat-auth-only .chat-account-bar,body.chat-admin-page.chat-
  </section>
  <footer class="chat-foot">LEOOSTORE.id · Chat Admin</footer>
 </main>
+<a class="leo-floating-admin" href="https://wa.me/6285823538473?text=Halo%20Admin%20LEOOSTORE.id%2C%20saya%20ingin%20bertanya%20mengenai%20produk%20dan%20layanan%20yang%20tersedia." aria-label="Hubungi Admin via WhatsApp" title="WhatsApp Admin" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13v-1a8 8 0 0 1 16 0v1"/><path d="M4 13v4a2 2 0 0 0 2 2h1v-6H6a2 2 0 0 0-2 2Z"/><path d="M20 13v4a2 2 0 0 1-2 2h-1v-6h1a2 2 0 0 1 2 2Z"/><path d="M15 19c-.7 1-1.7 1.5-3 1.5"/></svg></a>
+
 <div class="chat-support-menu" id="chatSupportMenu" aria-hidden="true">
  <div class="chat-support-panel">
   <div class="chat-support-title">Menu Chat Admin <button class="chat-support-close" id="chatSupportClose" aria-label="Tutup menu">×</button></div>
@@ -201,7 +241,7 @@ body.chat-admin-page.chat-auth-only .chat-account-bar,body.chat-admin-page.chat-
       nameWrap.hidden=!isRegister;
       login.classList.toggle("active",!isRegister);
       register.classList.toggle("active",isRegister);
-      submit.textContent=isRegister?"Buat akun dan mulai chat":"Masuk dan buka chat";
+      submit.textContent=isRegister?"Buat akun":"Masuk";
       password.autocomplete=isRegister?"new-password":"current-password";
       if(status)status.textContent=isRegister?"Gunakan email aktif. Jika diminta, verifikasi email sebelum login.":"Login untuk melanjutkan percakapan.";
     }
@@ -231,7 +271,7 @@ body.chat-admin-page.chat-auth-only .chat-account-bar,body.chat-admin-page.chat-
  async function loadMessages(){const {data,error}=await db.from("store_chat_messages").select("id,conversation_id,sender_role,body,created_at").eq("conversation_id",conversation.id).order("created_at",{ascending:true}).limit(300);if(error)throw error;messages.innerHTML="";known.clear();(data||[]).forEach(renderMessage);$("chatPresets").hidden=(data||[]).some(m=>m.sender_role==="customer");}
  function showChat(on){$("chatAuth").hidden=on;$("chatAccountBar").hidden=!on;$("chatPanel").hidden=!on;$("conversationPanel").hidden=!on;document.body.classList.toggle("chat-auth-only",!on);if(!on)closeMenu();}
  let authMode="login";
- function setAuthMode(mode){authMode=mode;const reg=mode==="register";$("authNameWrap").hidden=!reg;$("authLoginTab").classList.toggle("active",!reg);$("authRegisterTab").classList.toggle("active",reg);$("authSubmit").textContent=reg?"Buat akun dan mulai chat":"Masuk dan buka chat";$("authPassword").autocomplete=reg?"new-password":"current-password";$("authStatus").textContent=reg?"Gunakan email aktif. Jika diminta, verifikasi email sebelum login.":"Login untuk melanjutkan percakapan.";}
+ function setAuthMode(mode){authMode=mode;const reg=mode==="register";$("authNameWrap").hidden=!reg;$("authLoginTab").classList.toggle("active",!reg);$("authRegisterTab").classList.toggle("active",reg);$("authSubmit").textContent=reg?"Buat akun":"Masuk";$("authPassword").autocomplete=reg?"new-password":"current-password";$("authStatus").textContent=reg?"Gunakan email aktif. Jika diminta, verifikasi email sebelum login.":"Login untuk melanjutkan percakapan.";}
  $("authLoginTab").addEventListener("click",()=>setAuthMode("login"));$("authRegisterTab").addEventListener("click",()=>setAuthMode("register"));
  async function openCustomerChat(){const meta=user.user_metadata||{};const displayName=(meta.full_name||meta.name||(user.email?user.email.split("@")[0]:"Customer")).slice(0,60);$("chatAccountLabel").textContent=displayName+" · "+user.email;
  const {data:existing,error:findError}=await db.from("store_chat_conversations").select("id,status,customer_name").eq("customer_id",user.id).in("status",["open","pending"]).order("created_at",{ascending:false}).limit(1).maybeSingle();if(findError)throw findError;
@@ -246,5 +286,56 @@ body.chat-admin-page.chat-auth-only .chat-account-bar,body.chat-admin-page.chat-
 })();
 </script>
 <script src="./js/push-notifications.js?v=20261024-login-push-prompt5"></script>
+<style id="leoostore-text-brand-override">
+/* Final override: show text-only LEOOSTORE.id brand on every storefront page. */
+.site-header a.header-brand,
+.site-header .container > a.header-brand,
+.site-header .header-inner > a.header-brand{
+  display:inline-flex!important; align-items:center!important; justify-content:flex-start!important;
+  flex:0 0 auto!important; width:auto!important; min-width:0!important; height:auto!important;
+  max-width:100%!important; overflow:visible!important; gap:0!important;
+}
+.site-header .header-brand img.header-logo{display:none!important; visibility:hidden!important; width:0!important; height:0!important;}
+.site-header .header-brand .header-brand-text,
+.site-header a.header-brand > span.header-brand-text{
+  display:inline-block!important; visibility:visible!important; opacity:1!important;
+  position:relative!important; width:auto!important; height:auto!important; max-width:none!important;
+  margin:0!important; padding:0!important; overflow:visible!important;
+  color:#f5f8ff!important;
+  background:linear-gradient(100deg,#b78aff 0%,#9b5cff 36%,#7c3aed 68%,#d8b4fe 100%)!important;
+  -webkit-background-clip:text!important; background-clip:text!important;
+  -webkit-text-fill-color:transparent!important;
+  font-family:'Orbitron','Plus Jakarta Sans',Arial,sans-serif!important;
+  font-size:clamp(16px,2.3vw,21px)!important; font-weight:900!important;
+  font-style:normal!important; letter-spacing:-.045em!important; line-height:1.15!important;
+  white-space:nowrap!important; text-decoration:none!important; text-shadow:none!important;
+  transform:none!important;
+}
+@media(max-width:600px){
+ .site-header .header-brand .header-brand-text,
+ .site-header a.header-brand > span.header-brand-text{font-size:17px!important;}
+}
+
+/* HOME ONLY: align text logo with the inner pages; preserve all other positions. */
+.home-page .site-header.home-header .header-inner > a.header-brand{
+  margin-left:10px!important;
+}
+</style>
+
+<div id="google_translate_element" style="display:none!important"></div>
+<script src="js/language-selector.js?v=20261117-shell1" defer></script>
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+ const menuButton=document.getElementById("menuButton"),menuClose=document.getElementById("menuClose"),sideMenu=document.getElementById("sideMenu"),menuOverlay=document.getElementById("menuOverlay"),searchButton=document.getElementById("searchButton"),searchPanel=document.getElementById("searchPanel"),searchClose=document.getElementById("searchClose"),siteSearch=document.getElementById("siteSearch");
+ function openMenu(){sideMenu?.classList.add("active");menuOverlay?.classList.add("active");sideMenu?.setAttribute("aria-hidden","false");menuButton?.setAttribute("aria-expanded","true");document.body.style.overflow="hidden";}
+ function closeMenu(){sideMenu?.classList.remove("active");menuOverlay?.classList.remove("active");sideMenu?.setAttribute("aria-hidden","true");menuButton?.setAttribute("aria-expanded","false");document.body.style.overflow="";}
+ menuButton?.addEventListener("click",openMenu);menuClose?.addEventListener("click",closeMenu);menuOverlay?.addEventListener("click",closeMenu);
+ document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeMenu();searchPanel?.classList.remove("active");}});
+ searchButton?.addEventListener("click",()=>{searchPanel?.classList.toggle("active");if(searchPanel?.classList.contains("active"))siteSearch?.focus();});
+ searchClose?.addEventListener("click",()=>{searchPanel?.classList.remove("active");if(siteSearch)siteSearch.value="";});
+ siteSearch?.addEventListener("keydown",e=>{if(e.key==="Enter"&&siteSearch.value.trim())location.href="shop.html?q="+encodeURIComponent(siteSearch.value.trim());});
+});
+</script>
+
 </body>
 </html>
