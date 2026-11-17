@@ -37,6 +37,13 @@
     @keyframes adminMenuIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
     @media(max-width:480px){.admin-header{gap:10px}.admin-brand{gap:0!important}.admin-brand .header-brand-text{font-size:17px;letter-spacing:-.045em}.admin-brand .admin-brand-subtitle{font-size:11px}.admin-menu-toggle{width:48px;height:48px}}
     @media(prefers-reduced-motion:reduce){.admin-menu.open{animation:none}}
+    body:not(.admin-authenticated) .admin-main{display:none!important}
+    body:not(.admin-authenticated) .admin-menu-toggle{display:none!important}
+    .admin-login-wrap{width:min(100% - 32px,460px);margin:clamp(48px,12vh,110px) auto;padding:26px;background:#101a2b;border:1px solid #29364a;border-radius:18px;box-shadow:0 20px 60px #0005;color:#f5f7fb}
+    .admin-login-wrap h2{margin:0 0 8px;font-size:22px}.admin-login-wrap p{color:#9caac0;font-size:13px;line-height:1.6}
+    .admin-login-wrap label{display:block;margin:14px 0 6px;color:#b9c5d7;font-size:13px}.admin-login-wrap input{width:100%;padding:12px;border:1px solid #344158;border-radius:9px;background:#090e17;color:#f5f7fb}
+    .admin-login-wrap button{width:100%;margin-top:16px;padding:12px;border:0;border-radius:9px;background:#7545d5;color:white;font-weight:800}.admin-login-wrap button:disabled{opacity:.6}
+    #adminLoginStatus{min-height:20px;margin-bottom:0}
   </style>
 </head>
 
@@ -72,6 +79,19 @@
        MAIN
        ===================================== -->
 
+  <section class="admin-login-wrap" id="adminLoginPanel">
+    <h2>Login Admin</h2>
+    <p>Masuk sekali untuk membuka seluruh panel administrasi LEOOSTORE.id.</p>
+    <form id="adminLoginForm">
+      <label for="adminLoginEmail">Email admin</label>
+      <input id="adminLoginEmail" type="email" autocomplete="username" required>
+      <label for="adminLoginPassword">Password</label>
+      <input id="adminLoginPassword" type="password" autocomplete="current-password" required>
+      <button id="adminLoginButton" type="submit">Masuk ke Dashboard</button>
+    </form>
+    <p id="adminLoginStatus" role="status">Gunakan akun admin LEOOSTORE yang sudah diizinkan.</p>
+  </section>
+
   <main class="admin-main">
 
 
@@ -106,12 +126,6 @@
       >
         ↻ Refresh
       </button>
-
-      <div class="admin-api-connect" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px;width:100%">
-        <input id="adminApiToken" type="password" autocomplete="current-password" placeholder="Token admin Cloudflare" aria-label="Token admin Cloudflare" style="min-width:220px;max-width:100%;padding:10px;border:1px solid #344158;border-radius:8px;background:#090e17;color:#f5f7fc">
-        <button id="connectAdminApi" type="button" class="refresh-btn">Hubungkan Database</button>
-        <span id="adminApiStatus" role="status" style="font-size:12px;color:#9caac0">Belum terhubung ke database pusat</span>
-      </div>
 
     </section>
 
@@ -361,6 +375,8 @@
        JAVASCRIPT
        ===================================== -->
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/admin-auth.js?v=20261118-single-admin1"></script>
   <script src="js/admin.js"></script>
 
   <script>
