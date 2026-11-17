@@ -99,6 +99,23 @@ body.chat-admin-page.chat-auth-only .chat-account-bar,body.chat-admin-page.chat-
 .chat-admin-page .chat-cs-avatar svg{width:29px;height:29px;fill:none;stroke:#fff;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .chat-admin-page .chat-cs-mini svg{width:17px;height:17px;fill:none;stroke:#fff;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .chat-admin-page .site-header{position:relative!important;z-index:100!important}.chat-admin-page .site-header .menu-button{position:relative!important;z-index:101!important;pointer-events:auto!important}.chat-admin-page .chat-support-menu{z-index:1000!important;pointer-events:auto!important}.chat-admin-page .chat-support-menu:not(.open){display:none!important}.chat-admin-page .chat-support-menu.open{display:flex!important}
+
+/* Login-only layout: remove the support menu and tidy the authentication form. */
+.chat-admin-page.chat-auth-only .site-header{height:76px!important;min-height:76px!important;padding:0!important}
+.chat-admin-page.chat-auth-only .site-header .header-inner{height:76px!important;min-height:76px!important;padding-top:0!important;padding-bottom:0!important}
+.chat-admin-page.chat-auth-only .header-actions,
+.chat-admin-page.chat-auth-only #chatMenuButton,
+.chat-admin-page.chat-auth-only #chatSupportMenu{display:none!important}
+.chat-admin-page.chat-auth-only .chat-main{width:min(100% - 32px,560px)!important;max-width:560px!important;height:auto!important;min-height:calc(100dvh - 76px)!important;margin:0 auto!important;padding:clamp(26px,6vh,54px) 0 32px!important;display:flex!important;flex-direction:column!important;justify-content:flex-start!important;box-sizing:border-box!important;overflow:visible!important}
+.chat-admin-page.chat-auth-only .chat-auth{width:100%!important;max-width:100%!important;margin:0 auto!important;padding:24px!important;box-sizing:border-box!important;border-radius:20px!important}
+.chat-admin-page.chat-auth-only .chat-auth-tabs{gap:10px!important;margin-bottom:20px!important}
+.chat-admin-page.chat-auth-only .chat-auth-tabs button{min-height:54px!important;font-size:16px!important}
+.chat-admin-page.chat-auth-only .chat-auth label{margin:14px 0 7px!important;font-size:14px!important}
+.chat-admin-page.chat-auth-only .chat-auth input{display:block!important;width:100%!important;min-height:54px!important;padding:14px 15px!important;box-sizing:border-box!important;font:16px 'Plus Jakarta Sans',sans-serif!important}
+.chat-admin-page.chat-auth-only .chat-auth-submit{min-height:56px!important;margin-top:18px!important;font-size:16px!important}
+.chat-admin-page.chat-auth-only .chat-auth-status{margin-top:14px!important;font-size:13px!important}
+@media(max-width:480px){.chat-admin-page.chat-auth-only .chat-main{width:calc(100% - 32px)!important;padding-top:28px!important}.chat-admin-page.chat-auth-only .chat-auth{padding:20px!important}}
+
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
