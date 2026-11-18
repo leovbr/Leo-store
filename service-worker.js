@@ -4,7 +4,7 @@ self.addEventListener("push", event => {
   try { data = event.data ? event.data.json() : {}; } catch (_) { data = { body: event.data?.text() || "" }; }
   event.waitUntil(self.registration.showNotification(String(data.title || "LEOOSTORE.id").slice(0, 80), {
     body: String(data.body || "Ada kabar baru untuk kamu.").slice(0, 180),
-    icon: "./assets/logo.png", badge: "./assets/logo.png",
+    icon: "./assets/icon.webp", badge: "./assets/icon.webp",
     tag: String(data.tag || "leoostore-notification").slice(0, 100),
     data: { url: data.url || "./" }
   }));
