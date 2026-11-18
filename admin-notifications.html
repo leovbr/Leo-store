@@ -52,5 +52,5 @@ $("send").onclick=async()=>{const title=$("title").value.trim(),body=$("message"
 const toggle=$("menuToggle"),menu=$("adminMenu");toggle.onclick=()=>{const open=!menu.classList.contains("open");menu.classList.toggle("open",open);toggle.setAttribute("aria-expanded",String(open))};document.addEventListener("click",e=>{if(!e.target.closest(".admin-header-actions")){menu.classList.remove("open");toggle.setAttribute("aria-expanded","false")}});
 db.auth.getSession().then(({data})=>{if(data.session)auth(data.session.user,data.session)});
 })();
-</script><script src="js/admin-auth.js?v=20261118-single-admin1"></script>
+</script><!-- Auth handled by this page's Supabase client; avoid duplicate client/session lock. -->
 </body></html>
