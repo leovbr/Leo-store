@@ -1,10 +1,10 @@
-/* LEOOSTORE Web Push service worker */
+/* LEOOSTORE Web Push service worker — notification icon refresh 2026-11-19 */
 self.addEventListener("push", event => {
   let data = {};
   try { data = event.data ? event.data.json() : {}; } catch (_) { data = { body: event.data?.text() || "" }; }
   event.waitUntil(self.registration.showNotification(String(data.title || "LEOOSTORE.id").slice(0, 80), {
     body: String(data.body || "Ada kabar baru untuk kamu.").slice(0, 180),
-    icon: "./assets/icon.webp", badge: "./assets/icon.webp",
+    icon: "./assets/icon.webp?v=20261119", badge: "./assets/icon.webp?v=20261119",
     tag: String(data.tag || "leoostore-notification").slice(0, 100),
     data: { url: data.url || "./" }
   }));
