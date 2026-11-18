@@ -3,7 +3,7 @@
   const URL="https://tvdbrqskvuukxvqaqjom.supabase.co";
   const KEY="sb_publishable_2f-IadmcnaYzoCb_8Iko0w_pFp9u8eF";
   const ADMIN_UID="3939553f-ef8d-4295-8f2f-39c86ce9ed20";
-  const db=window.supabase.createClient(URL,KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+  const db=window.supabase.createClient(URL,KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,storageKey:"sb-tvdbrqskvuukxvqaqjom-auth-token"}});
   let currentSession=null;
   const $=id=>document.getElementById(id);
   const duplicateLoginStyle=document.createElement("style");duplicateLoginStyle.textContent='#adminMenu #adminGlobalLogout{appearance:none!important;-webkit-appearance:none!important;display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:12px!important;width:100%!important;min-height:48px!important;margin:5px 0 0!important;padding:14px 13px!important;border:0!important;border-radius:10px!important;background:transparent!important;box-shadow:none!important;color:#edf2fb!important;font-family:inherit!important;font-size:14px!important;font-weight:700!important;line-height:1.4!important;text-align:left!important;cursor:pointer!important}#adminMenu #adminGlobalLogout:hover,#adminMenu #adminGlobalLogout:focus-visible{background:#1b2940!important;outline:none!important}#adminMenu #adminGlobalLogout .admin-logout-icon{display:inline-flex;align-items:center;justify-content:center;width:24px;flex:0 0 24px;font-size:17px;color:#aab8cf}';document.head.appendChild(duplicateLoginStyle);
