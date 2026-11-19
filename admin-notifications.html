@@ -29,11 +29,11 @@
 <div class="panel"><h2>Riwayat Broadcast</h2><div id="history" class="tablewrap muted">Memuat riwayat…</div></div>
 <div class="panel"><h2>Status</h2><div id="status" class="status" role="status">Menunggu login admin.</div></div>
 </section></main>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./js/push-notifications.js?v=20261118-admin-broadcast1"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="js/admin-auth.js?v=20261119-session-unified2"></script><script src="./js/push-notifications.js?v=20261118-admin-broadcast1"></script>
 <script>
 (()=>{"use strict";
 const SUPABASE_URL="https://tvdbrqskvuukxvqaqjom.supabase.co",SUPABASE_KEY="sb_publishable_2f-IadmcnaYzoCb_8Iko0w_pFp9u8eF",ADMIN_UID="3939553f-ef8d-4295-8f2f-39c86ce9ed20",WORKER="https://spring-surf-a6a7.leovbriansyh791.workers.dev";
-const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}}),$=id=>document.getElementById(id);let session=null;
+const db=window.LEOAdminAuth.db,$=id=>document.getElementById(id);let session=null;
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function status(s){$("status").textContent=s}
 function auth(user,nextSession){const ok=!!user&&user.id===ADMIN_UID;$("loginPanel").classList.toggle("hidden",ok);$("app").classList.toggle("hidden",!ok);if(ok){session=nextSession;loadHistory()}else{session=null;if(user){$("authStatus").textContent="Akun ini tidak memiliki izin admin.";db.auth.signOut()}}}
@@ -44,13 +44,13 @@ $("title").addEventListener("input",preview);$("message").addEventListener("inpu
 const presets={promo:["Kode Promo Spesial!","Gunakan kode promo terbaru LEOOSTORE dan nikmati penawaran menarik."],discount:["Diskon Spesial LEOOSTORE","Ada penawaran spesial untuk top up game favoritmu. Cek sekarang!"],product:["Produk Baru Tersedia!","Pilihan top up terbaru sudah tersedia di LEOOSTORE."],maintenance:["Informasi Layanan LEOOSTORE","Kami sedang melakukan pembaruan layanan. Terima kasih atas pengertiannya."]};
 $("preset").addEventListener("change",()=>{const p=presets[$("preset").value];if(p){$("title").value=p[0];$("message").value=p[1]}preview()});
 $("target").addEventListener("change",()=>$("customTarget").classList.toggle("hidden",$("target").value!=="custom"));
-$("login").onclick=async()=>{const {data,error}=await db.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});if(error){$("authStatus").textContent="Login gagal: "+error.message;return}if(data.user?.id!==ADMIN_UID){$("authStatus").textContent="Akun ini bukan admin yang diizinkan.";await db.auth.signOut();return}auth(data.user,data.session)};
-db.auth.onAuthStateChange((_event,s)=>{if(s)auth(s.user,s)});
+$("login").onclick=()=>location.href="admin.html";
+window.LEOAdminAuth.ready.then(s=>{if(s)auth(s.user,s);else location.replace("admin.html")});
 $("refresh").onclick=loadHistory;
 $("diagnostics").onclick=async()=>{try{const d=await request("/api/admin/push/diagnostics");status("Diagnostik subscription\nTotal perangkat tersimpan: "+d.total+"\nPerangkat diperbarui 7 hari terakhir: "+d.updatedLast7Days+"\nRincian role: "+(d.roles||[]).map(x=>x.role+": "+x.count).join(", "));}catch(e){status("Diagnostik gagal: "+e.message)}};
 $("send").onclick=async()=>{const title=$("title").value.trim(),body=$("message").value.trim(),url=$("target").value==="custom"?$("customTarget").value.trim():$("target").value;if(!title||!body){status("Judul dan isi notifikasi wajib diisi.");return}if(url==="custom"||(!url.startsWith("/Leo-store/")&&!url.startsWith("https://leovbr.github.io/Leo-store/"))){status("Gunakan tujuan internal LEOOSTORE yang valid.");return}if(!confirm("Kirim notifikasi ini ke semua pelanggan yang sudah berlangganan? Pengiriman tidak bisa dibatalkan."))return;$("send").disabled=true;$("send").textContent="Mengirim…";try{const result=await request("/api/admin/push/broadcast",{method:"POST",body:JSON.stringify({title,body,url})});status("Broadcast selesai.\nTarget perangkat: "+result.targeted+"\nBerhasil dikirim ke layanan push: "+result.sent+"\nGagal: "+result.failed+"\nCatatan: perangkat offline dapat menerima notifikasi saat kembali online, selama subscription masih aktif.");await loadHistory()}catch(e){status("Pengiriman gagal: "+e.message)}finally{$("send").disabled=false;$("send").textContent="Kirim ke Pelanggan"}};
 const toggle=$("menuToggle"),menu=$("adminMenu");toggle.onclick=()=>{const open=!menu.classList.contains("open");menu.classList.toggle("open",open);toggle.setAttribute("aria-expanded",String(open))};document.addEventListener("click",e=>{if(!e.target.closest(".admin-header-actions")){menu.classList.remove("open");toggle.setAttribute("aria-expanded","false")}});
-db.auth.getSession().then(({data})=>{if(data.session)auth(data.session.user,data.session)});
+
 })();
 </script><!-- Auth handled by this page's Supabase client; avoid duplicate client/session lock. -->
 </body></html>
