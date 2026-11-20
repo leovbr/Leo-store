@@ -2427,3 +2427,22 @@ body.checkout-page .site-header.home-header .leo-language-button{
     line-height:16px!important;
   }
 }
+
+
+/* ===== QRIS IMAGE SIZE REFINEMENT ===== */
+.checkout-page .payment-option-qris .payment-qris-image{
+  width:68%!important;
+  max-width:340px!important;
+  max-height:none!important;
+  height:auto!important;
+  aspect-ratio:16/9!important;
+  object-fit:contain!important;
+  align-self:center!important;
+  background:transparent!important;
+}
+@media(max-width:600px){
+  .checkout-page .payment-option-qris .payment-qris-image{
+    width:68%!important;
+    max-width:260px!important;
+  }
+}
