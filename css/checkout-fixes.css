@@ -2502,3 +2502,42 @@ body.checkout-page .site-header.home-header .leo-language-button{
     max-width:460px!important;
   }
 }
+
+
+/* ===== QRIS COMPACT CARD — REMOVE EMPTY SIDE GUTTERS ===== */
+.checkout-page .payment-category-qris .payment-category-body{
+  display:flex!important;
+  justify-content:center!important;
+  padding:0!important;
+}
+.checkout-page .payment-option-qris{
+  width:88%!important;
+  max-width:560px!important;
+  min-height:0!important;
+  padding:6px!important;
+  margin:0 auto!important;
+  gap:0!important;
+  border-radius:16px!important;
+}
+.checkout-page .payment-option-qris .payment-qris-image{
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  height:auto!important;
+  max-height:none!important;
+  aspect-ratio:auto!important;
+  object-fit:contain!important;
+  margin:0!important;
+  border-radius:10px!important;
+}
+@media(max-width:600px){
+  .checkout-page .payment-option-qris{
+    width:88%!important;
+    padding:5px!important;
+    border-radius:14px!important;
+  }
+  .checkout-page .payment-option-qris .payment-qris-image{
+    width:100%!important;
+    max-width:none!important;
+  }
+}
