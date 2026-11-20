@@ -2081,3 +2081,28 @@ body.checkout-page .site-header.home-header .leo-language-button{
     padding:18px!important;
   }
 }
+
+
+/* ===== DYNAMIC STICKY SUMMARY HEIGHT ===== */
+.checkout-page .checkout-footer-inline{
+  margin-bottom:0!important;
+}
+.checkout-page .checkout-scroll-spacer{
+  height:var(--checkout-summary-space,32px)!important;
+  min-height:0!important;
+  flex:none!important;
+}
+.checkout-page{
+  scroll-padding-bottom:var(--checkout-summary-space,120px)!important;
+}
+@media(max-width:680px){
+  .checkout-page .checkout-summary{
+    max-height:calc(100vh - 64px)!important;
+    padding-bottom:env(safe-area-inset-bottom,0px)!important;
+    overflow-y:auto!important;
+  }
+  .checkout-page .checkout-summary:not(.has-product){
+    max-height:none!important;
+    overflow:visible!important;
+  }
+}
