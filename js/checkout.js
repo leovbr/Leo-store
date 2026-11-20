@@ -284,6 +284,25 @@ document.addEventListener("DOMContentLoaded", async () => {
       group.appendChild(grid);
       denominationList.appendChild(group);
     });
+
+    const fitDenominationTitles = () => {
+      denominationList.querySelectorAll(".denomination-title").forEach((title) => {
+        const baseSize = window.matchMedia("(max-width: 600px)").matches ? 13 : 14;
+        title.style.fontSize = baseSize + "px";
+        let size = baseSize;
+        while (title.scrollWidth > title.clientWidth + 1 && size > 8) {
+          size = Math.max(8, size - 0.5);
+          title.style.fontSize = size + "px";
+        }
+      });
+    };
+
+    fitDenominationTitles();
+    if (!denominationList.dataset.titleFitObserver && "ResizeObserver" in window) {
+      const titleFitObserver = new ResizeObserver(() => fitDenominationTitles());
+      titleFitObserver.observe(denominationList);
+      denominationList.dataset.titleFitObserver = "true";
+    }
   }
 
   function selectPayment(element) {
