@@ -2446,3 +2446,22 @@ body.checkout-page .site-header.home-header .leo-language-button{
     max-width:260px!important;
   }
 }
+
+
+/* ===== QRIS COVER IMAGE LAYOUT ===== */
+.checkout-page .payment-option-qris{
+  gap:0!important;
+}
+.checkout-page .payment-option-qris .payment-qris-image{
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  height:auto!important;
+  aspect-ratio:auto!important;
+  object-fit:contain!important;
+  align-self:center!important;
+  margin:0!important;
+  border-radius:10px!important;
+  background:transparent!important;
+}
