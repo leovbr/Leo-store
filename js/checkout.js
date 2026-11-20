@@ -337,7 +337,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const fixed = Number(selectedPayment.feeFixed || 0);
     if (selectedPayment.feeType === "percent") return Math.round(base * percent / 100);
     if (selectedPayment.feeType === "mixed") return Math.round(base * percent / 100) + fixed;
-    return fixed;
+    return fixed || percent;
   }
 
   function getPromoDiscount() {
