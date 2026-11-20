@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="css/style.css?v=20261120-whatsapp-country-width3">
 <link rel="stylesheet" href="css/style-pages.css?v=20260918-5">
 <link rel="stylesheet" href="css/checkout-premium.css?v=20261120-currency-icons2">
-<link rel="stylesheet" href="css/checkout-fixes.css?v=20261120-premium-delivery1">
+<link rel="stylesheet" href="css/checkout-fixes.css?v=20261120-qris-standalone1">
 
 <style id="leoostore-text-brand-override">
 /* Final override: show text-only LEOOSTORE.id brand on every storefront page. */
@@ -136,10 +136,14 @@ body{top:0!important}.skiptranslate iframe{display:none!important}.goog-logo-lin
 <section class="checkout-card"><div class="checkout-card-header"><span class="checkout-step">4</span><div><h2>Jumlah</h2><p>Tentukan jumlah pembelian.</p></div></div><div class="quantity-control"><button type="button" id="quantityMinus" aria-label="Kurangi jumlah">−</button><input type="number" id="quantity" name="quantity" value="1" min="1" max="99" inputmode="numeric"><button type="button" id="quantityPlus" aria-label="Tambah jumlah">+</button></div></section>
 <section class="checkout-card"><div class="checkout-card-header"><span class="checkout-step">5</span><div><h2>Metode Pembayaran</h2><p>Pilih metode pembayaran yang tersedia.</p></div></div><input type="hidden" id="payment" name="payment">
 <div class="payment-list">
-<div class="payment-category payment-category-qris">
-<div class="payment-category-header"><span>QRIS</span><span>⌄</span></div>
+<div class="payment-category payment-category-qris open">
 <div class="payment-category-body payment-single">
-<div class="payment-option payment-option-logo" data-payment-id="qris" data-payment-name="QRIS" data-fee="0" data-fee-type="fixed"><img src="https://cdn.jsdelivr.net/npm/@hafidznoor/idn-finlogos@2/dist/icons/qris.svg" alt=""><span>QRIS</span></div>
+<div class="payment-option payment-option-qris" data-payment-id="qris" data-payment-name="QRIS" data-fee="0" data-fee-type="fixed" role="button" tabindex="0" aria-label="Pilih pembayaran QRIS">
+<span class="payment-qris-ribbon">POPULAR</span>
+<div class="payment-qris-heading"><strong>QRIS</strong><span>Praktis dan banyak digunakan</span></div>
+<img id="paymentQrisImage" class="payment-qris-image" src="https://cdn.jsdelivr.net/npm/@hafidznoor/idn-finlogos@2/dist/icons/qris.svg" alt="QRIS">
+<div class="payment-qris-caption">Scan dengan aplikasi mobile banking atau e-wallet yang mendukung QRIS</div>
+</div>
 </div></div>
 <div class="payment-category payment-category-ewallet">
 <div class="payment-category-header"><span>E-Wallet</span><span>⌄</span></div>
@@ -176,7 +180,7 @@ body{top:0!important}.skiptranslate iframe{display:none!important}.goog-logo-lin
 
 <script src="js/products.js?v=20261018-catalog2"></script>
 <script src="js/supabase-catalog.js?v=20261120-product-icons1"></script>
-<script src="js/checkout.js?v=20261120-denomination-autofit3"></script>
+<script src="js/checkout.js?v=20261120-qris-standalone1"></script>
 
 <a class="leo-floating-admin" href="https://wa.me/628975278685?text=Halo%20Admin%20LEOOSTORE.id%2C%20saya%20ingin%20bertanya%20mengenai%20produk%20dan%20layanan%20yang%20tersedia." aria-label="Hubungi Admin via WhatsApp" title="WhatsApp Admin" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13v-1a8 8 0 0 1 16 0v1"/><path d="M4 13v4a2 2 0 0 0 2 2h1v-6H6a2 2 0 0 0-2 2Z"/><path d="M20 13v4a2 2 0 0 1-2 2h-1v-6h1a2 2 0 0 1 2 2Z"/><path d="M15 19c-.7 1-1.7 1.5-3 1.5"/></svg></a>
 <div id="google_translate_element" style="display:none!important"></div><script src="js/language-selector.js?v=20261017-languages3" defer></script>
