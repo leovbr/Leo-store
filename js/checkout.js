@@ -413,12 +413,47 @@ document.addEventListener("DOMContentLoaded", async () => {
   function setupPayments() {
     document.querySelectorAll(".payment-option").forEach((option) => {
       option.addEventListener("click", () => selectPayment(option));
+      option.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          selectPayment(option);
+        }
+      });
     });
     document.querySelectorAll(".payment-category-header").forEach((header) => {
       header.addEventListener("click", () => {
         header.closest(".payment-category")?.classList.toggle("open");
       });
     });
+  }
+
+  async function loadQrisPaymentImage() {
+    const image = $("paymentQrisImage");
+    if (!image) return;
+    try {
+      if (!window.supabase?.createClient) {
+        await new Promise((resolve, reject) => {
+          const script = document.createElement("script");
+          script.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+          script.onload = resolve;
+          script.onerror = reject;
+          document.head.appendChild(script);
+        });
+      }
+      const db = window.supabase.createClient(
+        "https://tvdbrqskvuukxvqaqjom.supabase.co",
+        "sb_publishable_2f-IadmcnaYzoCb_8Iko0w_pFp9u8eF"
+      );
+      const { data, error } = await db
+        .from("store_payment_methods")
+        .select("logo_url")
+        .eq("id", "qris")
+        .maybeSingle();
+      if (error) throw error;
+      if (data?.logo_url) image.src = data.logo_url;
+    } catch (error) {
+      console.warn("QRIS admin image could not be loaded; using checkout fallback image.", error);
+    }
   }
 
   async function applyPromo() {
@@ -635,6 +670,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   populateGames();
   setupPayments();
+  loadQrisPaymentImage();
 
   const queryGame = new URLSearchParams(window.location.search).get("game");
   if (queryGame && getProduct(queryGame)) {
