@@ -2204,3 +2204,72 @@ body.checkout-page .site-header.home-header .leo-language-button{
   overflow-wrap:normal!important;
   word-break:normal!important;
 }
+
+
+/* ===== DENOMINATION DELIVERY — PREMIUM ELECTRIC PILL ===== */
+.checkout-page .denomination-delivery{
+  display:flex!important;
+  justify-content:flex-end!important;
+  align-items:center!important;
+  width:100%!important;
+  margin-top:auto!important;
+  min-width:0!important;
+}
+.checkout-page .denomination-delivery-text{
+  display:inline-flex!important;
+  flex:0 1 auto!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:6px!important;
+  max-width:100%!important;
+  min-width:0!important;
+  padding:5px 10px!important;
+  border:1px solid rgba(153,112,255,.48)!important;
+  border-radius:999px!important;
+  background:linear-gradient(110deg,rgba(105,65,190,.22),rgba(48,32,91,.48))!important;
+  color:#e4d7ff!important;
+  font-size:11px!important;
+  font-weight:750!important;
+  line-height:1.2!important;
+  white-space:nowrap!important;
+  box-shadow:0 0 0 rgba(145,99,255,0)!important;
+  animation:leoDeliveryGlow 2.8s ease-in-out infinite!important;
+}
+.checkout-page .denomination-delivery-text .delivery-icon{
+  display:inline-block!important;
+  flex:0 0 auto!important;
+  color:#ffd34e!important;
+  font-size:13px!important;
+  line-height:1!important;
+  filter:drop-shadow(0 0 4px rgba(255,211,78,.45))!important;
+  animation:leoDeliveryBolt 2.8s ease-in-out infinite!important;
+}
+@keyframes leoDeliveryGlow{
+  0%,100%{box-shadow:0 0 0 rgba(145,99,255,0);border-color:rgba(153,112,255,.38)}
+  50%{box-shadow:0 0 10px rgba(145,99,255,.2);border-color:rgba(177,143,255,.72)}
+}
+@keyframes leoDeliveryBolt{
+  0%,100%{filter:drop-shadow(0 0 2px rgba(255,211,78,.25))}
+  50%{filter:drop-shadow(0 0 6px rgba(255,211,78,.8))}
+}
+@media(max-width:600px){
+  .checkout-page .denomination-delivery-text{
+    gap:5px!important;
+    padding:4px 8px!important;
+    font-size:10px!important;
+  }
+  .checkout-page .denomination-delivery-text .delivery-icon{font-size:12px!important}
+}
+@media(max-width:360px){
+  .checkout-page .denomination-delivery-text{
+    gap:4px!important;
+    padding:4px 7px!important;
+    font-size:9px!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .checkout-page .denomination-delivery-text,
+  .checkout-page .denomination-delivery-text .delivery-icon{
+    animation:none!important;
+  }
+}
