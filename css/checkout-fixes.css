@@ -2465,3 +2465,25 @@ body.checkout-page .site-header.home-header .leo-language-button{
   border-radius:10px!important;
   background:transparent!important;
 }
+
+
+/* ===== QRIS COVER FINAL FIT — NO DUPLICATE RIBBON ===== */
+.checkout-page .payment-option-qris{
+  padding:10px!important;
+  overflow:hidden!important;
+}
+.checkout-page .payment-option-qris .payment-qris-image{
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  height:auto!important;
+  max-height:none!important;
+  aspect-ratio:auto!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  margin:0!important;
+  border-radius:8px!important;
+}
+@media(max-width:600px){
+  .checkout-page .payment-option-qris{padding:9px!important}
+}
