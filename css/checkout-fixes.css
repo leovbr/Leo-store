@@ -2487,3 +2487,47 @@ body.checkout-page .site-header.home-header .leo-language-button{
 @media(max-width:600px){
   .checkout-page .payment-option-qris{padding:9px!important}
 }
+
+
+/* ===== QRIS LIVE TOTAL + ITEMIZED PAYMENT FEE ===== */
+.checkout-page .payment-qris-total{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:3px 12px!important;
+  width:100%!important;
+  margin-top:10px!important;
+  padding:11px 13px!important;
+  border:1px solid rgba(167,139,250,.34)!important;
+  border-radius:12px!important;
+  background:rgba(8,16,34,.58)!important;
+}
+.checkout-page .payment-qris-total[hidden]{display:none!important}
+.checkout-page .payment-qris-total span{
+  color:#aeb8d0!important;
+  font-size:11px!important;
+  font-weight:650!important;
+}
+.checkout-page .payment-qris-total strong{
+  color:#f5f1ff!important;
+  font-size:17px!important;
+  font-weight:850!important;
+  line-height:1.2!important;
+  text-align:right!important;
+  font-variant-numeric:tabular-nums!important;
+}
+.checkout-page .payment-qris-total small{
+  grid-column:1/-1!important;
+  color:#8f9bb5!important;
+  font-size:10px!important;
+  line-height:1.3!important;
+}
+.checkout-page .checkout-summary .summary-row[hidden]{display:none!important}
+.checkout-page .checkout-summary .summary-row strong{
+  font-variant-numeric:tabular-nums!important;
+}
+.checkout-page #summaryDiscount{color:#86efac!important}
+@media(max-width:600px){
+  .checkout-page .payment-qris-total{margin-top:8px!important;padding:9px 11px!important}
+  .checkout-page .payment-qris-total strong{font-size:15px!important}
+}
