@@ -29,8 +29,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   const summaryDenomination = $("summaryProductDenomination");
   const summaryQuantity = $("summaryQuantity");
   const summaryFee = $("summaryAdminFee");
+  const summaryFeeRow = $("summaryFeeRow");
+  const summaryDiscount = $("summaryDiscount");
+  const summaryDiscountRow = $("summaryDiscountRow");
   const summaryPrice = $("summaryProductPrice");
   const summaryTotal = $("summaryTotal");
+  const qrisTotalBox = $("qrisTotalBox");
+  const qrisTotalAmount = $("qrisTotalAmount");
   const promoButton = $("promoButton");
   const promoInput = $("promoCode");
   const promoMessage = $("promoMessage");
@@ -314,6 +319,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       id: element.dataset.paymentId,
       name: element.dataset.paymentName,
       fee: Number(element.dataset.fee || 0),
+      feeFixed: Number(element.dataset.feeFixed || 0),
       feeType: element.dataset.feeType || "fixed"
     };
     if (paymentInput) paymentInput.value = selectedPayment.id;
@@ -326,15 +332,24 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   function getPaymentFee() {
     if (!selectedDenomination || !selectedPayment) return 0;
-    const fee = selectedPayment.id === "qris" ? 0.8 : Number(selectedPayment.fee || 0);
-    return selectedPayment.feeType === "percent" ? Math.round(getBaseTotal() * fee / 100) : fee;
+    const base = getBaseTotal();
+    const percent = Number(selectedPayment.fee || 0);
+    const fixed = Number(selectedPayment.feeFixed || 0);
+    if (selectedPayment.feeType === "percent") return Math.round(base * percent / 100);
+    if (selectedPayment.feeType === "mixed") return Math.round(base * percent / 100) + fixed;
+    return fixed;
+  }
+
+  function getPromoDiscount() {
+    if (!promoApplied || !appliedPromo) return 0;
+    const base = getBaseTotal();
+    return appliedPromo.discount_type === "percent"
+      ? Math.round(base * Number(appliedPromo.discount_value || 0) / 100)
+      : Math.min(base, Number(appliedPromo.discount_value || 0));
   }
 
   function getTotal() {
-    const total = getBaseTotal() + getPaymentFee();
-    if (!promoApplied || !appliedPromo) return total;
-    const discount = appliedPromo.discount_type === "percent" ? Math.round(getBaseTotal() * Number(appliedPromo.discount_value || 0) / 100) : Number(appliedPromo.discount_value || 0);
-    return Math.max(0, total - discount);
+    return Math.max(0, getBaseTotal() - getPromoDiscount() + getPaymentFee());
   }
 
   function updateSummary() {
@@ -342,13 +357,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (summaryQuantity) summaryQuantity.textContent = quantity;
     if (summaryName) summaryName.textContent = selectedProduct?.name || "Pilih Game";
     if (summaryDenomination) summaryDenomination.textContent = selectedDenomination?.amount || "Pilih nominal";
-    if (summaryFee) summaryFee.textContent = rupiah(getPaymentFee());
+    const paymentFee = getPaymentFee();
+    const promoDiscount = getPromoDiscount();
+    if (summaryFee) summaryFee.textContent = rupiah(paymentFee);
     if (summaryPrice) summaryPrice.textContent = rupiah(getBaseTotal());
     if (summaryTotal) summaryTotal.textContent = rupiah(getTotal());
+    if (summaryFeeRow) summaryFeeRow.hidden = !selectedPayment || paymentFee <= 0;
+    if (summaryDiscount) summaryDiscount.textContent = "-" + rupiah(promoDiscount);
+    if (summaryDiscountRow) summaryDiscountRow.hidden = !promoApplied || promoDiscount <= 0;
     if (summaryPayment) summaryPayment.textContent = selectedPayment
       ? (selectedPayment.id === "qris" ? "QRIS (All Payment)" : selectedPayment.name)
       : "-";
     const hasProduct = Boolean(selectedProduct && selectedDenomination);
+    if (qrisTotalBox) qrisTotalBox.hidden = !(hasProduct && selectedPayment?.id === "qris");
+    if (qrisTotalAmount) qrisTotalAmount.textContent = rupiah(getTotal());
     if (checkoutSummary) checkoutSummary.classList.toggle("has-product", hasProduct);
     if (summaryEmpty) summaryEmpty.hidden = hasProduct;
     if (summaryContent) summaryContent.hidden = !hasProduct;
@@ -446,11 +468,23 @@ document.addEventListener("DOMContentLoaded", async () => {
       );
       const { data, error } = await db
         .from("store_payment_methods")
-        .select("logo_url")
+        .select("logo_url,fee_type,fee_value,fee_fixed")
         .eq("id", "qris")
         .maybeSingle();
       if (error) throw error;
       if (data?.logo_url) image.src = data.logo_url;
+      const option = document.querySelector('.payment-option[data-payment-id="qris"]');
+      if (option && data) {
+        option.dataset.fee = String(Number(data.fee_value || 0));
+        option.dataset.feeFixed = String(Number(data.fee_fixed || 0));
+        option.dataset.feeType = String(data.fee_type || "fixed");
+        if (selectedPayment?.id === "qris") {
+          selectedPayment.fee = Number(option.dataset.fee || 0);
+          selectedPayment.feeFixed = Number(option.dataset.feeFixed || 0);
+          selectedPayment.feeType = option.dataset.feeType;
+        }
+        updateSummary();
+      }
     } catch (error) {
       console.warn("QRIS admin image could not be loaded; using checkout fallback image.", error);
     }
