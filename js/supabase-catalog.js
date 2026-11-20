@@ -17,21 +17,21 @@
       const db=await client();
       const [gr,pr]=await Promise.all([
         db.from("store_games").select("slug,name,publisher,description,icon_url,currency_icon_url,banner_url,is_active,sort_order").eq("is_active",true).order("sort_order"),
-        db.from("store_products").select("id,game_slug,amount,price,category,is_active,sort_order").eq("is_active",true).order("sort_order")
+        db.from("store_products").select("id,game_slug,amount,price,icon_url,category,is_active,sort_order").eq("is_active",true).order("sort_order")
       ]);
       if(gr.error)throw gr.error;if(pr.error)throw pr.error;
       if(!gr.data||!gr.data.length)return [];
       const itemsByGame=new Map();
       (pr.data||[]).forEach(p=>{
         if(!itemsByGame.has(p.game_slug))itemsByGame.set(p.game_slug,[]);
-        itemsByGame.get(p.game_slug).push({id:String(p.id),amount:String(p.amount||p.id),price:Number(p.price)||0,category:p.category||"Top Up"});
+        itemsByGame.get(p.game_slug).push({id:String(p.id),amount:String(p.amount||p.id),price:Number(p.price)||0,category:p.category||"Top Up",image:String(p.icon_url||"")});
       });
       const catalog=gr.data.map(g=>{
         let description=String(g.description||"");
         let accountFields={useId:true,useServer:true};
         const meta=description.match(/\n?\[\[LEO_CONFIG:(.*?)\]\]$/);
         if(meta){try{accountFields={...accountFields,...JSON.parse(meta[1])};}catch(_){}description=description.replace(/\n?\[\[LEO_CONFIG:.*?\]\]$/,"").trim();}
-        return {id:String(g.slug),slug:String(g.slug),name:String(g.name||g.slug),publisher:g.publisher||"Publisher",description,image:g.icon_url||"",currencyIcon:g.currency_icon_url||"",banner:g.banner_url||"",icon:"🎮",useId:accountFields.useId!==false,useServer:accountFields.useServer!==false,denominations:(itemsByGame.get(g.slug)||[]).map(item=>({...item,image:g.currency_icon_url||""}))};
+        return {id:String(g.slug),slug:String(g.slug),name:String(g.name||g.slug),publisher:g.publisher||"Publisher",description,image:g.icon_url||"",currencyIcon:g.currency_icon_url||"",banner:g.banner_url||"",icon:"🎮",useId:accountFields.useId!==false,useServer:accountFields.useServer!==false,denominations:(itemsByGame.get(g.slug)||[]).map(item=>({...item,image:item.image||g.currency_icon_url||""}))};
       }).filter(g=>g.denominations.length);
       return catalog;
     }catch(e){console.error("[LEOOSTORE] Supabase catalog unavailable; hiding catalog to avoid showing stale/inactive products.",e);return [];}
