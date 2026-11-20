@@ -2193,3 +2193,14 @@ body.checkout-page .site-header.home-header .leo-language-button{
   .checkout-page .denomination-product-icon{flex-basis:38px!important;width:38px!important;height:38px!important;min-width:38px!important;max-width:38px!important}
   .checkout-page .denomination-price-box{font-size:11px!important}
 }
+
+
+/* Keep denomination names on one line and shrink long names to fit each card. */
+.checkout-page .denomination-title{
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:clip!important;
+  min-width:0!important;
+  overflow-wrap:normal!important;
+  word-break:normal!important;
+}
