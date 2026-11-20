@@ -44,6 +44,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const summaryEmptyButton = $("summaryEmptyButton");
   const summaryContent = $("summaryContent");
   const summaryPayment = $("summaryPayment");
+  const summarySpacer = document.querySelector(".checkout-scroll-spacer");
   const accountTitle = $("accountTitle");
   const accountDescription = $("accountDescription");
   const standardAccountFields = $("standardAccountFields");
@@ -65,6 +66,22 @@ document.addEventListener("DOMContentLoaded", async () => {
   let selectedPayment = null;
   let promoApplied = false;
   let appliedPromo = null;
+
+  // Keep the document's bottom clearance equal to the live sticky summary height.
+  const syncSummarySpacer = () => {
+    if (!checkoutSummary || !summarySpacer) return;
+    const height = Math.ceil(checkoutSummary.getBoundingClientRect().height);
+    document.documentElement.style.setProperty("--checkout-summary-space", `${height}px`);
+  };
+  if (checkoutSummary && summarySpacer) {
+    if ("ResizeObserver" in window) {
+      const summaryResizeObserver = new ResizeObserver(syncSummarySpacer);
+      summaryResizeObserver.observe(checkoutSummary);
+    }
+    window.addEventListener("resize", syncSummarySpacer, { passive: true });
+    syncSummarySpacer();
+  }
+
 
   const rupiah = (value) => new Intl.NumberFormat("id-ID", {
     style: "currency",
@@ -319,6 +336,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       summaryToggle.setAttribute("aria-label", checkoutSummary?.classList.contains("expanded") ? "Tutup ringkasan" : "Buka ringkasan");
     }
     if (checkoutButton) checkoutButton.disabled = !hasProduct;
+    syncSummarySpacer();
 
     if (summaryImage) {
       if (selectedProduct?.image) {
