@@ -1976,3 +1976,108 @@ body.checkout-page .site-header.home-header .leo-language-button{
   border:1px solid #6d4bd1!important;
   box-shadow:0 0 14px #713cff35!important;
 }
+
+
+/* LEOOSTORE compact sticky checkout summary — mobile-first refinement */
+@media(max-width:680px){
+  .checkout-page{
+    scroll-padding-bottom:120px!important;
+  }
+  .checkout-page .checkout-sidebar{
+    width:100vw!important;
+    z-index:1000!important;
+  }
+  .checkout-page .checkout-summary{
+    border-radius:16px 16px 0 0!important;
+    max-height:72vh!important;
+    padding:0 0 env(safe-area-inset-bottom,0px)!important;
+    overflow-y:auto!important;
+    overscroll-behavior:contain;
+  }
+
+  /* No product selected: hide the title bar and keep only a short prompt + CTA. */
+  .checkout-page .checkout-summary:not(.has-product) .checkout-summary-header{
+    display:none!important;
+  }
+  .checkout-page .checkout-summary:not(.has-product) .summary-empty{
+    min-height:0!important;
+    padding:12px 14px calc(10px + env(safe-area-inset-bottom,0px))!important;
+    gap:10px!important;
+    font-size:12px!important;
+  }
+  .checkout-page .checkout-summary:not(.has-product) .summary-empty-button{
+    width:100%!important;
+    min-height:42px!important;
+    padding:0 14px!important;
+    font-size:13px!important;
+  }
+
+  /* Product selected: compact collapsed card; expand only when the customer taps the chevron. */
+  .checkout-page .checkout-summary.has-product:not(.expanded) .checkout-summary-header{
+    min-height:42px!important;
+    padding:7px 12px!important;
+  }
+  .checkout-page .checkout-summary.has-product:not(.expanded) .checkout-summary-header .eyebrow{
+    display:none!important;
+  }
+  .checkout-page .checkout-summary.has-product:not(.expanded) .checkout-summary-header h2{
+    font-size:13px!important;
+    line-height:1.15!important;
+  }
+  .checkout-page .checkout-summary.has-product:not(.expanded) .summary-toggle{
+    width:28px!important;
+    height:28px!important;
+    flex-basis:28px!important;
+  }
+  .checkout-page .checkout-summary.has-product:not(.expanded) .summary-product-line{
+    margin:0 12px!important;
+    padding:8px 0!important;
+    gap:2px!important;
+  }
+  .checkout-page .checkout-summary.has-product:not(.expanded) .summary-product-line span{
+    font-size:13px!important;
+    line-height:1.25!important;
+  }
+  .checkout-page .checkout-summary.has-product:not(.expanded) .summary-product-line strong{
+    font-size:11px!important;
+    line-height:1.25!important;
+  }
+  .checkout-page .checkout-summary.has-product:not(.expanded) .btn-checkout{
+    min-height:44px!important;
+    margin:0 12px 10px!important;
+    width:calc(100% - 24px)!important;
+    font-size:14px!important;
+  }
+
+  /* Expanded state remains scrollable and exposes all price details. */
+  .checkout-page .checkout-summary.has-product.expanded .checkout-summary-header{
+    min-height:44px!important;
+    padding:8px 12px!important;
+  }
+  .checkout-page .checkout-summary.has-product.expanded .summary-content{
+    padding:8px 12px 12px!important;
+  }
+  .checkout-page .checkout-summary.has-product.expanded .summary-product-line{
+    margin:0!important;
+    padding:8px 0!important;
+  }
+  .checkout-page .checkout-summary.has-product.expanded .summary-row{
+    margin:8px 0 0!important;
+    padding:0!important;
+  }
+  .checkout-page .checkout-summary.has-product.expanded .summary-total{
+    margin:10px 0 0!important;
+    padding:10px 0!important;
+  }
+  .checkout-page .checkout-summary.has-product.expanded .btn-checkout{
+    min-height:44px!important;
+    margin:12px 0 0!important;
+    width:100%!important;
+  }
+}
+@media(min-width:681px){
+  .checkout-page .checkout-summary:not(.has-product) .summary-empty{
+    min-height:110px!important;
+    padding:18px!important;
+  }
+}
