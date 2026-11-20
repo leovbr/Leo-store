@@ -310,6 +310,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       ? (selectedPayment.id === "qris" ? "QRIS (All Payment)" : selectedPayment.name)
       : "-";
     const hasProduct = Boolean(selectedProduct && selectedDenomination);
+    if (checkoutSummary) checkoutSummary.classList.toggle("has-product", hasProduct);
     if (summaryEmpty) summaryEmpty.hidden = hasProduct;
     if (summaryContent) summaryContent.hidden = !hasProduct;
     if (summaryToggle) {
