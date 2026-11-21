@@ -35,7 +35,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   const summaryPrice = $("summaryProductPrice");
   const summaryTotal = $("summaryTotal");
   const qrisTotalBox = $("qrisTotalBox");
+  const qrisTotalLabel = $("qrisTotalLabel");
   const qrisTotalAmount = $("qrisTotalAmount");
+  const qrisTotalNote = $("qrisTotalNote");
   const promoButton = $("promoButton");
   const promoInput = $("promoCode");
   const promoMessage = $("promoMessage");
@@ -369,8 +371,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       ? (selectedPayment.id === "qris" ? "QRIS (All Payment)" : selectedPayment.name)
       : "-";
     const hasProduct = Boolean(selectedProduct && selectedDenomination);
-    if (qrisTotalBox) qrisTotalBox.hidden = !(hasProduct && selectedPayment?.id === "qris");
-    if (qrisTotalAmount) qrisTotalAmount.textContent = rupiah(getTotal());
+    if (qrisTotalBox) qrisTotalBox.hidden = false;
+    if (qrisTotalLabel) qrisTotalLabel.textContent = hasProduct ? "Total Pembayaran" : "Minimal Pembayaran QRIS";
+    if (qrisTotalAmount) qrisTotalAmount.textContent = hasProduct ? rupiah(getTotal()) : "Rp100.000";
+    if (qrisTotalNote) qrisTotalNote.textContent = hasProduct
+      ? "Termasuk biaya layanan QRIS"
+      : "Pilih produk untuk melihat total pembayaran";
     if (checkoutSummary) checkoutSummary.classList.toggle("has-product", hasProduct);
     if (summaryEmpty) summaryEmpty.hidden = hasProduct;
     if (summaryContent) summaryContent.hidden = !hasProduct;
