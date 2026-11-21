@@ -2947,3 +2947,54 @@ body.checkout-notice-open{overflow:hidden}
     margin:6px -8px 5px!important;
   }
 }
+
+
+/* Closed Virtual Account accordion: compact right-aligned logo strip, matching E-Wallet. */
+.checkout-page .payment-category-virtual-account .va-logo-preview{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  flex-wrap:nowrap!important;
+  gap:8px!important;
+  width:100%!important;
+  min-width:0!important;
+  padding:10px 16px 12px!important;
+  min-height:42px!important;
+  border-top:1px solid rgba(148,163,184,.18)!important;
+}
+.checkout-page .payment-category-virtual-account.open .va-logo-preview{
+  display:none!important;
+}
+.checkout-page .payment-category-virtual-account:not(.open) .va-logo-preview{
+  display:flex!important;
+}
+.checkout-page .payment-category-virtual-account .va-logo-preview img{
+  display:block!important;
+  flex:0 1 52px!important;
+  width:52px!important;
+  min-width:0!important;
+  max-width:52px!important;
+  height:25px!important;
+  padding:3px 5px!important;
+  object-fit:contain!important;
+  background:#fff!important;
+  border-radius:5px!important;
+}
+@media(max-width:380px){
+  .checkout-page .payment-category-virtual-account .va-logo-preview{
+    gap:5px!important;
+    padding:0 12px 10px!important;
+    min-height:36px!important;
+  }
+  .checkout-page .payment-category-virtual-account .va-logo-preview img{
+    flex-basis:45px!important;
+    width:45px!important;
+    max-width:45px!important;
+    height:22px!important;
+    padding:2px 4px!important;
+  }
+}
+@media(max-width:340px){
+  .checkout-page .payment-category-virtual-account .va-logo-preview{gap:3px!important;padding-left:8px!important;padding-right:8px!important}
+  .checkout-page .payment-category-virtual-account .va-logo-preview img{flex-basis:0!important;width:auto!important;max-width:100%!important;flex-grow:1!important;height:20px!important;padding:2px!important}
+}
