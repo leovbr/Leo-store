@@ -590,17 +590,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
     if (!selectedPayment) return alert("Silakan pilih metode pembayaran.");
-    if (!contactEmail?.value.trim()) {
-      alert("Silakan masukkan email.");
-      contactEmail?.focus();
-      return;
-    }
-    if (!contactWhatsapp?.value.trim()) {
-      alert("Silakan masukkan nomor WhatsApp.");
-      contactWhatsapp?.focus();
-      return;
-    }
-
     const orderId = "LEO-" + Date.now().toString(36).toUpperCase();
     const order = {
       id: orderId,
