@@ -3047,3 +3047,53 @@ body.checkout-notice-open{overflow:hidden}
   .checkout-page .denomination-main{padding:9px 9px 8px!important}
   .checkout-page .denomination-delivery{padding:6px 9px!important;min-height:33px!important}
 }
+
+
+/* ===== CONSISTENT DENOMINATION CARD PROPORTIONS =====
+   Give the geometric upper panel more height and keep the lower
+   delivery strip compact and identical across every product card.
+*/
+.checkout-page .denomination-option{
+  display:flex!important;
+  flex-direction:column!important;
+  min-height:150px!important;
+  height:100%!important;
+  box-sizing:border-box!important;
+}
+.checkout-page .denomination-main{
+  flex:1 1 auto!important;
+  min-height:102px!important;
+  box-sizing:border-box!important;
+}
+.checkout-page .denomination-divider{
+  flex:0 0 1px!important;
+  width:100%!important;
+}
+.checkout-page .denomination-delivery{
+  flex:0 0 46px!important;
+  min-height:46px!important;
+  height:46px!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  margin:0!important;
+}
+@media(max-width:600px){
+  .checkout-page .denomination-option{min-height:150px!important}
+  .checkout-page .denomination-main{min-height:102px!important}
+  .checkout-page .denomination-delivery{
+    flex-basis:44px!important;
+    min-height:44px!important;
+    height:44px!important;
+  }
+}
+@media(max-width:380px){
+  .checkout-page .denomination-option{min-height:146px!important}
+  .checkout-page .denomination-main{min-height:100px!important}
+  .checkout-page .denomination-delivery{
+    flex-basis:42px!important;
+    min-height:42px!important;
+    height:42px!important;
+  }
+}
