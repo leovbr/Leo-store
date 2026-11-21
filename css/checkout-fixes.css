@@ -2673,18 +2673,3 @@ body.checkout-page .site-header.home-header .leo-language-button{
     transform:none!important;
   }
 }
-
-
-/* LEOOSTORE branded checkout validation dialog */
-.checkout-notice[hidden]{display:none!important}
-.checkout-notice{position:fixed;inset:0;z-index:10050;display:grid;place-items:center;padding:22px}
-.checkout-notice-backdrop{position:absolute;inset:0;width:100%;height:100%;border:0;background:rgba(2,7,18,.78);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}
-.checkout-notice-panel{position:relative;width:min(100%,420px);padding:27px 24px 22px;border:1px solid rgba(139,100,255,.58);border-radius:25px;background:linear-gradient(145deg,#17263d 0%,#0d192d 100%);box-shadow:0 22px 70px rgba(0,0,0,.48),0 0 28px rgba(117,72,255,.16);color:#f4f2ff;text-align:center;animation:checkoutNoticeIn .22s ease-out}
-.checkout-notice-icon{display:grid;place-items:center;width:48px;height:48px;margin:0 auto 14px;border:1px solid rgba(164,128,255,.62);border-radius:16px;background:rgba(119,75,245,.17);color:#b99cff;font-size:29px;font-weight:800}
-.checkout-notice-panel h2{margin:0 0 9px;color:#fff;font-size:20px;font-weight:750}
-.checkout-notice-panel p{margin:0;color:#aebbd0;font-size:14px;line-height:1.65}
-.checkout-notice-action{width:100%;min-height:48px;margin-top:22px;border:0;border-radius:14px;background:linear-gradient(100deg,#7045e8,#8b55ff);color:#fff;font-size:15px;font-weight:750;box-shadow:0 8px 22px rgba(112,69,232,.22)}
-.checkout-notice-action:active{transform:scale(.985)}
-@keyframes checkoutNoticeIn{from{opacity:0;transform:translateY(9px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
-body.checkout-notice-open{overflow:hidden}
-@media(prefers-reduced-motion:reduce){.checkout-notice-panel{animation:none}.checkout-notice-action:active{transform:none}}

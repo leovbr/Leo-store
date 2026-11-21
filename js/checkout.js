@@ -65,46 +65,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   const robloxPreorderBody = $("robloxPreorderBody");
   const robloxPreorderOk = $("robloxPreorderOk");
 
-  const checkoutNotice = $("checkoutNotice");
-  const checkoutNoticeTitle = $("checkoutNoticeTitle");
-  const checkoutNoticeMessage = $("checkoutNoticeMessage");
-  const checkoutNoticeClose = $("checkoutNoticeClose");
-
-  function showCheckoutNotice(message, title = "Data Belum Lengkap") {
-    if (!checkoutNotice || !checkoutNoticeMessage) {
-      console.warn("[LEOOSTORE checkout]", message);
-      return;
-    }
-    checkoutNoticeTitle.textContent = title;
-    checkoutNoticeMessage.textContent = message;
-    checkoutNotice.hidden = false;
-    document.body.classList.add("checkout-notice-open");
-    checkoutNoticeClose?.focus();
-  }
-
-  function closeCheckoutNotice() {
-    if (checkoutNotice) checkoutNotice.hidden = true;
-    document.body.classList.remove("checkout-notice-open");
-  }
-
-  function scrollToCheckoutTarget(target, focusTarget) {
-    if (!target) return;
-    target.scrollIntoView({ behavior: "smooth", block: "center" });
-    if (focusTarget) {
-      window.setTimeout(() => {
-        try { focusTarget.focus({ preventScroll: true }); }
-        catch (_) { focusTarget.focus(); }
-      }, 420);
-    }
-  }
-
-  function requireCheckoutField(value, message, target, focusTarget) {
-    if (String(value ?? "").trim()) return true;
-    showCheckoutNotice(message);
-    scrollToCheckoutTarget(target, focusTarget);
-    return false;
-  }
-
   const ORDERS_KEY = "LEOOSTORE_orders";
   const LAST_ORDER_KEY = "LEOOSTORE_last_order";
 
@@ -231,8 +191,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     const isRoblox = id === "roblox-via-login" || id === "roblox-via-username";
     const isRobloxLogin = id === "roblox-via-login";
     const isRobloxUsername = id === "roblox-via-username";
+    const isPubg = id === "pubg-mobile";
+    const isFreeFire = id === "free-fire" || id === "freefire";
+    const isValorant = id === "valorant";
+
     const useId = product?.useId !== false;
-    const useServer = !isRoblox && product?.useServer !== false;
+    const useServer = product?.useServer !== false && !(isRoblox || isPubg || isFreeFire || isValorant);
     const playerField = playerIdInput?.closest(".form-group");
     if (playerField) playerField.style.display = (isRoblox || useId) ? "" : "none";
     if (serverField) serverField.style.display = useServer ? "" : "none";
@@ -313,8 +277,6 @@ document.addEventListener("DOMContentLoaded", async () => {
           option.classList.add("selected");
           if (nominalInput) nominalInput.value = item.id;
           updateSummary();
-          const paymentSection = document.querySelector(".payment-list")?.closest(".checkout-card");
-          scrollToCheckoutTarget(paymentSection);
         };
         option.addEventListener("click", choose);
         option.addEventListener("keydown", (event) => {
@@ -602,34 +564,42 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   async function createOrder() {
-    if (!requireCheckoutField(selectedProduct?.id, "Silakan pilih game terlebih dahulu.", gameSelect?.closest(".checkout-card"), gameSelect)) return;
-    if (!requireCheckoutField(selectedDenomination?.id, "Silakan pilih nominal terlebih dahulu.", denominationList?.closest(".checkout-card"), denominationList)) return;
+    if (!selectedProduct) return alert("Silakan pilih game terlebih dahulu.");
+    if (!selectedDenomination) return alert("Silakan pilih nominal terlebih dahulu.");
 
     const isRoblox = selectedProduct.id === "roblox-via-login" || selectedProduct.id === "roblox-via-username";
-    const useId = selectedProduct.useId !== false;
-    const useServer = !isRoblox && selectedProduct.useServer !== false;
-
     if (isRoblox) {
-      if (!requireCheckoutField(robloxUsername?.value, "Silakan masukkan Username Roblox.", robloxUsername?.closest(".checkout-card"), robloxUsername)) return;
-      if (!requireCheckoutField(robloxPassword?.value, "Silakan masukkan Password Roblox.", robloxPassword?.closest(".checkout-card"), robloxPassword)) return;
-    } else {
-      if (useId && !requireCheckoutField(playerIdInput?.value, "Silakan masukkan Player ID.", playerIdInput?.closest(".form-group"), playerIdInput)) return;
-      if (useServer && !requireCheckoutField(serverInput?.value, "Silakan masukkan Server.", serverField, serverInput)) return;
-    }
-
-    const paymentSection = document.querySelector(".payment-list")?.closest(".checkout-card");
-    if (!selectedPayment) {
-      showCheckoutNotice("Silakan pilih metode pembayaran.");
-      scrollToCheckoutTarget(paymentSection);
+      if (!robloxUsername?.value.trim()) {
+        alert("Silakan masukkan Username Roblox.");
+        robloxUsername?.focus();
+        return;
+      }
+      if (!robloxPassword?.value) {
+        alert("Silakan masukkan Password Roblox.");
+        robloxPassword?.focus();
+        return;
+      }
+    } else if (selectedProduct.useId !== false && !playerIdInput?.value.trim()) {
+      alert("Silakan masukkan Player ID.");
+      playerIdInput?.focus();
       return;
     }
-    if (!requireCheckoutField(contactEmail?.value, "Silakan masukkan email.", contactEmail?.closest(".checkout-card"), contactEmail)) return;
-    if (!contactEmail.checkValidity()) {
-      showCheckoutNotice("Format email belum benar. Periksa kembali alamat email kamu.");
-      scrollToCheckoutTarget(contactEmail.closest(".form-group"), contactEmail);
+    if (!isRoblox && selectedProduct.useServer !== false && selectedProduct.id !== "pubg-mobile" && selectedProduct.id !== "free-fire" && selectedProduct.id !== "freefire" && selectedProduct.id !== "valorant" && !serverInput?.value.trim()) {
+      alert("Silakan masukkan Server.");
+      serverInput?.focus();
       return;
     }
-    if (!requireCheckoutField(contactWhatsapp?.value, "Silakan masukkan nomor WhatsApp.", contactWhatsapp?.closest(".form-group"), contactWhatsapp)) return;
+    if (!selectedPayment) return alert("Silakan pilih metode pembayaran.");
+    if (!contactEmail?.value.trim()) {
+      alert("Silakan masukkan email.");
+      contactEmail?.focus();
+      return;
+    }
+    if (!contactWhatsapp?.value.trim()) {
+      alert("Silakan masukkan nomor WhatsApp.");
+      contactWhatsapp?.focus();
+      return;
+    }
 
     const orderId = "LEO-" + Date.now().toString(36).toUpperCase();
     const order = {
@@ -741,7 +711,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         checkoutButton.disabled = false;
         checkoutButton.textContent = "Bayar Sekarang";
       }
-      showCheckoutNotice(error.message || "Gagal membuat pembayaran. Silakan coba lagi.", "Pembayaran Belum Berhasil");
+      alert(error.message || "Gagal membuat pembayaran. Silakan coba lagi.");
     }
   }
 
@@ -764,11 +734,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   summaryEmptyButton?.addEventListener("click", () => gameSelect?.focus());
 
   checkoutButton?.addEventListener("click", createOrder);
-  checkoutNoticeClose?.addEventListener("click", closeCheckoutNotice);
-  checkoutNotice?.querySelector(".checkout-notice-backdrop")?.addEventListener("click", closeCheckoutNotice);
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && checkoutNotice && !checkoutNotice.hidden) closeCheckoutNotice();
-  });
   robloxInfoButton?.addEventListener("click", () => {
     if (robloxInfoPanel) robloxInfoPanel.hidden = false;
   });
