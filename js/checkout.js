@@ -635,7 +635,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         setOptionData(option, method);
         const image = method.logo_url || option.querySelector("img")?.src || "";
         option.classList.add("payment-option-ewallet");
-        option.setAttribute("aria-label", "Pilih pembayaran " + String(method.name || method.id).replace(/\\s*virtual\\s+account\\s*$/i, "").trim());
+        option.setAttribute("aria-label", "Pilih pembayaran " + String(method.name || method.id).replace(/\s*virtual\s+account\s*$/i, "").trim());
         const showFee = method.show_fee !== false;
         option.innerHTML = '<span class="ewallet-logo-wrap"><img src="' + image + '" alt="" loading="lazy"></span><strong class="ewallet-price">Pilih nominal</strong><span class="ewallet-divider" aria-hidden="true" ' + (showFee ? "" : "hidden") + '></span><span class="ewallet-service-fee" ' + (showFee ? "" : "hidden") + '>Biaya layanan Rp0</span>';
       });
@@ -686,7 +686,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             const img = document.createElement("img");
             img.src = method.logo_url || "";
             const displayName = String(method.name || method.id)
-              .replace(/\\s*virtual\\s+account\\s*$/i, "")
+              .replace(/\s*virtual\s+account\s*$/i, "")
               .trim();
             img.alt = displayName + " logo";
             img.loading = "lazy";
