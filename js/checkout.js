@@ -545,19 +545,19 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   function setupPayments() {
-    document.querySelectorAll(".payment-option").forEach((option) => {
-      option.addEventListener("click", () => selectPayment(option));
-      option.addEventListener("keydown", (event) => {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          selectPayment(option);
-        }
-      });
+    const paymentList = document.querySelector(".payment-list");
+    if (!paymentList || paymentList.dataset.handlersReady) return;
+    paymentList.dataset.handlersReady = "true";
+    paymentList.addEventListener("click", (event) => {
+      const header = event.target.closest(".payment-category-header");
+      if (header) { header.closest(".payment-category")?.classList.toggle("open"); return; }
+      const option = event.target.closest(".payment-option");
+      if (option) selectPayment(option);
     });
-    document.querySelectorAll(".payment-category-header").forEach((header) => {
-      header.addEventListener("click", () => {
-        header.closest(".payment-category")?.classList.toggle("open");
-      });
+    paymentList.addEventListener("keydown", (event) => {
+      if ((event.key === "Enter" || event.key === " ") && event.target.matches(".payment-option")) {
+        event.preventDefault(); selectPayment(event.target);
+      }
     });
   }
 
@@ -567,8 +567,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         await new Promise((resolve, reject) => {
           const script = document.createElement("script");
           script.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
-          script.onload = resolve;
-          script.onerror = reject;
+          script.onload = resolve; script.onerror = reject;
           document.head.appendChild(script);
         });
       }
@@ -576,65 +575,101 @@ document.addEventListener("DOMContentLoaded", async () => {
         "https://tvdbrqskvuukxvqaqjom.supabase.co",
         "sb_publishable_2f-IadmcnaYzoCb_8Iko0w_pFp9u8eF"
       );
-      const { data, error } = await db
-        .from("store_payment_methods")
-        .select("id,logo_url,fee_type,fee_value,fee_fixed,show_fee")
-        .in("id", ["qris", "dana", "ovo", "gopay", "shopeepay"]);
+      const { data, error } = await db.from("store_payment_methods")
+        .select("id,name,category,activation_status,is_enabled,sort_order,logo_url,fee_type,fee_value,fee_fixed,show_fee")
+        .order("sort_order", { ascending: true });
       if (error) throw error;
-
-      (data || []).forEach((method) => {
-        const option = document.querySelector('.payment-option[data-payment-id="' + method.id + '"]');
-        if (!option) return;
-        const image = option.querySelector("img");
-        if (method.logo_url && image) image.src = method.logo_url;
+      const methods = data || [];
+      const available = methods.filter((m) => m.is_enabled === true && m.activation_status === "active" && !["PayLater", "Kartu"].includes(m.category));
+      const byId = new Map(available.map((m) => [m.id, m]));
+      const setOptionData = (option, method) => {
+        option.dataset.paymentName = method.name || method.id;
         option.dataset.fee = String(Number(method.fee_value || 0));
         option.dataset.feeFixed = String(Number(method.fee_fixed || 0));
         option.dataset.feeType = String(method.fee_type || "fixed");
         option.dataset.showFee = String(method.show_fee !== false);
-        if (selectedPayment?.id === method.id) {
-          selectedPayment.fee = Number(option.dataset.fee || 0);
-          selectedPayment.feeFixed = Number(option.dataset.feeFixed || 0);
-          selectedPayment.feeType = option.dataset.feeType;
-        }
-        if (method.id === "qris") return;
+        const img = option.querySelector("img");
+        if (method.logo_url && img) img.src = method.logo_url;
+      };
 
-        option.classList.add("payment-option-ewallet");
-        option.setAttribute("aria-label", "Pilih pembayaran " + (option.dataset.paymentName || method.id));
-        const showFee = method.show_fee !== false;
-        option.innerHTML = `
-          <span class="ewallet-logo-wrap"><img src="${image?.src || ""}" alt="" loading="lazy"></span>
-          <strong class="ewallet-price">Pilih nominal</strong>
-          <span class="ewallet-divider" aria-hidden="true" ${showFee ? "" : "hidden"}></span>
-          <span class="ewallet-service-fee" ${showFee ? "" : "hidden"}>Biaya layanan Rp0</span>
-        `;
-      });
-
-      document.querySelectorAll("[data-ewallet-preview]").forEach((preview) => {
-        const methodOption = document.querySelector('.payment-option[data-payment-id="' + preview.dataset.ewalletPreview + '"]');
-        const methodLogo = methodOption?.querySelector("img");
-        if (methodLogo?.src) preview.src = methodLogo.src;
-      });
-
-      const qris = (data || []).find((method) => method.id === "qris");
-      const qrisImage = $("paymentQrisImage");
+      const qrisCategory = document.querySelector(".payment-category-qris");
+      const qris = byId.get("qris");
+      if (qrisCategory) qrisCategory.hidden = !qris;
       const qrisOption = document.querySelector('.payment-option[data-payment-id="qris"]');
-      if (qris?.logo_url && qrisImage) qrisImage.src = qris.logo_url;
-      if (qrisOption && qris) {
-        qrisOption.dataset.fee = String(Number(qris.fee_value || 0));
-        qrisOption.dataset.feeFixed = String(Number(qris.fee_fixed || 0));
-        qrisOption.dataset.feeType = String(qris.fee_type || "fixed");
+      if (qris && qrisOption) {
+        setOptionData(qrisOption, qris);
         if (selectedPayment?.id === "qris") {
           selectedPayment.fee = Number(qrisOption.dataset.fee || 0);
           selectedPayment.feeFixed = Number(qrisOption.dataset.feeFixed || 0);
           selectedPayment.feeType = qrisOption.dataset.feeType;
         }
+      } else if (selectedPayment?.id === "qris") {
+        selectedPayment = null; if (paymentInput) paymentInput.value = "";
+      }
+
+      const ewalletMethods = available.filter((m) => m.category === "E-Wallet");
+      const ewalletCategory = document.querySelector(".payment-category-ewallet");
+      if (ewalletCategory) ewalletCategory.hidden = ewalletMethods.length === 0;
+      document.querySelectorAll(".payment-category-ewallet .payment-option").forEach((option) => {
+        const method = byId.get(option.dataset.paymentId);
+        option.hidden = !method;
+        if (!method) {
+          if (selectedPayment?.id === option.dataset.paymentId) { selectedPayment = null; if (paymentInput) paymentInput.value = ""; }
+          return;
+        }
+        setOptionData(option, method);
+        const image = method.logo_url || option.querySelector("img")?.src || "";
+        option.classList.add("payment-option-ewallet");
+        option.setAttribute("aria-label", "Pilih pembayaran " + method.name);
+        const showFee = method.show_fee !== false;
+        option.innerHTML = '<span class="ewallet-logo-wrap"><img src="' + image + '" alt="" loading="lazy"></span><strong class="ewallet-price">Pilih nominal</strong><span class="ewallet-divider" aria-hidden="true" ' + (showFee ? "" : "hidden") + '></span><span class="ewallet-service-fee" ' + (showFee ? "" : "hidden") + '>Biaya layanan Rp0</span>';
+      });
+      document.querySelectorAll("[data-ewallet-preview]").forEach((preview) => {
+        const method = byId.get(preview.dataset.ewalletPreview);
+        preview.hidden = !method;
+        if (method?.logo_url) preview.src = method.logo_url;
+      });
+
+      const dynamicHost = document.getElementById("paymentDynamicCategories");
+      if (dynamicHost) {
+        dynamicHost.innerHTML = "";
+        const groups = [
+          { key: "Virtual Account", title: "Virtual Account", methods: available.filter((m) => m.category === "Virtual Account") },
+          { key: "Alfa Group", title: "Alfa Group", methods: available.filter((m) => m.id === "alfagroup") }
+        ].filter((g) => g.methods.length);
+        const esc = (v) => String(v ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+        groups.forEach((group) => {
+          const category = document.createElement("div");
+          category.className = "payment-category payment-category-dynamic";
+          category.dataset.category = group.key;
+          const header = document.createElement("div");
+          header.className = "payment-category-header";
+          const title = document.createElement("span"); title.textContent = group.title;
+          const arrow = document.createElement("span"); arrow.textContent = "⌄";
+          header.append(title, arrow);
+          const body = document.createElement("div"); body.className = "payment-category-body";
+          group.methods.forEach((method) => {
+            const option = document.createElement("div");
+            option.className = "payment-option payment-option-logo";
+            option.dataset.paymentId = method.id;
+            option.dataset.paymentName = method.name;
+            option.dataset.fee = String(Number(method.fee_value || 0));
+            option.dataset.feeFixed = String(Number(method.fee_fixed || 0));
+            option.dataset.feeType = method.fee_type || "fixed";
+            option.setAttribute("role", "button"); option.tabIndex = 0;
+            option.setAttribute("aria-label", "Pilih pembayaran " + method.name);
+            const img = document.createElement("img"); img.src = method.logo_url || ""; img.alt = ""; img.loading = "lazy";
+            const name = document.createElement("span"); name.textContent = method.name;
+            option.append(img, name); body.appendChild(option);
+          });
+          category.append(header, body); dynamicHost.appendChild(category);
+        });
       }
       updateSummary();
     } catch (error) {
-      console.warn("Payment logos/settings from admin could not be loaded; using checkout fallback values.", error);
+      console.warn("Payment methods from Admin could not be loaded.", error);
     }
   }
-
   async function applyPromo() {
     const code = String(promoInput?.value || "").trim().toUpperCase();
     promoApplied = false; appliedPromo = null;
