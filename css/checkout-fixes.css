@@ -2505,8 +2505,9 @@ body.checkout-page .site-header.home-header .leo-language-button{
 .checkout-page .payment-qris-total[hidden]{display:none!important}
 .checkout-page .payment-qris-total span{
   color:#aeb8d0!important;
-  font-size:11px!important;
-  font-weight:650!important;
+  font-size:17px!important;
+  font-weight:750!important;
+  line-height:1.2!important;
 }
 .checkout-page .payment-qris-total strong{
   color:#f5f1ff!important;
@@ -2529,5 +2530,6 @@ body.checkout-page .site-header.home-header .leo-language-button{
 .checkout-page #summaryDiscount{color:#86efac!important}
 @media(max-width:600px){
   .checkout-page .payment-qris-total{margin-top:8px!important;padding:9px 11px!important}
+  .checkout-page .payment-qris-total span,
   .checkout-page .payment-qris-total strong{font-size:15px!important}
 }
