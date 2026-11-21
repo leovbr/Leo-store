@@ -641,6 +641,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         groups.forEach((group) => {
           const category = document.createElement("div");
           category.className = "payment-category payment-category-dynamic";
+          if (group.key === "Virtual Account") category.classList.add("payment-category-virtual-account");
           category.dataset.category = group.key;
           const header = document.createElement("div");
           header.className = "payment-category-header";
