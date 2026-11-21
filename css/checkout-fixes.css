@@ -2895,3 +2895,55 @@ body.checkout-notice-open{overflow:hidden}
   color:inherit!important;
   text-align:left!important;
 }
+
+/* Compact Virtual Account cards to match the reduced E-Wallet card scale. */
+.checkout-page .payment-category-virtual-account .payment-category-body{
+  gap:10px!important;
+  padding:10px!important;
+}
+.checkout-page .payment-category-virtual-account .payment-option-va{
+  padding:9px!important;
+  border-radius:14px!important;
+}
+.checkout-page .payment-category-virtual-account .va-logo-wrap{
+  height:44px!important;
+  margin:0 0 7px!important;
+  padding:5px!important;
+  border-radius:8px!important;
+}
+.checkout-page .payment-category-virtual-account .va-bank-name{
+  font-size:12px!important;
+  line-height:1.35!important;
+}
+.checkout-page .payment-category-virtual-account .va-price{
+  min-height:20px!important;
+  margin-top:4px!important;
+  font-size:13px!important;
+  line-height:1.35!important;
+}
+.checkout-page .payment-category-virtual-account .va-divider{
+  width:calc(100% + 18px)!important;
+  margin:7px -9px 6px!important;
+}
+.checkout-page .payment-category-virtual-account .va-service-fee{
+  min-height:16px!important;
+  font-size:10px!important;
+  line-height:1.35!important;
+}
+@media(max-width:360px){
+  .checkout-page .payment-category-virtual-account .payment-category-body{
+    gap:8px!important;
+    padding:9px!important;
+  }
+  .checkout-page .payment-category-virtual-account .payment-option-va{
+    padding:8px!important;
+  }
+  .checkout-page .payment-category-virtual-account .va-logo-wrap{
+    height:40px!important;
+    margin-bottom:6px!important;
+  }
+  .checkout-page .payment-category-virtual-account .va-divider{
+    width:calc(100% + 16px)!important;
+    margin:6px -8px 5px!important;
+  }
+}
