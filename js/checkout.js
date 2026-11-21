@@ -354,18 +354,53 @@ document.addEventListener("DOMContentLoaded", async () => {
     return Math.max(0, getBaseTotal() - getPromoDiscount() + getPaymentFee());
   }
 
+  // Animate displayed summary numbers only; all transaction calculations remain unchanged.
+  const summaryNumberFrames = new WeakMap();
+  const animateSummaryNumber = (element, targetValue, formatter) => {
+    if (!element) return;
+    const target = Number(targetValue || 0);
+    const displayedText = element.textContent || "";
+    const parsedCurrent = Number(displayedText.replace(/[^0-9-]/g, ""));
+    const start = Number.isFinite(parsedCurrent) ? parsedCurrent : target;
+    const previousFrame = summaryNumberFrames.get(element);
+    if (previousFrame) cancelAnimationFrame(previousFrame);
+
+    const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+    if (reduceMotion || start === target) {
+      element.textContent = formatter(target);
+      summaryNumberFrames.delete(element);
+      return;
+    }
+
+    const duration = 360;
+    const startedAt = performance.now();
+    const tick = (now) => {
+      const progress = Math.min(1, (now - startedAt) / duration);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const value = Math.round(start + (target - start) * eased);
+      element.textContent = formatter(value);
+      if (progress < 1) {
+        summaryNumberFrames.set(element, requestAnimationFrame(tick));
+      } else {
+        element.textContent = formatter(target);
+        summaryNumberFrames.delete(element);
+      }
+    };
+    summaryNumberFrames.set(element, requestAnimationFrame(tick));
+  };
+
   function updateSummary() {
     const quantity = getQuantity();
-    if (summaryQuantity) summaryQuantity.textContent = quantity;
+    animateSummaryNumber(summaryQuantity, quantity, (value) => String(Math.max(0, value)));
     if (summaryName) summaryName.textContent = selectedProduct?.name || "Pilih Game";
     if (summaryDenomination) summaryDenomination.textContent = selectedDenomination?.amount || "Pilih nominal";
     const paymentFee = getPaymentFee();
     const promoDiscount = getPromoDiscount();
-    if (summaryFee) summaryFee.textContent = rupiah(paymentFee);
-    if (summaryPrice) summaryPrice.textContent = rupiah(getBaseTotal());
-    if (summaryTotal) summaryTotal.textContent = rupiah(getTotal());
+    animateSummaryNumber(summaryFee, paymentFee, rupiah);
+    animateSummaryNumber(summaryPrice, getBaseTotal(), rupiah);
+    animateSummaryNumber(summaryTotal, getTotal(), rupiah);
     if (summaryFeeRow) summaryFeeRow.hidden = !selectedPayment || paymentFee <= 0;
-    if (summaryDiscount) summaryDiscount.textContent = "-" + rupiah(promoDiscount);
+    animateSummaryNumber(summaryDiscount, -promoDiscount, (value) => "-" + rupiah(Math.abs(value)));
     if (summaryDiscountRow) summaryDiscountRow.hidden = !promoApplied || promoDiscount <= 0;
     if (summaryPayment) summaryPayment.textContent = selectedPayment
       ? (selectedPayment.id === "qris" ? "QRIS (All Payment)" : selectedPayment.name)
@@ -373,7 +408,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const hasProduct = Boolean(selectedProduct && selectedDenomination);
     if (qrisTotalBox) qrisTotalBox.hidden = false;
     if (qrisTotalLabel) qrisTotalLabel.textContent = hasProduct ? "Total Pembayaran" : "Minimal Pembayaran QRIS";
-    if (qrisTotalAmount) qrisTotalAmount.textContent = hasProduct ? rupiah(getTotal()) : "Rp100";
+    if (qrisTotalAmount) animateSummaryNumber(qrisTotalAmount, hasProduct ? getTotal() : 100, rupiah);
     if (qrisTotalNote) {
       qrisTotalNote.textContent = "Termasuk biaya layanan QRIS";
       qrisTotalNote.hidden = !hasProduct;
