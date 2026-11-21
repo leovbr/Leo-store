@@ -374,9 +374,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (qrisTotalBox) qrisTotalBox.hidden = false;
     if (qrisTotalLabel) qrisTotalLabel.textContent = hasProduct ? "Total Pembayaran" : "Minimal Pembayaran QRIS";
     if (qrisTotalAmount) qrisTotalAmount.textContent = hasProduct ? rupiah(getTotal()) : "Rp100";
-    if (qrisTotalNote) qrisTotalNote.textContent = hasProduct
-      ? "Termasuk biaya layanan QRIS"
-      : "Pilih produk untuk melihat total pembayaran";
+    if (qrisTotalNote) {
+      qrisTotalNote.textContent = "Termasuk biaya layanan QRIS";
+      qrisTotalNote.hidden = !hasProduct;
+    }
     if (checkoutSummary) checkoutSummary.classList.toggle("has-product", hasProduct);
     if (summaryEmpty) summaryEmpty.hidden = hasProduct;
     if (summaryContent) summaryContent.hidden = !hasProduct;
