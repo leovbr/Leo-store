@@ -2998,3 +2998,52 @@ body.checkout-notice-open{overflow:hidden}
   .checkout-page .payment-category-virtual-account .va-logo-preview{gap:3px!important;padding-left:8px!important;padding-right:8px!important}
   .checkout-page .payment-category-virtual-account .va-logo-preview img{flex-basis:0!important;width:auto!important;max-width:100%!important;flex-grow:1!important;height:20px!important;padding:2px!important}
 }
+
+
+/* ===== LEOOSTORE ORIGINAL DENOMINATION TWO-TONE DESIGN =====
+   Upper panel: abstract geometric facets.
+   Lower panel: plain midnight navy.
+   Keep card selection border/glow and existing content hierarchy.
+*/
+.checkout-page .denomination-option{
+  padding:0!important;
+  overflow:hidden!important;
+  background:#111c2d!important;
+}
+.checkout-page .denomination-main{
+  position:relative!important;
+  isolation:isolate!important;
+  padding:12px 12px 10px!important;
+  background-color:#1b2b42!important;
+  background-image:
+    linear-gradient(135deg, transparent 0 31%, rgba(139,163,201,.075) 31.2% 31.8%, transparent 32%),
+    linear-gradient(42deg, transparent 0 57%, rgba(139,163,201,.065) 57.2% 57.8%, transparent 58%),
+    linear-gradient(145deg, rgba(105,132,177,.10) 0 18%, transparent 18.3% 100%),
+    linear-gradient(35deg, transparent 0 73%, rgba(92,119,162,.11) 73.2% 88%, transparent 88.3%),
+    linear-gradient(160deg, transparent 0 44%, rgba(120,145,185,.055) 44.2% 64%, transparent 64.2%)!important;
+  background-size:100% 100%!important;
+  border-radius:0!important;
+}
+.checkout-page .denomination-divider{
+  height:1px!important;
+  min-height:1px!important;
+  margin:0!important;
+  transform:none!important;
+  background:rgba(130,151,181,.34)!important;
+  border:0!important;
+}
+.checkout-page .denomination-delivery{
+  min-height:38px!important;
+  padding:7px 12px 8px!important;
+  margin-top:auto!important;
+  background:#111c2d!important;
+  border-radius:0 0 12px 12px!important;
+}
+@media(max-width:600px){
+  .checkout-page .denomination-main{padding:11px 11px 9px!important}
+  .checkout-page .denomination-delivery{padding:6px 11px 7px!important;min-height:35px!important}
+}
+@media(max-width:380px){
+  .checkout-page .denomination-main{padding:9px 9px 8px!important}
+  .checkout-page .denomination-delivery{padding:6px 9px!important;min-height:33px!important}
+}
