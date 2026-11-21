@@ -471,6 +471,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (checkoutButton) checkoutButton.disabled = !hasProduct;
     syncSummarySpacer();
 
+    updateEwalletCards();
+
     if (summaryImage) {
       if (selectedProduct?.image) {
         summaryImage.src = selectedProduct.image;
@@ -479,6 +481,27 @@ document.addEventListener("DOMContentLoaded", async () => {
         summaryImage.removeAttribute("src");
       }
     }
+  }
+
+  function getFeeForPaymentOption(option) {
+    const fee = Number(option.dataset.fee || 0);
+    const fixed = Number(option.dataset.feeFixed || 0);
+    const type = option.dataset.feeType || "fixed";
+    const base = getBaseTotal();
+    if (type === "percent") return Math.round(base * fee / 100);
+    if (type === "mixed") return Math.round(base * fee / 100) + fixed;
+    return fixed || fee;
+  }
+
+  function updateEwalletCards() {
+    document.querySelectorAll(".payment-option-ewallet").forEach((option) => {
+      const fee = getFeeForPaymentOption(option);
+      const total = Math.max(0, getBaseTotal() - getPromoDiscount() + fee);
+      const price = option.querySelector(".ewallet-price");
+      const service = option.querySelector(".ewallet-service-fee");
+      if (price) price.textContent = selectedDenomination ? rupiah(total) : "Pilih nominal";
+      if (service) service.textContent = "Biaya layanan " + rupiah(fee);
+    });
   }
 
   function showRobloxPreorderInfo(product) {
@@ -539,8 +562,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   async function loadQrisPaymentImage() {
-    const image = $("paymentQrisImage");
-    if (!image) return;
     try {
       if (!window.supabase?.createClient) {
         await new Promise((resolve, reject) => {
@@ -557,25 +578,47 @@ document.addEventListener("DOMContentLoaded", async () => {
       );
       const { data, error } = await db
         .from("store_payment_methods")
-        .select("logo_url,fee_type,fee_value,fee_fixed")
-        .eq("id", "qris")
-        .maybeSingle();
+        .select("id,logo_url,fee_type,fee_value,fee_fixed")
+        .in("id", ["qris", "dana", "ovo", "gopay", "shopeepay"]);
       if (error) throw error;
-      if (data?.logo_url) image.src = data.logo_url;
-      const option = document.querySelector('.payment-option[data-payment-id="qris"]');
-      if (option && data) {
-        option.dataset.fee = String(Number(data.fee_value || 0));
-        option.dataset.feeFixed = String(Number(data.fee_fixed || 0));
-        option.dataset.feeType = String(data.fee_type || "fixed");
+
+      (data || []).forEach((method) => {
+        const option = document.querySelector('.payment-option[data-payment-id="' + method.id + '"]');
+        if (!option) return;
+        const image = option.querySelector("img");
+        if (method.logo_url && image) image.src = method.logo_url;
+        option.dataset.fee = String(Number(method.fee_value || 0));
+        option.dataset.feeFixed = String(Number(method.fee_fixed || 0));
+        option.dataset.feeType = String(method.fee_type || "fixed");
+        if (method.id === "qris") return;
+
+        option.classList.add("payment-option-ewallet");
+        option.setAttribute("aria-label", "Pilih pembayaran " + (option.dataset.paymentName || method.id));
+        option.innerHTML = `
+          <span class="ewallet-logo-wrap"><img src="${image?.src || ""}" alt="" loading="lazy"></span>
+          <strong class="ewallet-price">Pilih nominal</strong>
+          <span class="ewallet-divider" aria-hidden="true"></span>
+          <span class="ewallet-service-fee">Biaya layanan Rp0</span>
+        `;
+      });
+
+      const qris = (data || []).find((method) => method.id === "qris");
+      const qrisImage = $("paymentQrisImage");
+      const qrisOption = document.querySelector('.payment-option[data-payment-id="qris"]');
+      if (qris?.logo_url && qrisImage) qrisImage.src = qris.logo_url;
+      if (qrisOption && qris) {
+        qrisOption.dataset.fee = String(Number(qris.fee_value || 0));
+        qrisOption.dataset.feeFixed = String(Number(qris.fee_fixed || 0));
+        qrisOption.dataset.feeType = String(qris.fee_type || "fixed");
         if (selectedPayment?.id === "qris") {
-          selectedPayment.fee = Number(option.dataset.fee || 0);
-          selectedPayment.feeFixed = Number(option.dataset.feeFixed || 0);
-          selectedPayment.feeType = option.dataset.feeType;
+          selectedPayment.fee = Number(qrisOption.dataset.fee || 0);
+          selectedPayment.feeFixed = Number(qrisOption.dataset.feeFixed || 0);
+          selectedPayment.feeType = qrisOption.dataset.feeType;
         }
-        updateSummary();
       }
+      updateSummary();
     } catch (error) {
-      console.warn("QRIS admin image could not be loaded; using checkout fallback image.", error);
+      console.warn("Payment logos/settings from admin could not be loaded; using checkout fallback values.", error);
     }
   }
 
