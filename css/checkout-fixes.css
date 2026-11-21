@@ -2829,8 +2829,9 @@ body.checkout-notice-open{overflow:hidden}
   align-items:center;
   justify-content:flex-end;
   gap:8px;
-  padding:0 16px 12px;
+  padding:10px 16px 12px;
   min-height:42px;
+  border-top:1px solid rgba(148,163,184,.18);
 }
 .checkout-page .payment-category-ewallet.open .ewallet-logo-preview{display:none!important}
 .checkout-page .payment-category-ewallet:not(.open) .ewallet-logo-preview{display:flex!important}
