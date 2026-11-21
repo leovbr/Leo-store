@@ -2873,3 +2873,25 @@ body.checkout-notice-open{overflow:hidden}
 .checkout-page .payment-category-virtual-account .va-payment-type{display:none!important}
 /* Dynamic payment accordion headers remain interactive and accessible. */
 .checkout-page .payment-category-dynamic .payment-category-header{display:flex!important;align-items:center!important;justify-content:space-between!important;width:100%!important;cursor:pointer!important;pointer-events:auto!important;text-align:left!important;background:transparent!important;border:0!important;color:inherit!important}
+
+/* Dynamic VA accordion: the body must collapse despite the grid display rule. */
+.checkout-page .payment-category-virtual-account > .payment-category-body[hidden]{
+  display:none!important;
+}
+.checkout-page .payment-category-virtual-account > .payment-category-body:not([hidden]){
+  display:grid!important;
+}
+.checkout-page .payment-category-virtual-account > .payment-category-header{
+  display:flex!important;
+  width:100%!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  pointer-events:auto!important;
+  cursor:pointer!important;
+  appearance:none!important;
+  -webkit-appearance:none!important;
+  background:transparent!important;
+  border:0!important;
+  color:inherit!important;
+  text-align:left!important;
+}
