@@ -590,6 +590,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         option.dataset.fee = String(Number(method.fee_value || 0));
         option.dataset.feeFixed = String(Number(method.fee_fixed || 0));
         option.dataset.feeType = String(method.fee_type || "fixed");
+        if (selectedPayment?.id === method.id) {
+          selectedPayment.fee = Number(option.dataset.fee || 0);
+          selectedPayment.feeFixed = Number(option.dataset.feeFixed || 0);
+          selectedPayment.feeType = option.dataset.feeType;
+        }
         if (method.id === "qris") return;
 
         option.classList.add("payment-option-ewallet");
