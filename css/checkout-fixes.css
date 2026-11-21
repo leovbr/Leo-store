@@ -2784,3 +2784,40 @@ body.checkout-notice-open{overflow:hidden}
 .checkout-page .ewallet-service-fee[hidden]{
   display:none!important;
 }
+
+
+/* Compact E-Wallet cards on mobile without changing the 2-column layout. */
+.checkout-page .payment-category-ewallet .payment-category-body{
+  gap:10px!important;
+  padding:10px!important;
+}
+.checkout-page .payment-category-ewallet .payment-option-ewallet{
+  padding:9px!important;
+  border-radius:14px!important;
+}
+.checkout-page .ewallet-logo-wrap{
+  height:44px!important;
+  margin-bottom:7px!important;
+  padding:5px!important;
+  border-radius:8px!important;
+}
+.checkout-page .ewallet-price{
+  min-height:20px!important;
+  font-size:13px!important;
+  line-height:1.35!important;
+}
+.checkout-page .ewallet-divider{
+  width:calc(100% + 18px)!important;
+  margin:7px -9px 6px!important;
+}
+.checkout-page .ewallet-service-fee{
+  min-height:16px!important;
+  font-size:10px!important;
+  line-height:1.35!important;
+}
+@media(max-width:360px){
+  .checkout-page .payment-category-ewallet .payment-category-body{gap:8px!important;padding:9px!important}
+  .checkout-page .payment-category-ewallet .payment-option-ewallet{padding:8px!important}
+  .checkout-page .ewallet-logo-wrap{height:40px!important;margin-bottom:6px!important}
+  .checkout-page .ewallet-divider{width:calc(100% + 16px)!important;margin:6px -8px 5px!important}
+}
