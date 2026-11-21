@@ -680,7 +680,7 @@ document.addEventListener("DOMContentLoaded", async () => {
               if (!method.logo_url) return;
               const previewImg = document.createElement("img");
               previewImg.src = method.logo_url;
-              previewImg.alt = String(method.name || method.id).replace(/\\s*virtual\\s+account\\s*$/i, "").trim();
+              previewImg.alt = String(method.name || method.id).replace(/\s*virtual\s+account\s*$/i, "").trim();
               previewImg.loading = "lazy";
               logoPreview.appendChild(previewImg);
             });
