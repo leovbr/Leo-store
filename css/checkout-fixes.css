@@ -2694,7 +2694,6 @@ body.checkout-notice-open{overflow:hidden}
 
 /* ===== E-WALLET CARDS — ADMIN LOGO + PRICE + SERVICE FEE ===== */
 .checkout-page .payment-category-ewallet .payment-category-body{
-  display:grid!important;
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
   gap:12px!important;
   padding:12px!important;
