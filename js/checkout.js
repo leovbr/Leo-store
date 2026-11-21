@@ -311,6 +311,19 @@ document.addEventListener("DOMContentLoaded", async () => {
           option.classList.add("selected");
           if (nominalInput) nominalInput.value = item.id;
           updateSummary();
+
+          // Setelah nominal dipilih, arahkan pelanggan ke metode pembayaran.
+          const paymentSection = document.getElementById("paymentMethodsSection");
+          if (paymentSection) {
+            paymentSection.style.scrollMarginTop = "96px";
+            requestAnimationFrame(() => {
+              const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+              paymentSection.scrollIntoView({
+                behavior: reduceMotion ? "auto" : "smooth",
+                block: "start"
+              });
+            });
+          }
         };
         option.addEventListener("click", choose);
         option.addEventListener("keydown", (event) => {
