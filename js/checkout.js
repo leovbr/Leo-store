@@ -550,13 +550,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     paymentList.dataset.handlersReady = "true";
     paymentList.addEventListener("click", (event) => {
       const header = event.target.closest(".payment-category-header");
-      if (header) { header.closest(".payment-category")?.classList.toggle("open"); return; }
+      if (header) {
+        const category = header.closest(".payment-category");
+        if (category) {
+          const willOpen = !category.classList.contains("open");
+          category.classList.toggle("open", willOpen);
+          header.setAttribute("aria-expanded", String(willOpen));
+        }
+        return;
+      }
       const option = event.target.closest(".payment-option");
       if (option) selectPayment(option);
     });
     paymentList.addEventListener("keydown", (event) => {
       if ((event.key === "Enter" || event.key === " ") && event.target.matches(".payment-option")) {
         event.preventDefault(); selectPayment(event.target);
+      }
+      if ((event.key === "Enter" || event.key === " ") && event.target.matches(".payment-category-header")) {
+        event.preventDefault(); event.target.click();
       }
     });
   }
@@ -643,12 +654,17 @@ document.addEventListener("DOMContentLoaded", async () => {
           category.className = "payment-category payment-category-dynamic";
           if (group.key === "Virtual Account") category.classList.add("payment-category-virtual-account");
           category.dataset.category = group.key;
-          const header = document.createElement("div");
+          const header = document.createElement("button");
+          header.type = "button";
           header.className = "payment-category-header";
+          header.setAttribute("aria-expanded", "false");
           const title = document.createElement("span"); title.textContent = group.title;
           const arrow = document.createElement("span"); arrow.textContent = "⌄";
           header.append(title, arrow);
-          const body = document.createElement("div"); body.className = "payment-category-body";
+          const body = document.createElement("div");
+          body.className = "payment-category-body";
+          body.id = "payment-category-body-" + group.key.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+          header.setAttribute("aria-controls", body.id);
           group.methods.forEach((method) => {
             const option = document.createElement("div");
             option.className = "payment-option payment-option-va";
@@ -671,9 +687,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             const name = document.createElement("strong");
             name.className = "va-bank-name";
             name.textContent = method.name;
-            const type = document.createElement("span");
-            type.className = "va-payment-type";
-            type.textContent = group.key === "Alfa Group" ? "Bayar di Gerai" : "Virtual Account";
             const price = document.createElement("strong");
             price.className = "va-price";
             price.textContent = "Pilih nominal";
@@ -687,7 +700,7 @@ document.addEventListener("DOMContentLoaded", async () => {
               divider.hidden = true;
               service.hidden = true;
             }
-            option.append(logoWrap, name, type, price, divider, service);
+            option.append(logoWrap, name, price, divider, service);
             body.appendChild(option);
           });
           category.append(header, body); dynamicHost.appendChild(category);
