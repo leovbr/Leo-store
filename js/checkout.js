@@ -578,7 +578,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       );
       const { data, error } = await db
         .from("store_payment_methods")
-        .select("id,logo_url,fee_type,fee_value,fee_fixed")
+        .select("id,logo_url,fee_type,fee_value,fee_fixed,show_fee")
         .in("id", ["qris", "dana", "ovo", "gopay", "shopeepay"]);
       if (error) throw error;
 
@@ -590,6 +590,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         option.dataset.fee = String(Number(method.fee_value || 0));
         option.dataset.feeFixed = String(Number(method.fee_fixed || 0));
         option.dataset.feeType = String(method.fee_type || "fixed");
+        option.dataset.showFee = String(method.show_fee !== false);
         if (selectedPayment?.id === method.id) {
           selectedPayment.fee = Number(option.dataset.fee || 0);
           selectedPayment.feeFixed = Number(option.dataset.feeFixed || 0);
@@ -599,11 +600,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         option.classList.add("payment-option-ewallet");
         option.setAttribute("aria-label", "Pilih pembayaran " + (option.dataset.paymentName || method.id));
+        const showFee = method.show_fee !== false;
         option.innerHTML = `
           <span class="ewallet-logo-wrap"><img src="${image?.src || ""}" alt="" loading="lazy"></span>
           <strong class="ewallet-price">Pilih nominal</strong>
-          <span class="ewallet-divider" aria-hidden="true"></span>
-          <span class="ewallet-service-fee">Biaya layanan Rp0</span>
+          <span class="ewallet-divider" aria-hidden="true" ${showFee ? "" : "hidden"}></span>
+          <span class="ewallet-service-fee" ${showFee ? "" : "hidden"}>Biaya layanan Rp0</span>
         `;
       });
 
