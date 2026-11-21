@@ -6,6 +6,40 @@
 
 document.addEventListener("DOMContentLoaded", async () => {
   const $ = (id) => document.getElementById(id);
+
+  // Branded storefront notice replaces native browser alert dialogs.
+  const checkoutNotice = $("checkoutNotice");
+  const checkoutNoticeTitle = $("checkoutNoticeTitle");
+  const checkoutNoticeMessage = $("checkoutNoticeMessage");
+  const checkoutNoticeClose = $("checkoutNoticeClose");
+  let checkoutNoticePreviousFocus = null;
+
+  function showCheckoutNotice(message, title = "Periksa Pesanan") {
+    if (!checkoutNotice || !checkoutNoticeMessage) {
+      console.warn("[LEOOSTORE]", message);
+      return;
+    }
+    checkoutNoticePreviousFocus = document.activeElement;
+    checkoutNoticeTitle.textContent = title;
+    checkoutNoticeMessage.textContent = String(message || "Terjadi kendala. Silakan coba lagi.");
+    checkoutNotice.hidden = false;
+    document.body.classList.add("checkout-notice-open");
+    checkoutNoticeClose?.focus();
+  }
+
+  function closeCheckoutNotice() {
+    if (!checkoutNotice || checkoutNotice.hidden) return;
+    checkoutNotice.hidden = true;
+    document.body.classList.remove("checkout-notice-open");
+    checkoutNoticePreviousFocus?.focus?.();
+  }
+
+  checkoutNoticeClose?.addEventListener("click", closeCheckoutNotice);
+  checkoutNotice?.querySelector(".checkout-notice-backdrop")?.addEventListener("click", closeCheckoutNotice);
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && checkoutNotice && !checkoutNotice.hidden) closeCheckoutNotice();
+  });
+
   const legacyProducts = typeof PRODUCTS !== "undefined" && Array.isArray(PRODUCTS) ? PRODUCTS : (Array.isArray(window.PRODUCTS) ? window.PRODUCTS : []);
   const products = window.LEOOSTORE_CATALOG ? await window.LEOOSTORE_CATALOG.getCatalog(legacyProducts) : legacyProducts;
 
@@ -564,32 +598,32 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   async function createOrder() {
-    if (!selectedProduct) return alert("Silakan pilih game terlebih dahulu.");
-    if (!selectedDenomination) return alert("Silakan pilih nominal terlebih dahulu.");
+    if (!selectedProduct) return showCheckoutNotice("Silakan pilih game terlebih dahulu.", "Game Belum Dipilih");
+    if (!selectedDenomination) return showCheckoutNotice("Silakan pilih nominal terlebih dahulu.", "Nominal Belum Dipilih");
 
     const isRoblox = selectedProduct.id === "roblox-via-login" || selectedProduct.id === "roblox-via-username";
     if (isRoblox) {
       if (!robloxUsername?.value.trim()) {
-        alert("Silakan masukkan Username Roblox.");
+        showCheckoutNotice("Silakan masukkan Username Roblox.", "Data Akun Belum Lengkap");
         robloxUsername?.focus();
         return;
       }
       if (!robloxPassword?.value) {
-        alert("Silakan masukkan Password Roblox.");
+        showCheckoutNotice("Silakan masukkan Password Roblox.", "Data Akun Belum Lengkap");
         robloxPassword?.focus();
         return;
       }
     } else if (selectedProduct.useId !== false && !playerIdInput?.value.trim()) {
-      alert("Silakan masukkan Player ID.");
+      showCheckoutNotice("Silakan masukkan Player ID.", "Data Akun Belum Lengkap");
       playerIdInput?.focus();
       return;
     }
     if (!isRoblox && selectedProduct.useServer !== false && selectedProduct.id !== "pubg-mobile" && selectedProduct.id !== "free-fire" && selectedProduct.id !== "freefire" && selectedProduct.id !== "valorant" && !serverInput?.value.trim()) {
-      alert("Silakan masukkan Server.");
+      showCheckoutNotice("Silakan masukkan Server.", "Data Akun Belum Lengkap");
       serverInput?.focus();
       return;
     }
-    if (!selectedPayment) return alert("Silakan pilih metode pembayaran.");
+    if (!selectedPayment) return showCheckoutNotice("Silakan pilih metode pembayaran.", "Metode Pembayaran Belum Dipilih");
     const orderId = "LEO-" + Date.now().toString(36).toUpperCase();
     const order = {
       id: orderId,
@@ -700,7 +734,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         checkoutButton.disabled = false;
         checkoutButton.textContent = "Bayar Sekarang";
       }
-      alert(error.message || "Gagal membuat pembayaran. Silakan coba lagi.");
+      showCheckoutNotice(error.message || "Gagal membuat pembayaran. Silakan coba lagi.", "Pembayaran Belum Berhasil");
     }
   }
 
