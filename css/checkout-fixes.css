@@ -2821,3 +2821,29 @@ body.checkout-notice-open{overflow:hidden}
   .checkout-page .ewallet-logo-wrap{height:40px!important;margin-bottom:6px!important}
   .checkout-page .ewallet-divider{width:calc(100% + 16px)!important;margin:6px -8px 5px!important}
 }
+
+
+/* Compact right-aligned payment-logo strip visible while E-Wallet accordion is closed. */
+.checkout-page .payment-category-ewallet .ewallet-logo-preview{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:8px;
+  padding:0 16px 12px;
+  min-height:42px;
+}
+.checkout-page .payment-category-ewallet.open .ewallet-logo-preview{display:none!important}
+.checkout-page .payment-category-ewallet:not(.open) .ewallet-logo-preview{display:flex!important}
+.checkout-page .payment-category-ewallet .ewallet-logo-preview img{
+  display:block;
+  width:52px;
+  height:25px;
+  padding:3px 5px;
+  object-fit:contain;
+  background:#fff;
+  border-radius:5px;
+}
+@media(max-width:380px){
+  .checkout-page .payment-category-ewallet .ewallet-logo-preview{gap:5px;padding:0 12px 10px;min-height:36px}
+  .checkout-page .payment-category-ewallet .ewallet-logo-preview img{width:45px;height:22px;padding:2px 4px}
+}
