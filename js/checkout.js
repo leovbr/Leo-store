@@ -609,6 +609,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         `;
       });
 
+      document.querySelectorAll("[data-ewallet-preview]").forEach((preview) => {
+        const methodOption = document.querySelector('.payment-option[data-payment-id="' + preview.dataset.ewalletPreview + '"]');
+        const methodLogo = methodOption?.querySelector("img");
+        if (methodLogo?.src) preview.src = methodLogo.src;
+      });
+
       const qris = (data || []).find((method) => method.id === "qris");
       const qrisImage = $("paymentQrisImage");
       const qrisOption = document.querySelector('.payment-option[data-payment-id="qris"]');
