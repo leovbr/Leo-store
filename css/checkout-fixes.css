@@ -2777,3 +2777,10 @@ body.checkout-notice-open{overflow:hidden}
   .checkout-page .ewallet-divider{width:calc(100% + 18px)!important;margin-left:-9px!important;margin-right:-9px!important}
   .checkout-page .ewallet-service-fee{font-size:10px!important}
 }
+
+
+/* Respect the per-method admin setting that hides service-fee details. */
+.checkout-page .ewallet-divider[hidden],
+.checkout-page .ewallet-service-fee[hidden]{
+  display:none!important;
+}
