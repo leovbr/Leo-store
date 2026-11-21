@@ -373,7 +373,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const hasProduct = Boolean(selectedProduct && selectedDenomination);
     if (qrisTotalBox) qrisTotalBox.hidden = false;
     if (qrisTotalLabel) qrisTotalLabel.textContent = hasProduct ? "Total Pembayaran" : "Minimal Pembayaran QRIS";
-    if (qrisTotalAmount) qrisTotalAmount.textContent = hasProduct ? rupiah(getTotal()) : "Rp100.000";
+    if (qrisTotalAmount) qrisTotalAmount.textContent = hasProduct ? rupiah(getTotal()) : "Rp100";
     if (qrisTotalNote) qrisTotalNote.textContent = hasProduct
       ? "Termasuk biaya layanan QRIS"
       : "Pilih produk untuk melihat total pembayaran";
