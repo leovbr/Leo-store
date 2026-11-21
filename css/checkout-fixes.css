@@ -2868,3 +2868,8 @@ body.checkout-notice-open{overflow:hidden}
 .checkout-page .va-divider[hidden],.checkout-page .va-service-fee[hidden]{display:none!important}
 @media(hover:none){.checkout-page .payment-category-virtual-account .payment-option-va:hover{transform:none!important}}
 @media(max-width:360px){.checkout-page .payment-category-virtual-account .payment-category-body{gap:8px!important;padding:9px!important}.checkout-page .payment-category-virtual-account .payment-option-va{padding:8px!important}.checkout-page .va-logo-wrap{height:64px!important;margin-bottom:7px!important}.checkout-page .va-bank-name{font-size:13px!important}.checkout-page .va-divider{width:calc(100% + 16px)!important;margin:6px -8px 5px!important}.checkout-page .va-service-fee{font-size:9px!important}}
+
+/* Hide the redundant payment-channel subtitle inside VA cards. */
+.checkout-page .payment-category-virtual-account .va-payment-type{display:none!important}
+/* Dynamic payment accordion headers remain interactive and accessible. */
+.checkout-page .payment-category-dynamic .payment-category-header{display:flex!important;align-items:center!important;justify-content:space-between!important;width:100%!important;cursor:pointer!important;pointer-events:auto!important;text-align:left!important;background:transparent!important;border:0!important;color:inherit!important}
