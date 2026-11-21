@@ -555,7 +555,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (category) {
           const willOpen = !category.classList.contains("open");
           category.classList.toggle("open", willOpen);
+          const body = category.querySelector(":scope > .payment-category-body");
+          if (body) body.hidden = !willOpen;
           header.setAttribute("aria-expanded", String(willOpen));
+          const arrow = header.querySelector("span:last-child");
+          if (arrow) arrow.textContent = willOpen ? "⌃" : "⌄";
         }
         return;
       }
@@ -631,7 +635,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         setOptionData(option, method);
         const image = method.logo_url || option.querySelector("img")?.src || "";
         option.classList.add("payment-option-ewallet");
-        option.setAttribute("aria-label", "Pilih pembayaran " + method.name);
+        option.setAttribute("aria-label", "Pilih pembayaran " + String(method.name || method.id).replace(/\\s*virtual\\s+account\\s*$/i, "").trim());
         const showFee = method.show_fee !== false;
         option.innerHTML = '<span class="ewallet-logo-wrap"><img src="' + image + '" alt="" loading="lazy"></span><strong class="ewallet-price">Pilih nominal</strong><span class="ewallet-divider" aria-hidden="true" ' + (showFee ? "" : "hidden") + '></span><span class="ewallet-service-fee" ' + (showFee ? "" : "hidden") + '>Biaya layanan Rp0</span>';
       });
@@ -663,6 +667,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           header.append(title, arrow);
           const body = document.createElement("div");
           body.className = "payment-category-body";
+          body.hidden = true;
           body.id = "payment-category-body-" + group.key.toLowerCase().replace(/[^a-z0-9]+/g, "-");
           header.setAttribute("aria-controls", body.id);
           group.methods.forEach((method) => {
@@ -680,13 +685,16 @@ document.addEventListener("DOMContentLoaded", async () => {
             logoWrap.className = "va-logo-wrap";
             const img = document.createElement("img");
             img.src = method.logo_url || "";
-            img.alt = method.name + " logo";
+            const displayName = String(method.name || method.id)
+              .replace(/\\s*virtual\\s+account\\s*$/i, "")
+              .trim();
+            img.alt = displayName + " logo";
             img.loading = "lazy";
             logoWrap.appendChild(img);
 
             const name = document.createElement("strong");
             name.className = "va-bank-name";
-            name.textContent = method.name;
+            name.textContent = displayName;
             const price = document.createElement("strong");
             price.className = "va-price";
             price.textContent = "Pilih nominal";
