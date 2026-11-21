@@ -494,11 +494,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   function updateEwalletCards() {
-    document.querySelectorAll(".payment-option-ewallet").forEach((option) => {
+    document.querySelectorAll(".payment-option-ewallet, .payment-option-va").forEach((option) => {
       const fee = getFeeForPaymentOption(option);
       const total = Math.max(0, getBaseTotal() - getPromoDiscount() + fee);
-      const price = option.querySelector(".ewallet-price");
-      const service = option.querySelector(".ewallet-service-fee");
+      const price = option.querySelector(".ewallet-price, .va-price");
+      const service = option.querySelector(".ewallet-service-fee, .va-service-fee");
       if (price) price.textContent = selectedDenomination ? rupiah(total) : "Pilih nominal";
       if (service) service.textContent = "Biaya layanan " + rupiah(fee);
     });
@@ -650,7 +650,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           const body = document.createElement("div"); body.className = "payment-category-body";
           group.methods.forEach((method) => {
             const option = document.createElement("div");
-            option.className = "payment-option payment-option-logo";
+            option.className = "payment-option payment-option-va";
             option.dataset.paymentId = method.id;
             option.dataset.paymentName = method.name;
             option.dataset.fee = String(Number(method.fee_value || 0));
@@ -658,9 +658,36 @@ document.addEventListener("DOMContentLoaded", async () => {
             option.dataset.feeType = method.fee_type || "fixed";
             option.setAttribute("role", "button"); option.tabIndex = 0;
             option.setAttribute("aria-label", "Pilih pembayaran " + method.name);
-            const img = document.createElement("img"); img.src = method.logo_url || ""; img.alt = ""; img.loading = "lazy";
-            const name = document.createElement("span"); name.textContent = method.name;
-            option.append(img, name); body.appendChild(option);
+
+            const logoWrap = document.createElement("span");
+            logoWrap.className = "va-logo-wrap";
+            const img = document.createElement("img");
+            img.src = method.logo_url || "";
+            img.alt = method.name + " logo";
+            img.loading = "lazy";
+            logoWrap.appendChild(img);
+
+            const name = document.createElement("strong");
+            name.className = "va-bank-name";
+            name.textContent = method.name;
+            const type = document.createElement("span");
+            type.className = "va-payment-type";
+            type.textContent = group.key === "Alfa Group" ? "Bayar di Gerai" : "Virtual Account";
+            const price = document.createElement("strong");
+            price.className = "va-price";
+            price.textContent = "Pilih nominal";
+            const divider = document.createElement("span");
+            divider.className = "va-divider";
+            divider.setAttribute("aria-hidden", "true");
+            const service = document.createElement("span");
+            service.className = "va-service-fee";
+            service.textContent = "Biaya layanan Rp0";
+            if (method.show_fee === false) {
+              divider.hidden = true;
+              service.hidden = true;
+            }
+            option.append(logoWrap, name, type, price, divider, service);
+            body.appendChild(option);
           });
           category.append(header, body); dynamicHost.appendChild(category);
         });
