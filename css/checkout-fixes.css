@@ -2848,3 +2848,6 @@ body.checkout-notice-open{overflow:hidden}
   .checkout-page .payment-category-ewallet .ewallet-logo-preview{gap:5px;padding:0 12px 10px;min-height:36px}
   .checkout-page .payment-category-ewallet .ewallet-logo-preview img{width:45px;height:22px;padding:2px 4px}
 }
+
+
+.checkout-page .payment-category[hidden],.checkout-page .payment-option[hidden],.checkout-page .ewallet-logo-preview img[hidden]{display:none!important}
