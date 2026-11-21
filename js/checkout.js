@@ -670,6 +670,22 @@ document.addEventListener("DOMContentLoaded", async () => {
           body.hidden = true;
           body.id = "payment-category-body-" + group.key.toLowerCase().replace(/[^a-z0-9]+/g, "-");
           header.setAttribute("aria-controls", body.id);
+
+          let logoPreview = null;
+          if (group.key === "Virtual Account") {
+            logoPreview = document.createElement("div");
+            logoPreview.className = "va-logo-preview";
+            logoPreview.setAttribute("aria-label", "Bank Virtual Account tersedia");
+            group.methods.forEach((method) => {
+              if (!method.logo_url) return;
+              const previewImg = document.createElement("img");
+              previewImg.src = method.logo_url;
+              previewImg.alt = String(method.name || method.id).replace(/\\s*virtual\\s+account\\s*$/i, "").trim();
+              previewImg.loading = "lazy";
+              logoPreview.appendChild(previewImg);
+            });
+          }
+
           group.methods.forEach((method) => {
             const option = document.createElement("div");
             option.className = "payment-option payment-option-va";
@@ -711,7 +727,9 @@ document.addEventListener("DOMContentLoaded", async () => {
             option.append(logoWrap, name, price, divider, service);
             body.appendChild(option);
           });
-          category.append(header, body); dynamicHost.appendChild(category);
+          if (logoPreview && logoPreview.childElementCount) category.append(header, logoPreview, body);
+          else category.append(header, body);
+          dynamicHost.appendChild(category);
         });
       }
       updateSummary();
