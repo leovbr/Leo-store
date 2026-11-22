@@ -3462,3 +3462,33 @@ html body .side-menu .side-menu-header a.header-brand > span.header-brand-text{
   text-transform:none!important;
   white-space:nowrap!important;
 }
+
+
+/* ===== ACCOUNT LISTING INFO — CLEAR ROUGH STONE + BRUSHED METAL =====
+   Texture is limited to the information block only.
+   Keep account photos, outer marketplace panel, layout and controls intact.
+*/
+#marketPanelAccounts .account-listing-body{
+  position:relative!important;
+  isolation:isolate!important;
+  overflow:hidden!important;
+  width:100%!important;
+  padding:16px!important;
+  border:1px solid rgba(160,177,202,.22)!important;
+  border-radius:14px!important;
+  background-color:#172338!important;
+  background-image:
+    repeating-linear-gradient(112deg,rgba(220,229,242,.075) 0 1px,transparent 1px 5px),
+    repeating-linear-gradient(22deg,rgba(5,10,20,.20) 0 1px,transparent 1px 7px),
+    radial-gradient(ellipse at 18% 12%,rgba(155,171,196,.17),transparent 48%),
+    linear-gradient(145deg,#26364b 0%,#19283d 48%,#111d30 100%)!important;
+  background-blend-mode:overlay, multiply, screen, normal!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07),inset 0 -12px 24px rgba(0,0,0,.16)!important;
+}
+#marketPanelAccounts .account-listing-body > *{
+  position:relative!important;
+  z-index:1!important;
+}
+@media(max-width:520px){
+  #marketPanelAccounts .account-listing-body{padding:13px!important;}
+}
