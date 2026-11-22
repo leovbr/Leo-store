@@ -3191,3 +3191,24 @@ body.checkout-notice-open{overflow:hidden}
   border:0!important;
   box-shadow:none!important;
 }
+
+
+/* ===== PREMIUM GEOMETRIC HERO — BRIGHTER, CLEARER FACETS ===== */
+.checkout-page .game-hero::before{
+  background-color:#1B304B!important;
+  background-image:
+    linear-gradient(132deg,transparent 0 17%,rgba(116,151,195,.22) 17.2% 35%,transparent 35.2%),
+    linear-gradient(42deg,transparent 0 43%,rgba(142,169,205,.18) 43.2% 59%,transparent 59.2%),
+    linear-gradient(148deg,transparent 0 62%,rgba(83,119,165,.30) 62.2% 82%,transparent 82.2%),
+    linear-gradient(32deg,transparent 0 76%,rgba(164,185,216,.13) 76.2% 91%,transparent 91.2%),
+    linear-gradient(118deg,rgba(85,119,164,.17) 0 13%,transparent 13.2% 100%),
+    linear-gradient(145deg,#203957 0%,#192D47 52%,#15263D 100%)!important;
+  background-size:100% 100%!important;
+}
+.checkout-page .game-hero-benefits{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  box-shadow:none!important;
+}
