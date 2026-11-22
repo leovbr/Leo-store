@@ -4236,3 +4236,35 @@ body.payment-page #searchPanel.active{
   transform:translateY(0)!important;
   z-index:2147481000!important;
 }
+
+
+/* PAYMENT PAGE — PIN SHARED NAVBAR TO THE VERY TOP OF THE VIEWPORT.
+   Only this page is affected; reserve its height so order content stays aligned.
+*/
+body.payment-page > .site-header.home-header{
+  position:fixed!important;
+  top:0!important;
+  left:0!important;
+  right:0!important;
+  width:100%!important;
+  margin:0!important;
+  z-index:2147482000!important;
+  isolation:isolate!important;
+  background:#07111f!important;
+  opacity:1!important;
+  visibility:visible!important;
+}
+body.payment-page > main{
+  padding-top:76px!important;
+}
+body.payment-page #searchPanel{
+  position:fixed!important;
+  top:76px!important;
+  left:0!important;
+  right:0!important;
+  z-index:2147481500!important;
+}
+@media(max-width:600px){
+  body.payment-page > main{padding-top:76px!important}
+  body.payment-page #searchPanel{top:76px!important}
+}
