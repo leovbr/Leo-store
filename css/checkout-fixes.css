@@ -3650,3 +3650,25 @@ body.checkout-notice-open{overflow:hidden}
     animation:none!important;
   }
 }
+
+
+/* ===== HERO CRYSTAL FACETS — VISIBLE TEXTURE ON THE ACTUAL PANEL =====
+   The solid lower-panel ::before layer sits above .hero-liquid-flow,
+   so place the geometric texture on this visible layer, not underneath it.
+*/
+.checkout-page .game-hero::before{
+  background-image:
+    repeating-linear-gradient(132deg,transparent 0 34px,rgba(211,194,255,.105) 35px,transparent 37px 70px),
+    repeating-linear-gradient(42deg,transparent 0 43px,rgba(159,139,255,.085) 44px,transparent 46px 88px),
+    linear-gradient(132deg,transparent 0 17%,rgba(175,151,255,.075) 17.2% 32%,transparent 32.2% 100%),
+    linear-gradient(42deg,transparent 0 44%,rgba(190,169,255,.065) 44.2% 59%,transparent 59.2% 100%),
+    linear-gradient(148deg,transparent 0 63%,rgba(139,116,245,.09) 63.2% 80%,transparent 80.2% 100%),
+    radial-gradient(ellipse 82% 88% at 52% 100%,rgba(111,72,220,.24) 0%,rgba(76,48,160,.13) 42%,transparent 76%),
+    radial-gradient(ellipse 58% 95% at 10% 12%,rgba(143,103,255,.17) 0%,rgba(94,66,190,.08) 48%,transparent 78%),
+    radial-gradient(ellipse 62% 92% at 94% 18%,rgba(92,75,208,.18) 0%,rgba(64,53,154,.08) 50%,transparent 80%),
+    linear-gradient(108deg,rgba(8,9,27,.28) 0%,rgba(20,15,52,.04) 50%,rgba(8,9,27,.30) 100%),
+    linear-gradient(180deg,#30246c 0%,#211b50 54%,#11172d 100%)!important;
+  background-size:
+    100% 100%,100% 100%,100% 100%,100% 100%,100% 100%,
+    100% 100%,100% 100%,100% 100%,100% 100%,100% 100%!important;
+}
