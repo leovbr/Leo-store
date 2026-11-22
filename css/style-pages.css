@@ -6360,3 +6360,15 @@ body.home-page #homeTrendingSection .home-game-info {
   background-color:transparent!important;
   background-image:none!important;
 }
+
+
+/* ===== TRENDING — BOOST CARBON FIBER VISIBILITY =====
+   Increase weave contrast while preserving the unified violet
+   gradient across image and text, with no particles.
+*/
+body.home-page #homeTrendingSection .home-game-card::before {
+  background-image:
+    repeating-linear-gradient(45deg,rgba(239,228,255,.13) 0 1px,transparent 1px 4px),
+    repeating-linear-gradient(-45deg,rgba(18,8,34,.24) 0 1px,transparent 1px 4px)!important;
+  opacity:.95!important;
+}
