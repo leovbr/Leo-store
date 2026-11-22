@@ -3097,3 +3097,34 @@ body.checkout-notice-open{overflow:hidden}
     height:42px!important;
   }
 }
+
+
+/* ===== COMPACT DENOMINATION CARDS + CONSISTENT TWO-LINE TITLES ===== */
+.checkout-page .denomination-option{min-height:132px!important}
+.checkout-page .denomination-main{min-height:88px!important;padding:9px 10px 8px!important;gap:7px!important}
+.checkout-page .denomination-title{
+  display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important;
+  white-space:normal!important;overflow:hidden!important;text-overflow:clip!important;
+  overflow-wrap:anywhere!important;word-break:normal!important;
+  min-height:32px!important;max-height:32px!important;font-size:13px!important;line-height:16px!important;font-weight:800!important
+}
+.checkout-page .denomination-price-row{min-height:38px!important;gap:8px!important}
+.checkout-page .denomination-product-icon{flex:0 0 38px!important;width:38px!important;height:38px!important;min-width:38px!important;max-width:38px!important}
+.checkout-page .denomination-price-box{font-size:12px!important;min-width:0!important}
+.checkout-page .denomination-delivery{flex:0 0 38px!important;min-height:38px!important;height:38px!important;padding:5px 9px!important}
+@media(max-width:600px){
+ .checkout-page .denomination-option{min-height:128px!important}
+ .checkout-page .denomination-main{min-height:86px!important;padding:8px 9px 7px!important}
+ .checkout-page .denomination-title{font-size:12.5px!important;line-height:15px!important;min-height:30px!important;max-height:30px!important}
+ .checkout-page .denomination-price-row{min-height:36px!important;gap:7px!important}
+ .checkout-page .denomination-product-icon{flex-basis:36px!important;width:36px!important;height:36px!important;min-width:36px!important;max-width:36px!important}
+ .checkout-page .denomination-delivery{flex-basis:36px!important;min-height:36px!important;height:36px!important}
+}
+@media(max-width:380px){
+ .checkout-page .denomination-option{min-height:124px!important}
+ .checkout-page .denomination-main{min-height:84px!important;padding:7px 8px 6px!important}
+ .checkout-page .denomination-title{font-size:12px!important;line-height:14px!important;min-height:28px!important;max-height:28px!important}
+ .checkout-page .denomination-price-row{min-height:34px!important;gap:6px!important}
+ .checkout-page .denomination-product-icon{flex-basis:34px!important;width:34px!important;height:34px!important;min-width:34px!important;max-width:34px!important}
+ .checkout-page .denomination-delivery{flex-basis:35px!important;min-height:35px!important;height:35px!important}
+}
