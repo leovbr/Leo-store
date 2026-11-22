@@ -5298,3 +5298,24 @@ body.home-page .all-games-section .product-publisher{
   body.home-page .all-games-section .product-card{transition:none!important}
   body.home-page .all-games-section .product-card:hover{transform:none!important}
 }
+
+
+/* =========================================================
+   INDEX — CONTINUOUS SHOP-MATCHED PAGE BACKGROUND
+   Keep the area around the game cards on the same navy
+   atmosphere as shop.html; remove the visible section band.
+   ========================================================= */
+body.home-page{
+  background:
+    radial-gradient(circle at 15% 0%,rgba(124,92,255,.10),transparent 30%),
+    radial-gradient(circle at 85% 15%,rgba(37,99,235,.08),transparent 28%),
+    var(--bg,#07111f)!important;
+  background-color:var(--bg,#07111f)!important;
+}
+body.home-page .all-games-section,
+body.home-page #homeAllGamesSection{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  box-shadow:none!important;
+}
