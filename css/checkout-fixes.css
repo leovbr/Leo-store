@@ -3878,3 +3878,32 @@ body.checkout-notice-open{overflow:hidden}
     animation:none!important;
   }
 }
+
+
+/* ===== HOMEPAGE GAME CARD INFO — STRONGER PURPLE TINT =====
+   Higher-specificity override: the shared homepage card rule previously
+   reset .product-info to transparent, hiding the intended violet panel.
+*/
+body.home-page .all-games-section .product-info{
+  position:relative!important;
+  isolation:isolate!important;
+  overflow:hidden!important;
+  background:
+    radial-gradient(ellipse 105% 150% at 8% 115%,rgba(133,83,255,.42) 0%,rgba(91,57,184,.20) 48%,transparent 78%),
+    radial-gradient(ellipse 85% 125% at 100% 0%,rgba(107,83,235,.24) 0%,transparent 72%),
+    linear-gradient(118deg,#30205f 0%,#241c4c 48%,#17213b 100%)!important;
+}
+body.home-page .all-games-section .product-info::before{
+  opacity:.78!important;
+  background-image:
+    radial-gradient(circle,rgba(225,211,255,.95) 0 1.1px,transparent 2px),
+    radial-gradient(circle,rgba(174,145,255,.92) 0 1.3px,transparent 2.2px),
+    radial-gradient(circle,rgba(205,185,255,.72) 0 .9px,transparent 1.9px)!important;
+}
+body.home-page .all-games-section .product-info::after{
+  opacity:.72!important;
+  background:
+    radial-gradient(ellipse 78% 125% at 4% 120%,rgba(151,103,255,.34),transparent 72%),
+    radial-gradient(ellipse 68% 110% at 100% -15%,rgba(119,99,255,.27),transparent 74%),
+    linear-gradient(112deg,transparent 22%,rgba(215,196,255,.09) 49%,transparent 72%)!important;
+}
