@@ -4008,23 +4008,21 @@ body.shop-page .shop-search-wrap{
 }
 
 
-/* CHECKOUT HERO LOWER INFO PANEL — SILVER GRAPHITE
-   Correct surface: the existing .game-hero::before panel, starting at the
-   established banner divider (250px desktop / 233px mobile).
-   Do not paint .game-hero-main: it also spans the banner area.
+/* CHECKOUT HERO LOWER INFO PANEL — CLEAR SILVER GRAPHITE
+   Keep the exact panel target and preserve all content/layout.
 */
 .checkout-page .game-hero-main{
   background:transparent!important;
 }
 .checkout-page .game-hero::before{
-  background-color:#263343!important;
+  background-color:#59697d!important;
   background-image:
-    repeating-linear-gradient(108deg,rgba(225,233,243,.13) 0 1px,transparent 1px 6px),
-    repeating-linear-gradient(18deg,rgba(5,12,22,.24) 0 1px,transparent 0 9px),
-    linear-gradient(132deg,transparent 0 34%,rgba(210,220,233,.12) 35%,rgba(210,220,233,.025) 47%,transparent 57%),
-    radial-gradient(ellipse at 18% 12%,rgba(220,230,243,.17),transparent 48%),
-    radial-gradient(ellipse at 92% 90%,rgba(128,88,208,.14),transparent 42%),
-    linear-gradient(118deg,#46566a 0%,#303f52 42%,#202e41 100%)!important;
+    repeating-linear-gradient(108deg,rgba(245,248,252,.24) 0 1px,transparent 1px 6px),
+    repeating-linear-gradient(18deg,rgba(7,15,26,.16) 0 1px,transparent 0 9px),
+    linear-gradient(132deg,transparent 0 34%,rgba(238,244,251,.20) 35%,rgba(238,244,251,.055) 47%,transparent 57%),
+    radial-gradient(ellipse at 18% 12%,rgba(245,249,255,.25),transparent 48%),
+    radial-gradient(ellipse at 92% 90%,rgba(151,119,224,.16),transparent 42%),
+    linear-gradient(118deg,#8492a5 0%,#68798e 42%,#4b5d73 100%)!important;
 }
 .checkout-page .game-hero-content,
 .checkout-page .game-hero-benefits{
