@@ -4008,35 +4008,25 @@ body.shop-page .shop-search-wrap{
 }
 
 
-/* CHECKOUT HERO INFO PANEL — SILVER GRAPHITE
-   Scope: only the lower panel containing game name, publisher and benefits.
-   Banner artwork, game icon, typography, spacing and all other sections stay unchanged.
+/* CHECKOUT HERO LOWER INFO PANEL — SILVER GRAPHITE
+   Correct surface: the existing .game-hero::before panel, starting at the
+   established banner divider (250px desktop / 233px mobile).
+   Do not paint .game-hero-main: it also spans the banner area.
 */
 .checkout-page .game-hero-main{
-  position:relative!important;
-  isolation:isolate!important;
-  background-color:#263343!important;
-  background-image:linear-gradient(118deg,#46566a 0%,#303f52 42%,#202e41 100%)!important;
+  background:transparent!important;
 }
-.checkout-page .game-hero-main::before{
-  content:""!important;
-  position:absolute!important;
-  inset:0!important;
-  z-index:0!important;
-  pointer-events:none!important;
+.checkout-page .game-hero::before{
+  background-color:#263343!important;
   background-image:
     repeating-linear-gradient(108deg,rgba(225,233,243,.13) 0 1px,transparent 1px 6px),
     repeating-linear-gradient(18deg,rgba(5,12,22,.24) 0 1px,transparent 0 9px),
     linear-gradient(132deg,transparent 0 34%,rgba(210,220,233,.12) 35%,rgba(210,220,233,.025) 47%,transparent 57%),
     radial-gradient(ellipse at 18% 12%,rgba(220,230,243,.17),transparent 48%),
-    radial-gradient(ellipse at 92% 90%,rgba(128,88,208,.14),transparent 42%)!important;
-  opacity:.9!important;
+    radial-gradient(ellipse at 92% 90%,rgba(128,88,208,.14),transparent 42%),
+    linear-gradient(118deg,#46566a 0%,#303f52 42%,#202e41 100%)!important;
 }
-.checkout-page .game-hero-main > .game-hero-content,
-.checkout-page .game-hero-main > .game-hero-benefits{
-  position:relative!important;
-  z-index:1!important;
+.checkout-page .game-hero-content,
+.checkout-page .game-hero-benefits{
   background:transparent!important;
-  background-color:transparent!important;
-  background-image:none!important;
 }
