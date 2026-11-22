@@ -4000,3 +4000,9 @@ body.shop-page .product-info .product-publisher{
   body.shop-page .product-card{transition:none!important;}
   body.shop-page .product-card:hover{transform:none!important;}
 }
+
+
+/* SHOP: use the header search drawer; hide the duplicate always-visible catalog field. */
+body.shop-page .shop-search-wrap{
+  display:none!important;
+}
