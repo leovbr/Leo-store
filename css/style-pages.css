@@ -5953,3 +5953,152 @@ body.home-page #homeTrendingSection .home-game-image img{
   box-sizing:border-box!important;
   background:#0b1424!important;
 }
+
+
+/* ===== TRENDING — unified 1:1 image + text card (2026-11-23) =====
+   One continuous violet surface; no internal divider or split panels.
+   The square image establishes card height and every card shares this layout.
+*/
+body.home-page #homeTrendingSection .home-game-card{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,40%) minmax(0,60%)!important;
+  align-items:stretch!important;
+  width:100%!important;
+  min-width:0!important;
+  height:auto!important;
+  min-height:0!important;
+  padding:0!important;
+  gap:0!important;
+  overflow:hidden!important;
+  border:1px solid rgba(190,160,255,.28)!important;
+  border-radius:14px!important;
+  background:linear-gradient(135deg,#49317f 0%,#3c286e 55%,#30205e 100%)!important;
+  box-shadow:0 5px 16px rgba(18,8,45,.18)!important;
+}
+body.home-page #homeTrendingSection .home-game-image{
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:0!important;
+  height:auto!important;
+  aspect-ratio:1/1!important;
+  overflow:hidden!important;
+  padding:5px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+}
+body.home-page #homeTrendingSection .home-game-image img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:100%!important;
+  max-height:100%!important;
+  aspect-ratio:1/1!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:8px!important;
+  background:transparent!important;
+}
+body.home-page #homeTrendingSection .home-game-image .game-icon-empty{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:100%!important;
+  height:100%!important;
+  background:rgba(12,8,30,.16)!important;
+}
+body.home-page #homeTrendingSection .home-game-info{
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  align-items:stretch!important;
+  min-width:0!important;
+  min-height:0!important;
+  width:100%!important;
+  height:auto!important;
+  margin:0!important;
+  padding:10px 11px!important;
+  gap:7px!important;
+  overflow:hidden!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+}
+body.home-page #homeTrendingSection .home-game-info strong{
+  box-sizing:border-box!important;
+  display:-webkit-box!important;
+  -webkit-box-orient:vertical!important;
+  -webkit-line-clamp:2!important;
+  min-width:0!important;
+  width:100%!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+  white-space:normal!important;
+  overflow-wrap:anywhere!important;
+  word-break:normal!important;
+  text-overflow:ellipsis!important;
+  border:0!important;
+  border-bottom:0!important;
+  border-radius:0!important;
+  color:#fff!important;
+  background:transparent!important;
+  background-image:none!important;
+  font-size:clamp(11px,3.1vw,14px)!important;
+  font-weight:800!important;
+  line-height:1.28!important;
+  text-align:left!important;
+}
+body.home-page #homeTrendingSection .home-game-info strong::before,
+body.home-page #homeTrendingSection .home-game-info strong::after{
+  content:none!important;
+  display:none!important;
+}
+body.home-page #homeTrendingSection .home-game-info span{
+  display:block!important;
+  box-sizing:border-box!important;
+  flex:0 1 auto!important;
+  min-width:0!important;
+  width:100%!important;
+  min-height:0!important;
+  height:auto!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+  white-space:nowrap!important;
+  text-overflow:ellipsis!important;
+  border:0!important;
+  border-radius:0!important;
+  color:#e4d9ff!important;
+  background:transparent!important;
+  font-size:clamp(9px,2.6vw,11px)!important;
+  font-weight:600!important;
+  line-height:1.35!important;
+  text-align:left!important;
+}
+@media(max-width:380px){
+  body.home-page #homeTrendingSection .home-game-grid{
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+  body.home-page #homeTrendingSection .home-game-card{
+    grid-template-columns:minmax(0,40%) minmax(0,60%)!important;
+  }
+  body.home-page #homeTrendingSection .home-game-info{
+    padding:12px 14px!important;
+    gap:8px!important;
+  }
+  body.home-page #homeTrendingSection .home-game-info strong{
+    font-size:14px!important;
+  }
+  body.home-page #homeTrendingSection .home-game-info span{
+    font-size:11px!important;
+  }
+}
