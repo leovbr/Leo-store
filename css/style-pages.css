@@ -5737,3 +5737,53 @@ body.home-page #homeTrendingSection .home-game-info span{
     min-height:36px!important;
   }
 }
+
+
+/* TRENDING — final divider alignment and readable left-aligned titles */
+body.home-page #homeTrendingSection .home-game-info{
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:stretch!important;
+  align-items:stretch!important;
+  min-width:0!important;
+}
+body.home-page #homeTrendingSection .home-game-info strong{
+  box-sizing:border-box!important;
+  position:relative!important;
+  display:flex!important;
+  flex:1 1 auto!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:0!important;
+  overflow:hidden!important;
+  padding:0 8px 13px!important;
+  text-align:left!important;
+  white-space:nowrap!important;
+  text-overflow:ellipsis!important;
+  line-height:1.2!important;
+}
+body.home-page #homeTrendingSection .home-game-info strong::after{
+  content:""!important;
+  position:absolute!important;
+  left:8px!important;
+  right:8px!important;
+  bottom:7px!important;
+  width:auto!important;
+  height:1px!important;
+  margin:0!important;
+  display:block!important;
+}
+body.home-page #homeTrendingSection .home-game-info span{
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex:0 0 36px!important;
+  min-height:36px!important;
+  align-items:center!important;
+  min-width:0!important;
+  overflow:hidden!important;
+  white-space:nowrap!important;
+  text-overflow:ellipsis!important;
+  padding:5px 8px!important;
+}
