@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css?v=20261123-sell-account-compact1">
-  <link rel="stylesheet" href="css/style-pages.css?v=20261123-trending-silver-graphite1">
+  <link rel="stylesheet" href="css/style-pages.css?v=20261123-homepage-fadeup1">
 <link rel="stylesheet" href="css/checkout-fixes.css?v=20261122-home-card-violet-brighter">
 <style>
 /* Footer brand and social row: left aligned; preserve footer section order */
@@ -562,7 +562,7 @@ document.addEventListener("DOMContentLoaded",async function(){
  const setStatus=(message,kind="loading")=>{
   if(!status)return;
   status.textContent=message;
-  status.style.display=kind==="ok"?"none":"block";
+  status.style.display=kind==="error"?"block":"none";
   status.style.borderColor=kind==="ok"?"#237a57":kind==="error"?"#b45353":"#6550a4";
   status.style.color=kind==="ok"?"#a7f3d0":kind==="error"?"#fecaca":"#ddd6fe";
  };
