@@ -3323,35 +3323,3 @@ body.checkout-notice-open{overflow:hidden}
   background-position:center!important;
 }
 
-
-/* ===== PAYMENT OPTION TOP AREA — BRUSHED METALLIC =====
-   Adds a restrained metallic surface behind the logo + payment label/amount.
-   The dashed divider and service-fee footer keep their existing background.
-*/
-.checkout-page .payment-option-ewallet,
-.checkout-page .payment-option-va{
-  position:relative!important;
-  isolation:isolate!important;
-}
-.checkout-page .payment-option-ewallet::before,
-.checkout-page .payment-option-va::before{
-  content:""!important;
-  position:absolute!important;
-  z-index:0!important;
-  top:7px!important;
-  right:7px!important;
-  bottom:58px!important;
-  left:7px!important;
-  border-radius:10px!important;
-  pointer-events:none!important;
-  background-color:#1b2a3e!important;
-  background-image:
-    repeating-linear-gradient(0deg,rgba(184,202,224,.025) 0 1px,transparent 1px 3px),
-    linear-gradient(112deg,rgba(119,145,177,.10) 0%,rgba(38,57,81,.035) 38%,rgba(151,170,193,.075) 70%,rgba(28,43,63,.06) 100%),
-    linear-gradient(145deg,#26384e 0%,#1b2b40 52%,#22334a 100%)!important;
-}
-.checkout-page .payment-option-ewallet > *,
-.checkout-page .payment-option-va > *{
-  position:relative!important;
-  z-index:1!important;
-}
