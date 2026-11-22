@@ -5933,3 +5933,23 @@ body.home-page #homeTrendingSection .home-game-info span{
     font-size:10px!important;
   }
 }
+
+
+/* ===== TRENDING THUMBNAILS — SHOW FULL IMAGE WITHOUT CROPPING ===== */
+body.home-page #homeTrendingSection .home-game-image{
+  background:#0b1424!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+body.home-page #homeTrendingSection .home-game-image img{
+  width:100%!important;
+  height:100%!important;
+  max-width:100%!important;
+  max-height:100%!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  padding:3px!important;
+  box-sizing:border-box!important;
+  background:#0b1424!important;
+}
