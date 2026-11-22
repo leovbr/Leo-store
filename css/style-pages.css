@@ -5218,3 +5218,83 @@ body.home-page .all-games-section .home-game-info span{
   }
 }
 
+
+
+/* =========================================================
+   INDEX — ALL GAMES CARDS MATCH SHOP.HTML
+   Keep the homepage's existing 3-column grid and data flow.
+   ========================================================= */
+body.home-page .all-games-section .home-game-grid{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:10px!important;
+}
+body.home-page .all-games-section .product-card{
+  display:block!important;
+  min-width:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+  background:var(--card,#0f1d30)!important;
+  border:1px solid var(--border,rgba(148,163,184,.14))!important;
+  border-radius:var(--radius-lg,22px)!important;
+  box-shadow:none!important;
+  text-decoration:none!important;
+  transition:transform .2s ease,background .2s ease,border-color .2s ease!important;
+}
+body.home-page .all-games-section .product-card:hover{
+  transform:translateY(-2px)!important;
+  background:var(--card-hover,#172a43)!important;
+  border-color:var(--border-strong,rgba(148,163,184,.24))!important;
+}
+body.home-page .all-games-section .product-image-wrap{
+  position:relative!important;
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  aspect-ratio:1/1!important;
+  padding:0!important;
+  overflow:hidden!important;
+  border:0!important;
+  border-radius:0!important;
+  background:var(--card-2,#13243a)!important;
+}
+body.home-page .all-games-section .product-game-image{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+}
+body.home-page .all-games-section .product-info{
+  display:block!important;
+  min-width:0!important;
+  padding:9px 9px 10px!important;
+  background:transparent!important;
+}
+body.home-page .all-games-section .product-info h3{
+  display:block!important;
+  margin:0!important;
+  color:var(--text,#f5f8ff)!important;
+  font-size:13px!important;
+  font-weight:800!important;
+  line-height:1.2!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+body.home-page .all-games-section .product-publisher{
+  display:block!important;
+  min-width:0!important;
+  margin:4px 0 0!important;
+  padding:0!important;
+  color:var(--text-soft,#aebbd0)!important;
+  font-size:10px!important;
+  font-weight:500!important;
+  line-height:1.2!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+@media(prefers-reduced-motion:reduce){
+  body.home-page .all-games-section .product-card{transition:none!important}
+  body.home-page .all-games-section .product-card:hover{transform:none!important}
+}
