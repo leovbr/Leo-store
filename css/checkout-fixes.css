@@ -3606,3 +3606,47 @@ body.checkout-notice-open{overflow:hidden}
     border-radius:17px 17px 0 0!important;
   }
 }
+
+
+/* ===== HERO — PURPLE HORIZON + SUBTLE CRYSTAL FACETS =====
+   Banner artwork and layout remain untouched.
+   Only the lower title / publisher / benefits panel receives this treatment.
+   Preserve the existing slow liquid motion, recolored into the store's violet palette.
+*/
+.checkout-page .game-hero::before{
+  background-color:#171333!important;
+  background-image:
+    radial-gradient(ellipse 82% 88% at 52% 100%,rgba(111,72,220,.24) 0%,rgba(76,48,160,.13) 42%,transparent 76%),
+    radial-gradient(ellipse 58% 95% at 10% 12%,rgba(143,103,255,.17) 0%,rgba(94,66,190,.08) 48%,transparent 78%),
+    radial-gradient(ellipse 62% 92% at 94% 18%,rgba(92,75,208,.18) 0%,rgba(64,53,154,.08) 50%,transparent 80%),
+    linear-gradient(108deg,rgba(8,9,27,.28) 0%,rgba(20,15,52,.04) 50%,rgba(8,9,27,.30) 100%),
+    linear-gradient(180deg,#30246c 0%,#211b50 54%,#11172d 100%)!important;
+  filter:none!important;
+}
+.checkout-page .hero-liquid-flow{
+  opacity:.78!important;
+  background:
+    linear-gradient(132deg,transparent 0 13%,rgba(196,177,255,.075) 13.2% 23%,transparent 23.2% 100%),
+    linear-gradient(42deg,transparent 0 31%,rgba(154,132,255,.075) 31.2% 43%,transparent 43.2% 100%),
+    linear-gradient(148deg,transparent 0 55%,rgba(186,166,255,.065) 55.2% 68%,transparent 68.2% 100%),
+    linear-gradient(35deg,transparent 0 74%,rgba(135,119,238,.075) 74.2% 87%,transparent 87.2% 100%),
+    radial-gradient(ellipse 72% 48% at 50% 100%,rgba(139,91,255,.15),transparent 72%),
+    linear-gradient(180deg,rgba(18,12,48,.02),rgba(9,12,31,.10))!important;
+}
+.checkout-page .hero-liquid-flow::before,
+.checkout-page .hero-liquid-flow::after{
+  background:
+    radial-gradient(ellipse at 36% 48%,rgba(174,135,255,.28) 0%,rgba(119,83,235,.17) 30%,rgba(79,63,181,.08) 50%,transparent 72%),
+    conic-gradient(from 25deg at 50% 50%,transparent 0 18%,rgba(174,146,255,.12) 27%,transparent 40% 62%,rgba(119,105,242,.12) 72%,transparent 88%)!important;
+}
+.checkout-page .hero-liquid-flow::after{
+  background:
+    radial-gradient(ellipse at 60% 45%,rgba(145,119,255,.23) 0%,rgba(102,83,218,.15) 34%,transparent 70%),
+    conic-gradient(from 210deg at 50% 50%,transparent 0 22%,rgba(183,159,255,.11) 34%,transparent 48% 70%,rgba(140,111,255,.12) 82%,transparent 94%)!important;
+}
+@media(prefers-reduced-motion:reduce){
+  .checkout-page .hero-liquid-flow::before,
+  .checkout-page .hero-liquid-flow::after{
+    animation:none!important;
+  }
+}
