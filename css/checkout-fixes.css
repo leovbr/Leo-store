@@ -3212,3 +3212,51 @@ body.checkout-notice-open{overflow:hidden}
   border:0!important;
   box-shadow:none!important;
 }
+
+
+/* ===== CRYSTAL SHARDS HERO — ELECTRIC BLUE GLASS =====
+   Recreates the selected crystal reference as one continuous lower-Hero surface.
+   Layered faceted gradients keep the center glow controlled for benefit text.
+*/
+.checkout-page .game-hero::before{
+  content:""!important;
+  position:absolute!important;
+  left:0!important;right:0!important;top:250px!important;bottom:0!important;
+  background-color:#061326!important;
+  background-image:
+    linear-gradient(90deg,rgba(3,9,20,.58) 0%,rgba(4,15,32,.16) 48%,rgba(3,9,20,.56) 100%),
+    radial-gradient(ellipse at 50% 58%,rgba(0,174,255,.72) 0%,rgba(0,113,207,.38) 25%,rgba(5,25,55,.08) 58%,transparent 76%),
+    linear-gradient(132deg,transparent 0 9%,rgba(19,78,145,.62) 9.2% 18%,rgba(5,24,52,.82) 18.2% 26%,transparent 26.2%),
+    linear-gradient(48deg,transparent 0 13%,rgba(15,94,164,.62) 13.2% 25%,rgba(3,19,43,.86) 25.2% 34%,transparent 34.2%),
+    linear-gradient(148deg,transparent 0 30%,rgba(27,117,190,.54) 30.2% 42%,rgba(4,24,52,.88) 42.2% 52%,transparent 52.2%),
+    linear-gradient(35deg,transparent 0 43%,rgba(12,103,173,.68) 43.2% 55%,rgba(2,18,40,.82) 55.2% 65%,transparent 65.2%),
+    linear-gradient(142deg,transparent 0 58%,rgba(34,133,205,.48) 58.2% 70%,rgba(4,23,49,.84) 70.2% 80%,transparent 80.2%),
+    linear-gradient(42deg,transparent 0 73%,rgba(15,84,151,.62) 73.2% 85%,rgba(3,16,37,.86) 85.2% 94%,transparent 94.2%),
+    linear-gradient(180deg,#07152b 0%,#0a2a4d 48%,#061326 100%)!important;
+  background-size:100% 100%!important;
+  background-position:center!important;
+  z-index:1!important;
+  pointer-events:none!important;
+}
+.checkout-page .game-hero-benefits{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+@media(max-width:640px){
+  .checkout-page .game-hero::before{
+    top:233px!important;
+    background-image:
+      linear-gradient(90deg,rgba(3,9,20,.62),rgba(4,15,32,.18) 50%,rgba(3,9,20,.60)),
+      radial-gradient(ellipse at 50% 58%,rgba(0,174,255,.64),rgba(0,113,207,.34) 28%,rgba(5,25,55,.08) 62%,transparent 78%),
+      linear-gradient(132deg,transparent 0 9%,rgba(19,78,145,.62) 9.2% 18%,rgba(5,24,52,.82) 18.2% 26%,transparent 26.2%),
+      linear-gradient(48deg,transparent 0 13%,rgba(15,94,164,.62) 13.2% 25%,rgba(3,19,43,.86) 25.2% 34%,transparent 34.2%),
+      linear-gradient(148deg,transparent 0 30%,rgba(27,117,190,.54) 30.2% 42%,rgba(4,24,52,.88) 42.2% 52%,transparent 52.2%),
+      linear-gradient(35deg,transparent 0 43%,rgba(12,103,173,.68) 43.2% 55%,rgba(2,18,40,.82) 55.2% 65%,transparent 65.2%),
+      linear-gradient(142deg,transparent 0 58%,rgba(34,133,205,.48) 58.2% 70%,rgba(4,23,49,.84) 70.2% 80%,transparent 80.2%),
+      linear-gradient(42deg,transparent 0 73%,rgba(15,84,151,.62) 73.2% 85%,rgba(3,16,37,.86) 85.2% 94%,transparent 94.2%),
+      linear-gradient(180deg,#07152b 0%,#0a2a4d 48%,#061326 100%)!important;
+  }
+}
