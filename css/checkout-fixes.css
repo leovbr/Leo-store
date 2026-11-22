@@ -3930,3 +3930,32 @@ body.home-page .all-games-section .product-info::after{
     radial-gradient(ellipse 70% 112% at 100% -15%,rgba(151,132,255,.40),transparent 75%),
     linear-gradient(112deg,transparent 20%,rgba(235,220,255,.13) 49%,transparent 73%)!important;
 }
+
+
+/* ===== SHOP GAME CARDS — MATCH BRIGHTER INDEX VIOLET =====
+   Match the homepage card-info palette and particle brightness exactly.
+   Keep shop card layout, artwork and grid dimensions unchanged.
+*/
+body.shop-page .product-info{
+  position:relative!important;
+  isolation:isolate!important;
+  overflow:hidden!important;
+  background:
+    radial-gradient(ellipse 110% 155% at 8% 115%,rgba(171,126,255,.58) 0%,rgba(125,82,226,.34) 48%,transparent 79%),
+    radial-gradient(ellipse 88% 130% at 100% 0%,rgba(139,117,255,.38) 0%,transparent 73%),
+    linear-gradient(118deg,#56369a 0%,#3d2b78 49%,#263052 100%)!important;
+}
+body.shop-page .product-info::before{
+  opacity:.94!important;
+  background-image:
+    radial-gradient(circle,rgba(246,237,255,.98) 0 1.15px,transparent 2.1px),
+    radial-gradient(circle,rgba(205,180,255,.98) 0 1.35px,transparent 2.3px),
+    radial-gradient(circle,rgba(235,218,255,.86) 0 1px,transparent 2px)!important;
+}
+body.shop-page .product-info::after{
+  opacity:.88!important;
+  background:
+    radial-gradient(ellipse 80% 128% at 4% 120%,rgba(176,129,255,.48),transparent 73%),
+    radial-gradient(ellipse 70% 112% at 100% -15%,rgba(151,132,255,.40),transparent 75%),
+    linear-gradient(112deg,transparent 20%,rgba(235,220,255,.13) 49%,transparent 73%)!important;
+}
