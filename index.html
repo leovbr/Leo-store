@@ -306,6 +306,61 @@ button.leo-language-menu button,.leo-language-menu button{appearance:none!import
 body{top:0!important}.skiptranslate iframe{display:none!important}.goog-logo-link,.goog-te-gadget span{display:none!important}
 @media(max-width:600px){button.leo-language-button{min-height:32px!important;padding:6px 8px!important;font-size:11px!important}.leo-language-menu{width:205px!important;right:0!important}}
 </style>
+
+<style id="leoostore-home-drawer-shop-match">
+/* HOME PAGE ONLY: keep the drawer above the navbar and show its full header like shop.html. */
+html body.home-page #sideMenu{
+  position:fixed!important;
+  top:0!important;
+  right:0!important;
+  bottom:0!important;
+  height:100vh!important;
+  height:100dvh!important;
+  max-height:100dvh!important;
+  z-index:10000!important;
+  width:min(520px,88vw)!important;
+  display:flex!important;
+  flex-direction:column!important;
+  overflow-y:auto!important;
+}
+html body.home-page #sideMenu .side-menu-header{
+  display:flex!important;
+  position:relative!important;
+  visibility:visible!important;
+  opacity:1!important;
+  flex:0 0 82px!important;
+  min-height:82px!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  padding:0 25px!important;
+}
+html body.home-page #sideMenu .side-menu-header .header-brand{
+  display:inline-flex!important;
+  visibility:visible!important;
+  opacity:1!important;
+  flex:1 1 auto!important;
+  width:auto!important;
+  min-width:0!important;
+  max-width:calc(100% - 60px)!important;
+}
+html body.home-page #sideMenu .side-menu-header .side-menu-close{
+  display:flex!important;
+  visibility:visible!important;
+  opacity:1!important;
+  flex:0 0 44px!important;
+  width:44px!important;
+  height:44px!important;
+}
+html body.home-page #sideMenu .side-menu-divider{
+  display:block!important;
+  flex:0 0 1px!important;
+}
+html body.home-page #menuOverlay{
+  position:fixed!important;
+  inset:0!important;
+  z-index:9999!important;
+}
+</style>
 </head>
 <body class="home-page">
 <header class="site-header home-header">
