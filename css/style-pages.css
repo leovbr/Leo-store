@@ -5461,3 +5461,50 @@ body.home-page #homeTrendingSection .home-game-info span{
     font-size:10px!important;
   }
 }
+
+
+/* TRENDING compact sizing — retain the fitted photo/panel treatment */
+body.home-page #homeTrendingSection .home-game-card{
+  height:96px!important;
+  min-height:96px!important;
+  border-radius:14px!important;
+}
+body.home-page #homeTrendingSection .home-game-info strong{
+  padding:5px 8px 0!important;
+  font-size:14px!important;
+  line-height:1.2!important;
+}
+body.home-page #homeTrendingSection .home-game-info strong::after{
+  margin-top:5px!important;
+}
+body.home-page #homeTrendingSection .home-game-info span{
+  flex-basis:32px!important;
+  min-height:32px!important;
+  padding:4px 8px!important;
+  font-size:11px!important;
+}
+@media(max-width:600px){
+  body.home-page #homeTrendingSection .home-game-card{
+    height:78px!important;
+    min-height:78px!important;
+    border-radius:12px!important;
+  }
+  body.home-page #homeTrendingSection .home-game-image{
+    flex-basis:36%!important;
+    width:36%!important;
+  }
+  body.home-page #homeTrendingSection .home-game-info strong{
+    padding:4px 7px 0!important;
+    font-size:12px!important;
+    line-height:1.15!important;
+  }
+  body.home-page #homeTrendingSection .home-game-info strong::after{
+    margin-top:4px!important;
+  }
+  body.home-page #homeTrendingSection .home-game-info span{
+    flex-basis:27px!important;
+    min-height:27px!important;
+    padding:3px 7px!important;
+    font-size:10px!important;
+  }
+}
