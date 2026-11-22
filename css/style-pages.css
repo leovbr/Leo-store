@@ -5690,3 +5690,50 @@ body.home-page #homeTrendingSection .home-game-info span{
     font-size:10px!important;
   }
 }
+
+
+/* TRENDING divider — lock every separator to the same vertical position */
+body.home-page #homeTrendingSection .home-game-info{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+}
+body.home-page #homeTrendingSection .home-game-info strong{
+  position:relative!important;
+  flex:1 1 auto!important;
+  min-height:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:0 8px 13px!important;
+  line-height:1.2!important;
+}
+body.home-page #homeTrendingSection .home-game-info strong::after{
+  content:""!important;
+  position:absolute!important;
+  left:8px!important;
+  right:8px!important;
+  bottom:7px!important;
+  display:block!important;
+  width:auto!important;
+  height:1px!important;
+  margin:0!important;
+}
+body.home-page #homeTrendingSection .home-game-info span{
+  flex:0 0 36px!important;
+  min-height:36px!important;
+}
+@media(max-width:600px){
+  body.home-page #homeTrendingSection .home-game-info strong{
+    padding:0 8px 13px!important;
+  }
+  body.home-page #homeTrendingSection .home-game-info strong::after{
+    left:8px!important;
+    right:8px!important;
+    bottom:7px!important;
+  }
+  body.home-page #homeTrendingSection .home-game-info span{
+    flex-basis:36px!important;
+    min-height:36px!important;
+  }
+}
