@@ -5366,3 +5366,98 @@ body.home-page .home-games-section:not(.all-games-section) .home-game-info span{
     padding:5px 7px!important;
   }
 }
+
+
+/* =========================================================
+   TRENDING — EDGE-TO-EDGE CARD FIT
+   Photo and violet info panel now fill the card as one unit.
+   ========================================================= */
+body.home-page #homeTrendingSection .home-game-card{
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:stretch!important;
+  gap:0!important;
+  height:132px!important;
+  min-height:132px!important;
+  padding:0!important;
+  overflow:hidden!important;
+  border-radius:16px!important;
+}
+body.home-page #homeTrendingSection .home-game-image{
+  flex:0 0 37%!important;
+  width:37%!important;
+  height:100%!important;
+  min-width:0!important;
+  border-radius:0!important;
+  overflow:hidden!important;
+}
+body.home-page #homeTrendingSection .home-game-image img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:center!important;
+}
+body.home-page #homeTrendingSection .home-game-info{
+  flex:1 1 0!important;
+  width:auto!important;
+  min-width:0!important;
+  height:100%!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  border-radius:0!important;
+  overflow:hidden!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:stretch!important;
+}
+body.home-page #homeTrendingSection .home-game-info strong{
+  flex:1 1 auto!important;
+  min-height:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  box-sizing:border-box!important;
+  padding:8px 10px 0!important;
+  border-radius:0!important;
+}
+body.home-page #homeTrendingSection .home-game-info strong::after{
+  flex:0 0 1px!important;
+  width:100%!important;
+  margin:7px 0 0!important;
+}
+body.home-page #homeTrendingSection .home-game-info span{
+  flex:0 0 42px!important;
+  min-height:42px!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  margin:0!important;
+  padding:7px 10px!important;
+  border-radius:0!important;
+}
+@media(max-width:600px){
+  body.home-page #homeTrendingSection .home-game-card{
+    height:116px!important;
+    min-height:116px!important;
+    border-radius:14px!important;
+  }
+  body.home-page #homeTrendingSection .home-game-image{
+    flex-basis:36%!important;
+    width:36%!important;
+  }
+  body.home-page #homeTrendingSection .home-game-info strong{
+    padding:7px 8px 0!important;
+    font-size:13px!important;
+  }
+  body.home-page #homeTrendingSection .home-game-info strong::after{
+    margin-top:5px!important;
+  }
+  body.home-page #homeTrendingSection .home-game-info span{
+    flex-basis:36px!important;
+    min-height:36px!important;
+    padding:5px 8px!important;
+    font-size:10px!important;
+  }
+}
