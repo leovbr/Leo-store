@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css?v=20261117-drawer-gradient-fix2">
-  <link rel="stylesheet" href="css/style-pages.css?v=20261122-home-games-unified-cards">
+  <link rel="stylesheet" href="css/style-pages.css?v=20261122-home-shop-card-match1">
 <link rel="stylesheet" href="css/checkout-fixes.css?v=20261022-cache-bust1">
 <style>
 /* Footer brand and social row: left aligned; preserve footer section order */
@@ -581,6 +581,8 @@ document.addEventListener("DOMContentLoaded",async function(){
   const visibleGames=games;
   const cfg=settings;
   const card=g=>'<a href="checkout.html?game='+encodeURIComponent(g.slug)+'" class="home-game-card"><div class="home-game-image">'+(g.icon_url?'<img src="'+esc(g.icon_url)+'" alt="'+esc(g.name)+'" loading="lazy" onerror="this.remove()">':'<span class="game-icon-empty" aria-label="Ikon belum diatur">🎮</span>')+'</div><div class="home-game-info"><strong>'+esc(g.name)+'</strong><span>'+esc(g.publisher||"Game")+'</span></div></a>';
+  // All Games reuses the same card structure as shop.html; Trending keeps its compact layout.
+  const shopStyleCard=g=>'<a class="product-card" href="checkout.html?game='+encodeURIComponent(g.slug)+'" aria-label="Top up '+esc(g.name)+'"><div class="product-image-wrap">'+(g.icon_url?'<img class="product-game-image" src="'+esc(g.icon_url)+'" alt="'+esc(g.name)+'" loading="lazy" onerror="this.remove()">':'<div class="product-game-image game-icon-empty" aria-label="Ikon belum diatur">🎮</div>')+'</div><div class="product-info"><h3>'+esc(g.name)+'</h3><p class="product-publisher">'+esc(g.publisher||"Publisher")+'</p></div></a>';
   const configuredTrending=Array.isArray(cfg.trending_slugs)?cfg.trending_slugs:[];
   const gameBySlugForTrending=new Map(visibleGames.map(g=>[g.slug,g]));
   const trending=configuredTrending.map(slug=>gameBySlugForTrending.get(slug)).filter(Boolean).slice(0,Math.max(0,Number(cfg.trending_limit)||6));
@@ -592,7 +594,7 @@ document.addEventListener("DOMContentLoaded",async function(){
   const gameBySlug=new Map(visibleGames.map(g=>[g.slug,g]));
   const configuredSlugs=Array.isArray(cfg.all_games_slugs)?cfg.all_games_slugs:[];
   const allGames=configuredSlugs.length?configuredSlugs.map(slug=>gameBySlug.get(slug)).filter(Boolean):visibleGames;
-  function renderAll(){allGrid.innerHTML=allGames.slice(0,initialLimit).map(card).join("");const canGoShop=visibleGames.length>initialLimit&&cfg.show_all_games_button!==false;if(moreButton)moreButton.style.display=canGoShop?"inline-flex":"none";}renderAll();
+  function renderAll(){allGrid.innerHTML=allGames.slice(0,initialLimit).map(shopStyleCard).join("");const canGoShop=visibleGames.length>initialLimit&&cfg.show_all_games_button!==false;if(moreButton)moreButton.style.display=canGoShop?"inline-flex":"none";}renderAll();
   setStatus("Berhasil dimuat dari Supabase • "+games.length+" game aktif • pengaturan Admin diterapkan.", "ok");
  }catch(e){console.error("Homepage gagal memuat data Supabase:",e);const detail=String(e?.message||e||"Kesalahan tidak diketahui");setStatus("Gagal memuat data: "+detail,"error");const message='<p class="home-data-status">'+esc(detail)+'</p>';trendingGrid.innerHTML=message;allGrid.innerHTML=message;if(moreButton)moreButton.style.display="none";}
 });
