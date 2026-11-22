@@ -5801,3 +5801,135 @@ body.home-page #homeTrendingSection .home-game-info strong{box-sizing:border-box
 body.home-page #homeTrendingSection .home-game-info strong::after{content:none!important;display:none!important;}
 body.home-page #homeTrendingSection .home-game-info span{box-sizing:border-box!important;display:flex!important;flex:0 0 36px!important;width:100%!important;min-width:0!important;min-height:36px!important;align-items:center!important;overflow:hidden!important;white-space:nowrap!important;text-overflow:ellipsis!important;margin:0!important;padding:5px 9px!important;font-size:clamp(9px,2.8vw,11px)!important;line-height:1.2!important;color:#F1EDFF!important;background:linear-gradient(112deg,#8057E8 0%,#7046D8 54%,#6238C5 100%)!important;}
 @media(max-width:380px){body.home-page #homeTrendingSection .home-game-grid{grid-template-columns:minmax(0,1fr)!important;gap:12px!important;}body.home-page #homeTrendingSection .home-game-image{flex-basis:38%!important;width:38%!important;}body.home-page #homeTrendingSection .home-game-info{flex-basis:62%!important;width:62%!important;}body.home-page #homeTrendingSection .home-game-info strong{font-size:clamp(11px,3.4vw,14px)!important;padding:10px 11px 12px!important;}body.home-page #homeTrendingSection .home-game-info span{font-size:11px!important;padding-inline:11px!important;}}
+
+/* ===== TRENDING CARD FINAL FIX — stable two-line title and divider ===== */
+body.home-page #homeTrendingSection .home-game-card{
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:stretch!important;
+  height:auto!important;
+  min-height:0!important;
+  padding:0!important;
+  gap:0!important;
+  overflow:hidden!important;
+}
+body.home-page #homeTrendingSection .home-game-image{
+  box-sizing:border-box!important;
+  flex:0 0 43%!important;
+  width:43%!important;
+  height:auto!important;
+  min-width:0!important;
+  min-height:0!important;
+  aspect-ratio:1/1!important;
+  align-self:stretch!important;
+  overflow:hidden!important;
+}
+body.home-page #homeTrendingSection .home-game-image img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  aspect-ratio:1/1!important;
+  object-fit:cover!important;
+  object-position:center!important;
+}
+body.home-page #homeTrendingSection .home-game-info{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-rows:minmax(0,1fr) 36px!important;
+  flex:1 1 0!important;
+  width:auto!important;
+  min-width:0!important;
+  min-height:0!important;
+  height:auto!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+  border-radius:0!important;
+}
+body.home-page #homeTrendingSection .home-game-info strong{
+  box-sizing:border-box!important;
+  position:relative!important;
+  display:-webkit-box!important;
+  -webkit-box-orient:vertical!important;
+  -webkit-line-clamp:2!important;
+  align-self:stretch!important;
+  min-width:0!important;
+  min-height:0!important;
+  width:100%!important;
+  height:100%!important;
+  max-height:none!important;
+  overflow:hidden!important;
+  white-space:normal!important;
+  overflow-wrap:anywhere!important;
+  word-break:normal!important;
+  text-overflow:ellipsis!important;
+  padding:8px 10px 13px!important;
+  border:0!important;
+  border-radius:0!important;
+  font-size:clamp(12px,3.2vw,14px)!important;
+  line-height:1.22!important;
+  text-align:left!important;
+  background-color:#38266f!important;
+  background-image:
+    radial-gradient(circle,rgba(226,229,239,.78) 0 1px,transparent 1.9px),
+    radial-gradient(circle,rgba(190,196,216,.55) 0 .8px,transparent 1.7px),
+    linear-gradient(118deg,#49317f 0%,#352365 58%,#30205e 100%)!important;
+  background-size:43px 31px,67px 47px,100% 100%!important;
+  background-position:8px 4px,29px 17px,0 0!important;
+}
+body.home-page #homeTrendingSection .home-game-info strong::after{
+  content:""!important;
+  position:absolute!important;
+  left:9px!important;
+  right:9px!important;
+  bottom:6px!important;
+  display:block!important;
+  width:auto!important;
+  height:1px!important;
+  margin:0!important;
+  background:rgba(221,218,245,.62)!important;
+}
+body.home-page #homeTrendingSection .home-game-info span{
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  flex:0 0 36px!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:36px!important;
+  height:36px!important;
+  margin:0!important;
+  padding:5px 10px!important;
+  overflow:hidden!important;
+  white-space:nowrap!important;
+  text-overflow:ellipsis!important;
+  font-size:clamp(10px,2.8vw,11px)!important;
+  line-height:1.2!important;
+  color:#F1EDFF!important;
+  background:linear-gradient(112deg,#8057E8 0%,#7046D8 54%,#6238C5 100%)!important;
+}
+@media(max-width:600px){
+  body.home-page #homeTrendingSection .home-game-image{
+    flex-basis:43%!important;
+    width:43%!important;
+  }
+  body.home-page #homeTrendingSection .home-game-info{
+    grid-template-rows:minmax(0,1fr) 36px!important;
+  }
+  body.home-page #homeTrendingSection .home-game-info strong{
+    padding:8px 9px 13px!important;
+    font-size:clamp(12px,3.2vw,14px)!important;
+  }
+  body.home-page #homeTrendingSection .home-game-info strong::after{
+    left:8px!important;
+    right:8px!important;
+    bottom:6px!important;
+  }
+  body.home-page #homeTrendingSection .home-game-info span{
+    flex-basis:36px!important;
+    min-height:36px!important;
+    height:36px!important;
+    padding:5px 9px!important;
+    font-size:10px!important;
+  }
+}
