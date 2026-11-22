@@ -3757,3 +3757,63 @@ body.checkout-notice-open{overflow:hidden}
     padding:8px 5px 9px!important;
   }
 }
+
+
+/* ===== SHOP CARD PURPLE STARDUST + SLOW ENERGY FLOW =====
+   Decorative texture is confined to the text/publisher area below each game image.
+*/
+.shop-page .product-info{
+  position:relative!important;
+  isolation:isolate!important;
+  overflow:hidden!important;
+  background:
+    radial-gradient(ellipse at 12% 100%,rgba(110,72,210,.22),transparent 58%),
+    linear-gradient(118deg,#211943 0%,#1b1d3e 48%,#111d32 100%)!important;
+}
+.shop-page .product-info::before,
+.shop-page .product-info::after{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:0!important;
+  pointer-events:none!important;
+}
+.shop-page .product-info::before{
+  opacity:.68!important;
+  background-image:
+    radial-gradient(circle,rgba(210,193,255,.88) 0 1px,transparent 1.8px),
+    radial-gradient(circle,rgba(157,121,255,.82) 0 1.2px,transparent 2px),
+    radial-gradient(circle,rgba(187,164,255,.62) 0 .8px,transparent 1.7px);
+  background-size:43px 37px,67px 59px,91px 73px;
+  background-position:4px 7px,22px 18px,47px 3px;
+  animation:shopStardustDrift 22s linear infinite!important;
+}
+.shop-page .product-info::after{
+  opacity:.55!important;
+  background:
+    radial-gradient(ellipse 72% 115% at 5% 115%,rgba(132,83,255,.27),transparent 70%),
+    radial-gradient(ellipse 62% 100% at 92% -20%,rgba(106,83,224,.20),transparent 72%),
+    linear-gradient(112deg,transparent 25%,rgba(180,151,255,.055) 48%,transparent 69%);
+  background-size:140% 180%,150% 170%,220% 100%;
+  background-position:0% 100%,100% 0%,0% 50%;
+  animation:shopEnergyFlow 13s ease-in-out infinite alternate!important;
+}
+.shop-page .product-info h3,
+.shop-page .product-info .product-publisher{
+  position:relative!important;
+  z-index:1!important;
+}
+@keyframes shopStardustDrift{
+  from{background-position:4px 7px,22px 18px,47px 3px;}
+  to{background-position:47px -30px,-45px -41px,138px -70px;}
+}
+@keyframes shopEnergyFlow{
+  0%{background-position:0% 100%,100% 0%,0% 50%;opacity:.38;}
+  100%{background-position:100% 0%,0% 100%,100% 50%;opacity:.68;}
+}
+@media(prefers-reduced-motion:reduce){
+  .shop-page .product-info::before,
+  .shop-page .product-info::after{
+    animation:none!important;
+  }
+}
