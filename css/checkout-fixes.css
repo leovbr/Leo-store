@@ -3304,3 +3304,21 @@ body.checkout-notice-open{overflow:hidden}
     linear-gradient(110deg,#223650 0%,#1a2a40 52%,#202f48 100%)!important;
   background-size:100% 100%!important;
 }
+
+
+/* ===== PAYMENT ACCORDION HEADERS — SOFT GEOMETRIC =====
+   Replace the stronger carbon weave with low-contrast polygon facets.
+   Applies only to category title bars; logo strips and payment cards are untouched.
+*/
+.checkout-page .payment-category-ewallet > .payment-category-header,
+.checkout-page .payment-category-dynamic > .payment-category-header{
+  background-color:#1b2b42!important;
+  background-image:
+    linear-gradient(135deg,transparent 0 23%,rgba(113,151,195,.075) 23.2% 23.8%,transparent 24% 100%),
+    linear-gradient(45deg,transparent 0 58%,rgba(91,130,177,.085) 58.2% 59%,transparent 59.2% 100%),
+    linear-gradient(145deg,transparent 0 76%,rgba(143,170,205,.06) 76.2% 77%,transparent 77.2% 100%),
+    linear-gradient(35deg,rgba(75,111,158,.055) 0 18%,transparent 18.2% 100%),
+    linear-gradient(110deg,#21334c 0%,#1a2a40 52%,#202f48 100%)!important;
+  background-size:100% 100%!important;
+  background-position:center!important;
+}
