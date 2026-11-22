@@ -3413,3 +3413,81 @@ body.checkout-notice-open{overflow:hidden}
     animation:none!important;
   }
 }
+
+
+/* ===== HERO LIQUID FLOW — ORGANIC WATER-LIKE MOTION =====
+   Keep the aurora base steady; animate soft, morphing light currents above it.
+   The overlay is confined to the lower info panel and sits behind all copy.
+*/
+.checkout-page .game-hero::before{
+  animation:none!important;
+  background-position:center!important;
+}
+.checkout-page .game-hero-overlay{
+  position:relative!important;
+}
+.checkout-page .hero-liquid-flow{
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  top:205px!important;
+  bottom:0!important;
+  z-index:0!important;
+  overflow:hidden!important;
+  pointer-events:none!important;
+  opacity:.9!important;
+  background:
+    radial-gradient(ellipse 72% 48% at 50% 100%,rgba(0,164,255,.16),transparent 72%),
+    linear-gradient(180deg,rgba(3,15,31,.04),rgba(2,13,28,.08))!important;
+}
+.checkout-page .hero-liquid-flow::before,
+.checkout-page .hero-liquid-flow::after{
+  content:""!important;
+  position:absolute!important;
+  width:78%!important;
+  height:115%!important;
+  top:8%!important;
+  left:10%!important;
+  border-radius:58% 42% 64% 36% / 42% 55% 45% 58%!important;
+  background:
+    radial-gradient(ellipse at 36% 48%,rgba(0,202,255,.30) 0%,rgba(0,145,230,.19) 28%,rgba(30,104,205,.08) 48%,transparent 70%),
+    conic-gradient(from 25deg at 50% 50%,transparent 0 18%,rgba(0,181,255,.13) 27%,transparent 40% 62%,rgba(62,120,255,.12) 72%,transparent 88%)!important;
+  filter:blur(17px)!important;
+  transform:translate3d(-9%,2%,0) rotate(-9deg) scale(1)!important;
+  animation:leoLiquidMorphA 11s ease-in-out infinite alternate!important;
+}
+.checkout-page .hero-liquid-flow::after{
+  width:72%!important;
+  height:100%!important;
+  top:18%!important;
+  left:32%!important;
+  border-radius:42% 58% 38% 62% / 58% 42% 61% 39%!important;
+  background:
+    radial-gradient(ellipse at 60% 45%,rgba(0,174,255,.23) 0%,rgba(37,113,225,.15) 34%,transparent 70%),
+    conic-gradient(from 210deg at 50% 50%,transparent 0 22%,rgba(91,126,255,.12) 34%,transparent 48% 70%,rgba(0,205,255,.13) 82%,transparent 94%)!important;
+  filter:blur(21px)!important;
+  animation:leoLiquidMorphB 14s ease-in-out infinite alternate-reverse!important;
+}
+@keyframes leoLiquidMorphA{
+  0%{transform:translate3d(-12%,4%,0) rotate(-12deg) scale(.96);border-radius:58% 42% 64% 36% / 42% 55% 45% 58%;}
+  50%{transform:translate3d(2%,-5%,0) rotate(3deg) scale(1.08);border-radius:39% 61% 48% 52% / 56% 38% 62% 44%;}
+  100%{transform:translate3d(14%,2%,0) rotate(13deg) scale(1.02);border-radius:63% 37% 41% 59% / 38% 62% 42% 58%;}
+}
+@keyframes leoLiquidMorphB{
+  0%{transform:translate3d(10%,-3%,0) rotate(12deg) scale(1.02);border-radius:42% 58% 38% 62% / 58% 42% 61% 39%;}
+  50%{transform:translate3d(-6%,5%,0) rotate(-5deg) scale(.94);border-radius:60% 40% 57% 43% / 42% 58% 39% 61%;}
+  100%{transform:translate3d(-14%,-2%,0) rotate(-14deg) scale(1.08);border-radius:45% 55% 63% 37% / 61% 39% 55% 45%;}
+}
+@media(max-width:640px){
+  .checkout-page .hero-liquid-flow{top:205px!important;}
+  .checkout-page .hero-liquid-flow::before,
+  .checkout-page .hero-liquid-flow::after{
+    filter:blur(14px)!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .checkout-page .hero-liquid-flow::before,
+  .checkout-page .hero-liquid-flow::after{
+    animation:none!important;
+  }
+}
