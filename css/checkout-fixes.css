@@ -3386,3 +3386,30 @@ body.checkout-notice-open{overflow:hidden}
       linear-gradient(180deg,#142b46 0%,#0d2340 48%,#091a32 100%)!important;
   }
 }
+
+
+/* ===== ELECTRIC AURORA — SLOW FLOW ANIMATION ===== */
+.checkout-page .game-hero::before{
+  background-position:
+    50% 50%, 42% 62%, 8% 18%, 92% 24%, 48% 58%, 20% 50%, 50% 50%!important;
+  animation:leoAuroraDrift 16s ease-in-out infinite alternate!important;
+}
+@keyframes leoAuroraDrift{
+  0%{
+    background-position:
+      50% 50%, 18% 48%, 0% 8%, 100% 28%, 38% 50%, 0% 48%, 50% 50%;
+  }
+  50%{
+    background-position:
+      50% 50%, 58% 72%, 42% 38%, 62% 10%, 62% 62%, 48% 54%, 50% 50%;
+  }
+  100%{
+    background-position:
+      50% 50%, 92% 54%, 100% 18%, 0% 42%, 78% 48%, 100% 52%, 50% 50%;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .checkout-page .game-hero::before{
+    animation:none!important;
+  }
+}
