@@ -5319,3 +5319,80 @@ body.home-page #homeAllGamesSection{
   background-image:none!important;
   box-shadow:none!important;
 }
+
+
+/* ===== SHOP CATALOG CARDS — MATCH INDEX ALL-GAMES CARD GEOMETRY =====
+   Mirror the homepage card structure and typography on shop.html.
+   Preserve shop catalog data, grid, search, filters, and violet particles.
+*/
+body.shop-page .product-card{
+  display:block!important;
+  min-width:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+  background:var(--card,#0f1d30)!important;
+  border:1px solid var(--border,rgba(148,163,184,.14))!important;
+  border-radius:var(--radius-lg,22px)!important;
+  box-shadow:none!important;
+  text-decoration:none!important;
+  transition:transform .2s ease,background .2s ease,border-color .2s ease!important;
+}
+body.shop-page .product-card:hover{
+  transform:translateY(-2px)!important;
+  background:var(--card-hover,#172a43)!important;
+  border-color:var(--border-strong,rgba(148,163,184,.24))!important;
+}
+body.shop-page .product-image-wrap{
+  position:relative!important;
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  aspect-ratio:1/1!important;
+  padding:0!important;
+  overflow:hidden!important;
+  border:0!important;
+  border-radius:0!important;
+  background:var(--card-2,#13243a)!important;
+}
+body.shop-page .product-image-wrap .product-game-image{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+}
+body.shop-page .product-info{
+  display:block!important;
+  min-width:0!important;
+  padding:9px 9px 10px!important;
+}
+body.shop-page .product-info h3{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  color:var(--text,#f5f8ff)!important;
+  font-size:16px!important;
+  font-weight:800!important;
+  line-height:1.25!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+body.shop-page .product-info .product-publisher{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:5px 0 0!important;
+  padding:0!important;
+  color:var(--text-soft,#aebbd0)!important;
+  font-size:14px!important;
+  font-weight:500!important;
+  line-height:1.3!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+@media(prefers-reduced-motion:reduce){
+  body.shop-page .product-card{transition:none!important;}
+  body.shop-page .product-card:hover{transform:none!important;}
+}
