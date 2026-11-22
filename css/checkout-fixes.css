@@ -3275,3 +3275,9 @@ body.checkout-notice-open{overflow:hidden}
     top:205px!important;
   }
 }
+
+
+/* ===== CRYSTAL HERO — SOFTER LUMINANCE ===== */
+.checkout-page .game-hero::before{
+  filter:brightness(.88) saturate(.94)!important;
+}
