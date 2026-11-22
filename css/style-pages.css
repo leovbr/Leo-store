@@ -6144,3 +6144,67 @@ body.home-page #homeTrendingSection .home-game-info span{
     padding:1px 0 3px!important;
   }
 }
+
+
+/* ===== TRENDING TEXT — STRICT SINGLE LINE =====
+   Both game title and publisher stay on one line; overflow ends with ellipsis.
+   Keep the established card grid, image ratio, colors and dimensions.
+*/
+body.home-page #homeTrendingSection .home-game-info{
+  min-width:0!important;
+  justify-content:center!important;
+  align-items:stretch!important;
+  gap:6px!important;
+  padding:8px 10px!important;
+  overflow:hidden!important;
+}
+body.home-page #homeTrendingSection .home-game-info strong{
+  display:block!important;
+  flex:0 1 auto!important;
+  min-width:0!important;
+  max-width:100%!important;
+  width:100%!important;
+  min-height:0!important;
+  height:auto!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+  white-space:nowrap!important;
+  overflow-wrap:normal!important;
+  word-break:normal!important;
+  text-overflow:ellipsis!important;
+  font-size:clamp(10px,2.9vw,14px)!important;
+  line-height:1.35!important;
+  text-align:left!important;
+}
+body.home-page #homeTrendingSection .home-game-info span{
+  display:block!important;
+  flex:0 1 auto!important;
+  min-width:0!important;
+  max-width:100%!important;
+  width:100%!important;
+  min-height:0!important;
+  height:auto!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+  white-space:nowrap!important;
+  overflow-wrap:normal!important;
+  word-break:normal!important;
+  text-overflow:ellipsis!important;
+  font-size:clamp(9px,2.5vw,11px)!important;
+  line-height:1.4!important;
+  text-align:left!important;
+}
+@media(max-width:380px){
+  body.home-page #homeTrendingSection .home-game-info{
+    padding:8px 9px!important;
+    gap:5px!important;
+  }
+  body.home-page #homeTrendingSection .home-game-info strong{
+    font-size:12px!important;
+  }
+  body.home-page #homeTrendingSection .home-game-info span{
+    font-size:10px!important;
+  }
+}
