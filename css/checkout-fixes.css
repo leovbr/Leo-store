@@ -3260,3 +3260,18 @@ body.checkout-notice-open{overflow:hidden}
       linear-gradient(180deg,#07152b 0%,#0a2a4d 48%,#061326 100%)!important;
   }
 }
+
+
+/* ===== CRYSTAL HERO POSITION FIX — MOBILE PANEL START =====
+   Start the crystal surface at the exact banner/info boundary so it also
+   sits behind the game title and continues uninterrupted through benefits.
+*/
+@media(max-width:640px){
+  .checkout-page .game-hero::before{
+    top:205px!important;
+    bottom:0!important;
+  }
+  .checkout-page .game-hero-content::after{
+    top:205px!important;
+  }
+}
