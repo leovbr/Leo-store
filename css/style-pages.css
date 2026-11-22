@@ -6299,3 +6299,24 @@ body.home-page #homeTrendingSection .home-game-info strong {
 body.home-page #homeTrendingSection .home-game-info span {
   color: #F1EDFF !important;
 }
+
+
+/* ===== TRENDING COLOR ONLY — NO PARTICLES OR TEXTURE =====
+   Match the violet gradient brightness of All Games cards.
+   Explicitly remove decorative dots and carbon/diagonal overlays.
+*/
+body.home-page #homeTrendingSection .home-game-card {
+  background-color:#62449f!important;
+  background-image:linear-gradient(118deg,#8058d0 0%,#6848b0 52%,#4e3b83 100%)!important;
+}
+body.home-page #homeTrendingSection .home-game-card::before {
+  content:none!important;
+  display:none!important;
+  background:none!important;
+}
+body.home-page #homeTrendingSection .home-game-info {
+  background-color:transparent!important;
+  background-image:linear-gradient(118deg,#8058d0 0%,#6848b0 52%,#4e3b83 100%)!important;
+  background-size:100% 100%!important;
+  background-position:center!important;
+}
