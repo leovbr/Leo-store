@@ -6102,3 +6102,45 @@ body.home-page #homeTrendingSection .home-game-info span{
     font-size:11px!important;
   }
 }
+
+
+/* ===== TRENDING PUBLISHER VISIBILITY FIX =====
+   Keep card/image dimensions unchanged; give publisher a complete line box
+   and reserve breathing room below it.
+*/
+body.home-page #homeTrendingSection .home-game-info{
+  justify-content:center!important;
+  gap:5px!important;
+  padding:8px 11px 12px!important;
+  overflow:hidden!important;
+}
+body.home-page #homeTrendingSection .home-game-info strong{
+  flex:0 1 auto!important;
+  min-height:0!important;
+  line-height:1.3!important;
+  margin:0!important;
+  padding:0!important;
+}
+body.home-page #homeTrendingSection .home-game-info span{
+  display:block!important;
+  flex:0 0 auto!important;
+  min-height:18px!important;
+  height:auto!important;
+  line-height:1.5!important;
+  padding:1px 0 3px!important;
+  margin:0!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+@media(max-width:380px){
+  body.home-page #homeTrendingSection .home-game-info{
+    padding:8px 11px 12px!important;
+    gap:5px!important;
+  }
+  body.home-page #homeTrendingSection .home-game-info span{
+    min-height:18px!important;
+    line-height:1.5!important;
+    padding:1px 0 3px!important;
+  }
+}
