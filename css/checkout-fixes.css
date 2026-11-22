@@ -3746,3 +3746,14 @@ body.checkout-notice-open{overflow:hidden}
   .shop-page .product-card{transition:none!important;}
   .shop-page .product-card:hover{transform:none!important;}
 }
+
+
+/* ===== SHOP GAME CARD — SLIGHTLY TALLER TEXT AREA ===== */
+.shop-page .product-info{
+  padding:9px 8px 10px!important;
+}
+@media(max-width:680px){
+  .shop-page .product-info{
+    padding:8px 5px 9px!important;
+  }
+}
