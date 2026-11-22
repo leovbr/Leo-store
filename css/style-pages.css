@@ -5319,3 +5319,50 @@ body.home-page #homeAllGamesSection{
   background-image:none!important;
   box-shadow:none!important;
 }
+
+
+/* =========================================================
+   TRENDING — PURPLE PANEL + SILVER PATTERN ABOVE DIVIDER
+   Lower publisher strip stays brighter violet and clean.
+   ========================================================= */
+body.home-page .home-games-section:not(.all-games-section) .home-game-info{
+  overflow:hidden!important;
+  border-radius:10px!important;
+  background:transparent!important;
+}
+body.home-page .home-games-section:not(.all-games-section) .home-game-info strong{
+  box-sizing:border-box!important;
+  padding:9px 10px 0!important;
+  background-color:#38266f!important;
+  background-image:
+    radial-gradient(circle,rgba(226,229,239,.78) 0 1px,transparent 1.9px),
+    radial-gradient(circle,rgba(190,196,216,.55) 0 .8px,transparent 1.7px),
+    linear-gradient(118deg,#49317f 0%,#352365 58%,#30205e 100%)!important;
+  background-size:43px 31px,67px 47px,100% 100%!important;
+  background-position:8px 4px,29px 17px,0 0!important;
+}
+body.home-page .home-games-section:not(.all-games-section) .home-game-info strong::after{
+  margin-top:8px!important;
+  background:linear-gradient(90deg,rgba(226,229,239,.72),rgba(196,181,253,.56),rgba(226,229,239,.28))!important;
+}
+body.home-page .home-games-section:not(.all-games-section) .home-game-info span{
+  box-sizing:border-box!important;
+  flex:1 1 auto!important;
+  display:flex!important;
+  align-items:center!important;
+  margin-top:0!important;
+  padding:7px 10px!important;
+  color:#F1EDFF!important;
+  background:linear-gradient(112deg,#8057E8 0%,#7046D8 54%,#6238C5 100%)!important;
+}
+@media(max-width:600px){
+  body.home-page .home-games-section:not(.all-games-section) .home-game-info strong{
+    padding:6px 7px 0!important;
+  }
+  body.home-page .home-games-section:not(.all-games-section) .home-game-info strong::after{
+    margin-top:5px!important;
+  }
+  body.home-page .home-games-section:not(.all-games-section) .home-game-info span{
+    padding:5px 7px!important;
+  }
+}
