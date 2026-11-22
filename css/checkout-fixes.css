@@ -4219,3 +4219,20 @@ body.payment-page #searchPanel.active{
   opacity:1!important;
   pointer-events:auto!important;
 }
+
+
+/* PAYMENT SEARCH: never render until the navbar search button adds .active. */
+body.payment-page #searchPanel:not(.active){
+  display:none!important;
+  visibility:hidden!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+body.payment-page #searchPanel.active{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  pointer-events:auto!important;
+  transform:translateY(0)!important;
+  z-index:2147481000!important;
+}
