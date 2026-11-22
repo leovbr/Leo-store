@@ -5508,3 +5508,70 @@ body.home-page #homeTrendingSection .home-game-info span{
     font-size:10px!important;
   }
 }
+
+
+/* TRENDING — balanced mobile proportions, clean text truncation */
+body.home-page #homeTrendingSection .home-game-card{
+  height:104px!important;
+  min-height:104px!important;
+  border-radius:14px!important;
+}
+body.home-page #homeTrendingSection .home-game-image{
+  flex:0 0 36%!important;
+  width:36%!important;
+}
+body.home-page #homeTrendingSection .home-game-info{
+  min-width:0!important;
+}
+body.home-page #homeTrendingSection .home-game-info strong{
+  display:block!important;
+  flex:1 1 auto!important;
+  min-width:0!important;
+  overflow:hidden!important;
+  white-space:nowrap!important;
+  text-overflow:ellipsis!important;
+  position:relative!important;
+  padding:8px 9px 0!important;
+  font-size:13px!important;
+  line-height:1.2!important;
+}
+body.home-page #homeTrendingSection .home-game-info strong::after{
+  display:block!important;
+  height:1px!important;
+  margin:7px 0 0!important;
+}
+body.home-page #homeTrendingSection .home-game-info span{
+  flex:0 0 34px!important;
+  min-height:34px!important;
+  min-width:0!important;
+  overflow:hidden!important;
+  white-space:nowrap!important;
+  text-overflow:ellipsis!important;
+  padding:5px 9px!important;
+  font-size:11px!important;
+}
+@media(max-width:600px){
+  body.home-page #homeTrendingSection .home-game-card{
+    height:94px!important;
+    min-height:94px!important;
+    border-radius:13px!important;
+  }
+  body.home-page #homeTrendingSection .home-game-image{
+    flex:0 0 35%!important;
+    width:35%!important;
+  }
+  body.home-page #homeTrendingSection .home-game-info strong{
+    padding:7px 8px 0!important;
+    font-size:12px!important;
+    line-height:1.2!important;
+  }
+  body.home-page #homeTrendingSection .home-game-info strong::after{
+    margin-top:6px!important;
+  }
+  body.home-page #homeTrendingSection .home-game-info span{
+    flex-basis:31px!important;
+    min-height:31px!important;
+    padding:4px 8px!important;
+    font-size:10px!important;
+  }
+}
