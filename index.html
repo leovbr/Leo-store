@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css?v=20261117-drawer-gradient-fix2">
-  <link rel="stylesheet" href="css/style-pages.css?v=20261122-home-shop-background-match1">
+  <link rel="stylesheet" href="css/style-pages.css?v=20261122-home-violet-banner-frame1">
 <link rel="stylesheet" href="css/checkout-fixes.css?v=20261122-home-card-violet-brighter">
 <style>
 /* Footer brand and social row: left aligned; preserve footer section order */
@@ -158,6 +158,21 @@
   }
 }
 
+
+/* Premium violet frame for the homepage promo banner — image/layout unchanged. */
+.home-page .banner-carousel{
+  border:1.5px solid transparent!important;
+  background:
+    linear-gradient(var(--card,#0d192b),var(--card,#0d192b)) padding-box,
+    linear-gradient(135deg,#c4b5fd 0%,#8b5cf6 42%,#6d28d9 72%,#a78bfa 100%) border-box!important;
+  box-shadow:
+    0 0 0 1px rgba(139,92,246,.16),
+    0 0 18px rgba(124,58,237,.20),
+    inset 0 0 12px rgba(167,139,250,.05)!important;
+}
+@media(prefers-reduced-motion:reduce){
+  .home-page .banner-carousel{scroll-behavior:auto;}
+}
 
 /* Premium banner shine — quick diagonal light sweep, image and text stay unchanged. */
 .home-page .home-banner-slide{isolation:isolate;}
