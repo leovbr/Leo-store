@@ -3281,3 +3281,26 @@ body.checkout-notice-open{overflow:hidden}
 .checkout-page .game-hero::before{
   filter:brightness(.88) saturate(.94)!important;
 }
+
+
+/* ===== PAYMENT ACCORDION HEADERS — SUBTLE CARBON FIBER =====
+   Pattern is limited to the E-Wallet / Virtual Account / Alfa Group title bars.
+   Logo preview and payment-option bodies retain their existing surfaces.
+*/
+.checkout-page .payment-category-ewallet > .payment-category-header,
+.checkout-page .payment-category-dynamic > .payment-category-header{
+  position:relative!important;
+  isolation:isolate!important;
+  overflow:hidden!important;
+  background-color:#1b2b42!important;
+  background-image:
+    repeating-linear-gradient(135deg,
+      rgba(157,181,211,.075) 0 1px,
+      rgba(7,17,31,.10) 1px 3px,
+      transparent 3px 6px),
+    repeating-linear-gradient(45deg,
+      rgba(0,0,0,.16) 0 1px,
+      transparent 1px 5px),
+    linear-gradient(110deg,#223650 0%,#1a2a40 52%,#202f48 100%)!important;
+  background-size:100% 100%!important;
+}
