@@ -5152,16 +5152,25 @@ body.order-page .order-container {
 }
 
 
-/* ===== HOMEPAGE GAME GRID — PURPLE STARDUST + ENERGY FLOW =====
-   Match the shop card treatment; keep imagery and card geometry unchanged.
+/* ===== HOMEPAGE GAME CARDS — UNIFIED NAVY / VIOLET FINISH =====
+   Keep image, card dimensions and grid unchanged. Blend the info panel into
+   the card surface; use restrained particles away from the text baseline.
 */
+body.home-page .all-games-section .home-game-card{
+  background:#101d31!important;
+  border:1px solid rgba(139,157,195,.19)!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.035),
+    0 8px 22px rgba(2,7,18,.16)!important;
+}
 body.home-page .all-games-section .home-game-info{
   position:relative!important;
   isolation:isolate!important;
   overflow:hidden!important;
   background:
-    radial-gradient(ellipse at 12% 100%,rgba(110,72,210,.22),transparent 58%),
-    linear-gradient(118deg,#211943 0%,#1b1d3e 48%,#111d32 100%)!important;
+    radial-gradient(ellipse 90% 120% at 8% 115%,rgba(111,75,205,.20),transparent 72%),
+    radial-gradient(ellipse 75% 100% at 100% 100%,rgba(73,66,157,.14),transparent 72%),
+    linear-gradient(118deg,#17243b 0%,#17233a 52%,#142139 100%)!important;
 }
 body.home-page .all-games-section .home-game-info::before,
 body.home-page .all-games-section .home-game-info::after{
@@ -5172,24 +5181,22 @@ body.home-page .all-games-section .home-game-info::after{
   pointer-events:none!important;
 }
 body.home-page .all-games-section .home-game-info::before{
-  opacity:.68!important;
+  opacity:.34!important;
   background-image:
-    radial-gradient(circle,rgba(210,193,255,.88) 0 1px,transparent 1.8px),
-    radial-gradient(circle,rgba(157,121,255,.82) 0 1.2px,transparent 2px),
-    radial-gradient(circle,rgba(187,164,255,.62) 0 .8px,transparent 1.7px);
-  background-size:43px 37px,67px 59px,91px 73px;
-  background-position:4px 7px,22px 18px,47px 3px;
-  animation:homeGameStardustDrift 22s linear infinite!important;
+    radial-gradient(circle,rgba(207,190,255,.72) 0 .9px,transparent 1.7px),
+    radial-gradient(circle,rgba(157,133,255,.62) 0 1px,transparent 1.9px);
+  background-size:61px 49px,89px 71px;
+  background-position:7px 5px,34px 22px;
+  animation:homeGameStardustDrift 28s linear infinite!important;
 }
 body.home-page .all-games-section .home-game-info::after{
-  opacity:.55!important;
+  opacity:.42!important;
   background:
-    radial-gradient(ellipse 72% 115% at 5% 115%,rgba(132,83,255,.27),transparent 70%),
-    radial-gradient(ellipse 62% 100% at 92% -20%,rgba(106,83,224,.20),transparent 72%),
-    linear-gradient(112deg,transparent 25%,rgba(180,151,255,.055) 48%,transparent 69%);
-  background-size:140% 180%,150% 170%,220% 100%;
-  background-position:0% 100%,100% 0%,0% 50%;
-  animation:homeGameEnergyFlow 13s ease-in-out infinite alternate!important;
+    radial-gradient(ellipse 70% 90% at 0% 100%,rgba(130,91,239,.18),transparent 72%),
+    linear-gradient(108deg,transparent 34%,rgba(184,163,255,.035) 52%,transparent 70%);
+  background-size:150% 170%,220% 100%;
+  background-position:0% 100%,0% 50%;
+  animation:homeGameEnergyFlow 18s ease-in-out infinite alternate!important;
 }
 body.home-page .all-games-section .home-game-info strong,
 body.home-page .all-games-section .home-game-info span{
@@ -5197,12 +5204,12 @@ body.home-page .all-games-section .home-game-info span{
   z-index:1!important;
 }
 @keyframes homeGameStardustDrift{
-  from{background-position:4px 7px,22px 18px,47px 3px;}
-  to{background-position:47px -30px,-45px -41px,138px -70px;}
+  from{background-position:7px 5px,34px 22px;}
+  to{background-position:68px -35px,-55px -49px;}
 }
 @keyframes homeGameEnergyFlow{
-  0%{background-position:0% 100%,100% 0%,0% 50%;opacity:.38;}
-  100%{background-position:100% 0%,0% 100%,100% 50%;opacity:.68;}
+  0%{background-position:0% 100%,0% 50%;opacity:.30;}
+  100%{background-position:100% 0%,100% 50%;opacity:.52;}
 }
 @media(prefers-reduced-motion:reduce){
   body.home-page .all-games-section .home-game-info::before,
