@@ -3708,3 +3708,41 @@ body.checkout-notice-open{overflow:hidden}
     transition:none!important;
   }
 }
+
+
+/* ===== SHOP CATALOG — SOFT ROUNDED GAME CARDS =====
+   Keep the existing 3-column grid, square artwork, and text layout.
+   Only soften the card and image corners on shop.html.
+*/
+.shop-page .product-card{
+  overflow:hidden!important;
+  border-radius:16px!important;
+  background:linear-gradient(180deg,#14243a 0%,#101d30 100%)!important;
+  border:1px solid rgba(116,137,169,.22)!important;
+  box-shadow:0 5px 16px rgba(0,0,0,.12)!important;
+  transition:border-color .22s ease,box-shadow .22s ease,transform .22s ease!important;
+}
+.shop-page .product-image-wrap{
+  overflow:hidden!important;
+  aspect-ratio:1/1!important;
+  border-radius:15px 15px 0 0!important;
+}
+.shop-page .product-image-wrap .product-game-image{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+}
+.shop-page .product-card:hover{
+  border-color:rgba(139,103,255,.48)!important;
+  box-shadow:0 9px 22px rgba(56,35,115,.20)!important;
+  transform:translateY(-2px)!important;
+}
+.shop-page .product-card:focus-visible{
+  outline:2px solid #936bff!important;
+  outline-offset:3px!important;
+}
+@media(prefers-reduced-motion:reduce){
+  .shop-page .product-card{transition:none!important;}
+  .shop-page .product-card:hover{transform:none!important;}
+}
