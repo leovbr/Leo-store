@@ -3356,3 +3356,33 @@ body.checkout-notice-open{overflow:hidden}
       linear-gradient(180deg,#10243c 0%,#0b1e35 54%,#07162a 100%)!important;
   }
 }
+
+
+/* ===== ELECTRIC AURORA — PREMIUM CLARITY PASS =====
+   Increase visible depth and luminous flow while keeping copy readable.
+   Only the lower hero panel is affected; banner artwork remains untouched.
+*/
+.checkout-page .game-hero::before{
+  filter:brightness(1.02) saturate(1.08)!important;
+  background-image:
+    linear-gradient(90deg,rgba(3,10,23,.34) 0%,rgba(5,16,34,.04) 48%,rgba(3,10,23,.34) 100%),
+    radial-gradient(ellipse 78% 88% at 54% 105%,rgba(0,174,255,.42) 0%,rgba(0,126,218,.22) 38%,transparent 74%),
+    radial-gradient(ellipse 58% 100% at 12% 18%,rgba(0,204,255,.30) 0%,rgba(0,143,220,.13) 44%,transparent 76%),
+    radial-gradient(ellipse 60% 95% at 94% 24%,rgba(58,112,255,.30) 0%,rgba(43,83,190,.12) 48%,transparent 78%),
+    radial-gradient(ellipse 100% 48% at 50% 58%,transparent 28%,rgba(0,190,255,.20) 49%,rgba(44,104,220,.10) 58%,transparent 77%),
+    linear-gradient(155deg,transparent 16%,rgba(0,190,255,.15) 38%,rgba(55,111,225,.10) 48%,transparent 68%),
+    linear-gradient(180deg,#142b46 0%,#0d2340 48%,#091a32 100%)!important;
+}
+@media(max-width:640px){
+  .checkout-page .game-hero::before{
+    filter:brightness(1.02) saturate(1.08)!important;
+    background-image:
+      linear-gradient(90deg,rgba(3,10,23,.38) 0%,rgba(5,16,34,.06) 50%,rgba(3,10,23,.38) 100%),
+      radial-gradient(ellipse 90% 88% at 52% 106%,rgba(0,174,255,.40) 0%,rgba(0,126,218,.20) 40%,transparent 76%),
+      radial-gradient(ellipse 72% 98% at 10% 14%,rgba(0,204,255,.27) 0%,rgba(0,143,220,.12) 46%,transparent 78%),
+      radial-gradient(ellipse 68% 96% at 96% 22%,rgba(58,112,255,.27) 0%,rgba(43,83,190,.11) 50%,transparent 80%),
+      radial-gradient(ellipse 100% 48% at 50% 60%,transparent 28%,rgba(0,190,255,.18) 50%,rgba(44,104,220,.09) 59%,transparent 78%),
+      linear-gradient(155deg,transparent 16%,rgba(0,190,255,.13) 38%,rgba(55,111,225,.09) 48%,transparent 68%),
+      linear-gradient(180deg,#142b46 0%,#0d2340 48%,#091a32 100%)!important;
+  }
+}
