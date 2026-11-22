@@ -6257,3 +6257,45 @@ body.home-page #homeTrendingSection .home-game-card > .home-game-info {
   position: relative !important;
   z-index: 1 !important;
 }
+
+
+/* =========================================================
+   TRENDING — MATCH ALL GAMES PURPLE BRIGHTNESS
+   Match the brighter violet/lavender finish from the
+   All Games cards in the supplied mobile reference.
+   Keep title and publisher on one continuous surface.
+   ========================================================= */
+body.home-page #homeTrendingSection .home-game-card {
+  background-color: #62449f !important;
+  background-image: linear-gradient(118deg,
+    #8058d0 0%,
+    #6848b0 52%,
+    #4e3b83 100%) !important;
+  border-color: rgba(204, 184, 255, 0.32) !important;
+}
+
+body.home-page #homeTrendingSection .home-game-info {
+  background-color: #6848ad !important;
+  background-image:
+    radial-gradient(circle, rgba(235, 226, 255, .72) 0 1px, transparent 1.9px),
+    radial-gradient(circle, rgba(210, 194, 255, .50) 0 .8px, transparent 1.7px),
+    linear-gradient(118deg, #8058d0 0%, #6848ad 54%, #4e3b83 100%) !important;
+  background-size: 43px 31px, 67px 47px, 100% 100% !important;
+  background-position: 8px 4px, 29px 17px, 0 0 !important;
+}
+
+body.home-page #homeTrendingSection .home-game-info strong,
+body.home-page #homeTrendingSection .home-game-info span {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body.home-page #homeTrendingSection .home-game-info strong {
+  border-bottom: 0 !important;
+}
+
+body.home-page #homeTrendingSection .home-game-info span {
+  color: #F1EDFF !important;
+}
