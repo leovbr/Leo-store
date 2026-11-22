@@ -6381,8 +6381,8 @@ body.home-page #homeTrendingSection .home-game-card::before {
 body.home-page #homeTrendingSection .home-game-card{
   isolation:isolate!important;
   position:relative!important;
-  background-color:#6848b0!important;
-  background-image:linear-gradient(118deg,#8058d0 0%,#6848b0 52%,#4e3b83 100%)!important;
+  background-color:#263343!important;
+  background-image:linear-gradient(118deg,#46566a 0%,#303f52 42%,#202e41 100%)!important;
 }
 body.home-page #homeTrendingSection .home-game-card::before{
   content:""!important;
@@ -6393,10 +6393,12 @@ body.home-page #homeTrendingSection .home-game-card::before{
   pointer-events:none!important;
   border-radius:inherit!important;
   background-image:
-    repeating-linear-gradient(108deg,rgba(232,224,246,.15) 0 1px,transparent 1px 6px),
-    repeating-linear-gradient(18deg,rgba(25,14,48,.17) 0 1px,transparent 1px 9px),
-    radial-gradient(ellipse at 22% 18%,rgba(232,220,255,.13),transparent 52%)!important;
-  opacity:.82!important;
+    repeating-linear-gradient(108deg,rgba(225,233,243,.13) 0 1px,transparent 1px 6px),
+    repeating-linear-gradient(18deg,rgba(5,12,22,.24) 0 1px,transparent 1px 9px),
+    linear-gradient(132deg,transparent 0 34%,rgba(210,220,233,.12) 35%,rgba(210,220,233,.025) 47%,transparent 57%),
+    radial-gradient(ellipse at 18% 12%,rgba(220,230,243,.17),transparent 48%),
+    radial-gradient(ellipse at 92% 90%,rgba(128,88,208,.14),transparent 42%)!important;
+  opacity:.9!important;
 }
 body.home-page #homeTrendingSection .home-game-card > .home-game-image,
 body.home-page #homeTrendingSection .home-game-card > .home-game-info{
