@@ -3167,3 +3167,27 @@ body.checkout-notice-open{overflow:hidden}
   .checkout-page .denomination-product-icon{flex-basis:29px!important;width:29px!important;height:29px!important;min-width:29px!important;max-width:29px!important}
   .checkout-page .denomination-delivery{flex-basis:32px!important;min-height:32px!important;height:32px!important}
 }
+
+
+/* ===== UNIFIED GEOMETRIC HERO LOWER PANEL =====
+   One continuous geometric surface from the game-info area through all three benefits.
+   The benefits row stays transparent so the pattern is never interrupted.
+*/
+.checkout-page .game-hero::before{
+  background-color:#142338!important;
+  background-image:
+    linear-gradient(135deg,transparent 0 28%,rgba(145,169,207,.075) 28.2% 28.7%,transparent 29%),
+    linear-gradient(42deg,transparent 0 57%,rgba(145,169,207,.065) 57.2% 57.7%,transparent 58%),
+    linear-gradient(145deg,rgba(105,132,177,.10) 0 18%,transparent 18.3% 100%),
+    linear-gradient(35deg,transparent 0 73%,rgba(92,119,162,.11) 73.2% 88%,transparent 88.3%),
+    linear-gradient(160deg,transparent 0 44%,rgba(120,145,185,.055) 44.2% 64%,transparent 64.2%),
+    linear-gradient(145deg,#142338 0%,#101d30 100%)!important;
+  background-size:100% 100%!important;
+}
+.checkout-page .game-hero-benefits{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  box-shadow:none!important;
+}
