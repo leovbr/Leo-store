@@ -3491,3 +3491,10 @@ body.checkout-notice-open{overflow:hidden}
     animation:none!important;
   }
 }
+
+
+/* Keep the liquid layer strictly below the banner divider on desktop. */
+.checkout-page .hero-liquid-flow{top:250px!important;}
+@media(max-width:640px){
+  .checkout-page .hero-liquid-flow{top:205px!important;}
+}
