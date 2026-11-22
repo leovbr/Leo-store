@@ -5210,3 +5210,59 @@ body.home-page .all-games-section .home-game-info span{
     animation:none!important;
   }
 }
+
+
+/* ===== ALL GAMES — FIT VIEWPORT CLEANLY ===== */
+body.home-page .all-games-section,
+body.home-page .all-games-section .container{
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  box-sizing:border-box!important;
+}
+body.home-page .all-games-section .home-game-grid{
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:14px!important;
+}
+body.home-page .all-games-section .section-heading h2{
+  font-size:clamp(25px,4vw,34px)!important;
+}
+body.home-page .all-games-section .home-game-card,
+body.home-page .all-games-section .home-game-image,
+body.home-page .all-games-section .home-game-info{
+  min-width:0!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+}
+@media(max-width:760px){
+  body.home-page .all-games-section .container{
+    width:calc(100% - 32px)!important;
+  }
+  body.home-page .all-games-section .home-game-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:12px!important;
+  }
+  body.home-page .all-games-section .home-game-info{
+    padding:10px 9px 12px!important;
+  }
+  body.home-page .all-games-section .home-game-info strong{
+    font-size:clamp(12px,2.8vw,15px)!important;
+  }
+  body.home-page .all-games-section .home-game-info span{
+    font-size:clamp(10px,2.3vw,12px)!important;
+  }
+}
+@media(max-width:360px){
+  body.home-page .all-games-section .home-game-grid{
+    gap:9px!important;
+  }
+  body.home-page .all-games-section .home-game-info{
+    padding:9px 7px 10px!important;
+  }
+  body.home-page .all-games-section .home-game-info strong{
+    font-size:12px!important;
+  }
+}
