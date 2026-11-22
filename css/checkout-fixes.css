@@ -3128,3 +3128,42 @@ body.checkout-notice-open{overflow:hidden}
  .checkout-page .denomination-product-icon{flex-basis:34px!important;width:34px!important;height:34px!important;min-width:34px!important;max-width:34px!important}
  .checkout-page .denomination-delivery{flex-basis:35px!important;min-height:35px!important;height:35px!important}
 }
+
+
+/* ===== DENOMINATION CARD: REDUCED UPPER PANEL HEIGHT ===== */
+.checkout-page .denomination-option{min-height:110px!important}
+.checkout-page .denomination-main{
+  min-height:74px!important;
+  padding:6px 9px 5px!important;
+  gap:4px!important;
+}
+.checkout-page .denomination-title{
+  min-height:28px!important;
+  max-height:28px!important;
+  font-size:12.5px!important;
+  line-height:14px!important;
+}
+.checkout-page .denomination-price-row{min-height:32px!important;gap:6px!important}
+.checkout-page .denomination-product-icon{
+  flex-basis:32px!important;width:32px!important;height:32px!important;
+  min-width:32px!important;max-width:32px!important;
+}
+.checkout-page .denomination-delivery{
+  flex-basis:34px!important;min-height:34px!important;height:34px!important;
+  padding:4px 8px!important;
+}
+@media(max-width:600px){
+  .checkout-page .denomination-option{min-height:108px!important}
+  .checkout-page .denomination-main{min-height:72px!important;padding:5px 8px 4px!important;gap:4px!important}
+  .checkout-page .denomination-title{min-height:28px!important;max-height:28px!important;font-size:12px!important;line-height:14px!important}
+  .checkout-page .denomination-price-row{min-height:31px!important;gap:6px!important}
+  .checkout-page .denomination-product-icon{flex-basis:31px!important;width:31px!important;height:31px!important;min-width:31px!important;max-width:31px!important}
+  .checkout-page .denomination-delivery{flex-basis:33px!important;min-height:33px!important;height:33px!important}
+}
+@media(max-width:380px){
+  .checkout-page .denomination-option{min-height:104px!important}
+  .checkout-page .denomination-main{min-height:69px!important;padding:4px 7px 3px!important}
+  .checkout-page .denomination-price-row{min-height:30px!important}
+  .checkout-page .denomination-product-icon{flex-basis:29px!important;width:29px!important;height:29px!important;min-width:29px!important;max-width:29px!important}
+  .checkout-page .denomination-delivery{flex-basis:32px!important;min-height:32px!important;height:32px!important}
+}
