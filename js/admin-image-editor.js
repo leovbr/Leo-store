@@ -1,6 +1,6 @@
 (function(){
 "use strict";
-const selector='#pIconFile, input[data-product-icon-file]';
+const selector='#pIconFile, input[data-product-icon-file], #gIconFile, #gBannerFile';
 let activeInput=null,cropper=null,cropperReady=null,sourceUrl=null;
 const $=id=>document.getElementById(id);
 function loadCropper(){
@@ -27,7 +27,7 @@ function ensureModal(){
  #leoImageEditor .leo-tools button{background:#263247;color:#edf2fb;border:1px solid #3a4962;font-size:12px}
  #leoImageEditor .leo-tools button.active{background:#6242bd;border-color:#9672ff}
  #leoImageEditor .leo-zoom{display:flex;align-items:center;gap:9px;margin-top:12px;color:#aebbd0;font-size:12px}
- #leoImageEditor .leo-zoom input{flex:1;min-width:0;accent-color:#8b5cf6}
+ #leoImageEditor .leo-zoom button{background:#263247;color:#fff;border:1px solid #3a4962;min-width:38px;font-size:17px;padding:6px 10px}#leoImageEditor .leo-zoom strong{min-width:58px;text-align:center}
  #leoImageEditor .leo-card{max-width:390px;margin:0 auto;background:#17263a;border:1px solid #29384c;border-radius:16px;padding:11px;min-height:126px;display:flex;flex-direction:column;color:#f5f7fc}
  #leoImageEditor .leo-card-title{font-size:14px;font-weight:800;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
  #leoImageEditor .leo-card-price-row{display:flex;align-items:center;gap:10px;margin-top:9px}
@@ -48,28 +48,31 @@ function ensureModal(){
   <div class="leo-body">
    <section class="leo-section"><span class="leo-label">1. Editor gambar</span><div class="leo-stage"><img id="leoCropImage" alt="Gambar yang diedit"></div>
     <div class="leo-tools" id="leoRatioTools"><button type="button" data-ratio="free" class="active">Bebas</button><button type="button" data-ratio="1">1:1</button><button type="button" data-ratio="1.333333">4:3</button><button type="button" data-ratio="1.777778">16:9</button><button type="button" data-ratio="0.75">3:4</button><button type="button" data-ratio="0.5625">9:16</button></div>
-    <div class="leo-zoom"><span>Zoom</span><input id="leoCropZoom" type="range" min="0" max="100" value="0"><b id="leoZoomValue">0%</b></div>
+    <div class="leo-zoom"><span>Zoom</span><button type="button" id="leoZoomOut" aria-label="Perkecil">−</button><strong id="leoZoomValue">100%</strong><button type="button" id="leoZoomIn" aria-label="Perbesar">＋</button></div>
     <div class="leo-tools"><button type="button" id="leoRotateLeft">↶ Putar</button><button type="button" id="leoRotateRight">Putar ↷</button><button type="button" id="leoCropReset">Reset</button></div>
     <p class="leo-note">Kotak-kotak menandakan area transparan. Geser gambar dan batas crop sesuai kebutuhan. Rasio bebas tidak menambahkan background.</p>
    </section>
-   <section class="leo-section"><span class="leo-label">2. Preview card nominal checkout</span><div class="leo-card"><div class="leo-card-title" id="leoPreviewTitle">100 (50+50) Diamonds - First Top Up</div><div class="leo-card-price-row"><img id="leoPreviewIcon" class="leo-card-icon" alt=""><div class="leo-card-price" id="leoPreviewPrice">Rp 14.599</div></div><div class="leo-card-divider"></div><div class="leo-card-delivery"><span>⚡ Proses Cepat</span></div></div><p class="leo-note">Preview memakai area ikon card checkout: 42 px di mobile dan 48 px pada layar lebih lebar. Transparansi dipertahankan.</p></section>
+   <section class="leo-section" id="leoPreviewSection"><span class="leo-label" id="leoPreviewLabel">2. Preview card nominal checkout</span><div class="leo-card" id="leoProductPreview"><div class="leo-card-title" id="leoPreviewTitle">100 (50+50) Diamonds - First Top Up</div><div class="leo-card-price-row"><img id="leoPreviewIcon" class="leo-card-icon" alt=""><div class="leo-card-price" id="leoPreviewPrice">Rp 14.599</div></div><div class="leo-card-divider"></div><div class="leo-card-delivery"><span>⚡ Proses Cepat</span></div></div><div id="leoGamePreview" style="display:none;max-width:250px;margin:auto"><div style="aspect-ratio:1;background:#17263a;border:1px solid #344158;border-radius:16px;overflow:hidden;display:grid;place-items:center"><img id="leoGamePreviewIcon" alt="Preview cover game" style="width:100%;height:100%;object-fit:contain"></div><p id="leoGamePreviewCaption" class="leo-note" style="text-align:center">Preview cover game 1:1</p></div><div id="leoBannerPreview" style="display:none;max-width:390px;margin:auto"><div style="aspect-ratio:16/9;background:#17263a;border:1px solid #344158;border-radius:12px;overflow:hidden"><img id="leoBannerPreviewImage" alt="Preview banner checkout" style="width:100%;height:100%;object-fit:contain"></div><p class="leo-note" style="text-align:center">Preview banner checkout 16:9</p></div><p class="leo-note" id="leoPreviewNote">Preview memakai area ikon card checkout: 42 px di mobile dan 48 px pada layar lebih lebar. Transparansi dipertahankan.</p></section>
   </div>
   <div class="leo-foot"><button type="button" class="leo-cancel" id="leoEditorCancel">Batal</button><button type="button" class="leo-apply" id="leoEditorApply">Gunakan hasil edit</button></div>
  </div>`;document.body.appendChild(m);
  $('leoEditorClose').onclick=closeEditor;$('leoEditorCancel').onclick=closeEditor;m.addEventListener('click',e=>{if(e.target===m)closeEditor();});
  $('leoRotateLeft').onclick=()=>cropper&&cropper.rotate(-90);$('leoRotateRight').onclick=()=>cropper&&cropper.rotate(90);
- $('leoCropReset').onclick=()=>{if(cropper){cropper.reset();$('leoCropZoom').value=0;$('leoZoomValue').textContent='0%';setRatio('free');}};
+ $('leoCropReset').onclick=()=>{if(cropper){cropper.reset();$('leoZoomValue').textContent='100%';setRatio(defaultRatio());}};
+ $('leoZoomIn').onclick=()=>zoomBy(.12);$('leoZoomOut').onclick=()=>zoomBy(-.12);
  $('leoRatioTools').addEventListener('click',e=>{const b=e.target.closest('button[data-ratio]');if(b&&cropper)setRatio(b.dataset.ratio);});
  $('leoCropZoom').oninput=()=>{if(cropper){const n=Number($('leoCropZoom').value);cropper.zoomTo(1+n/100);$('leoZoomValue').textContent=n+'%';}};
  $('leoEditorApply').onclick=applyCrop;
 }
+function defaultRatio(){if(activeInput?.id==='gIconFile')return '1';if(activeInput?.id==='gBannerFile')return '1.777778';return 'free';}
 function setRatio(v){cropper.setAspectRatio(v==='free'?NaN:Number(v));document.querySelectorAll('#leoRatioTools button').forEach(b=>b.classList.toggle('active',b.dataset.ratio===String(v)));}
+function zoomBy(delta){if(!cropper)return;cropper.zoom(delta);try{const d=cropper.getImageData();$('leoZoomValue').textContent=Math.round(d.ratio*100)+'%';}catch(_){}}
 function getInfo(input){const row=input.closest('tr');if(row)return{title:row.querySelector('[data-field="amount"]')?.value||'Produk game',price:Number(row.querySelector('[data-field="price"]')?.value)||14599};return{title:$('pAmount')?.value||'100 (50+50) Diamonds - First Top Up',price:Number($('pPrice')?.value)||14599};}
-function updatePreview(){if(!cropper)return;const info=getInfo(activeInput);$('leoPreviewTitle').textContent=info.title;$('leoPreviewPrice').textContent='Rp '+new Intl.NumberFormat('id-ID').format(info.price||14599);try{$('leoPreviewIcon').src=cropper.getCroppedCanvas({maxWidth:1000,maxHeight:1000,fillColor:null}).toDataURL('image/png');}catch(_){}}
+function updatePreview(){if(!cropper)return;try{const canvas=cropper.getCroppedCanvas({maxWidth:1000,maxHeight:1000,fillColor:null}),url=canvas.toDataURL('image/png');if(activeInput.id==='gIconFile')$('leoGamePreviewIcon').src=url;else if(activeInput.id==='gBannerFile')$('leoBannerPreviewImage').src=url;else{const info=getInfo(activeInput);$('leoPreviewTitle').textContent=info.title;$('leoPreviewPrice').textContent='Rp '+new Intl.NumberFormat('id-ID').format(info.price||14599);$('leoPreviewIcon').src=url;}}catch(_){}}
 function openEditor(input,file){
- activeInput=input;loadCropper().then(()=>{ensureModal();const info=getInfo(input);$('leoPreviewTitle').textContent=info.title;$('leoPreviewPrice').textContent='Rp '+new Intl.NumberFormat('id-ID').format(info.price||14599);
+ activeInput=input;loadCropper().then(()=>{ensureModal();const isGame=input.id==='gIconFile',isBanner=input.id==='gBannerFile';$('leoEditorTitle').textContent=isBanner?'Edit banner checkout':isGame?'Edit cover game':'Edit ikon produk';$('leoPreviewSection').querySelector('.leo-label').textContent=isBanner?'2. Preview banner checkout':isGame?'2. Preview cover game':'2. Preview card nominal checkout';$('leoProductPreview').style.display=isGame||isBanner?'none':'';$('leoGamePreview').style.display=isGame?'block':'none';$('leoBannerPreview').style.display=isBanner?'block':'none';$('leoPreviewNote').style.display=isGame||isBanner?'none':'';const info=getInfo(input);$('leoPreviewTitle').textContent=info.title;$('leoPreviewPrice').textContent='Rp '+new Intl.NumberFormat('id-ID').format(info.price||14599);
  const img=$('leoCropImage');if(cropper){cropper.destroy();cropper=null;}if(sourceUrl)URL.revokeObjectURL(sourceUrl);sourceUrl=URL.createObjectURL(file);
- img.onload=()=>{cropper=new Cropper(img,{viewMode:1,dragMode:'crop',autoCropArea:.82,aspectRatio:NaN,background:false,responsive:true,restore:false,checkOrientation:true,modal:true,guides:true,center:true,highlight:true,cropBoxMovable:true,cropBoxResizable:true,toggleDragModeOnDblclick:false,zoomable:true,zoomOnWheel:true,zoomOnTouch:true,movable:true,rotatable:true,crop(){updatePreview();}});$('leoCropZoom').value=0;$('leoZoomValue').textContent='0%';$('leoRatioTools').querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.ratio==='free'));$('leoImageEditor').classList.add('open');document.body.style.overflow='hidden';updatePreview();};img.src=sourceUrl;
+ img.onload=()=>{cropper=new Cropper(img,{viewMode:1,dragMode:'crop',autoCropArea:.82,aspectRatio:defaultRatio()==='free'?NaN:Number(defaultRatio()),background:false,responsive:true,restore:false,checkOrientation:true,modal:true,guides:true,center:true,highlight:true,cropBoxMovable:true,cropBoxResizable:true,toggleDragModeOnDblclick:false,zoomable:true,zoomOnWheel:true,zoomOnTouch:true,movable:true,rotatable:true,crop(){updatePreview();}});$('leoZoomValue').textContent='100%';$('leoRatioTools').querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.ratio===defaultRatio()));$('leoImageEditor').classList.add('open');document.body.style.overflow='hidden';updatePreview();};img.src=sourceUrl;
  }).catch(err=>{alert(err.message||String(err));input.value='';});
 }
 function closeEditor(){const m=$('leoImageEditor');if(!m)return;m.classList.remove('open');document.body.style.overflow='';if(cropper){cropper.destroy();cropper=null;}if(sourceUrl){URL.revokeObjectURL(sourceUrl);sourceUrl=null;}activeInput=null;}
@@ -80,5 +83,5 @@ function applyCrop(){
  activeInput.dispatchEvent(new Event('change',{bubbles:true}));closeEditor();const status=$('authStatus');if(status)status.textContent='Hasil edit siap di-upload. Tekan tombol Upload ikon produk untuk menyimpan ke Supabase.';
  },'image/png');
 }
-document.addEventListener('change',e=>{const input=e.target;if(!input.matches?.(selector))return;if(input.dataset.leoCropReady==='1'){delete input.dataset.leoCropReady;return;}const file=input.files?.[0];if(!file)return;if(!/^image\/(jpeg|png|webp)$/.test(file.type)){alert('Pilih gambar JPG, PNG, atau WebP.');input.value='';return;}if(file.size>5*1024*1024){alert('Ukuran file maksimal 5 MB.');input.value='';return;}e.stopImmediatePropagation();openEditor(input,file);},true);
+document.addEventListener('change',e=>{const input=e.target;if(!input.matches?.(selector))return;if(input.dataset.leoCropReady==='1'){delete input.dataset.leoCropReady;return;}const file=input.files?.[0];if(!file)return;if(!/^image\/(jpeg|png|webp)$/.test(file.type)){alert('Pilih gambar JPG, PNG, atau WebP.');input.value='';return;}const max=input.id==='pIconFile'||input.matches('[data-product-icon-file]')?5:50;if(file.size>max*1024*1024){alert('Ukuran file maksimal '+max+' MB.');input.value='';return;}e.stopImmediatePropagation();openEditor(input,file);},true);
 })();
