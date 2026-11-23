@@ -5294,6 +5294,21 @@ body.home-page .all-games-section .product-publisher{
   overflow:hidden!important;
   text-overflow:ellipsis!important;
 }
+
+/* INDEX ALL GAMES — COMPACT INFO PANEL */
+body.home-page .all-games-section .product-info{
+  padding:7px 8px 7px!important;
+}
+body.home-page .all-games-section .product-info h3{
+  font-size:12px!important;
+  line-height:1.2!important;
+}
+body.home-page .all-games-section .product-publisher{
+  margin:3px 0 0!important;
+  font-size:9px!important;
+  line-height:1.2!important;
+}
+
 @media(prefers-reduced-motion:reduce){
   body.home-page .all-games-section .product-card{transition:none!important}
   body.home-page .all-games-section .product-card:hover{transform:none!important}
