@@ -6466,3 +6466,18 @@ body.home-page #homeAllGames .product-card:nth-child(n+7){animation-delay:.34s;}
     transform:none!important;
   }
 }
+
+
+/* SHOP GAME INFO — SLIGHTLY COMPACT LABEL PANEL */
+.shop-page #productList .product-info{
+  padding:8px 9px 8px!important;
+}
+.shop-page #productList .product-info h3{
+  font-size:12px!important;
+  line-height:1.2!important;
+}
+.shop-page #productList .product-info .product-publisher{
+  margin:3px 0 0!important;
+  font-size:10px!important;
+  line-height:1.2!important;
+}
