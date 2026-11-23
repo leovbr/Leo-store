@@ -1,6 +1,6 @@
 (function(){
 "use strict";
-const selector='#pIconFile, input[data-product-icon-file], #gIconFile, #gBannerFile';
+const selector='#pIconFile, input[data-product-icon-file], #gIconFile, #gBannerFile, #isCategoryIconFile, #isProductIconFile';
 let activeInput=null,cropper=null,cropperReady=null,sourceUrl=null;
 const $=id=>document.getElementById(id);
 function loadCropper(){
@@ -82,5 +82,5 @@ function applyCrop(){
  activeInput.dispatchEvent(new Event('change',{bubbles:true}));closeEditor();const status=$('authStatus');if(status)status.textContent='Hasil edit siap di-upload. Tekan tombol Upload ikon produk untuk menyimpan ke Supabase.';
  },'image/png');
 }
-document.addEventListener('change',e=>{const input=e.target;if(!input.matches?.(selector))return;if(input.dataset.leoCropReady==='1'){delete input.dataset.leoCropReady;return;}const file=input.files?.[0];if(!file)return;if(!/^image\/(jpeg|png|webp)$/.test(file.type)){alert('Pilih gambar JPG, PNG, atau WebP.');input.value='';return;}const max=input.id==='pIconFile'||input.matches('[data-product-icon-file]')?5:50;if(file.size>max*1024*1024){alert('Ukuran file maksimal '+max+' MB.');input.value='';return;}e.stopImmediatePropagation();openEditor(input,file);},true);
+document.addEventListener('change',e=>{const input=e.target;if(!input.matches?.(selector))return;if(input.dataset.leoCropReady==='1'){delete input.dataset.leoCropReady;return;}const file=input.files?.[0];if(!file)return;if(!/^image\/(jpeg|png|webp)$/.test(file.type)){alert('Pilih gambar JPG, PNG, atau WebP.');input.value='';return;}const max=input.id==='pIconFile'||input.matches('[data-product-icon-file]')||input.id==='isCategoryIconFile'||input.id==='isProductIconFile'?5:50;if(file.size>max*1024*1024){alert('Ukuran file maksimal '+max+' MB.');input.value='';return;}e.stopImmediatePropagation();openEditor(input,file);},true);
 })();
