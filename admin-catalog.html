@@ -95,7 +95,7 @@ function refreshStudioIconPickers(){
  const opts='<option value="">Pilih dari perpustakaan gambar…</option>'+images.map(i=>'<option value="'+esc(i.image_url)+'">'+esc(i.image_key)+'</option>').join("");
  ["isCategoryIconPicker","isProductIconPicker"].forEach(id=>{const el=$(id),v=el.value;el.innerHTML=opts;if([...el.options].some(o=>o.value===v))el.value=v;});
 }
-function studioPreviewIcon(kind,url){const img=$(kind==="category"?"isCategoryIconPreview":"isProductIconPreview"),wrap=$(kind==="category"?"isCategoryIconPreviewWrap":"isProductIconPreviewWrap");if(url){img.src=url;wrap.classList.add("has-image");}else{img.removeAttribute("src");wrap.classList.remove("has-image");}}
+function studioPreviewIcon(kind,url){const img=$(kind==="category"?"isCategoryIconPreview":"isProductIconPreview"),wrap=$(kind==="category"?"isCategoryIconPreviewWrap":"isProductIconPreviewWrap");if(url){img.src=url;wrap.classList.add("has-image");}else{img.removeAttribute("src");wrap.classList.remove("has-image");}const p=selectedStudioProduct(),pr=p?imageScaleRow($("isGame").value,$("isCategory").value,p.id):null,cr=imageScaleRow($("isGame").value,$("isCategory").value,null),mainUrl=(pr?.icon_url||$("isProductIconUrl").value.trim()||cr?.icon_url||$("isCategoryIconUrl").value.trim()||p?.icon_url||games.find(g=>g.slug===$("isGame").value)?.currency_icon_url||"");const main=$("isPreviewImage");if(main){if(mainUrl){main.src=mainUrl;main.style.display="block";}else{main.removeAttribute("src");main.style.display="none";}}}
 function renderImageStudio(){
  const gameSelect=$("isGame"),categorySelect=$("isCategory"),productSelect=$("isProduct");
  if(!gameSelect||!categorySelect||!productSelect)return;
@@ -156,7 +156,7 @@ async function uploadStudioIcon(kind){
  if(!url)return;
  const field=$(isCategory?"isCategoryIconUrl":"isProductIconUrl"),picker=$(isCategory?"isCategoryIconPicker":"isProductIconPicker");
  field.value=url;picker.value=url;studioPreviewIcon(kind,url);
- await saveImageScale(isCategory?null:product.id,isCategory?Number($("isCategoryScale").value):Number($("isProductScale").value),url);
+ const existing=imageScaleRow(slug,$("isCategory").value,isCategory?null:product.id),fallback=imageScaleRow(slug,$("isCategory").value,null);await saveImageScale(isCategory?null:product.id,Number(existing?.scale||fallback?.scale||100),url);
 }
 $("isGame").addEventListener("change",()=>renderStudioCategories("",""));
 $("isCategory").addEventListener("change",()=>renderStudioProducts(""));
@@ -167,10 +167,10 @@ $("isProductIconUrl").addEventListener("input",()=>studioPreviewIcon("product",$
 $("isProductIconPicker").addEventListener("change",()=>{$("isProductIconUrl").value=$("isProductIconPicker").value;studioPreviewIcon("product",$("isProductIconPicker").value);});
 $("uploadCategoryIcon").onclick=()=>uploadStudioIcon("category");
 $("uploadProductStudioIcon").onclick=()=>uploadStudioIcon("product");
-$("saveCategoryIcon").onclick=()=>saveImageScale(null,Number($("isCategoryScale").value),$("isCategoryIconUrl").value.trim()||null);
-$("saveProductStudioIcon").onclick=()=>{const p=selectedStudioProduct();if(p)saveImageScale(p.id,Number($("isProductScale").value),$("isProductIconUrl").value.trim()||null);};
-$("clearCategoryIcon").onclick=()=>{$("isCategoryIconUrl").value="";$("isCategoryIconPicker").value="";studioPreviewIcon("category","");saveImageScale(null,Number($("isCategoryScale").value),null);};
-$("clearProductStudioIcon").onclick=()=>{const p=selectedStudioProduct();if(p){$("isProductIconUrl").value="";$("isProductIconPicker").value="";studioPreviewIcon("product","");saveImageScale(p.id,Number($("isProductScale").value),null);}};
+$("saveCategoryIcon").onclick=()=>{const row=imageScaleRow($("isGame").value,$("isCategory").value,null);saveImageScale(null,Number(row?.scale||100),$("isCategoryIconUrl").value.trim()||null);};
+$("saveProductStudioIcon").onclick=()=>{const p=selectedStudioProduct();if(p){const row=imageScaleRow($("isGame").value,$("isCategory").value,p.id),cat=imageScaleRow($("isGame").value,$("isCategory").value,null);saveImageScale(p.id,Number(row?.scale||cat?.scale||100),$("isProductIconUrl").value.trim()||null);}};
+$("clearCategoryIcon").onclick=()=>{$("isCategoryIconUrl").value="";$("isCategoryIconPicker").value="";studioPreviewIcon("category","");const row=imageScaleRow($("isGame").value,$("isCategory").value,null);saveImageScale(null,Number(row?.scale||100),null);};
+$("clearProductStudioIcon").onclick=()=>{const p=selectedStudioProduct();if(p){$("isProductIconUrl").value="";$("isProductIconPicker").value="";studioPreviewIcon("product","");const row=imageScaleRow($("isGame").value,$("isCategory").value,p.id);if(row)saveImageScale(p.id,Number(row.scale||100),null);else updateStudioControls();}};
 $("isCategoryScale").addEventListener("input",()=>{$("isCategoryValue").textContent=$("isCategoryScale").value+"%";const p=selectedStudioProduct(),pr=p?imageScaleRow($("isGame").value,$("isCategory").value,p.id):null;if(!pr){$("isProductScale").value=$("isCategoryScale").value;$("isProductValue").textContent="Ikuti kategori ("+$("isCategoryScale").value+"%)";}const scale=pr?.scale||$("isCategoryScale").value;$("isPreviewImage").style.transform="scale("+Number(scale)/100+")";$("isEffectiveScale").textContent="Preview skala kategori: "+$("isCategoryScale").value+"%";});
 $("isProductScale").addEventListener("input",()=>{$("isProductValue").textContent=$("isProductScale").value+"% (preview override)";$("isPreviewImage").style.transform="scale("+Number($("isProductScale").value)/100+")";$("isEffectiveScale").textContent="Preview skala produk: "+$("isProductScale").value+"%";});
 $("saveCategoryScale").onclick=()=>saveImageScale(null,Number($("isCategoryScale").value));
