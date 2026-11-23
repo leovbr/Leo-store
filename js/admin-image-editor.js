@@ -31,7 +31,7 @@ function ensureModal(){
  #leoImageEditor .leo-card{max-width:390px;margin:0 auto;background:#17263a;border:1px solid #29384c;border-radius:16px;padding:11px;min-height:126px;display:flex;flex-direction:column;color:#f5f7fc}
  #leoImageEditor .leo-card-title{font-size:14px;font-weight:800;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
  #leoImageEditor .leo-card-price-row{display:flex;align-items:center;gap:10px;margin-top:9px}
- #leoImageEditor .leo-card-icon{width:42px;height:42px;flex:0 0 42px;object-fit:contain;background:transparent}
+ #leoImageEditor .leo-card-icon{width:42px;height:42px;flex:0 0 42px;object-fit:contain;background:transparent}\n @media(min-width:601px){#leoImageEditor .leo-card-icon{width:48px;height:48px;flex-basis:48px}}
  #leoImageEditor .leo-card-price{font-size:14px;font-weight:800;color:#8b5cf6}
  #leoImageEditor .leo-card-divider{height:1px;background:#334155;margin:9px 0 7px}
  #leoImageEditor .leo-card-delivery{display:flex;justify-content:flex-end;margin-top:auto}
@@ -74,7 +74,7 @@ function openEditor(input,file){
 }
 function closeEditor(){const m=$('leoImageEditor');if(!m)return;m.classList.remove('open');document.body.style.overflow='';if(cropper){cropper.destroy();cropper=null;}if(sourceUrl){URL.revokeObjectURL(sourceUrl);sourceUrl=null;}activeInput=null;}
 function applyCrop(){
- if(!cropper||!activeInput)return;const canvas=cropper.getCroppedCanvas({maxWidth:2048,maxHeight:2048,fillColor:null,imageSmoothingEnabled:true,imageSmoothingQuality:'high'});if(!canvas){alert('Gambar tidak dapat diproses.');return;}
+ if(!cropper||!activeInput)return;const canvas=cropper.getCroppedCanvas({maxWidth:1024,maxHeight:1024,fillColor:null,imageSmoothingEnabled:true,imageSmoothingQuality:'high'});if(!canvas){alert('Gambar tidak dapat diproses.');return;}
  canvas.toBlob(blob=>{if(!blob){alert('Gagal menyiapkan gambar hasil edit.');return;}const old=activeInput.files?.[0],base=(old?.name||'ikon-produk').replace(/\.[^.]+$/,'').replace(/[^a-z0-9_-]/gi,'-')||'ikon-produk';const edited=new File([blob],base+'-edited.png',{type:'image/png',lastModified:Date.now()});const dt=new DataTransfer();dt.items.add(edited);activeInput.files=dt.files;activeInput.dataset.leoCropReady='1';
  if(activeInput.id==='pIconFile'){const preview=$('pIconPreview'),wrap=$('pIconPreviewWrap');if(preview&&wrap){preview.src=URL.createObjectURL(edited);wrap.classList.add('has-image');}}
  activeInput.dispatchEvent(new Event('change',{bubbles:true}));closeEditor();const status=$('authStatus');if(status)status.textContent='Hasil edit siap di-upload. Tekan tombol Upload ikon produk untuk menyimpan ke Supabase.';
