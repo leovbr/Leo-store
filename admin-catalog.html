@@ -116,6 +116,6 @@ document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{document.query
 // Restore the shared admin session before loading catalog data.
 window.LEOAdminAuth.ready.then(session=>{if(session)auth(session.user);else location.replace("admin.html");}).catch(error=>say("Gagal memulihkan sesi admin: "+(error.message||error)));
 })();
-</script>  <script src="js/admin-image-editor.js?v=20261124-game-editor-zoom2" defer></script><script src="js/custom-selects.js?v=20261023-storetheme3" defer></script>
+</script>  <script src="js/admin-image-editor.js?v=20261124-game-editor-fix3" defer></script><script src="js/custom-selects.js?v=20261023-storetheme3" defer></script>
 <!-- Auth handled by this page's Supabase client; avoid duplicate client/session lock. -->
 </body></html>
