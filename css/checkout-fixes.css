@@ -4268,3 +4268,9 @@ body.payment-page #searchPanel{
   body.payment-page > main{padding-top:76px!important}
   body.payment-page #searchPanel{top:76px!important}
 }
+
+
+/* CHECKOUT DENOMINATION ICON SIZE OVERRIDE — responsive */
+.checkout-page .denomination-product-icon{width:60px!important;height:60px!important;min-width:60px!important;max-width:60px!important;flex:0 0 60px!important;object-fit:contain!important}
+@media(max-width:600px){.checkout-page .denomination-product-icon{width:52px!important;height:52px!important;min-width:52px!important;max-width:52px!important;flex-basis:52px!important}}
+@media(max-width:380px){.checkout-page .denomination-product-icon{width:48px!important;height:48px!important;min-width:48px!important;max-width:48px!important;flex-basis:48px!important}}
