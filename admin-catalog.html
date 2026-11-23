@@ -24,23 +24,41 @@
 <section id="tab-homepage" class="panel hidden"><h2>Pengaturan beranda</h2><p class="muted">Atur game Trending secara terpisah dari All Games. Nonaktifkan dari Trending tidak menghapus game atau produk. Simpan untuk menerapkan ke Home.</p><div id="homepageSetupNotice" class="status" style="margin-bottom:12px">Memuat pengaturan…</div><div class="grid"><div class="field"><label>Trending</label><select id="homeTrendingEnabled"><option value="true">Tampilkan Trending</option><option value="false">Sembunyikan Trending</option></select></div><div class="field"><label>Judul Trending</label><input id="homeTrendingTitle" value="Trending"></div><div class="field"><label>Jumlah game Trending</label><select id="homeTrendingLimit"><option value="4">4 game</option><option value="6">6 game</option><option value="8">8 game</option><option value="12">12 game</option><option value="24">24 game</option></select></div><div class="field"><label>All Games</label><select id="homeAllEnabled"><option value="true">Tampilkan All Games</option><option value="false">Sembunyikan All Games</option></select></div><div class="field"><label>Judul All Games</label><input id="homeAllTitle" value="All Games"></div><div class="field"><label>Jumlah game awal All Games</label><select id="homeAllLimit"><option value="9">9 game</option><option value="12">12 game</option><option value="15">15 game</option><option value="18">18 game</option><option value="21">21 game</option></select></div><div class="field"><label>Tombol tampilkan semua</label><select id="homeShowAllButton"><option value="true">Tampilkan tombol</option><option value="false">Sembunyikan tombol</option></select></div></div><div class="actions"><button id="saveTrending">Simpan pengaturan Trending</button><button id="saveAllGames">Simpan pengaturan All Games</button></div><hr style="border-color:#263144;margin:20px 0"><h2>Pilih game All Games</h2><p class="muted">Centang game yang ingin ditampilkan di bagian All Games. Urutan mengikuti nomor urutan pilihan di tabel; game nonaktif tidak dapat dipilih. Jika tidak ada yang dicentang, Home memakai semua game yang tersedia.</p><div id="homepageAllGamesTable" class="tablewrap"></div><hr style="border-color:#263144;margin:20px 0"><h2>Pilih game Trending</h2><p class="muted">Centang game untuk menampilkannya di Trending. Game nonaktif di katalog tidak bisa dipilih.</p><div id="homepageGamesTable" class="tablewrap"></div></section><section id="tab-promos" class="panel hidden"><h2>Kelola banner beranda & event / promo</h2><p class="muted">Untuk banner di index.html: isi URL gambar dan URL tujuan klik. Contoh URL gambar: URL dari tab Gambar. Contoh URL tujuan: checkout.html?game=mobile-legends. Pastikan status aktif dan tanggal promo berlaku.</p><p class="muted">Banner halaman utama memakai promo aktif yang memiliki URL gambar dan URL tujuan. Isi kedua URL untuk mengatur banner.</p><div class="grid"><div class="field"><label>Judul banner <span class="muted">(opsional)</span></label><input id="promoTitle" placeholder="Kosongkan untuk menyembunyikan judul"><small class="muted">Teks besar, contoh: Lihat Promo. Kosong = tidak ditampilkan.</small></div><div class="field"><label>Deskripsi banner <span class="muted">(opsional)</span></label><input id="promoDesc" placeholder="Kosongkan untuk menyembunyikan deskripsi"><small class="muted">Teks kecil di atas judul, contoh: PROMO SPESIAL. Kosong = tidak ditampilkan.</small></div><div class="field"><label>Gambar banner</label><input id="promoImage" type="hidden"><select id="promoImagePicker" aria-label="Pilih banner dari perpustakaan" style="margin-top:6px"><option value="">Pilih gambar yang sudah diunggah…</option></select><input id="promoUploadFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif" style="margin-top:8px"><button id="uploadPromoImage" type="button" class="secondary" style="margin-top:7px">Upload gambar banner</button><img id="promoImagePreview" alt="Preview gambar banner"><small class="muted">Cukup pilih gambar dari perpustakaan atau pilih file foto lalu tekan Upload gambar banner. Tidak perlu menyalin URL gambar.</small></div><div class="field"><label>Tujuan saat banner ditekan</label><select id="promoTargetPreset"><option value="home" selected>Beranda — index.html</option><option value="shop">Katalog game — shop.html</option><option value="game">Checkout/top up — checkout.html (pilih game)</option><option value="order">Pesanan — order.html</option><option value="custom">Halaman lain — URL sendiri</option></select><select id="promoTargetGame" style="margin-top:7px" class="hidden" aria-label="Pilih game tujuan"><option value="">Pilih game…</option></select><input id="promoTarget" placeholder="Masukkan URL tujuan sendiri" style="margin-top:7px;display:none"><small class="muted">Pilih tujuan di atas: index.html (beranda), shop.html (katalog), checkout.html (pilih game untuk top up), atau order.html (halaman pesanan). URL akan terisi otomatis. Untuk halaman lain, pilih URL sendiri.</small></div><div class="field"><label>Jenis diskon</label><select id="promoType"><option value="none">Tanpa diskon</option><option value="fixed">Nominal (Rp)</option><option value="percent">Persentase (%)</option></select></div><div class="field"><label>Nilai diskon</label><input id="promoValue" type="number" min="0" value="0"></div><div class="field"><label>Mulai (opsional)</label><input id="promoStart" type="datetime-local"></div><div class="field"><label>Selesai (opsional)</label><input id="promoEnd" type="datetime-local"></div><div class="field"><label>Urutan banner (angka kecil tampil dulu)</label><input id="promoOrder" type="number" value="0" step="1"></div></div><div class="actions"><button id="importLegacyBanners" type="button" class="secondary">Masukkan 3 banner bawaan Home ke admin</button><button id="addPromo">Tambah promo / banner</button><button id="cancelPromoEdit" class="secondary hidden" type="button">Batal edit</button></div><p class="muted">Banner bawaan saat ini: Mobile Legends, Free Fire, PUBG Mobile. Tekan tombol impor satu kali agar ketiganya menjadi entri yang bisa diedit/diaktifkan/nonaktifkan dari sini. Banner yang sudah ada tidak akan dihapus.</p><div id="promosTable" class="tablewrap"></div></section>
 <section id="tab-image-studio" class="panel hidden">
 <h2>Image Studio</h2>
-<p class="muted">Atur ukuran visual ikon nominal pada card checkout. Filter game dan kategori mengikuti katalog aktif. Skala kategori menjadi default; skala produk menjadi override khusus.</p>
+<p class="muted">Kelola ikon dan ukuran ikon nominal checkout. Ikon kategori menjadi default untuk semua produk; ikon produk dapat menjadi override. Pengaturan skala mengikuti aturan yang sama.</p>
 <div class="grid">
  <div class="field"><label>1. Pilih game</label><select id="isGame"></select></div>
  <div class="field"><label>2. Pilih kategori</label><select id="isCategory"></select></div>
- <div class="field"><label>3. Pilih produk</label><select id="isProduct"></select></div>
+ <div class="field"><label>3. Pilih produk (opsional)</label><select id="isProduct"></select></div>
 </div>
 <div class="grid" style="margin-top:14px">
  <div class="field" style="grid-column:1/-1">
-  <label>Skala default kategori <b id="isCategoryValue">100%</b></label>
+  <h3>Ikon default kategori</h3>
+  <p class="muted">Ikon ini diterapkan ke semua produk kategori yang tidak memiliki ikon override khusus.</p>
+  <input id="isCategoryIconUrl" placeholder="URL ikon kategori (opsional)">
+  <select id="isCategoryIconPicker" style="margin-top:7px"><option value="">Pilih dari perpustakaan gambar…</option></select>
+  <input id="isCategoryIconFile" type="file" accept="image/jpeg,image/png,image/webp" style="margin-top:8px">
+  <div class="image-upload-preview square" id="isCategoryIconPreviewWrap"><img id="isCategoryIconPreview" alt="Preview ikon kategori"><span>Preview ikon kategori 1:1</span></div>
+  <div class="actions"><button id="uploadCategoryIcon" type="button" class="secondary">Upload / gunakan hasil edit</button><button id="saveCategoryIcon" type="button">Terapkan ikon ke kategori</button><button id="clearCategoryIcon" type="button" class="secondary">Hapus ikon kategori</button></div>
+ </div>
+ <div class="field" style="grid-column:1/-1">
+  <h3>Ikon khusus produk</h3>
+  <p class="muted" id="isProductIconHint">Pilih produk untuk mengatur ikon override. Jika kosong, produk mengikuti ikon kategori.</p>
+  <input id="isProductIconUrl" placeholder="URL ikon khusus produk (opsional)" disabled>
+  <select id="isProductIconPicker" style="margin-top:7px" disabled><option value="">Pilih dari perpustakaan gambar…</option></select>
+  <input id="isProductIconFile" type="file" accept="image/jpeg,image/png,image/webp" style="margin-top:8px" disabled>
+  <div class="image-upload-preview square" id="isProductIconPreviewWrap"><img id="isProductIconPreview" alt="Preview ikon produk"><span>Preview ikon produk 1:1</span></div>
+  <div class="actions"><button id="uploadProductStudioIcon" type="button" class="secondary" disabled>Upload / gunakan hasil edit</button><button id="saveProductStudioIcon" type="button" disabled>Terapkan ikon ke produk</button><button id="clearProductStudioIcon" type="button" class="secondary" disabled>Hapus override ikon</button></div>
+ </div>
+ <div class="field" style="grid-column:1/-1">
+  <h3>Skala default kategori <b id="isCategoryValue">100%</b></h3>
   <input id="isCategoryScale" type="range" min="25" max="250" step="1" value="100">
-  <div class="muted">Berlaku untuk semua produk di kategori ini yang tidak memiliki override sendiri.</div>
+  <div class="muted">Berlaku untuk produk kategori ini yang tidak memiliki override skala.</div>
   <div class="actions"><button id="saveCategoryScale" type="button">Simpan skala kategori</button><button id="resetCategoryScale" type="button" class="secondary">Kembalikan 100%</button></div>
  </div>
  <div class="field" style="grid-column:1/-1">
-  <label>Skala khusus produk <b id="isProductValue">Ikuti kategori</b></label>
+  <h3>Skala khusus produk <b id="isProductValue">Ikuti kategori</b></h3>
   <input id="isProductScale" type="range" min="25" max="250" step="1" value="100" disabled>
-  <div class="muted" id="isProductHint">Pilih produk untuk mengatur override. Jika tidak disimpan, produk mengikuti skala kategori.</div>
+  <div class="muted" id="isProductHint">Pilih produk untuk mengatur override skala.</div>
   <div class="actions"><button id="saveProductScale" type="button" disabled>Simpan override produk</button><button id="resetProductScale" type="button" class="secondary" disabled>Hapus override</button></div>
  </div>
 </div>
@@ -73,68 +91,92 @@ function renderHomepage(){const notice=$("homepageSetupNotice");if(!homepageSett
 
 function imageScaleRow(gameSlug,category,productId){return imageScales.find(x=>x.game_slug===gameSlug&&x.category===category&&(productId?x.product_id===productId:x.product_id===null))||null;}
 function selectedStudioProduct(){return products.find(p=>p.id===$("isProduct").value)||null;}
+function refreshStudioIconPickers(){
+ const opts='<option value="">Pilih dari perpustakaan gambar…</option>'+images.map(i=>'<option value="'+esc(i.image_url)+'">'+esc(i.image_key)+'</option>').join("");
+ ["isCategoryIconPicker","isProductIconPicker"].forEach(id=>{const el=$(id),v=el.value;el.innerHTML=opts;if([...el.options].some(o=>o.value===v))el.value=v;});
+}
+function studioPreviewIcon(kind,url){const img=$(kind==="category"?"isCategoryIconPreview":"isProductIconPreview"),wrap=$(kind==="category"?"isCategoryIconPreviewWrap":"isProductIconPreviewWrap");if(url){img.src=url;wrap.classList.add("has-image");}else{img.removeAttribute("src");wrap.classList.remove("has-image");}}
 function renderImageStudio(){
  const gameSelect=$("isGame"),categorySelect=$("isCategory"),productSelect=$("isProduct");
  if(!gameSelect||!categorySelect||!productSelect)return;
  const oldGame=gameSelect.value,oldCategory=categorySelect.value,oldProduct=productSelect.value;
  gameSelect.innerHTML=games.map(g=>'<option value="'+esc(g.slug)+'">'+esc(g.name)+'</option>').join("");
  if(games.some(g=>g.slug===oldGame))gameSelect.value=oldGame;
- renderStudioCategories(oldCategory,oldProduct);
+ refreshStudioIconPickers();renderStudioCategories(oldCategory,oldProduct);
 }
 function renderStudioCategories(previousCategory,previousProduct){
- const gameSlug=$("isGame").value;
- const categories=[...new Set(products.filter(p=>p.game_slug===gameSlug).map(p=>p.category||"Top Up"))];
+ const gameSlug=$("isGame").value,categories=[...new Set(products.filter(p=>p.game_slug===gameSlug).map(p=>p.category||"Top Up"))];
  $("isCategory").innerHTML=categories.map(c=>'<option value="'+esc(c)+'">'+esc(c)+'</option>').join("");
  if(categories.includes(previousCategory))$("isCategory").value=previousCategory;
  renderStudioProducts(previousProduct);
 }
 function renderStudioProducts(previousProduct){
- const gameSlug=$("isGame").value,category=$("isCategory").value;
- const rows=products.filter(p=>p.game_slug===gameSlug&&(p.category||"Top Up")===category);
+ const gameSlug=$("isGame").value,category=$("isCategory").value,rows=products.filter(p=>p.game_slug===gameSlug&&(p.category||"Top Up")===category);
  $("isProduct").innerHTML='<option value="">Pilih produk…</option>'+rows.map(p=>'<option value="'+esc(p.id)+'">'+esc(p.amount)+'</option>').join("");
  if(rows.some(p=>p.id===previousProduct))$("isProduct").value=previousProduct;
  updateStudioControls();
 }
 function updateStudioControls(){
  const gameSlug=$("isGame").value,category=$("isCategory").value,p=selectedStudioProduct();
- const categoryRow=imageScaleRow(gameSlug,category,null),productRow=p?imageScaleRow(gameSlug,category,p.id):null;
- const categoryScale=Number(categoryRow?.scale||100),effective=Number(productRow?.scale||categoryScale);
- $("isCategoryScale").value=String(categoryScale);$("isCategoryValue").textContent=categoryScale+"%";
- $("isProductScale").disabled=!p;$("saveProductScale").disabled=!p;$("resetProductScale").disabled=!p||!productRow;
- $("isProductScale").value=String(productRow?.scale||categoryScale);
- $("isProductValue").textContent=productRow?Number(productRow.scale)+"% (override)":p?"Ikuti kategori ("+categoryScale+"%)":"Pilih produk";
- $("isProductHint").textContent=!p?"Pilih produk untuk mengatur override. Jika tidak disimpan, produk mengikuti skala kategori.":productRow?"Produk ini memakai skala khusus. Hapus override untuk kembali mengikuti kategori.":"Produk ini mengikuti skala kategori.";
- const image=p?.icon_url||games.find(g=>g.slug===gameSlug)?.currency_icon_url||"";
- $("isPreviewTitle").textContent=p?.amount||"Pilih produk";
- $("isPreviewPrice").textContent=p?price(p.price):"Rp 0";
- const img=$("isPreviewImage");if(image){img.src=image;img.style.display="block";}else{img.removeAttribute("src");img.style.display="none";}
- $("isPreviewImage").style.transform="scale("+effective/100+")";
- $("isEffectiveScale").textContent="Skala efektif: "+effective+"%"+(productRow?" · override produk":" · default kategori");
+ const cr=imageScaleRow(gameSlug,category,null),pr=p?imageScaleRow(gameSlug,category,p.id):null,cs=Number(cr?.scale||100),effective=Number(pr?.scale||cs);
+ $("isCategoryScale").value=String(cs);$("isCategoryValue").textContent=cs+"%";
+ $("isProductScale").disabled=!p;$("saveProductScale").disabled=!p;$("resetProductScale").disabled=!p||!pr;
+ $("isProductScale").value=String(pr?.scale||cs);
+ $("isProductValue").textContent=pr?Number(pr.scale)+"% (override)":p?"Ikuti kategori ("+cs+"%)":"Pilih produk";
+ $("isProductHint").textContent=!p?"Pilih produk untuk mengatur override skala.":pr?"Produk ini memakai skala khusus. Hapus override untuk mengikuti kategori.":"Produk ini mengikuti skala kategori.";
+ const categoryIcon=cr?.icon_url||"",productIcon=pr?.icon_url||"";
+ $("isCategoryIconUrl").value=categoryIcon;$("isCategoryIconPicker").value=categoryIcon;
+ $("isProductIconUrl").value=productIcon;$("isProductIconPicker").value=productIcon;
+ ["isProductIconUrl","isProductIconPicker","isProductIconFile","uploadProductStudioIcon","saveProductStudioIcon","clearProductStudioIcon"].forEach(id=>$(id).disabled=!p);
+ $("isProductIconHint").textContent=!p?"Pilih produk untuk mengatur ikon override.":productIcon?"Produk ini memiliki ikon khusus.":"Produk ini mengikuti ikon kategori, lalu ikon produk katalog jika kategori tidak punya ikon.";
+ studioPreviewIcon("category",categoryIcon);studioPreviewIcon("product",productIcon);
+ const effectiveIcon=productIcon||categoryIcon||p?.icon_url||games.find(g=>g.slug===gameSlug)?.currency_icon_url||"";
+ $("isPreviewTitle").textContent=p?.amount||category||"Pilih produk";
+ $("isPreviewPrice").textContent=p?price(p.price):"Pilih produk untuk preview harga";
+ const img=$("isPreviewImage");if(effectiveIcon){img.src=effectiveIcon;img.style.display="block";}else{img.removeAttribute("src");img.style.display="none";}
+ img.style.transform="scale("+effective/100+")";
+ $("isEffectiveScale").textContent="Skala efektif: "+effective+"%"+(pr?" · override produk":" · default kategori");
 }
-async function saveImageScale(productId,scale){
+async function saveImageScale(productId,scale,iconUrl){
  const gameSlug=$("isGame").value,category=$("isCategory").value;
  if(!gameSlug||!category){say("Pilih game dan kategori terlebih dahulu.");return false;}
- const existing=imageScaleRow(gameSlug,category,productId);
- const payload={game_slug:gameSlug,category,product_id:productId||null,scale:Number(scale),updated_at:new Date().toISOString()};
- let result;
- if(existing)result=await db.from("store_image_scales").update(payload).eq("id",existing.id);
- else result=await db.from("store_image_scales").insert(payload);
- if(result.error){say("Gagal menyimpan skala: "+result.error.message);return false;}
- const refreshed=await db.from("store_image_scales").select("*");
- if(refreshed.error){say("Tersimpan, tetapi gagal memuat ulang pengaturan: "+refreshed.error.message);return false;}
- imageScales=refreshed.data||[];updateStudioControls();say("Skala "+(productId?"produk":"kategori")+" berhasil disimpan.");
- return true;
+ const existing=imageScaleRow(gameSlug,category,productId),payload={game_slug:gameSlug,category,product_id:productId||null,scale:Number(scale),updated_at:new Date().toISOString()};
+ if(iconUrl!==undefined)payload.icon_url=iconUrl;
+ let result=existing?await db.from("store_image_scales").update(payload).eq("id",existing.id):await db.from("store_image_scales").insert(payload);
+ if(result.error){say("Gagal menyimpan pengaturan: "+result.error.message);return false;}
+ const refreshed=await db.from("store_image_scales").select("*");if(refreshed.error){say("Tersimpan, tetapi gagal memuat ulang pengaturan: "+refreshed.error.message);return false;}
+ imageScales=refreshed.data||[];updateStudioControls();say("Pengaturan "+(productId?"produk":"kategori")+" berhasil disimpan.");return true;
+}
+async function uploadStudioIcon(kind){
+ const isCategory=kind==="category",file=$(isCategory?"isCategoryIconFile":"isProductIconFile").files?.[0];
+ if(!file){say("Pilih gambar terlebih dahulu.");return;}
+ const slug=$("isGame").value,product=selectedStudioProduct();
+ if(!isCategory&&!product){say("Pilih produk terlebih dahulu.");return;}
+ const url=await uploadProductIconFile(file,(isCategory?"category-":"studio-")+ (product?.id||$("isCategory").value),slug);
+ if(!url)return;
+ const field=$(isCategory?"isCategoryIconUrl":"isProductIconUrl"),picker=$(isCategory?"isCategoryIconPicker":"isProductIconPicker");
+ field.value=url;picker.value=url;studioPreviewIcon(kind,url);
+ await saveImageScale(isCategory?null:product.id,isCategory?Number($("isCategoryScale").value):Number($("isProductScale").value),url);
 }
 $("isGame").addEventListener("change",()=>renderStudioCategories("",""));
 $("isCategory").addEventListener("change",()=>renderStudioProducts(""));
 $("isProduct").addEventListener("change",updateStudioControls);
-$("isCategoryScale").addEventListener("input",()=>{$("isCategoryValue").textContent=$("isCategoryScale").value+"%";const p=selectedStudioProduct();if(!imageScaleRow($("isGame").value,$("isCategory").value,p?.id)){$("isProductScale").value=$("isCategoryScale").value;$("isProductValue").textContent="Ikuti kategori ("+$("isCategoryScale").value+"%)";}$("isPreviewImage").style.transform="scale("+($("isProduct").value&&imageScaleRow($("isGame").value,$("isCategory").value,$("isProduct").value)?$("isProductScale").value:$("isCategoryScale").value)/100+")";$("isEffectiveScale").textContent="Preview skala kategori: "+$("isCategoryScale").value+"%";});
+$("isCategoryIconUrl").addEventListener("input",()=>studioPreviewIcon("category",$("isCategoryIconUrl").value.trim()));
+$("isCategoryIconPicker").addEventListener("change",()=>{$("isCategoryIconUrl").value=$("isCategoryIconPicker").value;studioPreviewIcon("category",$("isCategoryIconPicker").value);});
+$("isProductIconUrl").addEventListener("input",()=>studioPreviewIcon("product",$("isProductIconUrl").value.trim()));
+$("isProductIconPicker").addEventListener("change",()=>{$("isProductIconUrl").value=$("isProductIconPicker").value;studioPreviewIcon("product",$("isProductIconPicker").value);});
+$("uploadCategoryIcon").onclick=()=>uploadStudioIcon("category");
+$("uploadProductStudioIcon").onclick=()=>uploadStudioIcon("product");
+$("saveCategoryIcon").onclick=()=>saveImageScale(null,Number($("isCategoryScale").value),$("isCategoryIconUrl").value.trim()||null);
+$("saveProductStudioIcon").onclick=()=>{const p=selectedStudioProduct();if(p)saveImageScale(p.id,Number($("isProductScale").value),$("isProductIconUrl").value.trim()||null);};
+$("clearCategoryIcon").onclick=()=>{$("isCategoryIconUrl").value="";$("isCategoryIconPicker").value="";studioPreviewIcon("category","");saveImageScale(null,Number($("isCategoryScale").value),null);};
+$("clearProductStudioIcon").onclick=()=>{const p=selectedStudioProduct();if(p){$("isProductIconUrl").value="";$("isProductIconPicker").value="";studioPreviewIcon("product","");saveImageScale(p.id,Number($("isProductScale").value),null);}};
+$("isCategoryScale").addEventListener("input",()=>{$("isCategoryValue").textContent=$("isCategoryScale").value+"%";const p=selectedStudioProduct(),pr=p?imageScaleRow($("isGame").value,$("isCategory").value,p.id):null;if(!pr){$("isProductScale").value=$("isCategoryScale").value;$("isProductValue").textContent="Ikuti kategori ("+$("isCategoryScale").value+"%)";}const scale=pr?.scale||$("isCategoryScale").value;$("isPreviewImage").style.transform="scale("+Number(scale)/100+")";$("isEffectiveScale").textContent="Preview skala kategori: "+$("isCategoryScale").value+"%";});
 $("isProductScale").addEventListener("input",()=>{$("isProductValue").textContent=$("isProductScale").value+"% (preview override)";$("isPreviewImage").style.transform="scale("+Number($("isProductScale").value)/100+")";$("isEffectiveScale").textContent="Preview skala produk: "+$("isProductScale").value+"%";});
-$("saveCategoryScale").onclick=()=>saveImageScale(null,$("isCategoryScale").value);
-$("resetCategoryScale").onclick=()=>{$("isCategoryScale").value="100";updateStudioControls();saveImageScale(null,100);};
-$("saveProductScale").onclick=()=>{const p=selectedStudioProduct();if(p)saveImageScale(p.id,$("isProductScale").value);};
-$("resetProductScale").onclick=async()=>{const p=selectedStudioProduct();if(!p)return;const row=imageScaleRow($("isGame").value,$("isCategory").value,p.id);if(!row)return;const {error}=await db.from("store_image_scales").delete().eq("id",row.id);if(error){say("Gagal menghapus override: "+error.message);return;}imageScales=imageScales.filter(x=>x.id!==row.id);updateStudioControls();say("Override produk dihapus. Produk kembali mengikuti skala kategori.");};
-
+$("saveCategoryScale").onclick=()=>saveImageScale(null,Number($("isCategoryScale").value));
+$("resetCategoryScale").onclick=()=>{saveImageScale(null,100);};
+$("saveProductScale").onclick=()=>{const p=selectedStudioProduct();if(p)saveImageScale(p.id,Number($("isProductScale").value));};
+$("resetProductScale").onclick=async()=>{const p=selectedStudioProduct();if(!p)return;const row=imageScaleRow($("isGame").value,$("isCategory").value,p.id);if(!row)return;const {error}=await db.from("store_image_scales").update({scale:100,updated_at:new Date().toISOString()}).eq("id",row.id);if(error){say("Gagal reset override: "+error.message);return;}const refreshed=await db.from("store_image_scales").select("*");imageScales=refreshed.data||[];updateStudioControls();say("Override skala direset ke 100%.");};
 function renderImages(){$("imagesTable").innerHTML='<table><thead><tr><th>Preview</th><th>Kunci gambar</th><th>URL publik</th><th>Aksi</th></tr></thead><tbody>'+images.map(i=>'<tr><td><img class="cover" src="'+esc(i.image_url)+'" alt="'+esc(i.image_key)+'"></td><td><b>'+esc(i.image_key)+'</b></td><td><input readonly value="'+esc(i.image_url)+'" aria-label="URL gambar '+esc(i.image_key)+'"></td><td><button type="button" data-copy-image="'+esc(i.image_url)+'">Salin URL</button> <button type="button" class="danger" data-delete-image="'+esc(i.image_key)+'">Hapus gambar</button></td></tr>').join("")+'</tbody></table><p class="muted">Hapus gambar akan menghapus file dari Storage Supabase juga. Gambar yang masih dipakai game atau promo akan dilindungi.</p>';}async function saveHomepagePart(part){if(!homepageSettings){say("Pengaturan beranda belum tersedia.");return;}const payload={updated_at:new Date().toISOString()};if(part==="trending"){payload.trending_slugs=Array.from($("homepageGamesTable").querySelectorAll("[data-trending-slug]:checked")).map(el=>({slug:el.dataset.trendingSlug,order:Number($("homepageGamesTable").querySelector('[data-trending-order="'+el.dataset.trendingSlug+'"]')?.value)||99999})).sort((a,b)=>a.order-b.order||a.slug.localeCompare(b.slug)).map(item=>item.slug);payload.trending_title=$("homeTrendingTitle").value.trim()||"Trending";payload.trending_limit=Number($("homeTrendingLimit").value)||6;payload.trending_enabled=$("homeTrendingEnabled").value==="true";if(!payload.trending_slugs.length&&payload.trending_enabled&&!confirm("Belum ada game yang dipilih untuk Trending. Simpan agar bagian Trending kosong?"))return;}else{payload.all_games_title=$("homeAllTitle").value.trim()||"All Games";payload.all_games_initial_limit=Number($("homeAllLimit").value)||12;payload.all_games_enabled=$("homeAllEnabled").value==="true";payload.show_all_games_button=$("homeShowAllButton").value==="true";payload.all_games_slugs=Array.from($("homepageAllGamesTable").querySelectorAll("[data-allgame-slug]:checked")).map(el=>({slug:el.dataset.allgameSlug,order:Number($("homepageAllGamesTable").querySelector('[data-allgame-order="'+el.dataset.allgameSlug+'"]')?.value)||99999})).sort((a,b)=>a.order-b.order||a.slug.localeCompare(b.slug)).map(item=>item.slug);if(!payload.all_games_slugs.length&&!confirm("Belum ada game yang dipilih untuk All Games. Home akan menampilkan semua game tersedia berdasarkan urutan katalog. Lanjutkan?"))return;}const {error}=await db.from("store_homepage_settings").update(payload).eq("id",1);if(error){say("Gagal menyimpan "+(part==="trending"?"Trending":"All Games")+": "+error.message);return;}homepageSettings={...homepageSettings,...payload};renderHomepage();say("Pengaturan "+(part==="trending"?"Trending":"All Games")+" tersimpan. Muat ulang Home untuk melihat perubahan.");}$("saveTrending").onclick=()=>saveHomepagePart("trending");$("saveAllGames").onclick=()=>saveHomepagePart("allgames");document.addEventListener("DOMContentLoaded",()=>{const loginPanel=$("loginPanel");if(loginPanel)loginPanel.classList.add("hidden");});
 window.LEOAdminAuth.ready.then(session=>{if(session)auth(session.user);else location.replace("admin.html");});
 $("productSearch").oninput=renderProducts; $("productGameFilter").onchange=renderProducts;
