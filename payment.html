@@ -68,6 +68,38 @@ body:not(.home-page) .site-header .container > .header-brand {
 <link rel="stylesheet" href="css/logo-text-animation.css?v=20261117-drawer-logo-fix3">
 
 
+
+<style id="leoostore-payment-drawer-layer-fix">
+/* PAYMENT PAGE ONLY: match the shop drawer's priority over the navbar. */
+html body.payment-page .site-header,
+html body.payment-page .site-header.home-header{
+  z-index:1!important;
+}
+html body.payment-page #menuOverlay{
+  position:fixed!important;
+  inset:0!important;
+  z-index:2147483000!important;
+}
+html body.payment-page #sideMenu{
+  position:fixed!important;
+  top:0!important;
+  right:0!important;
+  bottom:0!important;
+  height:100vh!important;
+  height:100dvh!important;
+  max-height:100dvh!important;
+  z-index:2147483001!important;
+}
+html body.payment-page #sideMenu.active{
+  visibility:visible!important;
+  pointer-events:auto!important;
+}
+html body.payment-page #sideMenu:not(.active){
+  visibility:hidden!important;
+  pointer-events:none!important;
+}
+</style>
+
 </head>
 
 
