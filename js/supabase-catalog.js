@@ -20,12 +20,12 @@
         db.from("store_products").select("id,game_slug,amount,price,icon_url,category,is_active,sort_order").eq("is_active",true).order("sort_order"),
         db.from("store_image_scales").select("game_slug,category,product_id,scale")
       ]);
-      if(gr.error)throw gr.error;if(pr.error)throw pr.error;const scales=sr.error?[]:(sr.data||[]);const categoryScales=new Map(scales.filter(x=>!x.product_id).map(x=>[x.game_slug+"::"+x.category,Number(x.scale)||100]));const productScales=new Map(scales.filter(x=>x.product_id).map(x=>[x.game_slug+"::"+x.category+"::"+x.product_id,Number(x.scale)||100]));
+      if(gr.error)throw gr.error;if(pr.error)throw pr.error;const scales=sr.error?[]:(sr.data||[]);const categoryScales=new Map(scales.filter(x=>!x.product_id).map(x=>[x.game_slug+"::"+x.category,x]));const productScales=new Map(scales.filter(x=>x.product_id).map(x=>[x.game_slug+"::"+x.category+"::"+x.product_id,x]));
       if(!gr.data||!gr.data.length)return [];
       const itemsByGame=new Map();
       (pr.data||[]).forEach(p=>{
         if(!itemsByGame.has(p.game_slug))itemsByGame.set(p.game_slug,[]);
-        itemsByGame.get(p.game_slug).push({id:String(p.id),amount:String(p.amount||p.id),price:Number(p.price)||0,category:p.category||"Top Up",image:String(p.icon_url||""),imageScale:productScales.get(p.game_slug+"::"+(p.category||"Top Up")+"::"+p.id)||categoryScales.get(p.game_slug+"::"+(p.category||"Top Up"))||100});
+        itemsByGame.get(p.game_slug).push({id:String(p.id),amount:String(p.amount||p.id),price:Number(p.price)||0,category:p.category||"Top Up",image:String(p.icon_url||""),imageScale:Number(productScales.get(p.game_slug+"::"+(p.category||"Top Up")+"::"+p.id)?.scale||categoryScales.get(p.game_slug+"::"+(p.category||"Top Up"))?.scale||100),image:String(productScales.get(p.game_slug+"::"+(p.category||"Top Up")+"::"+p.id)?.icon_url||categoryScales.get(p.game_slug+"::"+(p.category||"Top Up"))?.icon_url||p.icon_url||"")});
       });
       const catalog=gr.data.map(g=>{
         let description=String(g.description||"");
