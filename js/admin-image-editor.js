@@ -61,7 +61,6 @@ function ensureModal(){
  $('leoCropReset').onclick=()=>{if(cropper){cropper.reset();$('leoZoomValue').textContent='100%';setRatio(defaultRatio());}};
  $('leoZoomIn').onclick=()=>zoomBy(.12);$('leoZoomOut').onclick=()=>zoomBy(-.12);
  $('leoRatioTools').addEventListener('click',e=>{const b=e.target.closest('button[data-ratio]');if(b&&cropper)setRatio(b.dataset.ratio);});
- $('leoCropZoom').oninput=()=>{if(cropper){const n=Number($('leoCropZoom').value);cropper.zoomTo(1+n/100);$('leoZoomValue').textContent=n+'%';}};
  $('leoEditorApply').onclick=applyCrop;
 }
 function defaultRatio(){if(activeInput?.id==='gIconFile')return '1';if(activeInput?.id==='gBannerFile')return '1.777778';return 'free';}
