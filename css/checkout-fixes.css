@@ -4464,3 +4464,64 @@ body.payment-page #searchPanel{
   .checkout-page .denomination-price-row{min-height:48px!important}
   .checkout-page .denomination-main{padding:2px 7px 2px!important}
 }
+
+
+/* CHECKOUT HERO GAME ICON — ANIMATED GRADIENT SWEEP BORDER
+   The sweep is confined to the 1:1 thumbnail frame; artwork and layout stay still.
+*/
+.checkout-page .game-hero-icon{
+  position:absolute!important;
+  isolation:isolate!important;
+  overflow:visible!important;
+  box-sizing:border-box!important;
+  padding:2px!important;
+  border:0!important;
+  border-radius:20px!important;
+  background:linear-gradient(135deg,#17243a,#101a2c)!important;
+  box-shadow:0 0 12px rgba(116,75,255,.16)!important;
+}
+.checkout-page .game-hero-icon::before{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:0!important;
+  border-radius:inherit!important;
+  background:conic-gradient(
+    from 0deg,
+    #754bff 0deg,
+    #a855f7 65deg,
+    #38bdf8 135deg,
+    #67e8f9 180deg,
+    #3985ff 235deg,
+    #a855f7 300deg,
+    #754bff 360deg
+  )!important;
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2px))!important;
+  mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2px))!important;
+  animation:checkoutHeroBorderSweep 4s linear infinite!important;
+  pointer-events:none!important;
+}
+.checkout-page .game-hero-icon img,
+.checkout-page .game-hero-icon .game-icon-fallback{
+  position:relative!important;
+  z-index:1!important;
+  display:block;
+  width:100%!important;
+  height:100%!important;
+  box-sizing:border-box!important;
+  border-radius:16px!important;
+}
+.checkout-page .game-hero-icon img{
+  object-fit:cover!important;
+}
+@keyframes checkoutHeroBorderSweep{
+  to{transform:rotate(360deg)}
+}
+@media(max-width:420px){
+  .checkout-page .game-hero-icon{border-radius:20px!important;padding:2px!important}
+  .checkout-page .game-hero-icon img,
+  .checkout-page .game-hero-icon .game-icon-fallback{border-radius:15px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .checkout-page .game-hero-icon::before{animation:none!important}
+}
