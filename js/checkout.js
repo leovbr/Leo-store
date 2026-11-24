@@ -291,7 +291,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         option.setAttribute("tabindex", "0");
         option.innerHTML = `
           <div class="denomination-main">
-            <div class="denomination-title">${escapeHTML(item.amount)}</div>
+            <div class="denomination-title"><span>${escapeHTML(item.amount)}</span></div>
             <div class="denomination-price-row">
               ${item.image ? '<img src="' + escapeHTML(item.image) + '" alt="" class="denomination-product-icon" loading="lazy" style="transform:scale(' + (Math.max(25,Math.min(250,Number(item.imageScale)||100))/100) + ')">' : ""}
               <div class="denomination-price-box"><span>${item.logo ? `<img src="${escapeHTML(item.logo)}" alt="" class="denomination-logo">` : ""}${rupiah(item.price)}</span></div>
