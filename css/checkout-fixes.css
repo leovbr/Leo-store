@@ -4647,3 +4647,18 @@ body.payment-page #searchPanel{
 @media(prefers-reduced-motion:reduce){
   .checkout-page .game-hero-icon::after{animation:none!important;display:none!important}
 }
+
+/* ===== ACCOUNT INPUTS — COMPACT PILL HEIGHT =====
+   Reduce only the vertical size of Player ID / Server fields.
+   Preserve their grid width, horizontal padding, radius and visual styling.
+*/
+.checkout-page #standardAccountFields .form-group input{
+  min-height:48px!important;
+  height:48px!important;
+}
+@media(max-width:640px){
+  .checkout-page #standardAccountFields .form-group input{
+    min-height:44px!important;
+    height:44px!important;
+  }
+}
