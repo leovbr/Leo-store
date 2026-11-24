@@ -6496,3 +6496,58 @@ body.home-page #homeAllGames .product-card:nth-child(n+7){animation-delay:.34s;}
   font-size:10px!important;
   line-height:1.2!important;
 }
+
+/* ===== TRENDING SPECIAL — VIOLET/BLUE GRADIENT BORDER + SOFT SHINE =====
+   Keep the existing card layout, artwork, typography and slate texture.
+   The border stays static; only a soft light reflection sweeps across the card.
+*/
+@keyframes leoTrendingShineSweep{
+  0%,18%{transform:translate3d(-170%,0,0) skewX(-20deg);opacity:0;}
+  26%{opacity:.72;}
+  58%{transform:translate3d(330%,0,0) skewX(-20deg);opacity:.62;}
+  68%,100%{transform:translate3d(330%,0,0) skewX(-20deg);opacity:0;}
+}
+body.home-page #homeTrendingSection .home-game-card{
+  border:1.5px solid transparent!important;
+  background-color:#263343!important;
+  background-image:
+    linear-gradient(118deg,#46566a 0%,#303f52 42%,#202e41 100%) padding-box,
+    linear-gradient(125deg,#a78bfa 0%,#60a5fa 38%,#c4b5fd 68%,#8b5cf6 100%) border-box!important;
+  background-origin:border-box!important;
+  background-clip:padding-box,border-box!important;
+  box-shadow:0 5px 16px rgba(18,8,45,.18),0 0 0 1px rgba(139,92,246,.08)!important;
+}
+body.home-page #homeTrendingSection .home-game-card::after{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  top:-18%!important;
+  bottom:-18%!important;
+  left:-58%!important;
+  width:42%!important;
+  z-index:2!important;
+  pointer-events:none!important;
+  border-radius:inherit!important;
+  background:linear-gradient(108deg,
+    transparent 0%,
+    rgba(255,255,255,.025) 28%,
+    rgba(221,213,255,.20) 46%,
+    rgba(255,255,255,.34) 50%,
+    rgba(191,219,254,.16) 55%,
+    transparent 76%)!important;
+  filter:blur(2px)!important;
+  opacity:0!important;
+  transform:translate3d(-170%,0,0) skewX(-20deg)!important;
+  animation:leoTrendingShineSweep 5.2s ease-in-out infinite!important;
+}
+body.home-page #homeTrendingSection .home-game-card > .home-game-image,
+body.home-page #homeTrendingSection .home-game-card > .home-game-info{
+  position:relative!important;
+  z-index:1!important;
+}
+@media(prefers-reduced-motion:reduce){
+  body.home-page #homeTrendingSection .home-game-card::after{
+    animation:none!important;
+    display:none!important;
+  }
+}
