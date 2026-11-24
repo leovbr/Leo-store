@@ -6565,22 +6565,32 @@ body.home-page #homeTrendingSection .home-game-image img{
     linear-gradient(135deg,#a78bfa 0%,#60a5fa 48%,#c4b5fd 100%) border-box!important;
 }
 
-/* ===== SHOP PRODUCT THUMBNAILS — MATCHING VIOLET FRAME =====
-   Keep the existing square image slot and card/grid dimensions unchanged.
-   A 1px inset frame uses the same violet family as the product info panel.
+
+/* ===== SHOP PRODUCT THUMBNAILS — FRAME ALIGNED TO IMAGE EDGE =====
+   Draw the violet stroke as an overlay on the exact image perimeter.
+   The image keeps its full original size and crop; no padding is added.
 */
 body.shop-page #productList .product-image-wrap{
-  box-sizing:border-box!important;
-  padding:1px 1px 0!important;
-  background:rgba(128,88,208,.58)!important;
+  position:relative!important;
+  padding:0!important;
+  background:var(--card-2,#13243a)!important;
   overflow:hidden!important;
+}
+body.shop-page #productList .product-image-wrap::after{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:2!important;
+  pointer-events:none!important;
+  border:1.5px solid rgba(128,88,208,.72)!important;
+  border-radius:15px 15px 0 0!important;
+  box-sizing:border-box!important;
 }
 body.shop-page #productList .product-image-wrap .product-game-image{
   display:block!important;
-  box-sizing:border-box!important;
   width:100%!important;
   height:100%!important;
   object-fit:cover!important;
   border:0!important;
-  border-radius:inherit!important;
+  border-radius:0!important;
 }
