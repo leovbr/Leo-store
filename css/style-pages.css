@@ -6564,3 +6564,23 @@ body.home-page #homeTrendingSection .home-game-image img{
     linear-gradient(#0b1424,#0b1424) padding-box,
     linear-gradient(135deg,#a78bfa 0%,#60a5fa 48%,#c4b5fd 100%) border-box!important;
 }
+
+/* ===== SHOP PRODUCT THUMBNAILS — MATCHING VIOLET FRAME =====
+   Keep the existing square image slot and card/grid dimensions unchanged.
+   A 1px inset frame uses the same violet family as the product info panel.
+*/
+body.shop-page #productList .product-image-wrap{
+  box-sizing:border-box!important;
+  padding:1px 1px 0!important;
+  background:rgba(128,88,208,.58)!important;
+  overflow:hidden!important;
+}
+body.shop-page #productList .product-image-wrap .product-game-image{
+  display:block!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  border:0!important;
+  border-radius:inherit!important;
+}
