@@ -4332,3 +4332,53 @@ body.payment-page #searchPanel{
   .checkout-page .denomination-delivery{flex-basis:30px!important;min-height:30px!important;height:30px!important}
 }
 
+
+
+/* ===== CHECKOUT PRODUCT TITLE: CENTER SINGLE-LINE NAMES =====
+   Reserve a consistent two-line title slot. One-line names sit
+   vertically centered; two-line names remain naturally stacked.
+   Preserve card width and all product-icon sizing/position controls.
+*/
+.checkout-page .denomination-main{
+  padding-top:2px!important;
+}
+.checkout-page .denomination-title{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  min-height:28px!important;
+  max-height:28px!important;
+  height:28px!important;
+  padding:0!important;
+  box-sizing:border-box!important;
+  font-size:12px!important;
+  line-height:14px!important;
+}
+.checkout-page .denomination-title > span{
+  display:-webkit-box!important;
+  -webkit-box-orient:vertical!important;
+  -webkit-line-clamp:2!important;
+  width:100%!important;
+  max-height:28px!important;
+  overflow:hidden!important;
+  white-space:normal!important;
+  overflow-wrap:anywhere!important;
+  word-break:normal!important;
+  line-height:14px!important;
+}
+.checkout-page .denomination-price-box{
+  font-size:12px!important;
+  line-height:1.25!important;
+}
+@media(max-width:600px){
+  .checkout-page .denomination-main{padding-top:2px!important}
+  .checkout-page .denomination-title{font-size:11.5px!important;line-height:14px!important}
+  .checkout-page .denomination-title > span{line-height:14px!important}
+  .checkout-page .denomination-price-box{font-size:11.5px!important}
+}
+@media(max-width:380px){
+  .checkout-page .denomination-main{padding-top:2px!important}
+  .checkout-page .denomination-title{font-size:11px!important;line-height:13px!important}
+  .checkout-page .denomination-title > span{line-height:13px!important}
+  .checkout-page .denomination-price-box{font-size:11px!important}
+}
