@@ -4525,3 +4525,72 @@ body.payment-page #searchPanel{
 @media(prefers-reduced-motion:reduce){
   .checkout-page .game-hero-icon::before{animation:none!important}
 }
+
+
+/* CHECKOUT HERO ICON — STATIC GRADIENT FRAME + SOFT IMAGE SHINE
+   Replace the rotating border effect: the frame stays still while a
+   subtle light reflection sweeps across the artwork itself.
+*/
+.checkout-page .game-hero-icon{
+  isolation:isolate!important;
+  overflow:hidden!important;
+  padding:2px!important;
+  border:0!important;
+  border-radius:20px!important;
+  background:
+    linear-gradient(#142338,#142338) padding-box,
+    linear-gradient(135deg,#8d6bff 0%,#6daeff 48%,#b8a4ff 100%) border-box!important;
+  box-shadow:0 2px 10px rgba(92,125,255,.12)!important;
+}
+.checkout-page .game-hero-icon::before{
+  content:none!important;
+  animation:none!important;
+  -webkit-mask:none!important;
+  mask:none!important;
+}
+.checkout-page .game-hero-icon img,
+.checkout-page .game-hero-icon .game-icon-fallback{
+  position:relative!important;
+  z-index:1!important;
+  display:block;
+  width:100%!important;
+  height:100%!important;
+  border-radius:16px!important;
+}
+.checkout-page .game-hero-icon img{object-fit:cover!important;}
+.checkout-page .game-hero-icon::after{
+  content:""!important;
+  position:absolute!important;
+  z-index:2!important;
+  top:2px!important;
+  bottom:2px!important;
+  left:-75%!important;
+  width:58%!important;
+  border-radius:16px!important;
+  background:linear-gradient(
+    108deg,
+    transparent 0%,
+    rgba(255,255,255,.035) 30%,
+    rgba(255,255,255,.32) 49%,
+    rgba(255,255,255,.07) 65%,
+    transparent 100%
+  )!important;
+  transform:skewX(-18deg) translateX(0)!important;
+  animation:checkoutHeroImageShine 5.2s ease-in-out infinite!important;
+  pointer-events:none!important;
+}
+@keyframes checkoutHeroImageShine{
+  0%,18%{transform:skewX(-18deg) translateX(0);opacity:0}
+  28%{opacity:1}
+  62%{transform:skewX(-18deg) translateX(330%);opacity:.9}
+  78%,100%{transform:skewX(-18deg) translateX(330%);opacity:0}
+}
+@media(max-width:420px){
+  .checkout-page .game-hero-icon{border-radius:20px!important;padding:2px!important}
+  .checkout-page .game-hero-icon img,
+  .checkout-page .game-hero-icon .game-icon-fallback,
+  .checkout-page .game-hero-icon::after{border-radius:15px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .checkout-page .game-hero-icon::after{animation:none!important;display:none!important}
+}
