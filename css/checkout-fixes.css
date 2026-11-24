@@ -4274,3 +4274,60 @@ body.payment-page #searchPanel{
 .checkout-page .denomination-product-icon{width:60px!important;height:60px!important;min-width:60px!important;max-width:60px!important;flex:0 0 60px!important;object-fit:contain!important}
 @media(max-width:600px){.checkout-page .denomination-product-icon{width:52px!important;height:52px!important;min-width:52px!important;max-width:52px!important;flex-basis:52px!important}}
 @media(max-width:380px){.checkout-page .denomination-product-icon{width:48px!important;height:48px!important;min-width:48px!important;max-width:48px!important;flex-basis:48px!important}}
+
+
+/* ===== CHECKOUT DENOMINATION — TIGHTER CARD + LOCKED TEXT ALIGNMENT =====
+   Keep product icon dimensions/position untouched.
+   Reserve the same two-line title slot so price and delivery align
+   whether the product name occupies one line or two.
+*/
+.checkout-page .denomination-option{
+  min-height:106px!important;
+  box-sizing:border-box!important;
+}
+.checkout-page .denomination-main{
+  min-height:72px!important;
+  padding:5px 9px 4px!important;
+  gap:4px!important;
+  box-sizing:border-box!important;
+}
+.checkout-page .denomination-title{
+  display:-webkit-box!important;
+  -webkit-box-orient:vertical!important;
+  -webkit-line-clamp:2!important;
+  min-height:28px!important;
+  max-height:28px!important;
+  height:28px!important;
+  margin:0!important;
+  overflow:hidden!important;
+  white-space:normal!important;
+  text-overflow:clip!important;
+  overflow-wrap:anywhere!important;
+  word-break:normal!important;
+  font-size:12px!important;
+  line-height:14px!important;
+  text-align:left!important;
+}
+.checkout-page .denomination-price-row{
+  min-height:60px!important;
+  align-items:center!important;
+}
+.checkout-page .denomination-delivery{
+  flex-basis:32px!important;
+  min-height:32px!important;
+  height:32px!important;
+  box-sizing:border-box!important;
+}
+@media(max-width:600px){
+  .checkout-page .denomination-option{min-height:104px!important}
+  .checkout-page .denomination-main{min-height:70px!important;padding:4px 8px 4px!important}
+  .checkout-page .denomination-title{font-size:11.5px!important;line-height:14px!important;min-height:28px!important;max-height:28px!important;height:28px!important}
+  .checkout-page .denomination-price-row{min-height:58px!important}
+  .checkout-page .denomination-delivery{flex-basis:31px!important;min-height:31px!important;height:31px!important}
+}
+@media(max-width:380px){
+  .checkout-page .denomination-option{min-height:102px!important}
+  .checkout-page .denomination-main{min-height:68px!important;padding:3px 7px 4px!important}
+  .checkout-page .denomination-price-row{min-height:56px!important}
+  .checkout-page .denomination-delivery{flex-basis:30px!important;min-height:30px!important;height:30px!important}
+}
