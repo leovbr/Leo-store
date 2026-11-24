@@ -4382,3 +4382,29 @@ body.payment-page #searchPanel{
   .checkout-page .denomination-title > span{line-height:13px!important}
   .checkout-page .denomination-price-box{font-size:11px!important}
 }
+
+
+/* CHECKOUT DENOMINATION — FINAL MICRO-ADJUSTMENT
+   Lower both one- and two-line product names slightly.
+   Trim only the upper panel's spare spacing; preserve icon size/position,
+   card width, divider, and the complete delivery strip below it.
+*/
+.checkout-page .denomination-title > span{
+  transform:translateY(2px)!important;
+}
+.checkout-page .denomination-main{
+  gap:2px!important;
+  padding-bottom:2px!important;
+}
+@media(max-width:600px){
+  .checkout-page .denomination-main{
+    gap:2px!important;
+    padding-bottom:2px!important;
+  }
+}
+@media(max-width:380px){
+  .checkout-page .denomination-main{
+    gap:2px!important;
+    padding-bottom:2px!important;
+  }
+}
