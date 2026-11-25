@@ -26,6 +26,7 @@ const gameFilterEl = document.getElementById("gameFilter");
 const adminStatusFilterEl = document.getElementById("adminStatusFilter");
 const adminOrderListEl = document.getElementById("adminOrderList");
 const refreshBtnEl = document.getElementById("refreshBtn");
+const resetOrdersBtnEl = document.getElementById("resetOrdersBtn");
 const adminApiStatusEl = document.getElementById("adminApiStatus");
 const ADMIN_API_URL = "https://spring-surf-a6a7.leovbriansyh791.workers.dev/api/admin/orders";
 let remoteOrders = null;
@@ -712,6 +713,52 @@ if (refreshBtnEl) {
   );
 }
 
+if (resetOrdersBtnEl) {
+  resetOrdersBtnEl.addEventListener("click", async () => {
+    const session = window.LEOAdminAuth?.session;
+    const token = String(session?.access_token || "").trim();
+    if (!token) {
+      if (adminApiStatusEl) adminApiStatusEl.textContent = "Sesi admin tidak tersedia. Login kembali.";
+      return;
+    }
+    const confirmed = window.confirm(
+      "RESET DATA DEMO LEOOSTORE?\n\nSemua transaksi di database akan dihapus permanen, termasuk catatan pemakaian promo dan log email yang terkait transaksi. Katalog, akun, promo, metode pembayaran, dan data pelanggan tidak dihapus."
+    );
+    if (!confirmed) return;
+    resetOrdersBtnEl.disabled = true;
+    if (adminApiStatusEl) adminApiStatusEl.textContent = "Menghapus data transaksi demo...";
+    try {
+      const response = await fetch(ADMIN_API_URL + "/reset", {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token,
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ confirm: true }),
+        cache: "no-store"
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || !data.ok) throw new Error(data.error || ("HTTP " + response.status));
+      localStorage.removeItem(ORDERS_KEY);
+      localStorage.removeItem(LAST_ORDER_KEY);
+      localStorage.removeItem("LEOOSTORE_last_order");
+      remoteOrders = [];
+      lastAdminSessionToken = "";
+      render();
+      await loadRemoteOrders(session, true);
+      if (adminApiStatusEl) {
+        const count = Number(data.deleted?.orders || 0);
+        adminApiStatusEl.textContent = "Reset berhasil. " + count + " transaksi demo dihapus; total transaksi dan omzet sekarang nol.";
+      }
+    } catch (error) {
+      if (adminApiStatusEl) adminApiStatusEl.textContent = "Reset gagal: " + (error.message || "Periksa koneksi dan coba lagi.");
+    } finally {
+      resetOrdersBtnEl.disabled = false;
+    }
+  });
+}
+
 // ================================
 // AUTO REFRESH
 // ================================
@@ -730,10 +777,10 @@ window.addEventListener(
 );
 
 
-async function loadRemoteOrders(session){
+async function loadRemoteOrders(session,force=false){
   const token=String(session?.access_token || "").trim();
   if(!token){if(adminApiStatusEl)adminApiStatusEl.textContent="Sesi admin tidak tersedia. Silakan login kembali.";return;}
-  if(token===lastAdminSessionToken&&Array.isArray(remoteOrders))return;
+  if(!force&&token===lastAdminSessionToken&&Array.isArray(remoteOrders))return;
   lastAdminSessionToken=token;
   if(adminApiStatusEl)adminApiStatusEl.textContent="Mengambil transaksi dari database...";
   try{
