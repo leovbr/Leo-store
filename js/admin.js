@@ -746,10 +746,12 @@ if (resetOrdersBtnEl) {
       remoteOrders = [];
       lastAdminSessionToken = "";
       render();
-      await loadRemoteOrders(session, true);
+      const refreshed = await loadRemoteOrders(session, true);
       if (adminApiStatusEl) {
         const count = Number(data.deleted?.orders || 0);
-        adminApiStatusEl.textContent = "Reset berhasil. " + count + " transaksi demo dihapus; total transaksi dan omzet sekarang nol.";
+        adminApiStatusEl.textContent = refreshed
+          ? "Reset berhasil. " + count + " transaksi demo dihapus; total transaksi dan omzet sekarang nol."
+          : "Reset berhasil, tetapi daftar transaksi belum bisa diverifikasi. Tekan Refresh.";
       }
     } catch (error) {
       if (adminApiStatusEl) adminApiStatusEl.textContent = "Reset gagal: " + (error.message || "Periksa koneksi dan coba lagi.");
@@ -779,7 +781,7 @@ window.addEventListener(
 
 async function loadRemoteOrders(session,force=false){
   const token=String(session?.access_token || "").trim();
-  if(!token){if(adminApiStatusEl)adminApiStatusEl.textContent="Sesi admin tidak tersedia. Silakan login kembali.";return;}
+  if(!token){if(adminApiStatusEl)adminApiStatusEl.textContent="Sesi admin tidak tersedia. Silakan login kembali.";return false;}
   if(!force&&token===lastAdminSessionToken&&Array.isArray(remoteOrders))return;
   lastAdminSessionToken=token;
   if(adminApiStatusEl)adminApiStatusEl.textContent="Mengambil transaksi dari database...";
@@ -790,10 +792,12 @@ async function loadRemoteOrders(session,force=false){
     remoteOrders=(Array.isArray(data.orders)?data.orders:[]).map(order=>({...order,_remote:true,gameSlug:order.gameSlug || order.game_slug || "",gameName:order.gameName || order.game_name || order.game || order.productName || order.product_name || "",amount:order.denomination || order.denomination_name,price:order.total,paidAt:order.status==="Pembayaran Berhasil"?order.updatedAt:""}));
     if(adminApiStatusEl)adminApiStatusEl.textContent="";
     render();
+    return true;
   }catch(error){
     remoteOrders=null;
     if(adminApiStatusEl)adminApiStatusEl.textContent="Gagal terhubung: "+(error.message||"Periksa token dan koneksi.");
     render();
+    return false;
   }
 }
 // ================================
