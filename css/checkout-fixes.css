@@ -4662,3 +4662,12 @@ body.payment-page #searchPanel{
     height:44px!important;
   }
 }
+
+/* ===== SHOP PAGE — DISABLE MOVING SHINE / STARDUST =====
+   Keep the existing purple panel colors and decorative highlights static.
+   Do not affect card hover feedback or the homepage Trending shine.
+*/
+body.shop-page #productList .product-info::before,
+body.shop-page #productList .product-info::after{
+  animation:none!important;
+}
