@@ -29,6 +29,11 @@
 #tab-games>p.muted,
 #tab-games #gamesTable>p.muted{display:none!important;}
 #app:has(#tab-games:not(.hidden))>.panel:first-child .stats{display:none!important;}
+/* Hilangkan panel statistik/panduan yang menjadi pill kosong pada modul tertentu */
+#app:has(#tab-add-game:not(.hidden))>.panel:first-child,
+#app:has(#tab-promos:not(.hidden))>.panel:first-child,
+#app:has(#tab-images:not(.hidden))>.panel:first-child,
+#app:has(#tab-image-studio:not(.hidden))>.panel:first-child{display:none!important;}
 /* Tambah Game: hide duplicate stats, title and introductory guidance only */
 #tab-add-game>h2,
 #tab-add-game>p.muted{display:none!important;}
