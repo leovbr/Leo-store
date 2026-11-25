@@ -27,11 +27,18 @@
 #tab-products #pIconPreviewWrap+button+small.muted{display:none!important;}
 #tab-products>.grid:first-of-type{grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;gap:14px;}
 #tab-products #productsTable th:nth-child(4),#tab-products #productsTable td:nth-child(4){display:none!important;}
+/* Beranda: sembunyikan panel statistik dan teks panduan, pertahankan seluruh kontrol */
+#app:has(#tab-homepage:not(.hidden))>.panel:first-child,
+#tab-homepage>h2,
+#tab-homepage>p.muted,
+#tab-homepage #homepageSetupNotice,
+#tab-homepage #homepageAllGamesTable>p.muted,
+#tab-homepage #homepageGamesTable>p.muted{display:none!important;}
 /* Menu Game: hide duplicate stats and explanatory copy only */
 #tab-games>h2,
 #tab-games>p.muted,
 #tab-games #gamesTable>p.muted{display:none!important;}
-#app:has(#tab-games:not(.hidden))>.panel:first-child .stats{display:none!important;}
+#app:has(#tab-games:not(.hidden))>.panel:first-child{display:none!important;}
 /* Hilangkan panel statistik/panduan yang menjadi pill kosong pada modul tertentu */
 #app:has(#tab-add-game:not(.hidden))>.panel:first-child,
 #app:has(#tab-promos:not(.hidden))>.panel:first-child,
