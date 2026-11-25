@@ -16,6 +16,29 @@
 #tab-image-studio .field textarea{display:block;width:100%;min-width:0;max-width:100%;}
 #tab-image-studio .image-upload-preview{min-width:0;width:100%;max-width:100%;}
 #tab-image-studio .actions{min-width:0;max-width:100%;}
+
+/* Produk & Harga: ringkas dan responsif tanpa mengubah fungsi form */
+#tab-products>h2:first-child,
+#tab-products>p:first-of-type,
+#tab-products #pIconPreviewWrap+button+small.muted{display:none!important;}
+#tab-products>.grid:first-of-type{grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;gap:14px;}
+#tab-products>.grid:first-of-type>.field{min-width:0;}
+#tab-products .field input,
+#tab-products .field select{min-width:0;}
+#tab-products #pIconPreviewWrap{align-items:center;flex-wrap:wrap;}
+#tab-products #pIconPreview{max-width:100%;}
+#tab-products>.grid:nth-of-type(2){grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px;}
+#tab-products .tablewrap{width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+@media(max-width:900px){#tab-products>.grid:first-of-type{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:560px){
+ #tab-products{padding:12px;overflow:hidden;}
+ #tab-products>.grid:first-of-type,
+ #tab-products>.grid:nth-of-type(2){grid-template-columns:minmax(0,1fr)!important;}
+ #tab-products .actions{gap:7px;}
+ #tab-products .actions button{max-width:100%;}
+ #tab-products #bulkPercent{width:100%!important;max-width:100%;}
+ #tab-products th,#tab-products td{padding:8px 7px;}
+}
 #tab-image-studio #isPreviewCard{width:100%;min-width:0;max-width:100%;overflow:hidden;}
 @media(max-width:600px){
  #tab-image-studio.panel{padding:12px;overflow:hidden;}
