@@ -88,6 +88,18 @@
  #tab-image-studio.panel{padding:12px;overflow:hidden;}
  #tab-image-studio .actions>*{max-width:100%;}
 }
+/* Image Studio multi-select produk tanpa batas pilihan */
+#tab-image-studio .is-product-multi{position:relative;width:100%;}
+#tab-image-studio .is-product-multi-trigger{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:left;background:#090e17;border:1px solid #344158;color:#f5f7fc;font-weight:500;}
+#tab-image-studio .is-product-multi-menu{position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:10020;padding:10px;background:#0d1726;border:1px solid #344158;border-radius:10px;box-shadow:0 16px 38px #000b;}
+#tab-image-studio .is-product-multi-tools{display:flex;gap:8px;margin:0 0 9px;}
+#tab-image-studio .is-product-multi-tools button{padding:7px 9px;font-size:12px;}
+#tab-image-studio .is-product-multi-search{width:100%;margin-bottom:8px;background:#090e17;color:#f5f7fc;border:1px solid #344158;border-radius:8px;padding:9px;}
+#tab-image-studio .is-product-multi-list{max-height:260px;overflow:auto;overscroll-behavior:contain;}
+#tab-image-studio .is-product-multi-option{display:flex;align-items:center;gap:9px;padding:9px 7px;border-radius:7px;color:#e8edf7;cursor:pointer;}
+#tab-image-studio .is-product-multi-option:hover{background:#1b2940;}
+#tab-image-studio .is-product-multi-option input{width:17px;height:17px;flex:0 0 auto;accent-color:#7c3aed;}
+#tab-image-studio .is-product-multi-count{display:block;margin-top:6px;color:#9caac0;font-size:11px;}
 </style>
 </head><body><header class="admin-header site-header"><a class="admin-brand header-brand" href="index.html"><div><span class="header-brand-text">LEOOSTORE.id</span><span class="admin-brand-subtitle">Catalog Admin</span></div></a><div class="admin-header-actions"><button class="admin-menu-toggle" id="adminMenuToggle" type="button" aria-label="Buka menu admin" aria-expanded="false" aria-controls="adminMenu"><span class="menu-icon"><span></span><span></span><span></span></span></button><nav class="admin-menu" id="adminMenu" aria-label="Navigasi admin">
 <a href="admin.html"><span>▦</span> Dashboard Transaksi</a>
@@ -113,7 +125,7 @@
 <div class="grid">
  <div class="field"><label>1. Pilih game</label><select id="isGame"></select></div>
  <div class="field"><label>2. Pilih kategori</label><select id="isCategory"></select></div>
- <div class="field"><label>3. Pilih produk (opsional)</label><select id="isProduct"></select></div>
+ <div class="field"><label>3. Pilih produk (opsional)</label><div id="isProductMultiSelect" class="is-product-multi"></div><select id="isProduct" multiple hidden aria-hidden="true"></select></div>
 </div>
 <div class="grid" style="margin-top:14px">
  <div class="field" style="grid-column:1/-1">
@@ -132,7 +144,7 @@
   <select id="isProductIconPicker" style="margin-top:7px" disabled><option value="">Pilih dari perpustakaan gambar…</option></select>
   <input id="isProductIconFile" type="file" accept="image/jpeg,image/png,image/webp" style="margin-top:8px" disabled>
   <div class="image-upload-preview square" id="isProductIconPreviewWrap"><img id="isProductIconPreview" alt="Preview ikon produk"><span>Preview ikon produk 1:1</span></div>
-  <div class="actions"><button id="uploadProductStudioIcon" type="button" class="secondary" disabled>Upload / gunakan hasil edit</button><button id="saveProductStudioIcon" type="button" disabled>Terapkan ikon ke produk</button><button id="clearProductStudioIcon" type="button" class="secondary" disabled>Hapus override ikon</button></div>
+  <div class="actions"><button id="uploadProductStudioIcon" type="button" class="secondary" disabled>Upload / gunakan hasil edit</button><button id="saveProductStudioIcon" type="button" disabled>Simpan Override Produk</button><button id="clearProductStudioIcon" type="button" class="secondary" disabled>Hapus override ikon</button></div>
  </div>
  <div class="field" style="grid-column:1/-1">
   <h3>Skala default kategori <b id="isCategoryValue">100%</b></h3>
