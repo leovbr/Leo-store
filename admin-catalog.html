@@ -29,6 +29,11 @@
 #tab-games>p.muted,
 #tab-games #gamesTable>p.muted{display:none!important;}
 #app:has(#tab-games:not(.hidden))>.panel:first-child .stats{display:none!important;}
+/* Tambah Game: hide duplicate stats, title and introductory guidance only */
+#tab-add-game>h2,
+#tab-add-game>p.muted{display:none!important;}
+#app:has(#tab-add-game:not(.hidden))>.panel:first-child .stats{display:none!important;}
+
 
 #tab-products>.grid:first-of-type>.field{min-width:0;}
 #tab-products .field input,
