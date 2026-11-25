@@ -13,6 +13,40 @@
 #app > .panel:first-child .title-row > div,
 #app > .panel:nth-child(2),
 #methods .fee-hint{display:none!important}
+
+/* Compact payment-methods load/status panel. */
+#app > .panel:first-child{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px;
+}
+#app > .panel:first-child .title-row{
+  flex:0 0 auto;
+  align-items:center;
+}
+#app > .panel:first-child #reload{
+  min-height:42px;
+  padding:10px 14px;
+  font-size:14px;
+  white-space:nowrap;
+}
+#app > .panel:first-child #status{
+  flex:1 1 auto;
+  min-width:0;
+  min-height:42px;
+  display:flex;
+  align-items:center;
+  margin:0;
+  padding:10px 12px;
+  font-size:14px;
+}
+@media(max-width:420px){
+  #app > .panel:first-child{gap:8px;padding:10px}
+  #app > .panel:first-child #reload{padding:9px 10px;font-size:13px}
+  #app > .panel:first-child #status{font-size:12px;padding:9px 10px}
+}
+
 </style>
 </head>
 <body>
