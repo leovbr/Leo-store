@@ -33,6 +33,11 @@
 #tab-add-game>h2,
 #tab-add-game>p.muted{display:none!important;}
 #app:has(#tab-add-game:not(.hidden))>.panel:first-child .stats{display:none!important;}
+/* Gambar: sembunyikan statistik, judul, dan seluruh teks panduan; kontrol tetap aktif */
+#tab-images>h2,
+#tab-images>p.muted,
+#tab-images .field small.muted,
+#app:has(#tab-images:not(.hidden))>.panel:first-child .stats{display:none!important;}
 /* Event & Promo: hide all redundant introductory and helper copy */
 #tab-promos>h2,
 #tab-promos>p.muted,
