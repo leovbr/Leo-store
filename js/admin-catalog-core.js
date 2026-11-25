@@ -11,7 +11,8 @@ function gameConfig(g){const m=String(g.description||"").match(/\n?\[\[LEO_CONFI
 function renderHomepage(){const notice=$("homepageSetupNotice");if(!homepageSettings){const e=window.homepageSettingsReadError;notice.textContent=e?"Gagal membaca pengaturan beranda dari Supabase ("+(e.code||"tanpa kode")+"): "+e.message+(e.details?" — "+e.details:"")+(e.hint?" — Petunjuk: "+e.hint:"")+". Tabel sudah terdeteksi di admin, jadi jangan jalankan migration ulang dulu.":"Supabase tidak mengembalikan baris pengaturan beranda id=1. Pastikan baris itu ada di public.store_homepage_settings.";["homeTrendingEnabled","homeTrendingTitle","homeTrendingLimit","homeAllEnabled","homeAllTitle","homeAllLimit","homeShowAllButton","saveTrending","saveAllGames"].forEach(id=>$(id).disabled=true);$("homepageGamesTable").innerHTML="";return;}notice.textContent="Pengaturan terhubung. Tekan Simpan untuk menerapkan perubahan ke Home.";["homeTrendingEnabled","homeTrendingTitle","homeTrendingLimit","homeAllEnabled","homeAllTitle","homeAllLimit","homeShowAllButton","saveTrending","saveAllGames"].forEach(id=>$(id).disabled=false);$("homeTrendingEnabled").value=String(homepageSettings.trending_enabled);$("homeTrendingTitle").value=homepageSettings.trending_title||"Trending";$("homeTrendingLimit").value=String(homepageSettings.trending_limit||6);$("homeAllEnabled").value=String(homepageSettings.all_games_enabled);$("homeAllTitle").value=homepageSettings.all_games_title||"All Games";$("homeAllLimit").value=String(homepageSettings.all_games_initial_limit||12);$("homeShowAllButton").value=String(homepageSettings.show_all_games_button!==false);const allSelected=new Set(Array.isArray(homepageSettings.all_games_slugs)?homepageSettings.all_games_slugs:[]);const orderedGames=[...games].sort((a,b)=>{const ai=allSelected.has(a.slug)?homepageSettings.all_games_slugs.indexOf(a.slug):99999;const bi=allSelected.has(b.slug)?homepageSettings.all_games_slugs.indexOf(b.slug):99999;return ai-bi||Number(a.sort_order||0)-Number(b.sort_order||0)||String(a.name).localeCompare(String(b.name));});$("homepageAllGamesTable").innerHTML='<table><thead><tr><th>Tampil</th><th>Urutan</th><th>Game</th><th>Status katalog</th></tr></thead><tbody>'+orderedGames.map((g,i)=>'<tr data-allgame-row="'+esc(g.slug)+'"><td><input type="checkbox" data-allgame-slug="'+esc(g.slug)+'" '+(allSelected.has(g.slug)&&g.is_active?'checked':'')+' '+(!g.is_active?'disabled':'')+' aria-label="Tampilkan '+esc(g.name)+' di All Games"></td><td><input type="number" min="1" step="1" data-allgame-order="'+esc(g.slug)+'" value="'+(allSelected.has(g.slug)?homepageSettings.all_games_slugs.indexOf(g.slug)+1:'')+'" placeholder="—" style="width:76px" '+(!g.is_active?'disabled':'')+'></td><td><b>'+esc(g.name)+'</b><br><small>'+esc(g.slug)+'</small></td><td><span class="pill">'+(g.is_active?'Aktif':'Nonaktif')+'</span></td></tr>').join("")+'</tbody></table><p class="muted">Isi nomor urutan (1, 2, 3, dst.) untuk mengatur posisi game yang dicentang. Nomor yang sama akan diurutkan berdasarkan nama.</p>';const trendingSlugs=Array.isArray(homepageSettings.trending_slugs)?homepageSettings.trending_slugs:[];const selected=new Set(trendingSlugs);const trendingGames=[...games].sort((a,b)=>{const ai=selected.has(a.slug)?trendingSlugs.indexOf(a.slug):99999;const bi=selected.has(b.slug)?trendingSlugs.indexOf(b.slug):99999;return ai-bi||Number(a.sort_order||0)-Number(b.sort_order||0)||String(a.name).localeCompare(String(b.name));});$("homepageGamesTable").innerHTML='<table><thead><tr><th>Trending</th><th>Urutan</th><th>Game</th><th>Status katalog</th></tr></thead><tbody>'+trendingGames.map(g=>'<tr><td><input type="checkbox" data-trending-slug="'+esc(g.slug)+'" '+(selected.has(g.slug)&&g.is_active?'checked':'')+' '+(!g.is_active?'disabled':'')+' aria-label="Tampilkan '+esc(g.name)+' di Trending"></td><td><input type="number" min="1" step="1" data-trending-order="'+esc(g.slug)+'" value="'+(selected.has(g.slug)?trendingSlugs.indexOf(g.slug)+1:'')+'" placeholder="—" style="width:76px" '+(!g.is_active?'disabled':'')+'></td><td><b>'+esc(g.name)+'</b><br><small>'+esc(g.slug)+'</small></td><td><span class="pill">'+(g.is_active?'Aktif':'Nonaktif')+'</span></td></tr>').join("")+'</tbody></table><p class="muted">Centang game lalu isi nomor urutan (1, 2, 3, dst.). Nomor terkecil tampil lebih dulu.</p>';}function refreshImagePickers(){const opts='<option value="">Pilih gambar yang sudah diunggah…</option>'+images.map(i=>'<option value="'+esc(i.image_url)+'">'+esc(i.image_key)+'</option>').join("");$("gIconPicker").innerHTML=opts;$("gBannerPicker").innerHTML=opts;$("gCurrencyIconPicker").innerHTML=opts;$("pIconPicker").innerHTML=opts;$("promoImagePicker").innerHTML=opts;const gameOpts='<option value="">Pilih game…</option>'+games.filter(g=>g.is_active).map(g=>'<option value="'+esc(g.slug)+'">'+esc(g.name)+'</option>').join("");$("promoTargetGame").innerHTML=gameOpts;}
 
 function imageScaleRow(gameSlug,category,productId){return imageScales.find(x=>x.game_slug===gameSlug&&x.category===category&&(productId?x.product_id===productId:x.product_id===null))||null;}
-function selectedStudioProduct(){return products.find(p=>p.id===$("isProduct").value)||null;}
+function selectedStudioProducts(){const el=$("isProduct");return el?[...el.selectedOptions].map(o=>products.find(p=>p.id===o.value)).filter(Boolean):[];}
+function selectedStudioProduct(){const selected=selectedStudioProducts();return selected.length===1?selected[0]:null;}
 function refreshStudioIconPickers(){
  const opts='<option value="">Pilih dari perpustakaan gambar…</option>'+images.map(i=>'<option value="'+esc(i.image_url)+'">'+esc(i.image_key)+'</option>').join("");
  ["isCategoryIconPicker","isProductIconPicker"].forEach(id=>{const el=$(id),v=el.value;el.innerHTML=opts;if([...el.options].some(o=>o.value===v))el.value=v;});
@@ -20,40 +21,59 @@ function studioPreviewIcon(kind,url){const img=$(kind==="category"?"isCategoryIc
 function renderImageStudio(){
  const gameSelect=$("isGame"),categorySelect=$("isCategory"),productSelect=$("isProduct");
  if(!gameSelect||!categorySelect||!productSelect)return;
- const oldGame=gameSelect.value,oldCategory=categorySelect.value,oldProduct=productSelect.value;
+ const oldGame=gameSelect.value,oldCategory=categorySelect.value,oldProducts=selectedStudioProducts().map(p=>p.id);
  gameSelect.innerHTML=games.map(g=>'<option value="'+esc(g.slug)+'">'+esc(g.name)+'</option>').join("");
  if(games.some(g=>g.slug===oldGame))gameSelect.value=oldGame;
- refreshStudioIconPickers();renderStudioCategories(oldCategory,oldProduct);
+ refreshStudioIconPickers();renderStudioCategories(oldCategory,oldProducts);
 }
-function renderStudioCategories(previousCategory,previousProduct){
+function renderStudioCategories(previousCategory,previousProducts){
  const gameSlug=$("isGame").value,categories=[...new Set(products.filter(p=>p.game_slug===gameSlug).map(p=>p.category||"Top Up"))];
  $("isCategory").innerHTML=categories.map(c=>'<option value="'+esc(c)+'">'+esc(c)+'</option>').join("");
  if(categories.includes(previousCategory))$("isCategory").value=previousCategory;
- renderStudioProducts(previousProduct);
+ renderStudioProducts(previousProducts);
 }
-function renderStudioProducts(previousProduct){
- const gameSlug=$("isGame").value,category=$("isCategory").value,rows=products.filter(p=>p.game_slug===gameSlug&&(p.category||"Top Up")===category);
- $("isProduct").innerHTML='<option value="">Pilih produk…</option>'+rows.map(p=>'<option value="'+esc(p.id)+'">'+esc(p.amount)+'</option>').join("");
- if(rows.some(p=>p.id===previousProduct))$("isProduct").value=previousProduct;
- updateStudioControls();
+function renderStudioProducts(previousProducts=[]){
+ const gameSlug=$("isGame").value,category=$("isCategory").value,rows=products.filter(p=>p.game_slug===gameSlug&&(p.category||"Top Up")===category),select=$("isProduct"),validIds=new Set(rows.map(p=>p.id)),wanted=new Set((Array.isArray(previousProducts)?previousProducts:[previousProducts]).filter(id=>validIds.has(id)));
+ select.innerHTML=rows.map(p=>'<option value="'+esc(p.id)+'"'+(wanted.has(p.id)?' selected':'')+'>'+esc(p.amount)+'</option>').join("");
+ const wrap=$("isProductMultiSelect");
+ wrap.innerHTML='<button type="button" id="isProductMultiTrigger" class="is-product-multi-trigger"><span id="isProductMultiSummary">Pilih produk…</span><span>⌄</span></button><div id="isProductMultiMenu" class="is-product-multi-menu" hidden><div class="is-product-multi-tools"><button type="button" id="isProductSelectAll" class="secondary">Pilih semua</button><button type="button" id="isProductClearAll" class="secondary">Hapus pilihan</button></div><input id="isProductMultiSearch" class="is-product-multi-search" type="search" placeholder="Cari nominal produk…"><div id="isProductMultiList" class="is-product-multi-list">'+rows.map(p=>'<label class="is-product-multi-option" data-product-label="'+esc(p.amount.toLowerCase())+'"><input type="checkbox" data-product-id="'+esc(p.id)+'"'+(wanted.has(p.id)?' checked':'')+'><span>'+esc(p.amount)+'</span></label>').join("")+'</div></div><span id="isProductMultiCount" class="is-product-multi-count"></span>';
+ const menu=$("isProductMultiMenu"),trigger=$("isProductMultiTrigger");
+ trigger.onclick=()=>{menu.hidden=!menu.hidden;};
+ $("isProductMultiSearch").oninput=e=>{const q=e.target.value.trim().toLowerCase();wrap.querySelectorAll("[data-product-label]").forEach(el=>{el.style.display=el.dataset.productLabel.includes(q)?"flex":"none";});};
+ const syncSelection=()=>{
+  const chosen=[...wrap.querySelectorAll("input[data-product-id]:checked")].map(el=>el.dataset.productId);
+  [...select.options].forEach(o=>o.selected=chosen.includes(o.value));
+  $("isProductIconUrl").value="";$("isProductIconPicker").value="";
+  updateStudioProductMultiSummary();updateStudioControls();
+ };
+ wrap.querySelectorAll("input[data-product-id]").forEach(el=>el.addEventListener("change",syncSelection));
+ $("isProductSelectAll").onclick=()=>{wrap.querySelectorAll("input[data-product-id]").forEach(el=>{if(el.closest("label").style.display!=="none")el.checked=true;});syncSelection();};
+ $("isProductClearAll").onclick=()=>{wrap.querySelectorAll("input[data-product-id]").forEach(el=>el.checked=false);syncSelection();};
+ updateStudioProductMultiSummary();updateStudioControls();
+}
+function updateStudioProductMultiSummary(){
+ const selected=selectedStudioProducts(),summary=$("isProductMultiSummary"),count=$("isProductMultiCount");
+ if(summary)summary.textContent=selected.length===0?"Pilih produk…":selected.length===1?selected[0].amount:selected.length+" produk dipilih";
+ if(count)count.textContent=selected.length+" produk dipilih dari kategori ini";
 }
 function updateStudioControls(){
- const gameSlug=$("isGame").value,category=$("isCategory").value,p=selectedStudioProduct();
+ const gameSlug=$("isGame").value,category=$("isCategory").value,selected=selectedStudioProducts(),p=selected.length===1?selected[0]:null;
  const cr=imageScaleRow(gameSlug,category,null),pr=p?imageScaleRow(gameSlug,category,p.id):null,cs=Number(cr?.scale||100),effective=Number(pr?.scale||cs);
  $("isCategoryScale").value=String(cs);$("isCategoryValue").textContent=cs+"%";
  $("isProductScale").disabled=!p;$("saveProductScale").disabled=!p;$("resetProductScale").disabled=!p||!pr;
  $("isProductScale").value=String(pr?.scale||cs);
- $("isProductValue").textContent=pr?Number(pr.scale)+"% (override)":p?"Ikuti kategori ("+cs+"%)":"Pilih produk";
- $("isProductHint").textContent=!p?"Pilih produk untuk mengatur override skala.":pr?"Produk ini memakai skala khusus. Hapus override untuk mengikuti kategori.":"Produk ini mengikuti skala kategori.";
+ $("isProductValue").textContent=pr?Number(pr.scale)+"% (override)":p?"Ikuti kategori ("+cs+"%)":"Pilih tepat satu produk untuk mengatur skala";
+ $("isProductHint").textContent=selected.length>1?"Skala khusus hanya dapat diedit saat tepat satu produk dipilih.":!p?"Pilih satu produk untuk mengatur override skala.":pr?"Produk ini memakai skala khusus. Hapus override untuk mengikuti kategori.":"Produk ini mengikuti skala kategori.";
  const categoryIcon=cr?.icon_url||"",productIcon=pr?.icon_url||"";
  $("isCategoryIconUrl").value=categoryIcon;$("isCategoryIconPicker").value=categoryIcon;
- $("isProductIconUrl").value=productIcon;$("isProductIconPicker").value=productIcon;
- ["isProductIconUrl","isProductIconPicker","isProductIconFile","uploadProductStudioIcon","saveProductStudioIcon","clearProductStudioIcon"].forEach(id=>$(id).disabled=!p);
- $("isProductIconHint").textContent=!p?"Pilih produk untuk mengatur ikon override.":productIcon?"Produk ini memiliki ikon khusus.":"Produk ini mengikuti ikon kategori, lalu ikon produk katalog jika kategori tidak punya ikon.";
- studioPreviewIcon("category",categoryIcon);studioPreviewIcon("product",productIcon);
- const effectiveIcon=productIcon||categoryIcon||p?.icon_url||games.find(g=>g.slug===gameSlug)?.currency_icon_url||"";
- $("isPreviewTitle").textContent=p?.amount||category||"Pilih produk";
- $("isPreviewPrice").textContent=p?price(p.price):"Pilih produk untuk preview harga";
+ if(p){$("isProductIconUrl").value=productIcon;$("isProductIconPicker").value=productIcon;}
+ else if(!selected.length){$("isProductIconUrl").value="";$("isProductIconPicker").value="";}
+ ["isProductIconUrl","isProductIconPicker","isProductIconFile","uploadProductStudioIcon","saveProductStudioIcon","clearProductStudioIcon"].forEach(id=>$(id).disabled=selected.length===0);
+ $("isProductIconHint").textContent=selected.length===0?"Pilih satu atau beberapa produk untuk mengatur ikon override.":selected.length>1?selected.length+" produk dipilih. Ikon yang disimpan akan diterapkan ke semuanya.":productIcon?"Produk ini memiliki ikon khusus.":"Produk ini mengikuti ikon kategori, lalu ikon produk katalog jika kategori tidak punya ikon.";
+ studioPreviewIcon("category",categoryIcon);studioPreviewIcon("product",$("isProductIconUrl").value.trim()||productIcon);
+ const effectiveIcon=$("isProductIconUrl").value.trim()||productIcon||categoryIcon||p?.icon_url||games.find(g=>g.slug===gameSlug)?.currency_icon_url||"";
+ $("isPreviewTitle").textContent=p?.amount||(selected.length>1?selected.length+" produk dipilih":category||"Pilih produk");
+ $("isPreviewPrice").textContent=p?price(p.price):selected.length>1?"Preview ikon untuk produk terpilih":"Pilih satu produk untuk preview harga";
  const img=$("isPreviewImage");if(effectiveIcon){img.src=effectiveIcon;img.style.display="block";}else{img.removeAttribute("src");img.style.display="none";}
  img.style.transform="scale("+effective/100+")";
  $("isEffectiveScale").textContent="Skala efektif: "+effective+"%"+(pr?" · override produk":" · default kategori");
@@ -71,17 +91,17 @@ async function saveImageScale(productId,scale,iconUrl){
 async function uploadStudioIcon(kind){
  const isCategory=kind==="category",file=$(isCategory?"isCategoryIconFile":"isProductIconFile").files?.[0];
  if(!file){say("Pilih gambar terlebih dahulu.");return;}
- const slug=$("isGame").value,product=selectedStudioProduct();
- if(!isCategory&&!product){say("Pilih produk terlebih dahulu.");return;}
- const url=await uploadProductIconFile(file,(isCategory?"category-":"studio-")+ (product?.id||$("isCategory").value),slug);
+ const slug=$("isGame").value,selected=selectedStudioProducts(),product=selectedStudioProduct();
+ if(!isCategory&&!selected.length){say("Pilih minimal satu produk terlebih dahulu.");return;}
+ const url=await uploadProductIconFile(file,isCategory?"category-"+$("isCategory").value:"studio-"+(product?.id||"bulk-"+$("isCategory").value),slug);
  if(!url)return;
  const field=$(isCategory?"isCategoryIconUrl":"isProductIconUrl"),picker=$(isCategory?"isCategoryIconPicker":"isProductIconPicker");
  field.value=url;picker.value=url;studioPreviewIcon(kind,url);
- const existing=imageScaleRow(slug,$("isCategory").value,isCategory?null:product.id),fallback=imageScaleRow(slug,$("isCategory").value,null);await saveImageScale(isCategory?null:product.id,Number(existing?.scale||fallback?.scale||100),url);
+ if(isCategory){const existing=imageScaleRow(slug,$("isCategory").value,null),fallback=imageScaleRow(slug,$("isCategory").value,null);await saveImageScale(null,Number(existing?.scale||fallback?.scale||100),url);}
+ else say("Ikon berhasil diunggah. Tekan Simpan Override Produk untuk menerapkannya ke "+selected.length+" produk terpilih.");
 }
 $("isGame").addEventListener("change",()=>renderStudioCategories("",""));
-$("isCategory").addEventListener("change",()=>renderStudioProducts(""));
-$("isProduct").addEventListener("change",updateStudioControls);
+$("isCategory").addEventListener("change",()=>renderStudioProducts([]));
 $("isCategoryIconUrl").addEventListener("input",()=>studioPreviewIcon("category",$("isCategoryIconUrl").value.trim()));
 $("isCategoryIconPicker").addEventListener("change",()=>{$("isCategoryIconUrl").value=$("isCategoryIconPicker").value;studioPreviewIcon("category",$("isCategoryIconPicker").value);});
 $("isProductIconUrl").addEventListener("input",()=>studioPreviewIcon("product",$("isProductIconUrl").value.trim()));
@@ -89,9 +109,38 @@ $("isProductIconPicker").addEventListener("change",()=>{$("isProductIconUrl").va
 $("uploadCategoryIcon").onclick=()=>uploadStudioIcon("category");
 $("uploadProductStudioIcon").onclick=()=>uploadStudioIcon("product");
 $("saveCategoryIcon").onclick=()=>{const row=imageScaleRow($("isGame").value,$("isCategory").value,null);saveImageScale(null,Number(row?.scale||100),$("isCategoryIconUrl").value.trim()||null);};
-$("saveProductStudioIcon").onclick=()=>{const p=selectedStudioProduct();if(p){const row=imageScaleRow($("isGame").value,$("isCategory").value,p.id),cat=imageScaleRow($("isGame").value,$("isCategory").value,null);saveImageScale(p.id,Number(row?.scale||cat?.scale||100),$("isProductIconUrl").value.trim()||null);}};
+$("saveProductStudioIcon").onclick=async()=>{
+ const selected=selectedStudioProducts(),url=$("isProductIconUrl").value.trim(),slug=$("isGame").value,category=$("isCategory").value;
+ if(!selected.length){say("Pilih minimal satu produk terlebih dahulu.");return;}
+ if(!url){say("Pilih atau upload ikon terlebih dahulu.");return;}
+ const btn=$("saveProductStudioIcon");btn.disabled=true;
+ let succeeded=0,failed=[];
+ try{
+  for(let i=0;i<selected.length;i++){
+   const product=selected[i],existing=imageScaleRow(slug,category,product.id),categoryRow=imageScaleRow(slug,category,null);
+   const payload={game_slug:slug,category,product_id:product.id,scale:Number(existing?.scale||categoryRow?.scale||100),icon_url:url,updated_at:new Date().toISOString()};
+   const result=existing?await db.from("store_image_scales").update(payload).eq("id",existing.id):await db.from("store_image_scales").insert(payload);
+   if(result.error)failed.push(product.amount+": "+result.error.message);else succeeded++;
+   if((i+1)%10===0||i===selected.length-1)say("Menyimpan override ikon… "+(i+1)+"/"+selected.length+" · "+succeeded+" berhasil");
+  }
+  const refreshed=await db.from("store_image_scales").select("*");
+  if(refreshed.error){say("Override tersimpan "+succeeded+"/"+selected.length+", tetapi gagal memuat ulang data: "+refreshed.error.message);return;}
+  imageScales=refreshed.data||[];updateStudioControls();
+  if(!failed.length)say("Berhasil: ikon override diterapkan ke "+succeeded+" produk.");
+  else say("Sebagian berhasil: "+succeeded+" berhasil, "+failed.length+" gagal. "+failed.slice(0,5).join(" | "));
+ }catch(err){say("Penyimpanan override terhenti: "+(err?.message||String(err))+" · "+succeeded+" berhasil dari "+selected.length+".");}
+ finally{btn.disabled=selectedStudioProducts().length===0;}
+};
 $("clearCategoryIcon").onclick=()=>{$("isCategoryIconUrl").value="";$("isCategoryIconPicker").value="";studioPreviewIcon("category","");const row=imageScaleRow($("isGame").value,$("isCategory").value,null);saveImageScale(null,Number(row?.scale||100),null);};
-$("clearProductStudioIcon").onclick=()=>{const p=selectedStudioProduct();if(p){$("isProductIconUrl").value="";$("isProductIconPicker").value="";studioPreviewIcon("product","");const row=imageScaleRow($("isGame").value,$("isCategory").value,p.id);if(row)saveImageScale(p.id,Number(row.scale||100),null);else updateStudioControls();}};
+$("clearProductStudioIcon").onclick=async()=>{
+ const selected=selectedStudioProducts();if(!selected.length)return;
+ let succeeded=0,failed=[];
+ for(const p of selected){const row=imageScaleRow($("isGame").value,$("isCategory").value,p.id);if(!row||!row.icon_url){succeeded++;continue;}const {error}=await db.from("store_image_scales").update({icon_url:null,updated_at:new Date().toISOString()}).eq("id",row.id);if(error)failed.push(p.amount+": "+error.message);else succeeded++;}
+ const refreshed=await db.from("store_image_scales").select("*");if(!refreshed.error)imageScales=refreshed.data||[];
+ $("isProductIconUrl").value="";$("isProductIconPicker").value="";studioPreviewIcon("product","");
+ say(failed.length?"Sebagian override dihapus: "+succeeded+" berhasil, "+failed.length+" gagal. "+failed.slice(0,5).join(" | "):"Override ikon berhasil dihapus dari "+succeeded+" produk terpilih.");
+ updateStudioControls();
+};
 $("isCategoryScale").addEventListener("input",()=>{$("isCategoryValue").textContent=$("isCategoryScale").value+"%";const p=selectedStudioProduct(),pr=p?imageScaleRow($("isGame").value,$("isCategory").value,p.id):null;if(!pr){$("isProductScale").value=$("isCategoryScale").value;$("isProductValue").textContent="Ikuti kategori ("+$("isCategoryScale").value+"%)";}const scale=pr?.scale||$("isCategoryScale").value;$("isPreviewImage").style.transform="scale("+Number(scale)/100+")";$("isEffectiveScale").textContent="Preview skala kategori: "+$("isCategoryScale").value+"%";});
 $("isProductScale").addEventListener("input",()=>{$("isProductValue").textContent=$("isProductScale").value+"% (preview override)";$("isPreviewImage").style.transform="scale("+Number($("isProductScale").value)/100+")";$("isEffectiveScale").textContent="Preview skala produk: "+$("isProductScale").value+"%";});
 $("saveCategoryScale").onclick=()=>saveImageScale(null,Number($("isCategoryScale").value));
