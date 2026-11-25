@@ -193,6 +193,33 @@ if(order.status==="Pembayaran Berhasil"&&status!=="Pembayaran Berhasil"&&tx!=="r
 await env.DB.prepare("UPDATE orders SET status=?,midtrans_transaction_id=?,midtrans_status=?,updated_at=? WHERE id=?").bind(status,body.transaction_id||null,tx,now,orderId).run();await ensurePromoUsageTable(env.DB);if(status==="Pembayaran Berhasil"){await env.DB.prepare("UPDATE promo_redemptions SET status='paid',updated_at=? WHERE order_id=? AND status='reserved'").bind(now,orderId).run();if(order.status!=="Pembayaran Berhasil"){await sendOrderEmail(env,{...order,total:order.total,status}, "paid_admin").catch(error=>console.error("Admin payment email logging failed",String(error?.message||error)));await sendOrderEmail(env,{...order,total:order.total,status}, "paid").catch(error=>console.error("Customer payment email logging failed",String(error?.message||error)));await sendPushToCustomer(env,order.customer_email,{title:"Pembayaran berhasil",body:"Pesanan "+order.id+" kamu sudah berhasil dibayar.",url:"/Leo-store/order.html?order="+encodeURIComponent(order.id),tag:"order-"+order.id}).catch(error=>console.error("Customer payment push failed",String(error?.message||error)));}}else if(status==="Kadaluarsa"||status==="Dibatalkan")await releasePromoUsage(env.DB,orderId,now);return json({ok:true});}
 
 
+async function handleAdminOrderReset(request,env){
+  const user=await verifyPushUser(request);
+  if(!user)return json({ok:false,error:"Sesi tidak valid atau sudah berakhir. Login kembali."},401);
+  if(user.id!==PUSH_ADMIN_UID)return json({ok:false,error:"Akses khusus admin."},403);
+  if(!env.DB)return json({ok:false,error:"Database belum dikonfigurasi."},503);
+  let body;try{body=await request.json();}catch{return json({ok:false,error:"Konfirmasi reset tidak valid."},400);}
+  if(body?.confirm!==true)return json({ok:false,error:"Konfirmasi reset wajib diberikan."},400);
+  await ensureOrderTable(env.DB);
+  await ensurePromoUsageTable(env.DB);
+  await ensureEmailNotificationTable(env.DB);
+  const [orders,promoRedemptions,emailNotifications]=await Promise.all([
+    env.DB.prepare("SELECT COUNT(*) AS count FROM orders").first(),
+    env.DB.prepare("SELECT COUNT(*) AS count FROM promo_redemptions WHERE order_id IN (SELECT id FROM orders)").first(),
+    env.DB.prepare("SELECT COUNT(*) AS count FROM email_notifications WHERE order_id IN (SELECT id FROM orders)").first()
+  ]);
+  await env.DB.batch([
+    env.DB.prepare("DELETE FROM email_notifications WHERE order_id IN (SELECT id FROM orders)"),
+    env.DB.prepare("DELETE FROM promo_redemptions WHERE order_id IN (SELECT id FROM orders)"),
+    env.DB.prepare("DELETE FROM orders")
+  ]);
+  return json({ok:true,deleted:{
+    orders:Number(orders?.count||0),
+    promoRedemptions:Number(promoRedemptions?.count||0),
+    emailNotifications:Number(emailNotifications?.count||0)
+  }});
+}
+
 async function handleAdminOrders(request,env){
   const user=await verifyPushUser(request);
   if(!user)return json({ok:false,error:"Sesi tidak valid atau sudah berakhir. Login kembali."},401);
@@ -445,4 +472,4 @@ if(url.pathname==="/api/push/event"&&request.method==="POST")return handlePushEv
 if(url.pathname==="/health"&&request.method==="GET")return json({ok:true,service:"LEOOSTORE Payment API",environment:"sandbox"});if(url.pathname==="/api/orders"&&request.method==="GET")return json({ok:true,service:"LEOOSTORE Payment API",endpoint:"orders",method:"POST",message:"Endpoint aktif. Gunakan POST untuk membuat pembayaran."});if(url.pathname==="/api/leaderboard"&&request.method==="GET")return handleLeaderboard(env,url);
 
 
-if(url.pathname==="/api/admin/orders"&&request.method==="GET")return handleAdminOrders(request,env);if(url.pathname==="/api/orders"&&request.method==="POST")return handleCreateOrder(request,env);if(url.pathname==="/api/midtrans/webhook"&&request.method==="POST")return handleWebhook(request,env);const m=url.pathname.match(/^\/api\/orders\/([^/]+)$/);if(m&&request.method==="GET")return handleGetOrder(env,decodeURIComponent(m[1]));return json({ok:false,error:"Endpoint tidak ditemukan."},404);}catch(error){console.error("Worker error",error);return json({ok:false,error:"Terjadi kesalahan server."},500);}}};
+if(url.pathname==="/api/admin/orders/reset"&&request.method==="POST")return handleAdminOrderReset(request,env);if(url.pathname==="/api/admin/orders"&&request.method==="GET")return handleAdminOrders(request,env);if(url.pathname==="/api/orders"&&request.method==="POST")return handleCreateOrder(request,env);if(url.pathname==="/api/midtrans/webhook"&&request.method==="POST")return handleWebhook(request,env);const m=url.pathname.match(/^\/api\/orders\/([^/]+)$/);if(m&&request.method==="GET")return handleGetOrder(env,decodeURIComponent(m[1]));return json({ok:false,error:"Endpoint tidak ditemukan."},404);}catch(error){console.error("Worker error",error);return json({ok:false,error:"Terjadi kesalahan server."},500);}}};
