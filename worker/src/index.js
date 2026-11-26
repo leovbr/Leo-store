@@ -193,6 +193,10 @@ if(order.status==="Pembayaran Berhasil"&&status!=="Pembayaran Berhasil"&&tx!=="r
 await env.DB.prepare("UPDATE orders SET status=?,midtrans_transaction_id=?,midtrans_status=?,updated_at=? WHERE id=?").bind(status,body.transaction_id||null,tx,now,orderId).run();await ensurePromoUsageTable(env.DB);if(status==="Pembayaran Berhasil"){await env.DB.prepare("UPDATE promo_redemptions SET status='paid',updated_at=? WHERE order_id=? AND status='reserved'").bind(now,orderId).run();if(order.status!=="Pembayaran Berhasil"){await sendOrderEmail(env,{...order,total:order.total,status}, "paid_admin").catch(error=>console.error("Admin payment email logging failed",String(error?.message||error)));await sendOrderEmail(env,{...order,total:order.total,status}, "paid").catch(error=>console.error("Customer payment email logging failed",String(error?.message||error)));await sendPushToCustomer(env,order.customer_email,{title:"Pembayaran berhasil",body:"Pesanan "+order.id+" kamu sudah berhasil dibayar.",url:"/Leo-store/order.html?order="+encodeURIComponent(order.id),tag:"order-"+order.id}).catch(error=>console.error("Customer payment push failed",String(error?.message||error)));}}else if(status==="Kadaluarsa"||status==="Dibatalkan")await releasePromoUsage(env.DB,orderId,now);return json({ok:true});}
 
 
+async function ensureAdminSettingsTable(db){
+  await db.prepare("CREATE TABLE IF NOT EXISTS admin_settings (setting_key TEXT PRIMARY KEY, setting_value TEXT NOT NULL, updated_at TEXT NOT NULL)").run();
+}
+
 async function handleAdminOrderReset(request,env){
   const user=await verifyPushUser(request);
   if(!user)return json({ok:false,error:"Sesi tidak valid atau sudah berakhir. Login kembali."},401);
@@ -200,41 +204,31 @@ async function handleAdminOrderReset(request,env){
   if(!env.DB)return json({ok:false,error:"Database belum dikonfigurasi."},503);
   let body;try{body=await request.json();}catch{return json({ok:false,error:"Konfirmasi reset tidak valid."},400);}
   if(body?.confirm!==true)return json({ok:false,error:"Konfirmasi reset wajib diberikan."},400);
-  await ensureOrderTable(env.DB);
-  await ensurePromoUsageTable(env.DB);
-  await ensureEmailNotificationTable(env.DB);
-  const [orders,promoRedemptions,emailNotifications]=await Promise.all([
-    env.DB.prepare("SELECT COUNT(*) AS count FROM orders").first(),
-    env.DB.prepare("SELECT COUNT(*) AS count FROM promo_redemptions WHERE order_id IN (SELECT id FROM orders)").first(),
-    env.DB.prepare("SELECT COUNT(*) AS count FROM email_notifications WHERE order_id IN (SELECT id FROM orders)").first()
-  ]);
-  await env.DB.batch([
-    env.DB.prepare("DELETE FROM email_notifications WHERE order_id IN (SELECT id FROM orders)"),
-    env.DB.prepare("DELETE FROM promo_redemptions WHERE order_id IN (SELECT id FROM orders)"),
-    env.DB.prepare("DELETE FROM orders")
-  ]);
-  return json({ok:true,deleted:{
-    orders:Number(orders?.count||0),
-    promoRedemptions:Number(promoRedemptions?.count||0),
-    emailNotifications:Number(emailNotifications?.count||0)
-  }});
+  await ensureAdminSettingsTable(env.DB);
+  const resetAt=new Date().toISOString();
+  await env.DB.prepare("INSERT INTO admin_settings (setting_key,setting_value,updated_at) VALUES ('orders_stats_reset_at',?,?) ON CONFLICT(setting_key) DO UPDATE SET setting_value=excluded.setting_value,updated_at=excluded.updated_at").bind(resetAt,resetAt).run();
+  return json({ok:true,resetAt,deleted:{orders:0}});
 }
-
 async function handleAdminOrders(request,env){
   const user=await verifyPushUser(request);
-  if(!user)return json({ok:false,error:"Sesi tidak valid atau sudah berakhir. Login kembali."},401);
+  if(!user)return json({ok:false,error:"Sesi tidak valid o sudah berakhir. Login kembali."},401);
   if(user.id!==PUSH_ADMIN_UID)return json({ok:false,error:"Akses khusus admin."},403);
   if(!env.DB)return json({ok:false,error:"Database belum dikonfigurasi."},503);
   await ensureOrderTable(env.DB);
+  await ensureAdminSettingsTable(env.DB);
+  const setting=await env.DB.prepare("SELECT setting_value FROM admin_settings WHERE setting_key='orders_stats_reset_at'").first();
+  const resetAt=String(setting?.setting_value||"");
   const url=new URL(request.url);
   const limit=Math.max(1,Math.min(100,Number(url.searchParams.get("limit"))||50));
   const before=String(url.searchParams.get("before")||"").trim();
-  const rows=before
-    ? await env.DB.prepare("SELECT id AS orderId,product_id AS productId,product_name AS productName,denomination_id AS denominationId,denomination_name AS denomination,player_id AS playerId,server_id AS server,payment_method AS paymentId,subtotal,fee,discount,total,status,midtrans_transaction_id AS transactionId,midtrans_status AS rawStatus,customer_email AS email,customer_whatsapp AS whatsapp,created_at AS createdAt,updated_at AS updatedAt FROM orders WHERE created_at < ? ORDER BY created_at DESC LIMIT ?").bind(before,limit).all()
-    : await env.DB.prepare("SELECT id AS orderId,product_id AS productId,product_name AS productName,denomination_id AS denominationId,denomination_name AS denomination,player_id AS playerId,server_id AS server,payment_method AS paymentId,subtotal,fee,discount,total,status,midtrans_transaction_id AS transactionId,midtrans_status AS rawStatus,customer_email AS email,customer_whatsapp AS whatsapp,created_at AS createdAt,updated_at AS updatedAt FROM orders ORDER BY created_at DESC LIMIT ?").bind(limit).all();
-  return json({ok:true,orders:rows.results||[],count:(rows.results||[]).length});
+  const conditions=[];
+  const values=[];
+  if(resetAt){conditions.push("created_at >= ?");values.push(resetAt);}
+  if(before){conditions.push("created_at < ?");values.push(before);}
+  const where=conditions.length?" WHERE "+conditions.join(" AND "):"";
+  const rows=await env.DB.prepare("SELECT id AS orderId,product_id AS productId,product_name AS productName,denomination_id AS denominationId,denomination_name AS denomination,player_id AS playerId,server_id AS server,payment_method AS paymentId,subtotal,fee,discount,total,status,midtrans_transaction_id AS transactionId,midtrans_status AS rawStatus,customer_email AS email,customer_whatsapp AS whatsapp,created_at AS createdAt,updated_at AS updatedAt FROM orders"+where+" ORDER BY created_at DESC LIMIT ?").bind(...values,limit).all();
+  return json({ok:true,orders:rows.results||[],count:(rows.results||[]).length,resetAt:resetAt||null});
 }
-
 async function handleGetOrder(env,orderId){if(!env.DB)return json({ok:false,error:"Database belum dikonfigurasi."},503);const id=normalizeOrderId(orderId);if(!id)return json({ok:false,error:"Order ID tidak valid."},400);const order=await env.DB.prepare("SELECT id AS orderId,product_id AS productId,product_name AS productName,denomination_id AS denominationId,denomination_name AS denomination,player_id AS playerId,server_id AS server,payment_method AS paymentId,subtotal,fee,discount,total,status,midtrans_transaction_id AS transactionId,midtrans_status AS rawStatus,snap_token AS token,snap_redirect_url AS redirectUrl,customer_email AS email,customer_whatsapp AS whatsapp,created_at AS createdAt,updated_at AS updatedAt FROM orders WHERE id=?").bind(id).first();if(!order)return json({ok:false,error:"Order tidak ditemukan."},404);return json({ok:true,order});}
 
 
