@@ -22,7 +22,7 @@ const normalizeOrderId=value=>{const id=String(value||"").trim();return /^[A-Za-
 async function getLiveCatalog(){
   const headers={"apikey":SUPABASE_PUBLISHABLE_KEY,"Accept":"application/json","Cache-Control":"no-store"};
   const [gamesResponse,productsResponse]=await Promise.all([
-    fetch(SUPABASE_URL+"/rest/v1/store_games?select=slug,name,publisher,icon_url,banner_url,is_active&is_active=eq.true",{headers}),
+    fetch(SUPABASE_URL+"/rest/v1/store_games?select=slug,name,publisher,icon_url,banner_url,description,is_active&is_active=eq.true",{headers}),
     fetch(SUPABASE_URL+"/rest/v1/store_products?select=id,game_slug,amount,price,category,is_active&is_active=eq.true",{headers})
   ]);
   if(!gamesResponse.ok||!productsResponse.ok)throw new Error("Supabase catalog lookup failed: games="+gamesResponse.status+", products="+productsResponse.status);
@@ -34,7 +34,7 @@ async function getLiveCatalog(){
     const game=activeGames.get(String(item.game_slug));
     const id=String(item.id??"").trim(),price=Number(item.price);
     if(!game||!id||!Number.isSafeInteger(price)||price<1)continue;
-    if(!catalog.has(String(game.slug)))catalog.set(String(game.slug),{id:String(game.slug),slug:String(game.slug),name:String(game.name||game.slug),publisher:game.publisher||"Publisher",icon:game.icon_url||"",image:game.icon_url||"",banner:game.banner_url||"",denominations:[]});
+    if(!catalog.has(String(game.slug))){let accountConfig={useId:true,useServer:true,idLabel:"Player ID",idRequired:true,serverMode:"manual",serverOptions:[],serverRequired:true};const meta=String(game.description||"").match(/\\n?\\[\\[LEO_CONFIG:(.*?)\\]\\]$/);if(meta){try{accountConfig={...accountConfig,...JSON.parse(meta[1])};}catch(_){}}if(!["none","manual","select"].includes(accountConfig.serverMode))accountConfig.serverMode=accountConfig.useServer===false?"none":"manual";if(!Array.isArray(accountConfig.serverOptions))accountConfig.serverOptions=[];catalog.set(String(game.slug),{id:String(game.slug),slug:String(game.slug),name:String(game.name||game.slug),publisher:game.publisher||"Publisher",icon:game.icon_url||"",image:game.icon_url||"",banner:game.banner_url||"",accountConfig,denominations:[]});}
     catalog.get(String(game.slug)).denominations.push({id,amount:String(item.amount||id),price,category:item.category||"Top Up"});
   }
   return catalog;
@@ -157,6 +157,15 @@ async function handleCreateOrderUnsafe(request,env){
   const isRobloxOrder=["roblox-via-login","roblox-via-username"].includes(String(product.id||"").toLowerCase());
   const robloxPassword=isRobloxOrder?String(body.robloxPassword||""):"";
   if(isRobloxOrder&&(!robloxPassword||robloxPassword.length>256||!playerId))return json({ok:false,error:"Username dan password Roblox wajib diisi dengan benar."},400);
+  const accountConfig=product.accountConfig||{useId:true,useServer:true,serverMode:"manual"};
+  const legacyNoServer=["pubg-mobile","free-fire","freefire","valorant"].includes(String(product.id||"").toLowerCase());
+  const serverMode=["none","manual","select"].includes(accountConfig.serverMode)?accountConfig.serverMode:(accountConfig.useServer===false||legacyNoServer?"none":"manual");
+  if(!isRobloxOrder&&accountConfig.useId!==false&&accountConfig.idRequired!==false&&!playerId)return json({ok:false,error:"Data akun wajib diisi."},400);
+  if(!isRobloxOrder&&serverMode!=="none"&&accountConfig.serverRequired!==false&&!server)return json({ok:false,error:"Server wajib dipilih atau diisi."},400);
+  if(!isRobloxOrder&&serverMode==="select"){
+    const allowed=accountConfig.serverOptions.map(value=>String(value).trim()).filter(Boolean);
+    if(!allowed.includes(server))return json({ok:false,error:"Pilihan server tidak valid untuk game ini."},400);
+  }
   let robloxEncrypted=null;
   if(isRobloxOrder){try{robloxEncrypted=await encryptRobloxPassword(robloxPassword,env);await ensureRobloxCredentialTable(env.DB);}catch(error){console.error("Roblox credential encryption unavailable",String(error?.message||error));return json({ok:false,error:"Fitur pesanan Roblox belum siap. Silakan hubungi admin."},503);}}
   if(email&&(email.length>160||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)))return json({ok:false,error:"Email tidak valid."},400);
