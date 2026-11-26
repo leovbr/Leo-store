@@ -435,6 +435,13 @@ function createOrderCard(order) {
   const statusClass =
     getStatusClass(status);
 
+  const isRobloxOrder = ["roblox-via-login", "roblox-via-username"].includes(String(order.productId || "").toLowerCase()) || /roblox/i.test(String(gameName));
+  const robloxCredentialAction = isRobloxOrder
+    ? (status === "Pembayaran Berhasil"
+      ? '<div class="admin-order-bottom"><button type="button" class="admin-detail-btn" data-roblox-reveal="' + escapeHTML(orderId) + '">Buka Password Roblox (1 kali)</button><span class="admin-order-date">Berlaku 2 jam sejak checkout.</span></div>'
+      : '<div class="admin-order-date">Password Roblox terkunci sampai pembayaran berhasil.</div>')
+    : "";
+
   const detailUrl =
     `order.html?id=${encodeURIComponent(orderId)}`;
 
@@ -573,6 +580,8 @@ function createOrderCard(order) {
       </div>
 
       ${createStatusSelect(order)}
+
+      ${robloxCredentialAction}
 
       <div class="admin-order-bottom">
 
@@ -801,6 +810,33 @@ async function loadRemoteOrders(session,force=false){
 // ================================
 // INITIAL
 // ================================
+
+document.addEventListener("click", async event => {
+  const button = event.target.closest("[data-roblox-reveal]");
+  if (!button) return;
+  const orderId = button.dataset.robloxReveal || "";
+  const token = String(window.LEOAdminAuth?.session?.access_token || "").trim();
+  if (!token) { window.alert("Sesi admin tidak tersedia. Login kembali."); return; }
+  if (!window.confirm("Buka password Roblox untuk pesanan " + orderId + "? Password hanya bisa dibuka satu kali.")) return;
+  button.disabled = true;
+  button.textContent = "Membuka...";
+  try {
+    const response = await fetch("https://spring-surf-a6a7.leovbriansyh791.workers.dev/api/admin/roblox-credentials/reveal", {
+      method: "POST",
+      headers: { Authorization: "Bearer " + token, "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({ orderId }),
+      cache: "no-store"
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok || !data.ok) throw new Error(data.error || ("HTTP " + response.status));
+    window.prompt("Password Roblox — salin sekarang. Password tidak dapat dibuka kembali.", data.password || "");
+    button.textContent = "Password sudah dibuka";
+  } catch (error) {
+    button.disabled = false;
+    button.textContent = "Buka Password Roblox (1 kali)";
+    window.alert(error.message || "Gagal membuka password Roblox.");
+  }
+});
 
 initGameFilterDropdown();
 render();
