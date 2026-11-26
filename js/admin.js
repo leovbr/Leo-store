@@ -722,11 +722,11 @@ if (resetOrdersBtnEl) {
       return;
     }
     const confirmed = window.confirm(
-      "RESET DATA DEMO LEOOSTORE?\n\nSemua transaksi di database akan dihapus permanen, termasuk catatan pemakaian promo dan log email yang terkait transaksi. Katalog, akun, promo, metode pembayaran, dan data pelanggan tidak dihapus."
+      "RESET STATISTIK TRANSAKSI LEOOSTORE?\n\nAngka dan daftar transaksi di dashboard akan dimulai dari nol. Riwayat transaksi lama tetap tersimpan aman di database."
     );
     if (!confirmed) return;
     resetOrdersBtnEl.disabled = true;
-    if (adminApiStatusEl) adminApiStatusEl.textContent = "Menghapus data transaksi demo...";
+    if (adminApiStatusEl) adminApiStatusEl.textContent = "Mengatur ulang titik awal statistik...";
     try {
       const response = await fetch(ADMIN_API_URL + "/reset", {
         method: "POST",
@@ -745,13 +745,11 @@ if (resetOrdersBtnEl) {
       localStorage.removeItem("LEOOSTORE_last_order");
       remoteOrders = [];
       lastAdminSessionToken = "";
-      render();
       const refreshed = await loadRemoteOrders(session, true);
       if (adminApiStatusEl) {
-        const count = Number(data.deleted?.orders || 0);
         adminApiStatusEl.textContent = refreshed
-          ? "Reset berhasil. " + count + " transaksi demo dihapus; total transaksi dan omzet sekarang nol."
-          : "Reset berhasil, tetapi daftar transaksi belum bisa diverifikasi. Tekan Refresh.";
+          ? "Statistik berhasil direset. Riwayat transaksi lama tetap tersimpan."
+          : "Titik awal statistik tersimpan, tetapi daftar belum bisa diverifikasi. Tekan Refresh.";
       }
     } catch (error) {
       if (adminApiStatusEl) adminApiStatusEl.textContent = "Reset gagal: " + (error.message || "Periksa koneksi dan coba lagi.");
