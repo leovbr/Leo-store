@@ -29,10 +29,10 @@
       });
       const catalog=gr.data.map(g=>{
         let description=String(g.description||"");
-        let accountFields={useId:true,useServer:true};
+        let accountFields={useId:true,useServer:true,idLabel:"Player ID",idRequired:true,serverMode:"manual",serverOptions:[],serverRequired:true};
         const meta=description.match(/\n?\[\[LEO_CONFIG:(.*?)\]\]$/);
         if(meta){try{accountFields={...accountFields,...JSON.parse(meta[1])};}catch(_){}description=description.replace(/\n?\[\[LEO_CONFIG:.*?\]\]$/,"").trim();}
-        return {id:String(g.slug),slug:String(g.slug),name:String(g.name||g.slug),publisher:g.publisher||"Publisher",description,image:g.icon_url||"",currencyIcon:g.currency_icon_url||"",banner:g.banner_url||"",icon:"🎮",useId:accountFields.useId!==false,useServer:accountFields.useServer!==false,denominations:(itemsByGame.get(g.slug)||[]).map(item=>({...item,image:item.image||g.currency_icon_url||""}))};
+        return {id:String(g.slug),slug:String(g.slug),name:String(g.name||g.slug),publisher:g.publisher||"Publisher",description,image:g.icon_url||"",currencyIcon:g.currency_icon_url||"",banner:g.banner_url||"",icon:"🎮",useId:accountFields.useId!==false,useServer:accountFields.useServer!==false,accountConfig:{idLabel:String(accountFields.idLabel||"Player ID"),idRequired:accountFields.idRequired!==false,serverMode:["none","manual","select"].includes(accountFields.serverMode)?accountFields.serverMode:(accountFields.useServer===false?"none":"manual"),serverOptions:Array.isArray(accountFields.serverOptions)?accountFields.serverOptions.map(x=>String(x).trim()).filter(Boolean).slice(0,100):[],serverRequired:accountFields.serverRequired!==false},denominations:(itemsByGame.get(g.slug)||[]).map(item=>({...item,image:item.image||g.currency_icon_url||""}))};
       }).filter(g=>g.denominations.length);
       return catalog;
     }catch(e){console.error("[LEOOSTORE] Supabase catalog unavailable; hiding catalog to avoid showing stale/inactive products.",e);return [];}
