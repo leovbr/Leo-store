@@ -127,7 +127,7 @@
       } catch (error) {
         button.disabled = false;
         button.textContent = "Coba Lagi";
-        leoModal.alert(error.message || "Notifikasi belum bisa diaktifkan.");
+        (window.leoModal?.alert||window.alert)(error.message || "Notifikasi belum bisa diaktifkan.");
       }
     });
   }
