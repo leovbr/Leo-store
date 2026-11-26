@@ -4671,3 +4671,42 @@ body.shop-page #productList .product-info::before,
 body.shop-page #productList .product-info::after{
   animation:none!important;
 }
+
+
+/* ACCOUNT SERVER SELECT — MATCH THE PLAYER ID PILL */
+.checkout-page #standardAccountFields #serverField .leo-shared-trigger{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-height:48px!important;
+  height:48px!important;
+  padding:0 16px!important;
+  border:1px solid #293548!important;
+  border-radius:999px!important;
+  background:#152235!important;
+  color:#eef2ff!important;
+  box-shadow:none!important;
+  font:400 14px/1.4 'Plus Jakarta Sans',system-ui,sans-serif!important;
+}
+.checkout-page #standardAccountFields #serverField .leo-shared-trigger:focus-visible,
+.checkout-page #standardAccountFields #serverField .leo-shared-select.open .leo-shared-trigger{
+  border-color:#8b7cff!important;
+  box-shadow:0 0 0 3px rgba(124,92,255,.15)!important;
+}
+.checkout-page #standardAccountFields #serverField .leo-shared-value{
+  gap:9px!important;
+  font-size:14px!important;
+}
+.checkout-page #standardAccountFields #serverField .leo-shared-icon{
+  background:rgba(124,92,255,.12)!important;
+}
+@media(max-width:640px){
+  .checkout-page #standardAccountFields #serverField .leo-shared-trigger{
+    min-height:44px!important;
+    height:44px!important;
+    padding:0 14px!important;
+    font-size:12px!important;
+  }
+  .checkout-page #standardAccountFields #serverField .leo-shared-value{
+    font-size:12px!important;
+  }
+}
