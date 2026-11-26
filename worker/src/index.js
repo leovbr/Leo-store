@@ -102,6 +102,49 @@ async function releasePromoUsage(db,orderId,now){
 }
 
 
+function robloxBase64(bytes){let binary="";for(const byte of bytes)binary+=String.fromCharCode(byte);return btoa(binary);}
+function robloxUnbase64(value){const binary=atob(value);return Uint8Array.from(binary,char=>char.charCodeAt(0));}
+async function getRobloxCryptoKey(env){
+  let raw;try{raw=robloxUnbase64(String(env.ROBLOX_CREDENTIAL_KEY||""));}catch{throw new Error("ROBLOX_CREDENTIAL_KEY belum valid.");}
+  if(raw.length!==32)throw new Error("ROBLOX_CREDENTIAL_KEY harus berupa 32 byte dalam format Base64.");
+  return crypto.subtle.importKey("raw",raw,{name:"AES-GCM"},false,["encrypt","decrypt"]);
+}
+async function encryptRobloxPassword(password,env){
+  const key=await getRobloxCryptoKey(env),iv=crypto.getRandomValues(new Uint8Array(12));
+  const encrypted=await crypto.subtle.encrypt({name:"AES-GCM",iv},key,new TextEncoder().encode(password));
+  return {iv:robloxBase64(iv),ciphertext:robloxBase64(new Uint8Array(encrypted))};
+}
+async function ensureRobloxCredentialTable(db){
+  await db.prepare("CREATE TABLE IF NOT EXISTS roblox_order_credentials (order_id TEXT PRIMARY KEY, iv TEXT NOT NULL, ciphertext TEXT NOT NULL, expires_at TEXT NOT NULL, consumed_at TEXT, created_at TEXT NOT NULL)").run();
+}
+async function handleRevealRobloxCredential(request,env){
+  const user=await verifyPushUser(request);
+  if(!user)return json({ok:false,error:"Sesi tidak valid atau sudah berakhir. Login kembali."},401);
+  if(user.id!==PUSH_ADMIN_UID)return json({ok:false,error:"Akses khusus admin."},403);
+  if(!env.DB)return json({ok:false,error:"Database belum dikonfigurasi."},503);
+  let body;try{body=await request.json();}catch{return json({ok:false,error:"Permintaan tidak valid."},400);}
+  const orderId=normalizeOrderId(body?.orderId);if(!orderId)return json({ok:false,error:"Order ID tidak valid."},400);
+  const order=await env.DB.prepare("SELECT id,status,product_id,product_name FROM orders WHERE id=?").bind(orderId).first();
+  if(!order)return json({ok:false,error:"Pesanan tidak ditemukan."},404);
+  if(!["roblox-via-login","roblox-via-username"].includes(String(order.product_id||"").toLowerCase())&&!/roblox/i.test(String(order.product_name||"")))return json({ok:false,error:"Pesanan ini bukan pesanan Roblox."},400);
+  if(order.status!=="Pembayaran Berhasil")return json({ok:false,error:"Password hanya bisa dibuka setelah pembayaran berhasil."},409);
+  await ensureRobloxCredentialTable(env.DB);
+  const now=new Date().toISOString();
+  const consumed=await env.DB.prepare("UPDATE roblox_order_credentials SET consumed_at=? WHERE order_id=? AND consumed_at IS NULL AND expires_at>?").bind(now,orderId,now).run();
+  if(Number(consumed?.meta?.changes||0)!==1){
+    const credential=await env.DB.prepare("SELECT expires_at,consumed_at FROM roblox_order_credentials WHERE order_id=?").bind(orderId).first();
+    if(!credential)return json({ok:false,error:"Kredensial tidak tersedia untuk pesanan ini."},404);
+    return json({ok:false,error:credential.consumed_at?"Password sudah pernah dibuka.":"Token password sudah kedaluwarsa."},410);
+  }
+  const credential=await env.DB.prepare("SELECT iv,ciphertext FROM roblox_order_credentials WHERE order_id=?").bind(orderId).first();
+  if(!credential)return json({ok:false,error:"Kredensial tidak ditemukan."},404);
+  try{
+    const key=await getRobloxCryptoKey(env);
+    const plaintext=await crypto.subtle.decrypt({name:"AES-GCM",iv:robloxUnbase64(credential.iv)},key,robloxUnbase64(credential.ciphertext));
+    return json({ok:true,password:new TextDecoder().decode(plaintext)});
+  }catch(error){console.error("Roblox credential decryption failed",String(error?.message||error));return json({ok:false,error:"Password gagal dibuka. Hubungi teknis."},500);}
+}
+
 async function handleCreateOrderUnsafe(request,env){
   console.log("POST /api/orders received",{contentType:request.headers.get("Content-Type")||"",origin:request.headers.get("Origin")||""});
   if(!env.DB||!env.MIDTRANS_SERVER_KEY)return json({ok:false,error:"Payment backend belum dikonfigurasi."},503);
@@ -111,6 +154,11 @@ async function handleCreateOrderUnsafe(request,env){
   const orderId=normalizeOrderId(body.orderId),product=getProduct(liveCatalog,body.productId),denomination=getDenomination(product,body.denominationId),paymentId=String(body.paymentId||"").trim(),quantity=Math.max(1,Math.min(99,Math.floor(Number(body.quantity)||1)));
   if(!orderId||!product||!denomination||!PAYMENT_METHODS.has(paymentId))return json({ok:false,error:"Produk atau metode pembayaran tidak valid atau sudah tidak aktif."},400);
   const email=String(body.email||"").trim(),whatsapp=String(body.whatsapp||"").trim(),playerId=String(body.playerId||"").trim().slice(0,120),server=String(body.server||"").trim().slice(0,80),promo=String(body.promo||"").trim().toUpperCase();
+  const isRobloxOrder=["roblox-via-login","roblox-via-username"].includes(String(product.id||"").toLowerCase());
+  const robloxPassword=isRobloxOrder?String(body.robloxPassword||""):"";
+  if(isRobloxOrder&&(!robloxPassword||robloxPassword.length>256||!playerId))return json({ok:false,error:"Username dan password Roblox wajib diisi dengan benar."},400);
+  let robloxEncrypted=null;
+  if(isRobloxOrder){try{robloxEncrypted=await encryptRobloxPassword(robloxPassword,env);await ensureRobloxCredentialTable(env.DB);}catch(error){console.error("Roblox credential encryption unavailable",String(error?.message||error));return json({ok:false,error:"Fitur pesanan Roblox belum siap. Silakan hubungi admin."},503);}}
   if(email&&(email.length>160||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)))return json({ok:false,error:"Email tidak valid."},400);
   const subtotal=denomination.price*quantity;
   let promoDiscount=0,promoRow=null;
@@ -181,7 +229,7 @@ async function handleCreateOrderUnsafe(request,env){
   try{const auth=btoa(env.MIDTRANS_SERVER_KEY+":");response=await fetch(MIDTRANS_SANDBOX_URL,{method:"POST",headers:{"Accept":"application/json","Content-Type":"application/json","Authorization":"Basic "+auth},body:JSON.stringify(snapPayload)});midtrans=await response.json().catch(()=>({}));}
   catch(error){console.error("Midtrans fetch exception",error);if(promoReserved)await releasePromoUsage(env.DB,orderId,new Date().toISOString());return json({ok:false,error:"Tidak dapat terhubung ke Midtrans Sandbox.",stage:"midtrans-fetch"},502);}
   if(!response.ok||!midtrans.token){console.error("Midtrans create transaction failed",response.status,midtrans);if(promoReserved)await releasePromoUsage(env.DB,orderId,new Date().toISOString());return json({ok:false,error:"Gagal membuat transaksi pembayaran.",stage:"midtrans-response",midtransStatus:response.status},502);}
-  try{await env.DB.prepare("INSERT INTO orders (id,customer_name,customer_email,customer_whatsapp,product_id,product_name,denomination_id,denomination_name,player_id,server_id,payment_method,subtotal,fee,discount,total,status,snap_token,snap_redirect_url,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)").bind(orderId,String(body.customerName||"").trim().slice(0,160)||"Customer",email||null,whatsapp||null,product.id,product.name,denomination.id,denomination.amount,playerId||null,server||null,paymentId,subtotal,fee,promoDiscount,total,"Menunggu Pembayaran",midtrans.token,midtrans.redirect_url||null,now,now).run();}catch(error){console.error("D1 order insert failed",error);if(promoReserved)await releasePromoUsage(env.DB,orderId,new Date().toISOString());return json({ok:false,error:"Gagal menyimpan pesanan ke database.",stage:"d1-insert",message:String(error?.message||error)},500);}
+  try{const orderInsert=env.DB.prepare("INSERT INTO orders (id,customer_name,customer_email,customer_whatsapp,product_id,product_name,denomination_id,denomination_name,player_id,server_id,payment_method,subtotal,fee,discount,total,status,snap_token,snap_redirect_url,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)").bind(orderId,String(body.customerName||"").trim().slice(0,160)||"Customer",email||null,whatsapp||null,product.id,product.name,denomination.id,denomination.amount,playerId||null,server||null,paymentId,subtotal,fee,promoDiscount,total,"Menunggu Pembayaran",midtrans.token,midtrans.redirect_url||null,now,now);if(isRobloxOrder){const expiresAt=new Date(Date.now()+2*60*60*1000).toISOString();const credentialInsert=env.DB.prepare("INSERT INTO roblox_order_credentials (order_id,iv,ciphertext,expires_at,created_at) VALUES (?,?,?,?,?)").bind(orderId,robloxEncrypted.iv,robloxEncrypted.ciphertext,expiresAt,now);await env.DB.batch([orderInsert,credentialInsert]);}else await orderInsert.run();}catch(error){console.error("D1 order insert failed",error);if(promoReserved)await releasePromoUsage(env.DB,orderId,new Date().toISOString());return json({ok:false,error:"Gagal menyimpan pesanan ke database.",stage:"d1-insert"} ,500);}
   await sendOrderEmail(env,{id:orderId,customer_name:String(body.customerName||"").trim().slice(0,160)||"Customer",customer_email:email,customer_whatsapp:whatsapp,product_name:product.name,denomination_name:denomination.amount,total,status:"Menunggu Pembayaran"},"created").catch(error=>console.error("Order email logging failed; order remains created",String(error?.message||error)));
   return json({ok:true,orderId,token:midtrans.token,redirectUrl:midtrans.redirect_url||null,total,status:"Menunggu Pembayaran"});
 }
@@ -466,4 +514,4 @@ if(url.pathname==="/api/push/event"&&request.method==="POST")return handlePushEv
 if(url.pathname==="/health"&&request.method==="GET")return json({ok:true,service:"LEOOSTORE Payment API",environment:"sandbox"});if(url.pathname==="/api/orders"&&request.method==="GET")return json({ok:true,service:"LEOOSTORE Payment API",endpoint:"orders",method:"POST",message:"Endpoint aktif. Gunakan POST untuk membuat pembayaran."});if(url.pathname==="/api/leaderboard"&&request.method==="GET")return handleLeaderboard(env,url);
 
 
-if(url.pathname==="/api/admin/orders/reset"&&request.method==="POST")return handleAdminOrderReset(request,env);if(url.pathname==="/api/admin/orders"&&request.method==="GET")return handleAdminOrders(request,env);if(url.pathname==="/api/orders"&&request.method==="POST")return handleCreateOrder(request,env);if(url.pathname==="/api/midtrans/webhook"&&request.method==="POST")return handleWebhook(request,env);const m=url.pathname.match(/^\/api\/orders\/([^/]+)$/);if(m&&request.method==="GET")return handleGetOrder(env,decodeURIComponent(m[1]));return json({ok:false,error:"Endpoint tidak ditemukan."},404);}catch(error){console.error("Worker error",error);return json({ok:false,error:"Terjadi kesalahan server."},500);}}};
+if(url.pathname==="/api/admin/roblox-credentials/reveal"&&request.method==="POST")return handleRevealRobloxCredential(request,env);if(url.pathname==="/api/admin/orders/reset"&&request.method==="POST")return handleAdminOrderReset(request,env);if(url.pathname==="/api/admin/orders"&&request.method==="GET")return handleAdminOrders(request,env);if(url.pathname==="/api/orders"&&request.method==="POST")return handleCreateOrder(request,env);if(url.pathname==="/api/midtrans/webhook"&&request.method==="POST")return handleWebhook(request,env);const m=url.pathname.match(/^\/api\/orders\/([^/]+)$/);if(m&&request.method==="GET")return handleGetOrder(env,decodeURIComponent(m[1]));return json({ok:false,error:"Endpoint tidak ditemukan."},404);}catch(error){console.error("Worker error",error);return json({ok:false,error:"Terjadi kesalahan server."},500);}}};
