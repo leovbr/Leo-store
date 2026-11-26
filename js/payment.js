@@ -174,13 +174,59 @@ const LAST_ORDER_KEY =
       } catch (error) {
         paidButton.disabled = false;
         paidButton.textContent = "Cek Status Pembayaran";
-        alert(error.message || "Gagal mengecek status pembayaran.");
+        showPaymentAlert(error.message || "Gagal mengecek status pembayaran.");
       }
     }
   );
 
 });
 
+/* =========================================================
+   CUSTOMER THEMED ALERT
+========================================================= */
+
+function showPaymentAlert(message) {
+  const existing = document.getElementById("leo-payment-alert");
+  if (existing) existing.remove();
+
+  if (!document.getElementById("leo-payment-alert-style")) {
+    const style = document.createElement("style");
+    style.id = "leo-payment-alert-style";
+    style.textContent = [
+      "#leo-payment-alert{position:fixed;inset:0;z-index:2147483647;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(4,7,18,.76);backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);animation:leoPayFade .18s ease}",
+      "#leo-payment-alert .leo-pay-dialog{width:min(100%,390px);padding:26px 22px 20px;border:1px solid rgba(167,139,250,.28);border-radius:22px;background:linear-gradient(145deg,#17152b,#0c1020 72%);color:#f5f3ff;box-shadow:0 24px 80px rgba(0,0,0,.48),0 0 35px rgba(124,58,237,.13);font-family:Plus Jakarta Sans,Arial,sans-serif;text-align:center}",
+      "#leo-payment-alert .leo-pay-icon{width:52px;height:52px;margin:0 auto 15px;display:grid;place-items:center;border-radius:17px;background:rgba(139,92,246,.16);border:1px solid rgba(167,139,250,.28);color:#c4b5fd;font-size:25px;font-weight:800}",
+      "#leo-payment-alert h2{margin:0 0 9px;font-size:18px;font-weight:800;letter-spacing:-.02em}",
+      "#leo-payment-alert p{margin:0;color:#b8b5ca;font-size:13px;line-height:1.65;overflow-wrap:anywhere}",
+      "#leo-payment-alert button{width:100%;margin-top:22px;padding:12px 16px;border:0;border-radius:12px;background:linear-gradient(100deg,#7c3aed,#a855f7);color:#fff;font:700 13px Plus Jakarta Sans,Arial,sans-serif;cursor:pointer;box-shadow:0 7px 22px rgba(124,58,237,.25)}",
+      "#leo-payment-alert button:focus-visible{outline:2px solid #ddd6fe;outline-offset:3px}",
+      "@keyframes leoPayFade{from{opacity:0}to{opacity:1}}",
+      "@media(prefers-reduced-motion:reduce){#leo-payment-alert{animation:none}}"
+    ].join("");
+    document.head.appendChild(style);
+  }
+
+  const overlay = document.createElement("div");
+  overlay.id = "leo-payment-alert";
+  overlay.innerHTML = '<section class="leo-pay-dialog" role="alertdialog" aria-modal="true" aria-labelledby="leo-pay-alert-title" aria-describedby="leo-pay-alert-message"><div class="leo-pay-icon" aria-hidden="true">!</div><h2 id="leo-pay-alert-title">Status Belum Dapat Dicek</h2><p id="leo-pay-alert-message"></p><button type="button" id="leo-pay-alert-ok">Mengerti</button></section>';
+  overlay.querySelector("#leo-pay-alert-message").textContent = String(message || "Terjadi kesalahan. Silakan coba kembali.");
+  document.body.appendChild(overlay);
+
+  const close = () => {
+    overlay.remove();
+    document.removeEventListener("keydown", onKeydown);
+  };
+  const onKeydown = event => {
+    if (event.key === "Escape" || event.key === "Enter") {
+      event.preventDefault();
+      close();
+    }
+  };
+  overlay.querySelector("#leo-pay-alert-ok").addEventListener("click", close);
+  overlay.addEventListener("click", event => { if (event.target === overlay) close(); });
+  document.addEventListener("keydown", onKeydown);
+  overlay.querySelector("#leo-pay-alert-ok").focus();
+}
 /* =========================================================
    RENDER PAYMENT
 ========================================================= */
