@@ -829,7 +829,7 @@ document.addEventListener("click", async event => {
     });
     const data = await response.json().catch(() => ({}));
     if (!response.ok || !data.ok) throw new Error(data.error || ("HTTP " + response.status));
-    window.prompt("Password Roblox — salin sekarang. Password tidak dapat dibuka kembali.", data.password || "");
+    await leoModal.password(data.password || "", {title:"Password Roblox", message:"Salin password sekarang. Password hanya dapat dibuka satu kali."});
     button.textContent = "Password sudah dibuka";
   } catch (error) {
     button.disabled = false;
