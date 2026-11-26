@@ -46,6 +46,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   const gameSelect = $("game");
   const playerIdInput = $("playerId");
   const serverInput = $("server");
+  const serverSelect = $("serverSelect");
+  const serverLabel = $("serverLabel");
   const serverField = $("serverField");
   const denominationList = $("denominationList");
   const nominalInput = $("nominal");
@@ -229,13 +231,28 @@ document.addEventListener("DOMContentLoaded", async () => {
     const isFreeFire = id === "free-fire" || id === "freefire";
     const isValorant = id === "valorant";
 
+    const cfg = product?.accountConfig || {};
     const useId = product?.useId !== false;
-    const useServer = product?.useServer !== false && !(isRoblox || isPubg || isFreeFire || isValorant);
+    const serverMode = ["none","manual","select"].includes(cfg.serverMode) ? cfg.serverMode : (product?.useServer !== false && !(isRoblox || isPubg || isFreeFire || isValorant) ? "manual" : "none");
+    const useServer = serverMode !== "none";
     const playerField = playerIdInput?.closest(".form-group");
     if (playerField) playerField.style.display = (isRoblox || useId) ? "" : "none";
     if (serverField) serverField.style.display = useServer ? "" : "none";
+    if (serverInput) { serverInput.hidden = serverMode === "select"; serverInput.required = useServer && serverMode === "manual" && cfg.serverRequired !== false; }
+    if (serverSelect) {
+      serverSelect.hidden = serverMode !== "select";
+      serverSelect.required = useServer && serverMode === "select" && cfg.serverRequired !== false;
+      if (serverMode === "select") {
+        const options = Array.isArray(cfg.serverOptions) ? cfg.serverOptions : [];
+        serverSelect.innerHTML = '<option value="">Pilih Server</option>' + options.map(value => '<option value="' + escapeHTML(value) + '">' + escapeHTML(value) + '</option>').join("");
+      } else serverSelect.value = "";
+    }
+    if (serverLabel) serverLabel.textContent = cfg.serverLabel || "Server";
     if (serverInput && !useServer) serverInput.value = "";
     if (playerIdInput && !useId && !isRoblox) playerIdInput.value = "";
+    const playerLabel = playerIdInput?.closest(".form-group")?.querySelector("label");
+    if (playerLabel) playerLabel.textContent = cfg.idLabel || "Player ID";
+    if (playerIdInput) playerIdInput.required = useId && cfg.idRequired !== false;
     if (accountTitle) accountTitle.textContent = "Data Akun";
     if (accountDescription) accountDescription.textContent = (isRobloxLogin || isRobloxUsername)
       ? "Masukkan username dan password."
@@ -249,11 +266,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (robloxInfoPanel) robloxInfoPanel.hidden = true;
     }
     if (playerIdInput) {
-      playerIdInput.placeholder = id === "roblox-via-login" || id === "roblox-via-username"
-        ? "Masukkan Username Roblox"
-        : isValorant
-          ? "Masukkan Riot ID"
-          : "Masukkan Player ID";
+      playerIdInput.placeholder = id === "roblox-via-login" || id === "roblox-via-username" ? "Masukkan Username Roblox" : "Masukkan " + (cfg.idLabel || (isValorant ? "Riot ID" : "Player ID"));
     }
   }
 
@@ -765,14 +778,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         robloxPassword?.focus();
         return;
       }
-    } else if (selectedProduct.useId !== false && !playerIdInput?.value.trim()) {
-      showCheckoutNotice("Silakan masukkan Player ID.", "Data Akun Belum Lengkap");
+    } else if (selectedProduct.useId !== false && selectedProduct.accountConfig?.idRequired !== false && !playerIdInput?.value.trim()) {
+      showCheckoutNotice("Silakan masukkan " + (selectedProduct.accountConfig?.idLabel || "Player ID") + ".", "Data Akun Belum Lengkap");
       playerIdInput?.focus();
       return;
     }
-    if (!isRoblox && selectedProduct.useServer !== false && selectedProduct.id !== "pubg-mobile" && selectedProduct.id !== "free-fire" && selectedProduct.id !== "freefire" && selectedProduct.id !== "valorant" && !serverInput?.value.trim()) {
-      showCheckoutNotice("Silakan masukkan Server.", "Data Akun Belum Lengkap");
-      serverInput?.focus();
+    const activeServerMode = selectedProduct.accountConfig?.serverMode || (selectedProduct.useServer !== false && !isRoblox && !isPubg && !isFreeFire && !isValorant ? "manual" : "none");
+    const selectedServerValue = activeServerMode === "select" ? serverSelect?.value.trim() : serverInput?.value.trim();
+    if (!isRoblox && activeServerMode !== "none" && selectedProduct.accountConfig?.serverRequired !== false && !selectedServerValue) {
+      showCheckoutNotice("Silakan pilih atau masukkan Server.", "Data Akun Belum Lengkap");
+      (activeServerMode === "select" ? serverSelect : serverInput)?.focus();
       return;
     }
     if (!selectedPayment) return showCheckoutNotice("Silakan pilih metode pembayaran.", "Metode Pembayaran Belum Dipilih");
@@ -785,7 +800,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       gameName: selectedProduct.name,
       playerId: isRoblox ? robloxUsername.value.trim() : playerIdInput.value.trim(),
       username: isRoblox ? robloxUsername.value.trim() : "",
-      server: serverInput?.value.trim() || "",
+      server: (serverSelect && !serverSelect.hidden ? serverSelect.value : serverInput?.value)?.trim() || "",
       denominationId: selectedDenomination.id,
       denomination: selectedDenomination.amount,
       amount: selectedDenomination.amount,
