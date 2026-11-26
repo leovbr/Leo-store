@@ -211,7 +211,7 @@ async function handleAdminOrderReset(request,env){
 }
 async function handleAdminOrders(request,env){
   const user=await verifyPushUser(request);
-  if(!user)return json({ok:false,error:"Sesi tidak valid o sudah berakhir. Login kembali."},401);
+  if(!user)return json({ok:false,error:"Sesi tidak valid atau sudah berakhir. Login kembali."},401);
   if(user.id!==PUSH_ADMIN_UID)return json({ok:false,error:"Akses khusus admin."},403);
   if(!env.DB)return json({ok:false,error:"Database belum dikonfigurasi."},503);
   await ensureOrderTable(env.DB);
