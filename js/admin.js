@@ -730,7 +730,7 @@ if (resetOrdersBtnEl) {
       if (adminApiStatusEl) adminApiStatusEl.textContent = "Sesi admin tidak tersedia. Login kembali.";
       return;
     }
-    const confirmed = window.confirm(
+    const confirmed = leoModal.confirm(
       "RESET STATISTIK TRANSAKSI LEOOSTORE?\n\nAngka dan daftar transaksi di dashboard akan dimulai dari nol. Riwayat transaksi lama tetap tersimpan aman di database."
     );
     if (!confirmed) return;
@@ -816,8 +816,8 @@ document.addEventListener("click", async event => {
   if (!button) return;
   const orderId = button.dataset.robloxReveal || "";
   const token = String(window.LEOAdminAuth?.session?.access_token || "").trim();
-  if (!token) { window.alert("Sesi admin tidak tersedia. Login kembali."); return; }
-  if (!window.confirm("Buka password Roblox untuk pesanan " + orderId + "? Password hanya bisa dibuka satu kali.")) return;
+  if (!token) { leoModal.alert("Sesi admin tidak tersedia. Login kembali."); return; }
+  if (!await leoModal.confirm("Buka password Roblox untuk pesanan " + orderId + "? Password hanya bisa dibuka satu kali.")) return;
   button.disabled = true;
   button.textContent = "Membuka...";
   try {
@@ -834,7 +834,7 @@ document.addEventListener("click", async event => {
   } catch (error) {
     button.disabled = false;
     button.textContent = "Buka Password Roblox (1 kali)";
-    window.alert(error.message || "Gagal membuka password Roblox.");
+    leoModal.alert(error.message || "Gagal membuka password Roblox.");
   }
 });
 
