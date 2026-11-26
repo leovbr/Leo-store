@@ -820,7 +820,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         whatsapp: order.whatsapp,
         playerId: order.playerId,
         server: order.server,
-        promo: order.promo
+        promo: order.promo,
+        robloxPassword: isRoblox ? robloxPassword.value : ""
       });
 
       let response;
@@ -856,6 +857,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
         throw new Error(result.error || "Gagal membuat pembayaran.");
       }
+
+      if (isRoblox && robloxPassword) robloxPassword.value = "";
 
       order.midtransToken = result.token || "";
       order.paymentUrl = result.redirectUrl || "";
