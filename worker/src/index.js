@@ -58,7 +58,14 @@ async function ensureOrderReviewTable(db){
   await db.prepare("CREATE TABLE IF NOT EXISTS order_reviews (order_id TEXT PRIMARY KEY REFERENCES orders(id) ON DELETE CASCADE, rating INTEGER NOT NULL CHECK(rating BETWEEN 1 AND 5), comment TEXT NOT NULL DEFAULT '', created_at TEXT NOT NULL, CHECK(length(comment)<=1000))").run();
   await db.prepare("ALTER TABLE order_reviews ADD COLUMN reviewer_id INTEGER").run().catch(()=>{});
   await db.prepare("ALTER TABLE order_reviews ADD COLUMN display_name TEXT").run().catch(()=>{});
+  await db.prepare("ALTER TABLE order_reviews ADD COLUMN review_number INTEGER").run().catch(()=>{});
   await db.prepare("CREATE TABLE IF NOT EXISTS public_reviewers (id INTEGER PRIMARY KEY AUTOINCREMENT, identity_hash TEXT NOT NULL UNIQUE, created_at TEXT NOT NULL)").run();
+  const legacy=await db.prepare("SELECT order_id FROM order_reviews WHERE review_number IS NULL ORDER BY created_at ASC,order_id ASC").all();
+  for(const row of (legacy.results||[])){
+    const next=await db.prepare("SELECT COALESCE(MAX(review_number),0)+1 AS nextNumber FROM order_reviews").first();
+    await db.prepare("UPDATE order_reviews SET review_number=? WHERE order_id=? AND review_number IS NULL").bind(Number(next?.nextNumber)||1,row.order_id).run();
+  }
+  await db.prepare("CREATE UNIQUE INDEX IF NOT EXISTS idx_order_reviews_number ON order_reviews(review_number)").run();
   await db.prepare("CREATE INDEX IF NOT EXISTS idx_order_reviews_created_at ON order_reviews(created_at DESC)").run();
 }
 async function hashReviewIdentity(value){
@@ -97,7 +104,7 @@ async function handleSubmitOrderReview(request,env,orderId){
   const reviewer=await getPublicReviewer(env.DB,identity);
   const displayName=user&&!user.is_anonymous&&verifiedEmail?maskReviewEmail(verifiedEmail):"Pelanggan LEOOSTORE #"+String(reviewer.id).padStart(3,"0");
   const now=new Date().toISOString();
-  const inserted=await env.DB.prepare("INSERT OR IGNORE INTO order_reviews(order_id,rating,comment,created_at,reviewer_id,display_name) VALUES(?,?,?,?,?,?)").bind(id,rating,comment,now,reviewer.id,displayName).run();
+  const inserted=await env.DB.prepare("INSERT OR IGNORE INTO order_reviews(order_id,rating,comment,created_at,reviewer_id,display_name,review_number) VALUES(?,?,?,?,?,?,(SELECT COALESCE(MAX(review_number),0)+1 FROM order_reviews))").bind(id,rating,comment,now,reviewer.id,displayName).run();
   if(Number(inserted?.meta?.changes||0)!==1){
     const existing=await env.DB.prepare("SELECT rating,comment,created_at AS createdAt FROM order_reviews WHERE order_id=?").bind(id).first();
     return json({ok:false,error:"Ulasan untuk transaksi ini sudah pernah dikirim.",review:existing||null},409);
@@ -110,8 +117,8 @@ async function handlePublicReviews(env,url){
   const limit=Math.max(1,Math.min(50,Number(url.searchParams.get("limit"))||12));
   const offset=Math.max(0,Number(url.searchParams.get("offset"))||0);
   const summary=await env.DB.prepare("SELECT COUNT(*) AS count,ROUND(AVG(rating),1) AS average FROM order_reviews r INNER JOIN orders o ON o.id=r.order_id WHERE o.status IN ('Pembayaran Berhasil','Pesanan Diproses','Top Up Berhasil')").first();
-  const rows=await env.DB.prepare("SELECT r.rating,r.comment,r.created_at AS createdAt,r.display_name AS displayName,r.reviewer_id AS reviewerId FROM order_reviews r INNER JOIN orders o ON o.id=r.order_id WHERE o.status IN ('Pembayaran Berhasil','Pesanan Diproses','Top Up Berhasil') ORDER BY r.created_at DESC LIMIT ? OFFSET ?").bind(limit,offset).all();
-  const items=(rows.results||[]).map(row=>({rating:Number(row.rating),comment:String(row.comment||""),createdAt:row.createdAt,displayName:String(row.displayName||(row.reviewerId?("Pelanggan LEOOSTORE #"+String(row.reviewerId).padStart(3,"0")):"Pelanggan LEOOSTORE"))}));
+  const rows=await env.DB.prepare("SELECT r.order_id AS orderId,r.review_number AS reviewNumber,r.rating,r.comment,r.created_at AS createdAt,r.display_name AS displayName,r.reviewer_id AS reviewerId FROM order_reviews r INNER JOIN orders o ON o.id=r.order_id WHERE o.status IN ('Pembayaran Berhasil','Pesanan Diproses','Top Up Berhasil') ORDER BY r.created_at DESC LIMIT ? OFFSET ?").bind(limit,offset).all();
+  const items=(rows.results||[]).map(row=>({orderId:row.orderId,reviewNumber:Number(row.reviewNumber)||0,rating:Number(row.rating),comment:String(row.comment||""),createdAt:row.createdAt,displayName:String(row.displayName||(row.reviewerId?("Pelanggan LEOOSTORE #"+String(row.reviewerId).padStart(3,"0")):"Pelanggan LEOOSTORE"))}));
   return json({ok:true,average:Number(summary?.average)||0,count:Number(summary?.count)||0,items,limit,offset});
 }
 async function ensureEmailNotificationTable(db){await db.prepare("CREATE TABLE IF NOT EXISTS email_notifications (id INTEGER PRIMARY KEY AUTOINCREMENT, order_id TEXT NOT NULL, event_type TEXT NOT NULL, recipient TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'pending', attempts INTEGER NOT NULL DEFAULT 0, last_error TEXT, created_at TEXT NOT NULL, updated_at TEXT NOT NULL, UNIQUE(order_id,event_type,recipient))").run();}
@@ -345,6 +352,28 @@ async function handleAdminOrders(request,env){
   const where=conditions.length?" WHERE "+conditions.join(" AND "):"";
   const rows=await env.DB.prepare("SELECT id AS orderId,product_id AS productId,product_name AS productName,denomination_id AS denominationId,denomination_name AS denomination,player_id AS playerId,server_id AS server,payment_method AS paymentId,subtotal,fee,discount,total,status,midtrans_transaction_id AS transactionId,midtrans_status AS rawStatus,customer_email AS email,customer_whatsapp AS whatsapp,created_at AS createdAt,updated_at AS updatedAt FROM orders"+where+" ORDER BY created_at DESC LIMIT ?").bind(...values,limit).all();
   return json({ok:true,orders:rows.results||[],count:(rows.results||[]).length,resetAt:resetAt||null});
+}
+async function handleAdminReviews(request,env){
+  const user=await verifyPushUser(request);
+  if(!user)return json({ok:false,error:"Sesi tidak valid atau sudah berakhir. Login kembali."},401);
+  if(user.id!==PUSH_ADMIN_UID)return json({ok:false,error:"Akses khusus admin."},403);
+  if(!env.DB)return json({ok:false,error:"Database belum dikonfigurasi."},503);
+  await ensureOrderTable(env.DB);await ensureOrderReviewTable(env.DB);
+  const rows=await env.DB.prepare("SELECT r.order_id AS orderId,r.review_number AS reviewNumber,r.rating,r.comment,r.created_at AS createdAt,r.display_name AS displayName,o.product_name AS productName,o.denomination_name AS denomination,o.total,o.status FROM order_reviews r INNER JOIN orders o ON o.id=r.order_id ORDER BY r.created_at DESC LIMIT 200").all();
+  return json({ok:true,items:rows.results||[]});
+}
+async function handleAdminReviewDelete(request,env){
+  const user=await verifyPushUser(request);
+  if(!user)return json({ok:false,error:"Sesi tidak valid atau sudah berakhir. Login kembali."},401);
+  if(user.id!==PUSH_ADMIN_UID)return json({ok:false,error:"Akses khusus admin."},403);
+  if(!env.DB)return json({ok:false,error:"Database belum dikonfigurasi."},503);
+  let body;try{body=await request.json();}catch{return json({ok:false,error:"Permintaan hapus tidak valid."},400);}
+  const orderId=normalizeOrderId(body?.orderId);
+  if(!orderId)return json({ok:false,error:"ID transaksi tidak valid."},400);
+  await ensureOrderReviewTable(env.DB);
+  const deleted=await env.DB.prepare("DELETE FROM order_reviews WHERE order_id=?").bind(orderId).run();
+  if(Number(deleted?.meta?.changes||0)!==1)return json({ok:false,error:"Ulasan tidak ditemukan atau sudah dihapus."},404);
+  return json({ok:true,deleted:true,orderId});
 }
 async function handleGetOrder(env,orderId){if(!env.DB)return json({ok:false,error:"Database belum dikonfigurasi."},503);const id=normalizeOrderId(orderId);if(!id)return json({ok:false,error:"Order ID tidak valid."},400);await ensureOrderTable(env.DB);await ensureOrderReviewTable(env.DB);const order=await env.DB.prepare("SELECT id AS orderId,product_id AS productId,product_name AS productName,denomination_id AS denominationId,denomination_name AS denomination,player_id AS playerId,server_id AS server,payment_method AS paymentId,subtotal,fee,discount,total,status,midtrans_transaction_id AS transactionId,midtrans_status AS rawStatus,snap_token AS token,snap_redirect_url AS redirectUrl,customer_email AS email,customer_whatsapp AS whatsapp,created_at AS createdAt,updated_at AS updatedAt FROM orders WHERE id=?").bind(id).first();if(!order)return json({ok:false,error:"Order tidak ditemukan."},404);order.review=await env.DB.prepare("SELECT rating,comment,created_at AS createdAt FROM order_reviews WHERE order_id=?").bind(id).first()||null;return json({ok:true,order,reviewEnabled:true});}
 
@@ -583,4 +612,4 @@ if(url.pathname==="/api/push/event"&&request.method==="POST")return handlePushEv
 if(url.pathname==="/health"&&request.method==="GET")return json({ok:true,service:"LEOOSTORE Payment API",environment:"sandbox"});if(url.pathname==="/api/orders"&&request.method==="GET")return json({ok:true,service:"LEOOSTORE Payment API",endpoint:"orders",method:"POST",message:"Endpoint aktif. Gunakan POST untuk membuat pembayaran."});if(url.pathname==="/api/leaderboard"&&request.method==="GET")return handleLeaderboard(env,url);if(url.pathname==="/api/reviews"&&request.method==="GET")return handlePublicReviews(env,url);
 
 
-if(url.pathname==="/api/admin/roblox-credentials/reveal"&&request.method==="POST")return handleRevealRobloxCredential(request,env);if(url.pathname==="/api/admin/orders/reset"&&request.method==="POST")return handleAdminOrderReset(request,env);if(url.pathname==="/api/admin/orders"&&request.method==="GET")return handleAdminOrders(request,env);if(url.pathname==="/api/orders"&&request.method==="POST")return handleCreateOrder(request,env);if(url.pathname==="/api/midtrans/webhook"&&request.method==="POST")return handleWebhook(request,env);const reviewMatch=url.pathname.match(/^\/api\/orders\/([^/]+)\/review$/);if(reviewMatch&&request.method==="POST")return handleSubmitOrderReview(request,env,decodeURIComponent(reviewMatch[1]));const m=url.pathname.match(/^\/api\/orders\/([^/]+)$/);if(m&&request.method==="GET")return handleGetOrder(env,decodeURIComponent(m[1]));return json({ok:false,error:"Endpoint tidak ditemukan."},404);}catch(error){console.error("Worker error",error);return json({ok:false,error:"Terjadi kesalahan server."},500);}}};
+if(url.pathname==="/api/admin/roblox-credentials/reveal"&&request.method==="POST")return handleRevealRobloxCredential(request,env);if(url.pathname==="/api/admin/orders/reset"&&request.method==="POST")return handleAdminOrderReset(request,env);if(url.pathname==="/api/admin/reviews"&&request.method==="GET")return handleAdminReviews(request,env);if(url.pathname==="/api/admin/reviews/delete"&&request.method==="POST")return handleAdminReviewDelete(request,env);if(url.pathname==="/api/admin/orders"&&request.method==="GET")return handleAdminOrders(request,env);if(url.pathname==="/api/orders"&&request.method==="POST")return handleCreateOrder(request,env);if(url.pathname==="/api/midtrans/webhook"&&request.method==="POST")return handleWebhook(request,env);const reviewMatch=url.pathname.match(/^\/api\/orders\/([^/]+)\/review$/);if(reviewMatch&&request.method==="POST")return handleSubmitOrderReview(request,env,decodeURIComponent(reviewMatch[1]));const m=url.pathname.match(/^\/api\/orders\/([^/]+)$/);if(m&&request.method==="GET")return handleGetOrder(env,decodeURIComponent(m[1]));return json({ok:false,error:"Endpoint tidak ditemukan."},404);}catch(error){console.error("Worker error",error);return json({ok:false,error:"Terjadi kesalahan server."},500);}}};
