@@ -70,7 +70,7 @@ async function handleSubmitOrderReview(request,env,orderId){
   if(!order)return json({ok:false,error:"Transaksi tidak ditemukan."},404);
   if(!["Pembayaran Berhasil","Pesanan Diproses","Top Up Berhasil"].includes(String(order.status||"")))return json({ok:false,error:"Ulasan hanya bisa dikirim setelah pembayaran berhasil."},409);
   const submittedEmail=String(body?.email||"").trim().toLowerCase(),storedEmail=String(order.customer_email||"").trim().toLowerCase();
-  const submittedPhone=String(body?.whatsapp||"").replace(/\\D/g,""),storedPhone=String(order.customer_whatsapp||"").replace(/\\D/g,"");
+  const submittedPhone=String(body?.whatsapp||"").replace(/\D/g,""),storedPhone=String(order.customer_whatsapp||"").replace(/\\D/g,"");
   if(!((submittedEmail&&storedEmail&&submittedEmail===storedEmail)||(submittedPhone&&storedPhone&&submittedPhone===storedPhone)))return json({ok:false,error:"Verifikasi kontak transaksi gagal. Muat ulang halaman pesanan lalu coba lagi."},403);
   const now=new Date().toISOString();
   const inserted=await env.DB.prepare("INSERT OR IGNORE INTO order_reviews(order_id,rating,comment,created_at) VALUES(?,?,?,?)").bind(id,rating,comment,now).run();
