@@ -641,15 +641,6 @@ document.addEventListener("DOMContentLoaded",async function(){
     merged.forEach(([from,to])=>{output+=esc(source.slice(cursor,from))+'<mark class="site-search-highlight">'+esc(source.slice(from,to))+'</mark>';cursor=to;});
     return output+esc(source.slice(cursor));
    };
-   const highlightName=(name,terms)=>{
-    let html=esc(name);
-    [...new Set(terms)].sort((a,b)=>b.length-a.length).forEach(term=>{
-     if(!term)return;
-     const re=new RegExp(escapeRegExp(esc(term)),"gi");
-     html=html.replace(re,match=>'<mark class="site-search-highlight">'+match+'</mark>');
-    });
-    return html;
-   };
    const renderSiteSearch=()=>{
     if(!results)return;
     const raw=siteSearch.value.trim();
