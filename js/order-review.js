@@ -55,7 +55,7 @@
       try {
         const response = await fetch(API + "/api/orders/" + encodeURIComponent(order.orderId) + "/review", {
           method: "POST", headers: {"Content-Type":"application/json"},
-          body: JSON.stringify({rating, comment: modal.querySelector("#leoReviewText").value.trim()})
+          body: JSON.stringify({rating, comment: modal.querySelector("#leoReviewText").value.trim(), email: order.email || "", whatsapp: order.whatsapp || ""})
         });
         const result = await response.json().catch(() => ({}));
         if (!response.ok || !result.ok) throw new Error(result.error || "Ulasan gagal dikirim.");
