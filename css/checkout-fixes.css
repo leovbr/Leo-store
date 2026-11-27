@@ -4832,3 +4832,12 @@ body.shop-page #productList .product-info::after{
     animation:none!important;
   }
 }
+
+
+/* Prevent default account fields from flashing before the selected game's
+   Supabase account configuration has been applied by checkout.js.
+   The existing checkout-catalog-loading class is removed only after
+   catalog loading and selectGame/updateAccountFields have completed. */
+.checkout-page.checkout-catalog-loading #accountCard{
+  visibility:hidden!important;
+}
