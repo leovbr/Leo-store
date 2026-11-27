@@ -54,8 +54,16 @@
       if (!rating) { err.textContent = "Pilih rating bintang terlebih dahulu."; return; }
       send.disabled = true; send.textContent = "Mengirim...";
       try {
+        const headers = {"Content-Type":"application/json"};
+        try {
+          if (window.supabase?.createClient) {
+            const auth = window.supabase.createClient("https://tvdbrqskvuukxvqaqjom.supabase.co", "sb_publishable_2f-IadmcnaYzoCb_8Iko0w_pFp9u8eF");
+            const {data} = await auth.auth.getSession();
+            if (data?.session?.access_token) headers.Authorization = "Bearer " + data.session.access_token;
+          }
+        } catch (_) {}
         const response = await fetch(API + "/api/orders/" + encodeURIComponent(order.orderId) + "/review", {
-          method: "POST", headers: {"Content-Type":"application/json"},
+          method: "POST", headers,
           body: JSON.stringify({rating, comment: modal.querySelector("#leoReviewText").value.trim(), email: order.email || "", whatsapp: order.whatsapp || ""})
         });
         const result = await response.json().catch(() => ({}));
