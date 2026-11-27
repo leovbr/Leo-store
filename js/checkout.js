@@ -543,10 +543,47 @@ document.addEventListener("DOMContentLoaded", async () => {
           const willOpen = !category.classList.contains("open");
           category.classList.toggle("open", willOpen);
           const body = category.querySelector(":scope > .payment-category-body");
-          if (body) body.hidden = !willOpen;
           header.setAttribute("aria-expanded", String(willOpen));
           const arrow = header.querySelector("span:last-child");
-          if (arrow) arrow.textContent = willOpen ? "⌃" : "⌄";
+          if (arrow) arrow.textContent = "⌄";
+
+          if (body) {
+            body.getAnimations().forEach((animation) => animation.cancel());
+            const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            if (reduceMotion) {
+              body.hidden = !willOpen;
+              body.style.removeProperty("height");
+              body.style.removeProperty("overflow");
+            } else if (willOpen) {
+              body.hidden = false;
+              body.style.overflow = "hidden";
+              const targetHeight = body.scrollHeight;
+              const animation = body.animate(
+                [{ height: "0px", opacity: 0 }, { height: targetHeight + "px", opacity: 1 }],
+                { duration: 320, easing: "cubic-bezier(.22,.75,.25,1)", fill: "both" }
+              );
+              animation.onfinish = () => {
+                if (category.classList.contains("open")) {
+                  body.style.removeProperty("height");
+                  body.style.removeProperty("overflow");
+                }
+              };
+            } else {
+              const currentHeight = body.getBoundingClientRect().height;
+              body.style.overflow = "hidden";
+              const animation = body.animate(
+                [{ height: currentHeight + "px", opacity: 1 }, { height: "0px", opacity: 0 }],
+                { duration: 280, easing: "cubic-bezier(.4,0,.2,1)", fill: "both" }
+              );
+              animation.onfinish = () => {
+                if (!category.classList.contains("open")) {
+                  body.hidden = true;
+                  body.style.removeProperty("height");
+                  body.style.removeProperty("overflow");
+                }
+              };
+            }
+          }
         }
         return;
       }
