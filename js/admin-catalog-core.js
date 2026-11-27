@@ -238,7 +238,7 @@ async function loadAdminReviews(){
   const items=Array.isArray(data.items)?data.items:[];
   status.textContent=items.length+" ulasan tersimpan.";
   if(!items.length){table.innerHTML='<p class="muted">Belum ada ulasan pelanggan.</p>';return;}
-  table.innerHTML='<table><thead><tr><th>ID</th><th>Pelanggan</th><th>Transaksi</th><th>Produk</th><th>Rating</th><th>Ulasan</th><th>Tanggal</th><th>Aksi</th></tr></thead><tbody>'+items.map(item=>'<tr><td><b>#'+String(Number(item.reviewNumber)||0).padStart(3,"0")+'</b></td><td>'+esc(item.displayName||"Pelanggan LEOOSTORE")+'</td><td><small>'+esc(item.orderId||"—")+'</small><br><small>'+esc(item.status||"")+'</small></td><td>'+esc(item.productName||"")+'<br><small>'+esc(item.denomination||"")+'</small></td><td>'+("★".repeat(Math.max(0,Math.min(5,Number(item.rating)||0))))+'</td><td>'+esc(item.comment||"—")+'</td><td>'+esc(item.createdAt?new Date(item.createdAt).toLocaleString("id-ID"):"—")+'</td><td><button type="button" class="danger" data-review-delete="'+esc(item.orderId)+'">Hapus</button></td></tr>').join("")+'</tbody></table>';
+  table.innerHTML='<table><thead><tr><th>ID</th><th>Pelanggan</th><th>Transaksi</th><th>Produk</th><th>Rating</th><th>Ulasan</th><th>Tanggal</th><th>Aksi</th></tr></thead><tbody>'+items.map(item=>'<tr><td><b>#'+String(Number(item.reviewNumber)||0).padStart(3,"0")+'</b></td><td>'+esc(String(item.displayName||"Pelanggan LEOOSTORE").replace(/ #\\\\d{3,}$/,""))+'</td><td><small>'+esc(item.orderId||"—")+'</small><br><small>'+esc(item.status||"")+'</small></td><td>'+esc(item.productName||"")+'<br><small>'+esc(item.denomination||"")+'</small></td><td>'+("★".repeat(Math.max(0,Math.min(5,Number(item.rating)||0))))+'</td><td>'+esc(item.comment||"—")+'</td><td>'+esc(item.createdAt?new Date(item.createdAt).toLocaleString("id-ID"):"—")+'</td><td><button type="button" class="danger" data-review-delete="'+esc(item.orderId)+'">Hapus</button></td></tr>').join("")+'</tbody></table>';
  }catch(error){status.textContent="Gagal: "+(error.message||String(error));}
 }
 $("adminReviewsTable").addEventListener("click",async event=>{
@@ -255,7 +255,7 @@ $("adminReviewsTable").addEventListener("click",async event=>{
   await loadAdminReviews();
  }catch(error){button.disabled=false;$("adminReviewsStatus").textContent="Gagal menghapus: "+(error.message||String(error));}
 });
-document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-tab]").forEach(x=>x.classList.toggle("active",x===b));["products","games","add-game","homepage","promos","images","image-studio"].forEach(t=>$("tab-"+t).classList.toggle("hidden",t!==b.dataset.tab));b.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"});if(b.dataset.tab==="reviews")loadAdminReviews();});
+document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-tab]").forEach(x=>x.classList.toggle("active",x===b));["products","games","add-game","homepage","promos","images","image-studio","reviews"].forEach(t=>$("tab-"+t).classList.toggle("hidden",t!==b.dataset.tab));b.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"});if(b.dataset.tab==="reviews")loadAdminReviews();});
 // Restore the shared admin session before loading catalog data.
 window.LEOAdminAuth.ready.then(session=>{if(session)auth(session.user);else location.replace("admin.html");}).catch(error=>say("Gagal memulihkan sesi admin: "+(error.message||error)));
 })();
