@@ -57,6 +57,7 @@ async function ensureOrderTable(db){await db.prepare("CREATE TABLE IF NOT EXISTS
 async function ensureOrderReviewTable(db){
   await db.prepare("CREATE TABLE IF NOT EXISTS order_reviews (order_id TEXT PRIMARY KEY REFERENCES orders(id) ON DELETE CASCADE, rating INTEGER NOT NULL CHECK(rating BETWEEN 1 AND 5), comment TEXT NOT NULL DEFAULT '', created_at TEXT NOT NULL, CHECK(length(comment)<=1000))").run();
   await db.prepare("ALTER TABLE order_reviews ADD COLUMN reviewer_id INTEGER").run().catch(()=>{});
+  await db.prepare("ALTER TABLE order_reviews ADD COLUMN display_name TEXT").run().catch(()=>{});
   await db.prepare("CREATE TABLE IF NOT EXISTS public_reviewers (id INTEGER PRIMARY KEY AUTOINCREMENT, identity_hash TEXT NOT NULL UNIQUE, created_at TEXT NOT NULL)").run();
   await db.prepare("CREATE INDEX IF NOT EXISTS idx_order_reviews_created_at ON order_reviews(created_at DESC)").run();
 }
@@ -96,7 +97,7 @@ async function handleSubmitOrderReview(request,env,orderId){
   const reviewer=await getPublicReviewer(env.DB,identity);
   const displayName=verifiedEmail?maskReviewEmail(verifiedEmail):"Pelanggan LEOOSTORE #"+String(reviewer.id).padStart(3,"0");
   const now=new Date().toISOString();
-  const inserted=await env.DB.prepare("INSERT OR IGNORE INTO order_reviews(order_id,rating,comment,created_at,reviewer_id) VALUES(?,?,?,?,?)").bind(id,rating,comment,now,reviewer.id).run();
+  const inserted=await env.DB.prepare("INSERT OR IGNORE INTO order_reviews(order_id,rating,comment,created_at,reviewer_id,display_name) VALUES(?,?,?,?,?,?)").bind(id,rating,comment,now,reviewer.id,displayName).run();
   if(Number(inserted?.meta?.changes||0)!==1){
     const existing=await env.DB.prepare("SELECT rating,comment,created_at AS createdAt FROM order_reviews WHERE order_id=?").bind(id).first();
     return json({ok:false,error:"Ulasan untuk transaksi ini sudah pernah dikirim.",review:existing||null},409);
@@ -109,8 +110,8 @@ async function handlePublicReviews(env,url){
   const limit=Math.max(1,Math.min(50,Number(url.searchParams.get("limit"))||12));
   const offset=Math.max(0,Number(url.searchParams.get("offset"))||0);
   const summary=await env.DB.prepare("SELECT COUNT(*) AS count,ROUND(AVG(rating),1) AS average FROM order_reviews r INNER JOIN orders o ON o.id=r.order_id WHERE o.status IN ('Pembayaran Berhasil','Pesanan Diproses','Top Up Berhasil')").first();
-  const rows=await env.DB.prepare("SELECT r.rating,r.comment,r.created_at AS createdAt,r.reviewer_id AS reviewerId, o.customer_email AS customerEmail FROM order_reviews r INNER JOIN orders o ON o.id=r.order_id WHERE o.status IN ('Pembayaran Berhasil','Pesanan Diproses','Top Up Berhasil') ORDER BY r.created_at DESC LIMIT ? OFFSET ?").bind(limit,offset).all();
-  const items=(rows.results||[]).map(row=>({rating:Number(row.rating),comment:String(row.comment||""),createdAt:row.createdAt,displayName:maskReviewEmail(row.customerEmail)||("Pelanggan LEOOSTORE #"+String(row.reviewerId||0).padStart(3,"0"))}));
+  const rows=await env.DB.prepare("SELECT r.rating,r.comment,r.created_at AS createdAt,r.display_name AS displayName,r.reviewer_id AS reviewerId FROM order_reviews r INNER JOIN orders o ON o.id=r.order_id WHERE o.status IN ('Pembayaran Berhasil','Pesanan Diproses','Top Up Berhasil') ORDER BY r.created_at DESC LIMIT ? OFFSET ?").bind(limit,offset).all();
+  const items=(rows.results||[]).map(row=>({rating:Number(row.rating),comment:String(row.comment||""),createdAt:row.createdAt,displayName:String(row.displayName||("Pelanggan LEOOSTORE #"+String(row.reviewerId||0).padStart(3,"0")))}));
   return json({ok:true,average:Number(summary?.average)||0,count:Number(summary?.count)||0,items,limit,offset});
 }
 async function ensureEmailNotificationTable(db){await db.prepare("CREATE TABLE IF NOT EXISTS email_notifications (id INTEGER PRIMARY KEY AUTOINCREMENT, order_id TEXT NOT NULL, event_type TEXT NOT NULL, recipient TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'pending', attempts INTEGER NOT NULL DEFAULT 0, last_error TEXT, created_at TEXT NOT NULL, updated_at TEXT NOT NULL, UNIQUE(order_id,event_type,recipient))").run();}
