@@ -56,7 +56,24 @@ async function verifyNotification(body,key){if(!key||!body?.signature_key)return
 async function ensureOrderTable(db){await db.prepare("CREATE TABLE IF NOT EXISTS orders (id TEXT PRIMARY KEY, customer_name TEXT, customer_email TEXT, customer_whatsapp TEXT, product_id TEXT NOT NULL, product_name TEXT NOT NULL, denomination_id TEXT NOT NULL, denomination_name TEXT NOT NULL, player_id TEXT, server_id TEXT, payment_method TEXT NOT NULL, subtotal INTEGER NOT NULL, fee INTEGER NOT NULL, discount INTEGER NOT NULL, total INTEGER NOT NULL, status TEXT NOT NULL, midtrans_transaction_id TEXT, midtrans_status TEXT, snap_token TEXT, snap_redirect_url TEXT, created_at TEXT NOT NULL, updated_at TEXT NOT NULL)").run();}
 async function ensureOrderReviewTable(db){
   await db.prepare("CREATE TABLE IF NOT EXISTS order_reviews (order_id TEXT PRIMARY KEY REFERENCES orders(id) ON DELETE CASCADE, rating INTEGER NOT NULL CHECK(rating BETWEEN 1 AND 5), comment TEXT NOT NULL DEFAULT '', created_at TEXT NOT NULL, CHECK(length(comment)<=1000))").run();
+  await db.prepare("ALTER TABLE order_reviews ADD COLUMN reviewer_id INTEGER").run().catch(()=>{});
+  await db.prepare("CREATE TABLE IF NOT EXISTS public_reviewers (id INTEGER PRIMARY KEY AUTOINCREMENT, identity_hash TEXT NOT NULL UNIQUE, created_at TEXT NOT NULL)").run();
   await db.prepare("CREATE INDEX IF NOT EXISTS idx_order_reviews_created_at ON order_reviews(created_at DESC)").run();
+}
+async function hashReviewIdentity(value){
+  const digest=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(String(value||"").trim().toLowerCase()));
+  return [...new Uint8Array(digest)].map(b=>b.toString(16).padStart(2,"0")).join("");
+}
+function maskReviewEmail(email){
+  const local=String(email||"").trim().split("@")[0].replace(/[^a-z0-9._-]/gi,"");
+  if(!local)return "";
+  if(local.length<=3)return local.charAt(0)+"*****";
+  return local.slice(0,3)+"*"+local.slice(3,5)+"*****";
+}
+async function getPublicReviewer(db,identity){
+  const key=await hashReviewIdentity(identity),now=new Date().toISOString();
+  await db.prepare("INSERT OR IGNORE INTO public_reviewers(identity_hash,created_at) VALUES(?,?)").bind(key,now).run();
+  return db.prepare("SELECT id FROM public_reviewers WHERE identity_hash=?").bind(key).first();
 }
 async function handleSubmitOrderReview(request,env,orderId){
   if(!env.DB)return json({ok:false,error:"Database belum dikonfigurasi."},503);
@@ -72,15 +89,30 @@ async function handleSubmitOrderReview(request,env,orderId){
   const submittedEmail=String(body?.email||"").trim().toLowerCase(),storedEmail=String(order.customer_email||"").trim().toLowerCase();
   const submittedPhone=String(body?.whatsapp||"").replace(/\D/g,""),storedPhone=String(order.customer_whatsapp||"").replace(/\D/g,"");
   if(!((submittedEmail&&storedEmail&&submittedEmail===storedEmail)||(submittedPhone&&storedPhone&&submittedPhone===storedPhone)))return json({ok:false,error:"Verifikasi kontak transaksi gagal. Muat ulang halaman pesanan lalu coba lagi."},403);
+  const user=await verifyPushUser(request);
+  const verifiedEmail=String(user?.email||storedEmail||"").trim().toLowerCase();
+  const identity=verifiedEmail||("phone:"+storedPhone);
+  if(!identity)return json({ok:false,error:"Identitas pelanggan tidak dapat diverifikasi."},400);
+  const reviewer=await getPublicReviewer(env.DB,identity);
+  const displayName=verifiedEmail?maskReviewEmail(verifiedEmail):"Pelanggan LEOOSTORE #"+String(reviewer.id).padStart(3,"0");
   const now=new Date().toISOString();
-  const inserted=await env.DB.prepare("INSERT OR IGNORE INTO order_reviews(order_id,rating,comment,created_at) VALUES(?,?,?,?)").bind(id,rating,comment,now).run();
+  const inserted=await env.DB.prepare("INSERT OR IGNORE INTO order_reviews(order_id,rating,comment,created_at,reviewer_id) VALUES(?,?,?,?,?)").bind(id,rating,comment,now,reviewer.id).run();
   if(Number(inserted?.meta?.changes||0)!==1){
     const existing=await env.DB.prepare("SELECT rating,comment,created_at AS createdAt FROM order_reviews WHERE order_id=?").bind(id).first();
     return json({ok:false,error:"Ulasan untuk transaksi ini sudah pernah dikirim.",review:existing||null},409);
   }
-  return json({ok:true,review:{rating,comment,createdAt:now}});
+  return json({ok:true,review:{rating,comment,createdAt:now,displayName}});
 }
-
+async function handlePublicReviews(env,url){
+  if(!env.DB)return json({ok:false,error:"Database belum dikonfigurasi."},503);
+  await ensureOrderTable(env.DB);await ensureOrderReviewTable(env.DB);
+  const limit=Math.max(1,Math.min(50,Number(url.searchParams.get("limit"))||12));
+  const offset=Math.max(0,Number(url.searchParams.get("offset"))||0);
+  const summary=await env.DB.prepare("SELECT COUNT(*) AS count,ROUND(AVG(rating),1) AS average FROM order_reviews r INNER JOIN orders o ON o.id=r.order_id WHERE o.status IN ('Pembayaran Berhasil','Pesanan Diproses','Top Up Berhasil')").first();
+  const rows=await env.DB.prepare("SELECT r.rating,r.comment,r.created_at AS createdAt,r.reviewer_id AS reviewerId, o.customer_email AS customerEmail FROM order_reviews r INNER JOIN orders o ON o.id=r.order_id WHERE o.status IN ('Pembayaran Berhasil','Pesanan Diproses','Top Up Berhasil') ORDER BY r.created_at DESC LIMIT ? OFFSET ?").bind(limit,offset).all();
+  const items=(rows.results||[]).map(row=>({rating:Number(row.rating),comment:String(row.comment||""),createdAt:row.createdAt,displayName:maskReviewEmail(row.customerEmail)||("Pelanggan LEOOSTORE #"+String(row.reviewerId||0).padStart(3,"0"))}));
+  return json({ok:true,average:Number(summary?.average)||0,count:Number(summary?.count)||0,items,limit,offset});
+}
 async function ensureEmailNotificationTable(db){await db.prepare("CREATE TABLE IF NOT EXISTS email_notifications (id INTEGER PRIMARY KEY AUTOINCREMENT, order_id TEXT NOT NULL, event_type TEXT NOT NULL, recipient TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'pending', attempts INTEGER NOT NULL DEFAULT 0, last_error TEXT, created_at TEXT NOT NULL, updated_at TEXT NOT NULL, UNIQUE(order_id,event_type,recipient))").run();}
 async function sendOrderEmail(env,order,eventType){
   const apiKey=String(env.RESEND_API_KEY||"").trim(),from=String(env.RESEND_FROM_EMAIL||"").trim();
@@ -547,7 +579,7 @@ if(url.pathname==="/api/admin/push/history"&&request.method==="GET")return handl
 if(url.pathname==="/api/admin/push/diagnostics"&&request.method==="GET")return handleAdminPushDiagnostics(request,env);
 if(url.pathname==="/api/push/unsubscribe"&&request.method==="POST")return handlePushUnsubscribe(request,env);
 if(url.pathname==="/api/push/event"&&request.method==="POST")return handlePushEvent(request,env);
-if(url.pathname==="/health"&&request.method==="GET")return json({ok:true,service:"LEOOSTORE Payment API",environment:"sandbox"});if(url.pathname==="/api/orders"&&request.method==="GET")return json({ok:true,service:"LEOOSTORE Payment API",endpoint:"orders",method:"POST",message:"Endpoint aktif. Gunakan POST untuk membuat pembayaran."});if(url.pathname==="/api/leaderboard"&&request.method==="GET")return handleLeaderboard(env,url);
+if(url.pathname==="/health"&&request.method==="GET")return json({ok:true,service:"LEOOSTORE Payment API",environment:"sandbox"});if(url.pathname==="/api/orders"&&request.method==="GET")return json({ok:true,service:"LEOOSTORE Payment API",endpoint:"orders",method:"POST",message:"Endpoint aktif. Gunakan POST untuk membuat pembayaran."});if(url.pathname==="/api/leaderboard"&&request.method==="GET")return handleLeaderboard(env,url);if(url.pathname==="/api/reviews"&&request.method==="GET")return handlePublicReviews(env,url);
 
 
 if(url.pathname==="/api/admin/roblox-credentials/reveal"&&request.method==="POST")return handleRevealRobloxCredential(request,env);if(url.pathname==="/api/admin/orders/reset"&&request.method==="POST")return handleAdminOrderReset(request,env);if(url.pathname==="/api/admin/orders"&&request.method==="GET")return handleAdminOrders(request,env);if(url.pathname==="/api/orders"&&request.method==="POST")return handleCreateOrder(request,env);if(url.pathname==="/api/midtrans/webhook"&&request.method==="POST")return handleWebhook(request,env);const reviewMatch=url.pathname.match(/^\/api\/orders\/([^/]+)\/review$/);if(reviewMatch&&request.method==="POST")return handleSubmitOrderReview(request,env,decodeURIComponent(reviewMatch[1]));const m=url.pathname.match(/^\/api\/orders\/([^/]+)$/);if(m&&request.method==="GET")return handleGetOrder(env,decodeURIComponent(m[1]));return json({ok:false,error:"Endpoint tidak ditemukan."},404);}catch(error){console.error("Worker error",error);return json({ok:false,error:"Terjadi kesalahan server."},500);}}};
