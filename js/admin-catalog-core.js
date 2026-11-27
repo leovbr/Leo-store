@@ -244,7 +244,7 @@ async function loadAdminReviews(){
 $("adminReviewsTable").addEventListener("click",async event=>{
  const button=event.target.closest("[data-review-delete]");if(!button)return;
  const orderId=button.dataset.reviewDelete;
- if(!await leoModal.confirm("Hapus ulasan #"+(button.closest("tr")?.querySelector("td")?.textContent||"")+" secara permanen? Ulasan akan hilang dari halaman publik dan rating dihitung ulang."))return;
+ if(!await leoModal.confirm("Hapus ulasan "+(button.closest("tr")?.querySelector("td")?.textContent||"ini")+" secara permanen? Ulasan akan hilang dari halaman publik dan rating dihitung ulang."))return;
  button.disabled=true;
  try{
   const sessionResult=await db.auth.getSession(),token=sessionResult?.data?.session?.access_token;
