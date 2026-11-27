@@ -7,7 +7,7 @@
   function showReview(order) {
     const area = document.getElementById("orderReviewArea");
     if (!area) return;
-    if (!order._backendVerified || !paidStatuses.includes(String(order.status || ""))) { area.innerHTML = ""; return; }
+    if (!order._reviewEnabled || !paidStatuses.includes(String(order.status || ""))) { area.innerHTML = ""; return; }
     if (order.review && Number(order.review.rating) >= 1 && Number(order.review.rating) <= 5) {
       const n = Number(order.review.rating);
       area.innerHTML = '<section class="leo-review-card"><strong>Ulasan Kamu</strong><span class="leo-review-gold">' + "★".repeat(n) + "☆".repeat(5-n) + '</span><p>' + (order.review.comment ? esc(order.review.comment) : "Tanpa komentar tertulis.") + '</p><small>Terima kasih atas ulasanmu.</small></section>';
@@ -15,7 +15,7 @@
     }
     area.innerHTML = '<section class="leo-review-card"><strong>Bagaimana pengalaman top up kamu?</strong><p>Bantu kami meningkatkan layanan LEOOSTORE.</p><button type="button" class="order-detail-button order-primary-button" id="leoOpenReview">Beri Ulasan</button></section>';
     document.getElementById("leoOpenReview").addEventListener("click", () => openModal(order));
-    if (order._backendVerified) {
+    if (order._reviewEnabled) {
       let dismissed = false;
       try { dismissed = sessionStorage.getItem("LEOOSTORE_review_dismissed_" + order.orderId) === "1"; } catch (_) {}
       if (!dismissed) openModal(order);
