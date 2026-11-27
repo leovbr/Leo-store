@@ -57,6 +57,14 @@ body.info-page{background:#080e1a;color:#f4f6ff;font-family:'Plus Jakarta Sans',
  .leo-public-review-card p{margin-top:10px!important;font-size:13px!important}
  .leo-public-review-card time{margin-top:0!important;padding-top:10px}
 }
+
+.leo-review-purchase-meta{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px;margin-top:15px;padding:12px;border:1px solid rgba(148,163,184,.14);border-radius:11px;background:rgba(2,6,23,.28)}
+.leo-review-purchase-meta>div{display:flex;flex-direction:column;gap:4px;min-width:0}
+.leo-review-purchase-meta small{color:#8290a7;font-size:9px;font-weight:800;letter-spacing:.09em}
+.leo-review-purchase-meta strong{color:#e2e8f0;font-size:11px;line-height:1.5;overflow-wrap:anywhere}
+.leo-review-purchase-meta .leo-review-purchase-time{grid-column:1/-1}
+.leo-public-review-card>time{display:block;margin-top:11px;color:#8290a7;font-size:10px}
+@media(max-width:480px){.leo-review-purchase-meta{gap:9px;padding:11px}.leo-review-purchase-meta strong{font-size:10px}}
 </style>
 <style id="leoostore-text-brand-override">
 /* Final override: show text-only LEOOSTORE.id brand on every storefront page. */
@@ -176,6 +184,6 @@ document.addEventListener("DOMContentLoaded",function(){
 </script>
 <script src="js/supabase-catalog.js?v=20261127-shared-search1"></script>
 <script src="js/site-search.js?v=20261128-navbar-align3"></script>
-<script src="js/public-reviews.js?v=20261128-public7"></script>
+<script src="js/public-reviews.js?v=20261128-public8"></script>
 <script src="js/floating-admin-drag.js?v=20261120-drag1" defer></script>
 </body></html>
