@@ -23,6 +23,44 @@ body.info-page{background:#080e1a;color:#f4f6ff;font-family:'Plus Jakarta Sans',
 .leo-public-review-card .review-card-top{display:flex;justify-content:space-between;gap:8px;align-items:center}.leo-public-review-card .review-card-identity{display:flex;align-items:center;gap:8px;min-width:0;flex-wrap:wrap}.leo-public-review-card .leo-review-number{display:inline-flex;align-items:center;padding:3px 7px;border:1px solid rgba(139,92,246,.35);border-radius:7px;background:rgba(124,58,237,.12);color:#c4b5fd;font-size:10px;font-weight:800;letter-spacing:.3px}.leo-public-review-card strong{font-size:13px;overflow-wrap:anywhere}.leo-public-review-card .review-stars{color:#f6c453;letter-spacing:1px;white-space:nowrap}
 .leo-public-review-card p{margin:12px 0 0;color:#cbd5e1;font-size:13px;line-height:1.7;overflow-wrap:anywhere}.leo-public-review-card time{display:block;margin-top:12px;color:#8290a7;font-size:11px}
 @media(max-width:680px){.info-page .site-header .header-inner,.info-page .site-header .container.header-inner{height:60px!important;min-height:60px!important;padding-block:0!important}}@media(max-width:760px){.leo-public-review-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:480px){.leo-public-review-grid{grid-template-columns:1fr}}
+
+/* Match the exact navbar wordmark sizing used on Tentang Kami. */
+<style id="leoostore-text-brand-override">
+/* Final override: show text-only LEOOSTORE.id brand on every storefront page. */
+.site-header a.header-brand,
+.site-header .container > a.header-brand,
+.site-header .header-inner > a.header-brand{
+  display:inline-flex!important; align-items:center!important; justify-content:flex-start!important;
+  flex:0 0 auto!important; width:auto!important; min-width:0!important; height:auto!important;
+  max-width:100%!important; overflow:visible!important; gap:0!important;
+}
+.site-header .header-brand img.header-logo{display:none!important; visibility:hidden!important; width:0!important; height:0!important;}
+.site-header .header-brand .header-brand-text,
+.site-header a.header-brand > span.header-brand-text{
+  display:inline-block!important; visibility:visible!important; opacity:1!important;
+  position:relative!important; width:auto!important; height:auto!important; max-width:none!important;
+  margin:0!important; padding:0!important; overflow:visible!important;
+  color:#f5f8ff!important;
+  background:linear-gradient(100deg,#b78aff 0%,#9b5cff 36%,#7c3aed 68%,#d8b4fe 100%)!important;
+  -webkit-background-clip:text!important; background-clip:text!important;
+  -webkit-text-fill-color:transparent!important;
+  font-family:'Orbitron','Plus Jakarta Sans',Arial,sans-serif!important;
+  font-size:clamp(16px,2.3vw,21px)!important; font-weight:900!important;
+  font-style:normal!important; letter-spacing:-.045em!important; line-height:1.15!important;
+  white-space:nowrap!important; text-decoration:none!important; text-shadow:none!important;
+  transform:none!important;
+}
+@media(max-width:600px){
+ .site-header .header-brand .header-brand-text,
+ .site-header a.header-brand > span.header-brand-text{font-size:17px!important;}
+}
+
+/* HOME ONLY: align text logo with the inner pages; preserve all other positions. */
+.home-page .site-header.home-header .header-inner > a.header-brand{
+  margin-left:10px!important;
+}
+2636
+</style>
 </style>
 </head><body class="info-page">
 <header class="site-header home-header">
@@ -79,5 +117,5 @@ document.addEventListener("DOMContentLoaded",function(){
 </script>
 <script src="js/supabase-catalog.js?v=20261127-shared-search1"></script>
 <script src="js/site-search.js?v=20261128-navbar-align3"></script>
-<script src="js/public-reviews.js?v=20261128-public3"></script>
+<script src="js/public-reviews.js?v=20261128-public4"></script>
 </body></html>
