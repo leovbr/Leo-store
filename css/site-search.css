@@ -48,3 +48,17 @@
   transform:translateY(0)!important;
   transition:transform .25s ease,visibility 0s!important;
 }
+
+/* Global contract: every visitor search drawer stays out of layout until opened. */
+.search-panel:not(.active){
+  display:none!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+  transform:translateY(-120%)!important;
+}
+.search-panel.active{
+  display:block!important;
+  visibility:visible!important;
+  pointer-events:auto!important;
+  transform:translateY(0)!important;
+}
