@@ -4761,3 +4761,30 @@ body.shop-page #productList .product-info::after{
     animation:none!important;
   }
 }
+
+
+/* ===== PAYMENT ACCORDIONS — SMOOTH EXPAND / COLLAPSE ===== */
+.checkout-page .payment-category-ewallet > .payment-category-header,
+.checkout-page .payment-category-dynamic > .payment-category-header{
+  cursor:pointer!important;
+  -webkit-tap-highlight-color:transparent;
+}
+.checkout-page .payment-category-ewallet > .payment-category-header > span:last-child,
+.checkout-page .payment-category-dynamic > .payment-category-header > span:last-child{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  transform:rotate(0deg);
+  transform-origin:center;
+  transition:transform .28s cubic-bezier(.22,.75,.25,1)!important;
+}
+.checkout-page .payment-category-ewallet.open > .payment-category-header > span:last-child,
+.checkout-page .payment-category-dynamic.open > .payment-category-header > span:last-child{
+  transform:rotate(180deg)!important;
+}
+@media(prefers-reduced-motion:reduce){
+  .checkout-page .payment-category-ewallet > .payment-category-header > span:last-child,
+  .checkout-page .payment-category-dynamic > .payment-category-header > span:last-child{
+    transition:none!important;
+  }
+}
