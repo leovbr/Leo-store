@@ -623,8 +623,24 @@ document.addEventListener("DOMContentLoaded",async function(){
    if(!results&&searchInner){results=document.createElement("div");results.id="siteSearchResults";results.className="site-search-results";results.setAttribute("role","listbox");results.setAttribute("aria-label","Hasil pencarian game");searchInner.appendChild(results);}
    const uniqueGames=[...new Map(visibleGames.filter(g=>g&&g.slug&&g.name).map(g=>[String(g.slug).toLowerCase(),g])).values()];
    const uniqueByName=[...new Map(uniqueGames.map(g=>[String(g.name).trim().toLocaleLowerCase("id-ID"),g])).values()];
-   const escapeRegExp=value=>value.replace(/[.*+?^${}()|[\]\\]/g,"\\  const visibleGames=games;
-  const cfg=settings;");
+   const highlightName=(name,terms)=>{
+    const source=String(name||"");
+    const lower=source.toLocaleLowerCase("id-ID");
+    const ranges=[];
+    terms.forEach(term=>{
+     let at=0;
+     while(term&&(at=lower.indexOf(term,at))!==-1){ranges.push([at,at+term.length]);at+=term.length;}
+    });
+    ranges.sort((a,b)=>a[0]-b[0]||b[1]-a[1]);
+    const merged=[];
+    ranges.forEach(range=>{
+     const last=merged[merged.length-1];
+     if(last&&range[0]<=last[1])last[1]=Math.max(last[1],range[1]);else merged.push(range.slice());
+    });
+    let output="",cursor=0;
+    merged.forEach(([from,to])=>{output+=esc(source.slice(cursor,from))+'<mark class="site-search-highlight">'+esc(source.slice(from,to))+'</mark>';cursor=to;});
+    return output+esc(source.slice(cursor));
+   };
    const highlightName=(name,terms)=>{
     let html=esc(name);
     [...new Set(terms)].sort((a,b)=>b.length-a.length).forEach(term=>{
