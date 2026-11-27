@@ -364,6 +364,7 @@ html body.home-page #menuOverlay{
 
 
 <link rel="stylesheet" href="css/page-entrance.css?v=20261127-global-drop1">
+<link rel="stylesheet" href="css/site-search.css?v=20261127-live-search1">
 </head>
 <body class="home-page">
 <header class="site-header home-header">
@@ -613,6 +614,50 @@ document.addEventListener("DOMContentLoaded",async function(){
   if(productsError)console.warn("Produk aktif gagal dimuat; katalog game tetap ditampilkan:",productsError);
   const visibleGames=games;
   const cfg=settings;
+  // Global header search uses one canonical active-game list, not both homepage grids.
+  const siteSearch=document.getElementById("siteSearch");
+  const searchPanel=document.getElementById("searchPanel");
+  if(siteSearch&&searchPanel){
+   const searchInner=siteSearch.closest(".search-panel-inner");
+   let results=document.getElementById("siteSearchResults");
+   if(!results&&searchInner){results=document.createElement("div");results.id="siteSearchResults";results.className="site-search-results";results.setAttribute("role","listbox");results.setAttribute("aria-label","Hasil pencarian game");searchInner.appendChild(results);}
+   const uniqueGames=[...new Map(visibleGames.filter(g=>g&&g.slug&&g.name).map(g=>[String(g.slug).toLowerCase(),g])).values()];
+   const uniqueByName=[...new Map(uniqueGames.map(g=>[String(g.name).trim().toLocaleLowerCase("id-ID"),g])).values()];
+   const escapeRegExp=value=>value.replace(/[.*+?^${}()|[\]\\]/g,"\\  const visibleGames=games;
+  const cfg=settings;");
+   const highlightName=(name,terms)=>{
+    let html=esc(name);
+    [...new Set(terms)].sort((a,b)=>b.length-a.length).forEach(term=>{
+     if(!term)return;
+     const re=new RegExp(escapeRegExp(esc(term)),"gi");
+     html=html.replace(re,match=>'<mark class="site-search-highlight">'+match+'</mark>');
+    });
+    return html;
+   };
+   const renderSiteSearch=()=>{
+    if(!results)return;
+    const raw=siteSearch.value.trim();
+    const query=raw.toLocaleLowerCase("id-ID").replace(/\s+/g," ");
+    if(!query){results.classList.remove("is-visible");results.innerHTML="";return;}
+    const terms=query.split(" ").filter(Boolean);
+    const matches=uniqueByName.filter(g=>{
+     const name=String(g.name||"").toLocaleLowerCase("id-ID");
+     return terms.every(term=>name.includes(term));
+    }).sort((a,b)=>{
+     const an=String(a.name||"").toLocaleLowerCase("id-ID"),bn=String(b.name||"").toLocaleLowerCase("id-ID");
+     const score=n=>n===query?0:n.startsWith(query)?1:n.split(/\s+/).some(word=>word.startsWith(query))?2:3;
+     return score(an)-score(bn)||an.localeCompare(bn,"id");
+    });
+    results.classList.add("is-visible");
+    if(!matches.length){results.innerHTML='<div class="site-search-empty">Game tidak ditemukan. Coba kata kunci lain.</div>';return;}
+    results.innerHTML='<div class="site-search-results-label">'+matches.length+' game ditemukan</div>'+matches.slice(0,30).map(g=>'<a class="site-search-result" role="option" href="checkout.html?game='+encodeURIComponent(g.slug)+'">'+(g.icon_url?'<img src="'+esc(g.icon_url)+'" alt="" loading="lazy" onerror="this.style.display=\'none\'">':'<span class="site-search-result-icon" aria-hidden="true">🎮</span>')+'<span class="site-search-result-copy"><span class="site-search-result-name">'+highlightName(g.name,terms)+'</span><span class="site-search-result-publisher">'+esc(g.publisher||"Game")+'</span></span><span class="site-search-result-arrow" aria-hidden="true">›</span></a>').join("");
+   };
+   siteSearch.addEventListener("input",renderSiteSearch);
+   siteSearch.addEventListener("keydown",event=>{if(event.key==="Escape"){results?.classList.remove("is-visible");}});
+   searchClose?.addEventListener("click",()=>{results?.classList.remove("is-visible");if(results)results.innerHTML="";});
+   searchButton?.addEventListener("click",()=>{if(searchPanel?.classList.contains("active"))setTimeout(renderSiteSearch,220);});
+   renderSiteSearch();
+  }
   const card=g=>'<a href="checkout.html?game='+encodeURIComponent(g.slug)+'" class="home-game-card"><div class="home-game-image">'+(g.icon_url?'<img src="'+esc(g.icon_url)+'" alt="'+esc(g.name)+'" loading="lazy" onerror="this.remove()">':'<span class="game-icon-empty" aria-label="Ikon belum diatur">🎮</span>')+'</div><div class="home-game-info"><strong>'+esc(g.name)+'</strong><span>'+esc(g.publisher||"Game")+'</span></div></a>';
   // All Games reuses the same card structure as shop.html; Trending keeps its compact layout.
   const shopStyleCard=g=>'<a class="product-card" href="checkout.html?game='+encodeURIComponent(g.slug)+'" aria-label="Top up '+esc(g.name)+'"><div class="product-image-wrap">'+(g.icon_url?'<img class="product-game-image" src="'+esc(g.icon_url)+'" alt="'+esc(g.name)+'" loading="lazy" onerror="this.remove()">':'<div class="product-game-image game-icon-empty" aria-label="Ikon belum diatur">🎮</div>')+'</div><div class="product-info"><h3>'+esc(g.name)+'</h3><p class="product-publisher">'+esc(g.publisher||"Publisher")+'</p></div></a>';
