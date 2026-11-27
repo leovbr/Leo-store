@@ -955,4 +955,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     renderDenominations(null);
     updateSummary();
   }
+
+  // Reveal the hero only after catalog data and the requested game state are applied.
+  document.body.classList.remove("checkout-catalog-loading");
 });
