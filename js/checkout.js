@@ -245,7 +245,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       // The shared-select enhancer wraps the native select; hide its wrapper too
       // so manual mode shows only the text input.
       const serverSelectWrapper = serverSelect.closest(".leo-shared-select") || serverSelect;
-      serverSelectWrapper.style.display = serverMode === "select" ? "" : "none";
+      serverSelectWrapper.style.display = serverMode === "select" ? "block" : "none";
       if (serverMode === "select") {
         const options = Array.isArray(cfg.serverOptions) ? cfg.serverOptions : [];
         serverSelect.innerHTML = '<option value="">Pilih Server</option>' + options.map(value => '<option value="' + escapeHTML(value) + '">' + escapeHTML(value) + '</option>').join("");
