@@ -1,3 +1,4 @@
+// Trigger Cloudflare Worker redeployment: public review purchase metadata.
 import webpush from "web-push";
 const ALLOWED_ORIGIN = "https://leovbr.github.io";
 
