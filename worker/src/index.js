@@ -102,7 +102,7 @@ async function handleSubmitOrderReview(request,env,orderId){
   const identity=user?.id?("user:"+user.id):(storedEmail||storedPhone?("guest:"+(storedEmail||storedPhone)):"");
   if(!identity)return json({ok:false,error:"Identitas pelanggan tidak dapat diverifikasi."},400);
   const reviewer=await getPublicReviewer(env.DB,identity);
-  const displayName=user&&!user.is_anonymous&&verifiedEmail?maskReviewEmail(verifiedEmail):"Pelanggan LEOOSTORE #"+String(reviewer.id).padStart(3,"0");
+  const displayName=user&&!user.is_anonymous&&verifiedEmail?maskReviewEmail(verifiedEmail):"Pelanggan LEOOSTORE";
   const now=new Date().toISOString();
   const inserted=await env.DB.prepare("INSERT OR IGNORE INTO order_reviews(order_id,rating,comment,created_at,reviewer_id,display_name,review_number) VALUES(?,?,?,?,?,?,(SELECT COALESCE(MAX(review_number),0)+1 FROM order_reviews))").bind(id,rating,comment,now,reviewer.id,displayName).run();
   if(Number(inserted?.meta?.changes||0)!==1){
