@@ -710,6 +710,19 @@ function renderHistoryPage(
       </section>
 
 
+      <section class="order-public-reviews" aria-labelledby="orderPublicReviewsTitle">
+        <div class="order-public-reviews-heading">
+          <h2 id="orderPublicReviewsTitle">Ulasan Pelanggan</h2>
+          <p>Pengalaman pelanggan setelah bertransaksi di LEOOSTORE.</p>
+        </div>
+        <div class="leo-review-summary">
+          <div><strong id="leoPublicAverage">—</strong><span class="leo-review-stars">★★★★★</span><small id="leoPublicCount">Memuat ulasan…</small></div>
+          <a href="ulasan.html">Lihat semua ulasan →</a>
+        </div>
+        <div id="leoPublicReviewList" class="leo-public-review-grid"><p class="leo-public-review-loading">Memuat ulasan pelanggan…</p></div>
+      </section>
+
+
       <section class="order-transactions-section">
 
 
