@@ -190,7 +190,9 @@ async function syncOrderFromBackend(order) {
       paymentName: backendOrder.paymentName || order.paymentName,
       price: Number(backendOrder.total ?? order.price ?? 0),
       total: Number(backendOrder.total ?? order.total ?? 0),
-      createdAt: backendOrder.createdAt || order.createdAt
+      createdAt: backendOrder.createdAt || order.createdAt,
+      review: backendOrder.review || null,
+      _backendVerified: true
     };
 
     const orders = getOrders();
@@ -587,6 +589,7 @@ function renderOrder(
 
         </div>
 
+        <div id="orderReviewArea"></div>
 
         <div class="order-detail-actions">
 
@@ -616,7 +619,7 @@ function renderOrder(
     </div>
 
   `;
-
+  if (window.LEOOrderReview) window.LEOOrderReview(order);
 }
 
 
