@@ -192,7 +192,8 @@ async function syncOrderFromBackend(order) {
       total: Number(backendOrder.total ?? order.total ?? 0),
       createdAt: backendOrder.createdAt || order.createdAt,
       review: backendOrder.review || null,
-      _backendVerified: true
+      _backendVerified: true,
+      _reviewEnabled: result.reviewEnabled === true
     };
 
     const orders = getOrders();
