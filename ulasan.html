@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ulasan Pelanggan | LEOOSTORE.id</title>
+<meta name="description" content="Baca ulasan pelanggan LEOOSTORE.id dari transaksi top up yang berhasil.">
+<link rel="stylesheet" href="css/style.css">
+<style>
+body{background:#080e1a;color:#f4f6ff;font-family:inherit}
+.reviews-page{width:min(1100px,calc(100% - 32px));margin:48px auto 70px}
+.reviews-heading{margin-bottom:24px}.reviews-heading a{color:#c4b5fd;text-decoration:none}.reviews-heading h1{font-size:clamp(25px,4vw,38px);margin:18px 0 8px}.reviews-heading p{color:#9caac0}
+.leo-review-summary{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px;margin:20px 0;border:1px solid rgba(148,163,184,.18);border-radius:16px;background:linear-gradient(135deg,rgba(124,92,255,.12),rgba(15,23,42,.45))}
+.leo-review-summary>div{display:grid;grid-template-columns:auto auto;align-items:center;gap:2px 10px}.leo-review-summary strong{font-size:30px;color:#fff}.leo-review-stars{color:#f6c453;letter-spacing:2px}.leo-review-summary small{grid-column:1/-1;color:#9caac0}
+.leo-public-review-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.leo-public-review-card{min-width:0;padding:18px;border:1px solid rgba(148,163,184,.18);border-radius:15px;background:rgba(15,23,42,.75)}
+.leo-public-review-card .review-card-top{display:flex;justify-content:space-between;gap:8px;align-items:center}.leo-public-review-card strong{font-size:13px;overflow-wrap:anywhere}.leo-public-review-card .review-stars{color:#f6c453;letter-spacing:1px;white-space:nowrap}
+.leo-public-review-card p{margin:12px 0 0;color:#cbd5e1;font-size:13px;line-height:1.7;overflow-wrap:anywhere}.leo-public-review-card time{display:block;margin-top:12px;color:#8290a7;font-size:11px}
+@media(max-width:760px){.leo-public-review-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:480px){.leo-public-review-grid{grid-template-columns:1fr}}
+</style>
+</head><body>
+<main class="reviews-page">
+<header class="reviews-heading"><a href="index.html">← Kembali ke beranda</a><h1>Ulasan Pelanggan</h1><p>Rating dan pengalaman pelanggan setelah transaksi berhasil di LEOOSTORE.</p></header>
+<div class="leo-review-summary"><div><strong id="leoPublicAverage">—</strong><span class="leo-review-stars">★★★★★</span><small id="leoPublicCount">Memuat ulasan…</small></div></div>
+<div id="leoPublicReviewList" class="leo-public-review-grid"><p>Memuat ulasan pelanggan…</p></div>
+</main>
+<script src="js/public-reviews.js?v=20261127-public1"></script>
+</body></html>
