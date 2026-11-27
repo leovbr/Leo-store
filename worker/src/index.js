@@ -54,6 +54,30 @@ async function sha512Hex(value){const d=await crypto.subtle.digest("SHA-512",new
 async function verifyNotification(body,key){if(!key||!body?.signature_key)return false;const raw=String(body.order_id||"")+String(body.status_code||"")+String(body.gross_amount||"")+key;return (await sha512Hex(raw))===String(body.signature_key).toLowerCase();}
 
 async function ensureOrderTable(db){await db.prepare("CREATE TABLE IF NOT EXISTS orders (id TEXT PRIMARY KEY, customer_name TEXT, customer_email TEXT, customer_whatsapp TEXT, product_id TEXT NOT NULL, product_name TEXT NOT NULL, denomination_id TEXT NOT NULL, denomination_name TEXT NOT NULL, player_id TEXT, server_id TEXT, payment_method TEXT NOT NULL, subtotal INTEGER NOT NULL, fee INTEGER NOT NULL, discount INTEGER NOT NULL, total INTEGER NOT NULL, status TEXT NOT NULL, midtrans_transaction_id TEXT, midtrans_status TEXT, snap_token TEXT, snap_redirect_url TEXT, created_at TEXT NOT NULL, updated_at TEXT NOT NULL)").run();}
+async function ensureOrderReviewTable(db){
+  await db.prepare("CREATE TABLE IF NOT EXISTS order_reviews (order_id TEXT PRIMARY KEY REFERENCES orders(id) ON DELETE CASCADE, rating INTEGER NOT NULL CHECK(rating BETWEEN 1 AND 5), comment TEXT NOT NULL DEFAULT '', created_at TEXT NOT NULL, CHECK(length(comment)<=1000))").run();
+  await db.prepare("CREATE INDEX IF NOT EXISTS idx_order_reviews_created_at ON order_reviews(created_at DESC)").run();
+}
+async function handleSubmitOrderReview(request,env,orderId){
+  if(!env.DB)return json({ok:false,error:"Database belum dikonfigurasi."},503);
+  const id=normalizeOrderId(orderId);if(!id)return json({ok:false,error:"Order ID tidak valid."},400);
+  let body;try{body=await request.json();}catch{return json({ok:false,error:"Format ulasan tidak valid."},400);}
+  const rating=Number(body?.rating),comment=String(body?.comment||"").trim();
+  if(!Number.isInteger(rating)||rating<1||rating>5)return json({ok:false,error:"Pilih rating bintang 1 sampai 5."},400);
+  if(comment.length>1000)return json({ok:false,error:"Ulasan maksimal 1.000 karakter."},400);
+  await ensureOrderTable(env.DB);await ensureOrderReviewTable(env.DB);
+  const order=await env.DB.prepare("SELECT id,status FROM orders WHERE id=?").bind(id).first();
+  if(!order)return json({ok:false,error:"Transaksi tidak ditemukan."},404);
+  if(!["Pembayaran Berhasil","Pesanan Diproses","Top Up Berhasil"].includes(String(order.status||"")))return json({ok:false,error:"Ulasan hanya bisa dikirim setelah pembayaran berhasil."},409);
+  const now=new Date().toISOString();
+  const inserted=await env.DB.prepare("INSERT OR IGNORE INTO order_reviews(order_id,rating,comment,created_at) VALUES(?,?,?,?)").bind(id,rating,comment,now).run();
+  if(Number(inserted?.meta?.changes||0)!==1){
+    const existing=await env.DB.prepare("SELECT rating,comment,created_at AS createdAt FROM order_reviews WHERE order_id=?").bind(id).first();
+    return json({ok:false,error:"Ulasan untuk transaksi ini sudah pernah dikirim.",review:existing||null},409);
+  }
+  return json({ok:true,review:{rating,comment,createdAt:now}});
+}
+
 async function ensureEmailNotificationTable(db){await db.prepare("CREATE TABLE IF NOT EXISTS email_notifications (id INTEGER PRIMARY KEY AUTOINCREMENT, order_id TEXT NOT NULL, event_type TEXT NOT NULL, recipient TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'pending', attempts INTEGER NOT NULL DEFAULT 0, last_error TEXT, created_at TEXT NOT NULL, updated_at TEXT NOT NULL, UNIQUE(order_id,event_type,recipient))").run();}
 async function sendOrderEmail(env,order,eventType){
   const apiKey=String(env.RESEND_API_KEY||"").trim(),from=String(env.RESEND_FROM_EMAIL||"").trim();
@@ -286,7 +310,7 @@ async function handleAdminOrders(request,env){
   const rows=await env.DB.prepare("SELECT id AS orderId,product_id AS productId,product_name AS productName,denomination_id AS denominationId,denomination_name AS denomination,player_id AS playerId,server_id AS server,payment_method AS paymentId,subtotal,fee,discount,total,status,midtrans_transaction_id AS transactionId,midtrans_status AS rawStatus,customer_email AS email,customer_whatsapp AS whatsapp,created_at AS createdAt,updated_at AS updatedAt FROM orders"+where+" ORDER BY created_at DESC LIMIT ?").bind(...values,limit).all();
   return json({ok:true,orders:rows.results||[],count:(rows.results||[]).length,resetAt:resetAt||null});
 }
-async function handleGetOrder(env,orderId){if(!env.DB)return json({ok:false,error:"Database belum dikonfigurasi."},503);const id=normalizeOrderId(orderId);if(!id)return json({ok:false,error:"Order ID tidak valid."},400);const order=await env.DB.prepare("SELECT id AS orderId,product_id AS productId,product_name AS productName,denomination_id AS denominationId,denomination_name AS denomination,player_id AS playerId,server_id AS server,payment_method AS paymentId,subtotal,fee,discount,total,status,midtrans_transaction_id AS transactionId,midtrans_status AS rawStatus,snap_token AS token,snap_redirect_url AS redirectUrl,customer_email AS email,customer_whatsapp AS whatsapp,created_at AS createdAt,updated_at AS updatedAt FROM orders WHERE id=?").bind(id).first();if(!order)return json({ok:false,error:"Order tidak ditemukan."},404);return json({ok:true,order});}
+async function handleGetOrder(env,orderId){if(!env.DB)return json({ok:false,error:"Database belum dikonfigurasi."},503);const id=normalizeOrderId(orderId);if(!id)return json({ok:false,error:"Order ID tidak valid."},400);await ensureOrderTable(env.DB);await ensureOrderReviewTable(env.DB);const order=await env.DB.prepare("SELECT id AS orderId,product_id AS productId,product_name AS productName,denomination_id AS denominationId,denomination_name AS denomination,player_id AS playerId,server_id AS server,payment_method AS paymentId,subtotal,fee,discount,total,status,midtrans_transaction_id AS transactionId,midtrans_status AS rawStatus,snap_token AS token,snap_redirect_url AS redirectUrl,customer_email AS email,customer_whatsapp AS whatsapp,created_at AS createdAt,updated_at AS updatedAt FROM orders WHERE id=?").bind(id).first();if(!order)return json({ok:false,error:"Order tidak ditemukan."},404);order.review=await env.DB.prepare("SELECT rating,comment,created_at AS createdAt FROM order_reviews WHERE order_id=?").bind(id).first()||null;return json({ok:true,order});}
 
 
 function getJakartaPeriodStart(period,now=new Date()){
@@ -523,4 +547,4 @@ if(url.pathname==="/api/push/event"&&request.method==="POST")return handlePushEv
 if(url.pathname==="/health"&&request.method==="GET")return json({ok:true,service:"LEOOSTORE Payment API",environment:"sandbox"});if(url.pathname==="/api/orders"&&request.method==="GET")return json({ok:true,service:"LEOOSTORE Payment API",endpoint:"orders",method:"POST",message:"Endpoint aktif. Gunakan POST untuk membuat pembayaran."});if(url.pathname==="/api/leaderboard"&&request.method==="GET")return handleLeaderboard(env,url);
 
 
-if(url.pathname==="/api/admin/roblox-credentials/reveal"&&request.method==="POST")return handleRevealRobloxCredential(request,env);if(url.pathname==="/api/admin/orders/reset"&&request.method==="POST")return handleAdminOrderReset(request,env);if(url.pathname==="/api/admin/orders"&&request.method==="GET")return handleAdminOrders(request,env);if(url.pathname==="/api/orders"&&request.method==="POST")return handleCreateOrder(request,env);if(url.pathname==="/api/midtrans/webhook"&&request.method==="POST")return handleWebhook(request,env);const m=url.pathname.match(/^\/api\/orders\/([^/]+)$/);if(m&&request.method==="GET")return handleGetOrder(env,decodeURIComponent(m[1]));return json({ok:false,error:"Endpoint tidak ditemukan."},404);}catch(error){console.error("Worker error",error);return json({ok:false,error:"Terjadi kesalahan server."},500);}}};
+if(url.pathname==="/api/admin/roblox-credentials/reveal"&&request.method==="POST")return handleRevealRobloxCredential(request,env);if(url.pathname==="/api/admin/orders/reset"&&request.method==="POST")return handleAdminOrderReset(request,env);if(url.pathname==="/api/admin/orders"&&request.method==="GET")return handleAdminOrders(request,env);if(url.pathname==="/api/orders"&&request.method==="POST")return handleCreateOrder(request,env);if(url.pathname==="/api/midtrans/webhook"&&request.method==="POST")return handleWebhook(request,env);const reviewMatch=url.pathname.match(/^\/api\/orders\/([^/]+)\/review$/);if(reviewMatch&&request.method==="POST")return handleSubmitOrderReview(request,env,decodeURIComponent(reviewMatch[1]));const m=url.pathname.match(/^\/api\/orders\/([^/]+)$/);if(m&&request.method==="GET")return handleGetOrder(env,decodeURIComponent(m[1]));return json({ok:false,error:"Endpoint tidak ditemukan."},404);}catch(error){console.error("Worker error",error);return json({ok:false,error:"Terjadi kesalahan server."},500);}}};
