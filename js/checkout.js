@@ -540,8 +540,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (header) {
         const category = header.closest(".payment-category");
         if (category) {
-          const willOpen = !category.classList.contains("open");
-          category.classList.toggle("open", willOpen);
+          const willOpen = category.classList.contains("closing") || !category.classList.contains("open");
+          category.classList.remove("closing");
+          if (willOpen) category.classList.add("open");
           const body = category.querySelector(":scope > .payment-category-body");
           header.setAttribute("aria-expanded", String(willOpen));
           const arrow = header.querySelector("span:last-child");
@@ -551,6 +552,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             body.getAnimations().forEach((animation) => animation.cancel());
             const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
             if (reduceMotion) {
+              category.classList.toggle("open", willOpen);
               body.hidden = !willOpen;
               body.style.removeProperty("height");
               body.style.removeProperty("overflow");
@@ -569,6 +571,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 }
               };
             } else {
+              category.classList.add("closing");
               const currentHeight = body.getBoundingClientRect().height;
               body.style.overflow = "hidden";
               const animation = body.animate(
@@ -576,7 +579,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                 { duration: 280, easing: "cubic-bezier(.4,0,.2,1)", fill: "both" }
               );
               animation.onfinish = () => {
-                if (!category.classList.contains("open")) {
+                if (category.classList.contains("closing")) {
+                  category.classList.remove("open", "closing");
                   body.hidden = true;
                   body.style.removeProperty("height");
                   body.style.removeProperty("overflow");
