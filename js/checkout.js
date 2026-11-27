@@ -201,19 +201,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         };
         probe.src = configuredBanner;
       } else {
-        const bannerCandidates = ["banner.webp", "assets/banner.webp"];
-        const tryBanner = (index) => {
-          if (index >= bannerCandidates.length) {
-            gameHeroBanner.style.setProperty("--hero-banner-image", "none");
-            return;
-          }
-          const bannerUrl = new URL(bannerCandidates[index], document.baseURI).href;
-          const probe = new Image();
-          probe.onload = () => gameHeroBanner.style.setProperty("--hero-banner-image", `url("${bannerUrl}")`);
-          probe.onerror = () => tryBanner(index + 1);
-          probe.src = bannerUrl + (bannerUrl.includes("?") ? "&" : "?") + "v=20261018";
-        };
-        tryBanner(0);
+        // No Admin banner configured: keep the hero background empty.
+        gameHeroBanner.style.setProperty("--hero-banner-image", "none");
       }
     }
     if (gameIconFallback) {
