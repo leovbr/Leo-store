@@ -61,6 +61,14 @@ body:not(.home-page) .site-header > .container > .header-brand,
 body:not(.home-page) .site-header .container > .header-brand {
   margin-left: 10px !important;
 }
+
+.leo-review-purchase-meta{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px;margin-top:15px;padding:12px;border:1px solid rgba(148,163,184,.14);border-radius:11px;background:rgba(2,6,23,.28)}
+.leo-review-purchase-meta>div{display:flex;flex-direction:column;gap:4px;min-width:0}
+.leo-review-purchase-meta small{color:#8290a7;font-size:9px;font-weight:800;letter-spacing:.09em}
+.leo-review-purchase-meta strong{color:#e2e8f0;font-size:11px;line-height:1.5;overflow-wrap:anywhere}
+.leo-review-purchase-meta .leo-review-purchase-time{grid-column:1/-1}
+.leo-public-review-card>time{display:block;margin-top:11px;color:#8290a7;font-size:10px}
+@media(max-width:480px){.leo-review-purchase-meta{gap:9px;padding:11px}.leo-review-purchase-meta strong{font-size:10px}}
 </style>
 <link rel="stylesheet" href="css/logo-text-animation.css?v=20261117-drawer-logo-fix3">
 
@@ -201,7 +209,7 @@ body.order-page main {
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/order.js?v=20261127-review4"></script>
   <script src="js/order-review.js?v=20261127-review4"></script>
-  <script src="js/public-reviews.js?v=20261127-public2"></script>
+  <script src="js/public-reviews.js?v=20261128-public3"></script>
 
 
 <a class="leo-floating-admin" href="https://wa.me/628975278685?text=Halo%20Admin%20LEOOSTORE.id%2C%20saya%20ingin%20bertanya%20mengenai%20produk%20dan%20layanan%20yang%20tersedia." aria-label="Hubungi Admin via WhatsApp" title="WhatsApp Admin" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13v-1a8 8 0 0 1 16 0v1"/><path d="M4 13v4a2 2 0 0 0 2 2h1v-6H6a2 2 0 0 0-2 2Z"/><path d="M20 13v4a2 2 0 0 1-2 2h-1v-6h1a2 2 0 0 1 2 2Z"/><path d="M15 19c-.7 1-1.7 1.5-3 1.5"/></svg></a>
