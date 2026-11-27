@@ -1526,10 +1526,7 @@
 @media(max-width:600px){.all-games-section .home-game-placeholder{font-size:30px;}}
 
 
-/* TARGET LOCK — shared checkout hero banner fallback */
-.checkout-page .game-hero{
-  --hero-banner-image:url("../assets/banner.webp?v=20261015");
-}
+/* Checkout hero has no legacy image fallback; only the selected game's Admin banner is used. */
 
 
 /* =========================================================
