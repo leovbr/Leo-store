@@ -66,6 +66,9 @@ async function ensureOrderReviewTable(db){
     await db.prepare("UPDATE order_reviews SET review_number=? WHERE order_id=? AND review_number IS NULL").bind(Number(next?.nextNumber)||1,row.order_id).run();
   }
   await db.prepare("CREATE UNIQUE INDEX IF NOT EXISTS idx_order_reviews_number ON order_reviews(review_number)").run();
+  await db.prepare("CREATE TABLE IF NOT EXISTS order_review_sequence (id INTEGER PRIMARY KEY CHECK(id=1),last_number INTEGER NOT NULL DEFAULT 0)").run();
+  await db.prepare("INSERT OR IGNORE INTO order_review_sequence(id,last_number) VALUES(1,0)").run();
+  await db.prepare("UPDATE order_review_sequence SET last_number=MAX(last_number,(SELECT COALESCE(MAX(review_number),0) FROM order_reviews)) WHERE id=1").run();
   await db.prepare("CREATE INDEX IF NOT EXISTS idx_order_reviews_created_at ON order_reviews(created_at DESC)").run();
 }
 async function hashReviewIdentity(value){
@@ -104,12 +107,14 @@ async function handleSubmitOrderReview(request,env,orderId){
   const reviewer=await getPublicReviewer(env.DB,identity);
   const displayName=user&&!user.is_anonymous&&verifiedEmail?maskReviewEmail(verifiedEmail):"Pelanggan LEOOSTORE";
   const now=new Date().toISOString();
-  const inserted=await env.DB.prepare("INSERT OR IGNORE INTO order_reviews(order_id,rating,comment,created_at,reviewer_id,display_name,review_number) VALUES(?,?,?,?,?,?,(SELECT COALESCE(MAX(review_number),0)+1 FROM order_reviews))").bind(id,rating,comment,now,reviewer.id,displayName).run();
+  const sequence=await env.DB.prepare("UPDATE order_review_sequence SET last_number=last_number+1 WHERE id=1 RETURNING last_number").first();
+  const reviewNumber=Number(sequence?.last_number)||1;
+  const inserted=await env.DB.prepare("INSERT OR IGNORE INTO order_reviews(order_id,rating,comment,created_at,reviewer_id,display_name,review_number) VALUES(?,?,?,?,?,?,?)").bind(id,rating,comment,now,reviewer.id,displayName,reviewNumber).run();
   if(Number(inserted?.meta?.changes||0)!==1){
     const existing=await env.DB.prepare("SELECT rating,comment,created_at AS createdAt FROM order_reviews WHERE order_id=?").bind(id).first();
     return json({ok:false,error:"Ulasan untuk transaksi ini sudah pernah dikirim.",review:existing||null},409);
   }
-  return json({ok:true,review:{rating,comment,createdAt:now,displayName}});
+  return json({ok:true,review:{rating,comment,createdAt:now,displayName,reviewNumber}});
 }
 async function handlePublicReviews(env,url){
   if(!env.DB)return json({ok:false,error:"Database belum dikonfigurasi."},503);
