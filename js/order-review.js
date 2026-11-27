@@ -6,7 +6,8 @@
   const esc = value => String(value == null ? "" : value).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
   function showReview(order) {
     const area = document.getElementById("orderReviewArea");
-    if (!area || !paidStatuses.includes(String(order.status || ""))) return;
+    if (!area) return;
+    if (!order._backendVerified || !paidStatuses.includes(String(order.status || ""))) { area.innerHTML = ""; return; }
     if (order.review && Number(order.review.rating) >= 1 && Number(order.review.rating) <= 5) {
       const n = Number(order.review.rating);
       area.innerHTML = '<section class="leo-review-card"><strong>Ulasan Kamu</strong><span class="leo-review-gold">' + "★".repeat(n) + "☆".repeat(5-n) + '</span><p>' + (order.review.comment ? esc(order.review.comment) : "Tanpa komentar tertulis.") + '</p><small>Terima kasih atas ulasanmu.</small></section>';
