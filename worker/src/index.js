@@ -105,7 +105,7 @@ async function handleSubmitOrderReview(request,env,orderId){
   const identity=user?.id?("user:"+user.id):(storedEmail||storedPhone?("guest:"+(storedEmail||storedPhone)):"");
   if(!identity)return json({ok:false,error:"Identitas pelanggan tidak dapat diverifikasi."},400);
   const reviewer=await getPublicReviewer(env.DB,identity);
-  const displayName=user&&!user.is_anonymous&&verifiedEmail?maskReviewEmail(verifiedEmail):"Pelanggan LEOOSTORE";
+  const displayName=user&&!user.is_anonymous&&verifiedEmail?maskReviewEmail(verifiedEmail):"Pelanggan LEOOSTORE.id";
   const now=new Date().toISOString();
   const sequence=await env.DB.prepare("UPDATE order_review_sequence SET last_number=last_number+1 WHERE id=1 RETURNING last_number").first();
   const reviewNumber=Number(sequence?.last_number)||1;
@@ -123,7 +123,7 @@ async function handlePublicReviews(env,url){
   const offset=Math.max(0,Number(url.searchParams.get("offset"))||0);
   const summary=await env.DB.prepare("SELECT COUNT(*) AS count,ROUND(AVG(rating),1) AS average FROM order_reviews r INNER JOIN orders o ON o.id=r.order_id WHERE o.status IN ('Pembayaran Berhasil','Pesanan Diproses','Top Up Berhasil')").first();
   const rows=await env.DB.prepare("SELECT r.order_id AS orderId,r.review_number AS reviewNumber,r.rating,r.comment,r.created_at AS createdAt,r.display_name AS displayName,r.reviewer_id AS reviewerId FROM order_reviews r INNER JOIN orders o ON o.id=r.order_id WHERE o.status IN ('Pembayaran Berhasil','Pesanan Diproses','Top Up Berhasil') ORDER BY r.created_at DESC LIMIT ? OFFSET ?").bind(limit,offset).all();
-  const items=(rows.results||[]).map(row=>({orderId:row.orderId,reviewNumber:Number(row.reviewNumber)||0,rating:Number(row.rating),comment:String(row.comment||""),createdAt:row.createdAt,displayName:String(row.displayName||(row.reviewerId?("Pelanggan LEOOSTORE #"+String(row.reviewerId).padStart(3,"0")):"Pelanggan LEOOSTORE"))}));
+  const items=(rows.results||[]).map(row=>({orderId:row.orderId,reviewNumber:Number(row.reviewNumber)||0,rating:Number(row.rating),comment:String(row.comment||""),createdAt:row.createdAt,displayName:String(row.displayName==="Pelanggan LEOOSTORE"?"Pelanggan LEOOSTORE.id":(row.displayName||(row.reviewerId?("Pelanggan LEOOSTORE.id #"+String(row.reviewerId).padStart(3,"0")):"Pelanggan LEOOSTORE.id"))))}));
   return json({ok:true,average:Number(summary?.average)||0,count:Number(summary?.count)||0,items,limit,offset});
 }
 async function ensureEmailNotificationTable(db){await db.prepare("CREATE TABLE IF NOT EXISTS email_notifications (id INTEGER PRIMARY KEY AUTOINCREMENT, order_id TEXT NOT NULL, event_type TEXT NOT NULL, recipient TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'pending', attempts INTEGER NOT NULL DEFAULT 0, last_error TEXT, created_at TEXT NOT NULL, updated_at TEXT NOT NULL, UNIQUE(order_id,event_type,recipient))").run();}
@@ -365,7 +365,7 @@ async function handleAdminReviews(request,env){
   if(!env.DB)return json({ok:false,error:"Database belum dikonfigurasi."},503);
   await ensureOrderTable(env.DB);await ensureOrderReviewTable(env.DB);
   const rows=await env.DB.prepare("SELECT r.order_id AS orderId,r.review_number AS reviewNumber,r.rating,r.comment,r.created_at AS createdAt,r.display_name AS displayName,o.product_name AS productName,o.denomination_name AS denomination,o.total,o.status FROM order_reviews r INNER JOIN orders o ON o.id=r.order_id ORDER BY r.created_at DESC LIMIT 200").all();
-  return json({ok:true,items:rows.results||[]});
+  return json({ok:true,items:(rows.results||[]).map(row=>({...row,displayName:row.display_name==="Pelanggan LEOOSTORE"?"Pelanggan LEOOSTORE.id":row.display_name}))});
 }
 async function handleAdminReviewDelete(request,env){
   const user=await verifyPushUser(request);
