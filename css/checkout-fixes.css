@@ -4716,3 +4716,9 @@ body.shop-page #productList .product-info::after{
 .checkout-page #standardAccountFields #serverField > .leo-shared-select{
   display:none;
 }
+
+
+/* Avoid showing the generic checkout hero while the selected game catalog loads. */
+.checkout-page.checkout-catalog-loading .game-hero{
+  visibility:hidden!important;
+}
