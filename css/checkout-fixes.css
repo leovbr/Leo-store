@@ -4788,3 +4788,8 @@ body.shop-page #productList .product-info::after{
     transition:none!important;
   }
 }
+
+.checkout-page .payment-category-ewallet.closing > .payment-category-header > span:last-child,
+.checkout-page .payment-category-dynamic.closing > .payment-category-header > span:last-child{
+  transform:rotate(0deg)!important;
+}
