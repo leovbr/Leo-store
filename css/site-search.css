@@ -16,3 +16,21 @@
 .site-search-highlight{color:#e9d5ff;background:linear-gradient(90deg,rgba(139,92,246,.30),rgba(168,85,247,.18));border-radius:4px;padding:0 1px;text-shadow:0 0 10px rgba(192,132,252,.8);box-shadow:0 0 10px rgba(139,92,246,.18)}
 .site-search-empty{padding:18px 10px;text-align:center;color:#aab6cc;font-size:13px}
 @media(prefers-reduced-motion:reduce){.site-search-result{transition:none}}
+
+/* Keep the search drawer flush beneath the actual sticky navbar. */
+.search-panel{
+  top:var(--leo-search-top,76px)!important;
+  padding:12px 20px 14px!important;
+  z-index:950!important;
+}
+.search-panel-inner{
+  width:100%;
+  box-sizing:border-box;
+  align-items:center;
+}
+.site-search-results{
+  margin-top:10px;
+  flex-basis:100%;
+  width:100%;
+  box-sizing:border-box;
+}
