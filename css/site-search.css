@@ -1,0 +1,18 @@
+/* LEOOSTORE live game search */
+.search-panel-inner{position:relative;flex-wrap:wrap}
+.site-search-results{display:none;flex:0 0 100%;width:100%;max-height:min(62vh,520px);overflow-y:auto;margin-top:12px;padding:8px;border:1px solid rgba(139,92,246,.28);border-radius:16px;background:rgba(8,15,32,.98);box-shadow:0 18px 42px rgba(0,0,0,.38);backdrop-filter:blur(18px)}
+.site-search-results.is-visible{display:block}
+.site-search-results-label{padding:5px 8px 10px;color:#9ca9c2;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.site-search-result{display:flex;align-items:center;gap:12px;padding:10px;border-radius:12px;color:#f8fafc;text-decoration:none;transition:background .18s ease,transform .18s ease}
+.site-search-result+.site-search-result{margin-top:4px}
+.site-search-result:hover,.site-search-result:focus-visible{background:rgba(139,92,246,.13);outline:none}
+.site-search-result:active{transform:scale(.99)}
+.site-search-result img,.site-search-result-icon{width:48px;height:48px;flex:0 0 48px;border-radius:12px;object-fit:cover;background:#1a2540}
+.site-search-result-icon{display:grid;place-items:center;font-size:22px}
+.site-search-result-copy{min-width:0;flex:1}
+.site-search-result-name{display:block;overflow-wrap:anywhere;font-size:14px;font-weight:800;line-height:1.35}
+.site-search-result-publisher{display:block;margin-top:3px;color:#9ca9c2;font-size:11px}
+.site-search-result-arrow{color:#9ca3b8;font-size:20px}
+.site-search-highlight{color:#e9d5ff;background:linear-gradient(90deg,rgba(139,92,246,.30),rgba(168,85,247,.18));border-radius:4px;padding:0 1px;text-shadow:0 0 10px rgba(192,132,252,.8);box-shadow:0 0 10px rgba(139,92,246,.18)}
+.site-search-empty{padding:18px 10px;text-align:center;color:#aab6cc;font-size:13px}
+@media(prefers-reduced-motion:reduce){.site-search-result{transition:none}}
