@@ -661,8 +661,6 @@ document.addEventListener("DOMContentLoaded",async function(){
    };
    siteSearch.addEventListener("input",renderSiteSearch);
    siteSearch.addEventListener("keydown",event=>{if(event.key==="Escape"){results?.classList.remove("is-visible");}});
-   searchClose?.addEventListener("click",()=>{results?.classList.remove("is-visible");if(results)results.innerHTML="";});
-   searchButton?.addEventListener("click",()=>{if(searchPanel?.classList.contains("active"))setTimeout(renderSiteSearch,220);});
    renderSiteSearch();
   }
   const card=g=>'<a href="checkout.html?game='+encodeURIComponent(g.slug)+'" class="home-game-card"><div class="home-game-image">'+(g.icon_url?'<img src="'+esc(g.icon_url)+'" alt="'+esc(g.name)+'" loading="lazy" onerror="this.remove()">':'<span class="game-icon-empty" aria-label="Ikon belum diatur">🎮</span>')+'</div><div class="home-game-info"><strong>'+esc(g.name)+'</strong><span>'+esc(g.publisher||"Game")+'</span></div></a>';
