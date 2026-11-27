@@ -1,0 +1,123 @@
+/* =========================================================
+   LEOOSTORE — CUSTOMER PAGE ENTRANCE
+   Shared soft drop-in animation for public-facing pages.
+   Checkout keeps its existing dedicated entrance sequence.
+   ========================================================= */
+
+@keyframes leoCheckoutDropIn{
+  0%{opacity:0;transform:translate3d(0,-24px,0)}
+  72%{opacity:1;transform:translate3d(0,3px,0)}
+  100%{opacity:1;transform:translate3d(0,0,0)}
+}
+
+/* Shared navigation */
+body:not(.checkout-page) .site-header{
+  animation:leoCheckoutDropIn .58s cubic-bezier(.2,.75,.25,1.12) both;
+}
+
+/* Home */
+.home-page .home-banner-section{
+  animation:leoCheckoutDropIn .62s cubic-bezier(.2,.75,.25,1.12) .06s both;
+}
+.home-page .home-games-section{
+  animation:leoCheckoutDropIn .58s cubic-bezier(.2,.75,.25,1.12) .16s both;
+}
+
+/* Shop */
+.shop-page .shop-section{
+  animation:leoCheckoutDropIn .58s cubic-bezier(.2,.75,.25,1.12) .08s both;
+}
+.shop-page #productList > .product-card{
+  animation:leoCheckoutDropIn .58s cubic-bezier(.2,.75,.25,1.12) both;
+}
+.shop-page #productList > .product-card:nth-child(1){animation-delay:.14s}
+.shop-page #productList > .product-card:nth-child(2){animation-delay:.19s}
+.shop-page #productList > .product-card:nth-child(3){animation-delay:.24s}
+.shop-page #productList > .product-card:nth-child(4){animation-delay:.29s}
+.shop-page #productList > .product-card:nth-child(5){animation-delay:.34s}
+.shop-page #productList > .product-card:nth-child(6){animation-delay:.39s}
+.shop-page #productList > .product-card:nth-child(7){animation-delay:.44s}
+.shop-page #productList > .product-card:nth-child(8){animation-delay:.49s}
+.shop-page #productList > .product-card:nth-child(n+9){animation-delay:.54s}
+
+/* Payment and order */
+.payment-page .payment-container,
+.order-page .order-container{
+  animation:leoCheckoutDropIn .62s cubic-bezier(.2,.75,.25,1.12) .10s both;
+}
+
+/* Information pages */
+.info-page .info-wrap{
+  animation:leoCheckoutDropIn .62s cubic-bezier(.2,.75,.25,1.12) .10s both;
+}
+
+/* Notifications */
+.notification-page .notif-hero{
+  animation:leoCheckoutDropIn .58s cubic-bezier(.2,.75,.25,1.12) .10s both;
+}
+.notification-page .notif-list{
+  animation:leoCheckoutDropIn .58s cubic-bezier(.2,.75,.25,1.12) .22s both;
+}
+
+/* Calculator */
+.wr-page .wr-grid{
+  animation:leoCheckoutDropIn .62s cubic-bezier(.2,.75,.25,1.12) .10s both;
+}
+.wr-page .wr-grid > .wr-card:nth-child(2){animation:leoCheckoutDropIn .58s cubic-bezier(.2,.75,.25,1.12) .20s both}
+
+/* Leaderboard */
+.leaderboard-page .lb-hero{
+  animation:leoCheckoutDropIn .58s cubic-bezier(.2,.75,.25,1.12) .10s both;
+}
+.leaderboard-page .lb-list{
+  animation:leoCheckoutDropIn .58s cubic-bezier(.2,.75,.25,1.12) .22s both;
+}
+
+/* Articles */
+.article-list-page .article-banner-section{
+  animation:leoCheckoutDropIn .58s cubic-bezier(.2,.75,.25,1.12) .08s both;
+}
+.article-list-page .article-tools{
+  animation:leoCheckoutDropIn .58s cubic-bezier(.2,.75,.25,1.12) .16s both;
+}
+.article-list-page .article-grid > .article-card{
+  animation:leoCheckoutDropIn .58s cubic-bezier(.2,.75,.25,1.12) both;
+}
+.article-list-page .article-grid > .article-card:nth-child(1){animation-delay:.20s}
+.article-list-page .article-grid > .article-card:nth-child(2){animation-delay:.26s}
+.article-list-page .article-grid > .article-card:nth-child(3){animation-delay:.32s}
+.article-list-page .article-grid > .article-card:nth-child(4){animation-delay:.38s}
+.article-list-page .article-grid > .article-card:nth-child(n+5){animation-delay:.44s}
+.article-detail-page .detail-wrap{
+  animation:leoCheckoutDropIn .62s cubic-bezier(.2,.75,.25,1.12) .10s both;
+}
+
+/* Other customer pages */
+body:not(.checkout-page) .site-footer{
+  animation:leoCheckoutDropIn .58s cubic-bezier(.2,.75,.25,1.12) .38s both;
+}
+
+/* Respect accessibility settings */
+@media(prefers-reduced-motion:reduce){
+  body:not(.checkout-page) .site-header,
+  .home-page .home-banner-section,
+  .home-page .home-games-section,
+  .shop-page .shop-section,
+  .shop-page #productList > .product-card,
+  .payment-page .payment-container,
+  .order-page .order-container,
+  .info-page .info-wrap,
+  .notification-page .notif-hero,
+  .notification-page .notif-list,
+  .wr-page .wr-grid,
+  .wr-page .wr-grid > .wr-card:nth-child(2),
+  .leaderboard-page .lb-hero,
+  .leaderboard-page .lb-list,
+  .article-list-page .article-banner-section,
+  .article-list-page .article-tools,
+  .article-list-page .article-grid > .article-card,
+  .article-detail-page .detail-wrap,
+  body:not(.checkout-page) .site-footer{
+    animation:none!important;
+  }
+}
