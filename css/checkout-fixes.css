@@ -4719,3 +4719,45 @@ body.shop-page #productList .product-info::after{
 .checkout-page.checkout-catalog-loading .game-hero{
   visibility:hidden!important;
 }
+
+
+/* ===== CHECKOUT PAGE ENTRANCE — SOFT DROP-IN =====
+   One-time entrance on page load/refresh. Each major section settles
+   from a short downward drop with a restrained spring finish.
+*/
+@keyframes leoCheckoutDropIn{
+  0%{opacity:0;transform:translate3d(0,-24px,0)}
+  72%{opacity:1;transform:translate3d(0,3px,0)}
+  100%{opacity:1;transform:translate3d(0,0,0)}
+}
+.checkout-page .site-header{
+  animation:leoCheckoutDropIn .58s cubic-bezier(.2,.75,.25,1.12) both;
+}
+.checkout-page .game-hero{
+  animation:leoCheckoutDropIn .62s cubic-bezier(.2,.75,.25,1.12) .06s both;
+}
+.checkout-page .checkout-main > .checkout-card{
+  animation:leoCheckoutDropIn .58s cubic-bezier(.2,.75,.25,1.12) both;
+}
+.checkout-page .checkout-main > .checkout-card:nth-child(1){animation-delay:.12s}
+.checkout-page .checkout-main > .checkout-card:nth-child(2){animation-delay:.19s}
+.checkout-page .checkout-main > .checkout-card:nth-child(3){animation-delay:.26s}
+.checkout-page .checkout-main > .checkout-card:nth-child(4){animation-delay:.33s}
+.checkout-page .checkout-main > .checkout-card:nth-child(5){animation-delay:.40s}
+.checkout-page .checkout-main > .checkout-card:nth-child(6){animation-delay:.47s}
+.checkout-page .checkout-main > .checkout-card:nth-child(7){animation-delay:.54s}
+.checkout-page .checkout-sidebar .checkout-summary{
+  animation:leoCheckoutDropIn .62s cubic-bezier(.2,.75,.25,1.12) .3s both;
+}
+.checkout-page .checkout-footer-inline{
+  animation:leoCheckoutDropIn .58s cubic-bezier(.2,.75,.25,1.12) .58s both;
+}
+@media(prefers-reduced-motion:reduce){
+  .checkout-page .site-header,
+  .checkout-page .game-hero,
+  .checkout-page .checkout-main > .checkout-card,
+  .checkout-page .checkout-sidebar .checkout-summary,
+  .checkout-page .checkout-footer-inline{
+    animation:none!important;
+  }
+}
