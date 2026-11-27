@@ -4793,3 +4793,42 @@ body.shop-page #productList .product-info::after{
 .checkout-page .payment-category-dynamic.closing > .payment-category-header > span:last-child{
   transform:rotate(0deg)!important;
 }
+
+
+/* ===== SERVER DROPDOWN — LAYER ABOVE THE NEXT CHECKOUT CARD =====
+   The entrance transform creates stacking contexts on checkout cards.
+   Raise the account card while its server selector is open so the menu
+   cannot be painted underneath the denomination card.
+*/
+.checkout-page #accountCard{
+  position:relative!important;
+  z-index:30!important;
+  overflow:visible!important;
+}
+.checkout-page #denominationCard{
+  position:relative!important;
+  z-index:1!important;
+  overflow:visible!important;
+}
+.checkout-page #standardAccountFields #serverField,
+.checkout-page #standardAccountFields #serverField .leo-shared-select{
+  position:relative!important;
+  z-index:40!important;
+  overflow:visible!important;
+}
+.checkout-page #standardAccountFields #serverField .leo-shared-menu{
+  z-index:10000!important;
+  transform-origin:top center;
+}
+@keyframes leoServerMenuDrop{
+  0%{opacity:0;transform:translateY(-12px) scaleY(.94)}
+  100%{opacity:1;transform:translateY(0) scaleY(1)}
+}
+.checkout-page #standardAccountFields #serverField .leo-shared-menu:not([hidden]){
+  animation:leoServerMenuDrop .28s cubic-bezier(.2,.75,.25,1.12) both;
+}
+@media(prefers-reduced-motion:reduce){
+  .checkout-page #standardAccountFields #serverField .leo-shared-menu:not([hidden]){
+    animation:none!important;
+  }
+}
