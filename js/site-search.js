@@ -29,6 +29,20 @@
   function init(){
     const input=document.getElementById("siteSearch"),panel=document.getElementById("searchPanel");
     if(!input||!panel)return;
+    const header=document.querySelector(".site-header");
+    const positionPanel=()=>{
+      if(!panel)return;
+      const headerBottom=header?.getBoundingClientRect().bottom;
+      const top=Number.isFinite(headerBottom)&&headerBottom>0?headerBottom:0;
+      panel.style.setProperty("--leo-search-top",top+"px");
+    };
+    // Capture runs before each page's existing search-button toggle handler.
+    document.addEventListener("click",event=>{
+      if(event.target.closest("#searchButton"))positionPanel();
+    },true);
+    window.addEventListener("resize",()=>{if(panel.classList.contains("active"))positionPanel();},{passive:true});
+    window.addEventListener("scroll",()=>{if(panel.classList.contains("active"))positionPanel();},{passive:true});
+    positionPanel();
     const inner=input.closest(".search-panel-inner");
     if(!inner)return;
     let results=document.getElementById("siteSearchResults");
