@@ -4710,3 +4710,9 @@ body.shop-page #productList .product-info::after{
     font-size:12px!important;
   }
 }
+
+
+/* Prevent the server custom-select from flashing before game config loads. */
+.checkout-page #standardAccountFields #serverField > .leo-shared-select{
+  display:none;
+}
