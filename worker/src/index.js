@@ -365,7 +365,7 @@ async function handleAdminReviews(request,env){
   if(!env.DB)return json({ok:false,error:"Database belum dikonfigurasi."},503);
   await ensureOrderTable(env.DB);await ensureOrderReviewTable(env.DB);
   const rows=await env.DB.prepare("SELECT r.order_id AS orderId,r.review_number AS reviewNumber,r.rating,r.comment,r.created_at AS createdAt,r.display_name AS displayName,o.product_name AS productName,o.denomination_name AS denomination,o.total,o.status FROM order_reviews r INNER JOIN orders o ON o.id=r.order_id ORDER BY r.created_at DESC LIMIT 200").all();
-  return json({ok:true,items:(rows.results||[]).map(row=>({...row,displayName:row.display_name==="Pelanggan LEOOSTORE"?"Pelanggan LEOOSTORE.id":row.display_name}))});
+  return json({ok:true,items:(rows.results||[]).map(row=>({...row,displayName:row.displayName==="Pelanggan LEOOSTORE"?"Pelanggan LEOOSTORE.id":row.displayName}))});
 }
 async function handleAdminReviewDelete(request,env){
   const user=await verifyPushUser(request);
