@@ -365,23 +365,7 @@ html body.home-page #menuOverlay{
 
 <link rel="stylesheet" href="css/page-entrance.css?v=20261127-global-drop1">
 <link rel="stylesheet" href="css/site-search.css?v=20261127-glass2">
-<style>
-#homePublicReviews{padding-top:34px;padding-bottom:42px}
-#homePublicReviews .leo-public-reviews-subtitle{margin:8px 0 0;color:var(--text-soft,#9caac0);font-size:13px}
-.leo-review-summary{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px;margin:20px 0;border:1px solid rgba(148,163,184,.18);border-radius:16px;background:linear-gradient(135deg,rgba(124,92,255,.12),rgba(15,23,42,.45))}
-.leo-review-summary>div{display:grid;grid-template-columns:auto auto;align-items:center;gap:2px 10px}
-.leo-review-summary strong{font-size:30px;color:#fff}.leo-review-stars{color:#f6c453;letter-spacing:2px}.leo-review-summary small{grid-column:1/-1;color:var(--text-soft,#9caac0)}
-.leo-review-summary a{color:#c4b5fd;text-decoration:none;font-weight:800;font-size:13px}
-.leo-public-review-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.leo-public-review-card{min-width:0;padding:17px;border:1px solid rgba(148,163,184,.18);border-radius:15px;background:rgba(15,23,42,.55)}
-.leo-public-review-card .review-card-top{display:flex;justify-content:space-between;gap:8px;align-items:center}
-.leo-public-review-card strong{font-size:13px;color:#f1f5f9;overflow-wrap:anywhere}.leo-public-review-card .review-stars{color:#f6c453;letter-spacing:1px;white-space:nowrap;font-size:13px}
-.leo-public-review-card p{margin:12px 0 0;color:#cbd5e1;font-size:13px;line-height:1.65;overflow-wrap:anywhere}
-.leo-public-review-card time{display:block;margin-top:12px;color:#8290a7;font-size:11px}
-.leo-public-review-loading{color:var(--text-soft,#9caac0);font-size:13px}
-@media(max-width:760px){.leo-public-review-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:480px){.leo-public-review-grid{grid-template-columns:1fr}.leo-review-summary{align-items:flex-start;flex-direction:column}}
-</style>
+
 </head>
 <body class="home-page">
 <header class="site-header home-header">
@@ -425,7 +409,7 @@ html body.home-page #menuOverlay{
     <div class="banner-dots" id="bannerDots"></div>
   </div>
 </div></section>
-<section class="home-games-section" id="homePublicReviews"><div class="container"><div class="section-heading"><h2>Ulasan Pelanggan</h2><p class="leo-public-reviews-subtitle">Pengalaman nyata pelanggan LEOOSTORE</p></div><div class="leo-review-summary"><div><strong id="leoPublicAverage">—</strong><span class="leo-review-stars">★★★★★</span><small id="leoPublicCount">Memuat ulasan…</small></div><a href="ulasan.html">Lihat semua ulasan →</a></div><div id="leoPublicReviewList" class="leo-public-review-grid"><p class="leo-public-review-loading">Memuat ulasan pelanggan…</p></div></div></section><section class="home-games-section" id="homeTrendingSection"><div class="container"><div class="section-heading"><h2 id="homeTrendingTitle">Trending <span class="trending-flame" aria-hidden="true">🔥</span></h2></div><div class="home-game-grid" id="homeTrendingGames"></div></div></section>
+<section class="home-games-section" id="homeTrendingSection"><div class="container"><div class="section-heading"><h2 id="homeTrendingTitle">Trending <span class="trending-flame" aria-hidden="true">🔥</span></h2></div><div class="home-game-grid" id="homeTrendingGames"></div></div></section>
 <section class="home-games-section" id="marketplaceTabsSection">
  <div class="container">
   <div class="marketplace-tabs" role="tablist" aria-label="Pilihan beranda">
@@ -717,5 +701,4 @@ document.addEventListener("DOMContentLoaded",async function(){
 <script src="js/floating-admin-drag.js?v=20261120-drag1" defer></script>
 <script src="js/supabase-catalog.js?v=20261127-shared-search1"></script>
 <script src="js/site-search.js?v=20261127-navbar-align2"></script>
-<script src="js/public-reviews.js?v=20261127-public1" defer></script>
 </body></html>
