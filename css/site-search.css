@@ -34,3 +34,17 @@
   width:100%;
   box-sizing:border-box;
 }
+
+/* Hard-hide the drawer until the search button explicitly activates it. */
+.search-panel{
+  visibility:hidden!important;
+  pointer-events:none!important;
+  transform:translateY(-120%)!important;
+  transition:transform .25s ease,visibility 0s linear .25s!important;
+}
+.search-panel.active{
+  visibility:visible!important;
+  pointer-events:auto!important;
+  transform:translateY(0)!important;
+  transition:transform .25s ease,visibility 0s!important;
+}
