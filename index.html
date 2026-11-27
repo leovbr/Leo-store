@@ -364,7 +364,7 @@ html body.home-page #menuOverlay{
 
 
 <link rel="stylesheet" href="css/page-entrance.css?v=20261127-global-drop1">
-<link rel="stylesheet" href="css/site-search.css?v=20261127-live-search1">
+<link rel="stylesheet" href="css/site-search.css?v=20261127-search-under-navbar1">
 </head>
 <body class="home-page">
 <header class="site-header home-header">
@@ -556,7 +556,10 @@ document.addEventListener("DOMContentLoaded",function(){
   function closeMenu(){sideMenu.classList.remove("active");menuOverlay.classList.remove("active");sideMenu.setAttribute("aria-hidden","true");menuButton.setAttribute("aria-expanded","false");document.body.style.overflow="";}
   menuButton?.addEventListener("click",openMenu);menuClose?.addEventListener("click",closeMenu);menuOverlay?.addEventListener("click",closeMenu);
   document.addEventListener("keydown",function(event){if(event.key==="Escape"){closeMenu();searchPanel?.classList.remove("active");}});
-  searchButton?.addEventListener("click",function(){searchPanel.classList.toggle("active");if(searchPanel.classList.contains("active"))setTimeout(function(){siteSearch?.focus();},200);});
+  const siteHeader=document.querySelector(".site-header");
+  function positionSearchPanel(){if(!searchPanel)return;const headerBottom=siteHeader?.getBoundingClientRect().bottom??76;searchPanel.style.setProperty("--leo-search-top",Math.max(0,headerBottom)+"px");}
+  searchButton?.addEventListener("click",function(){positionSearchPanel();searchPanel.classList.toggle("active");if(searchPanel.classList.contains("active"))setTimeout(function(){positionSearchPanel();siteSearch?.focus();},80);});
+  window.addEventListener("resize",function(){if(searchPanel?.classList.contains("active"))positionSearchPanel();});
   searchClose?.addEventListener("click",function(){searchPanel.classList.remove("active");if(siteSearch)siteSearch.value="";});
 });
 </script>
