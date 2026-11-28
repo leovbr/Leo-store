@@ -86,6 +86,8 @@ body{top:0!important}.skiptranslate iframe{display:none!important}.goog-logo-lin
 <link rel="stylesheet" href="css/page-entrance.css?v=20261127-global-drop1">
 <link rel="stylesheet" href="css/site-search.css?v=20261127-glass2">
 <style id="leo-game-info-tabs">
+.checkout-layout[hidden]{display:none!important}
+body.checkout-description-mode .checkout-scroll-spacer{display:none!important}
 .game-info-tabs{display:flex;gap:8px;margin:22px 0 18px;padding:5px;border:1px solid rgba(148,163,184,.18);border-radius:14px;background:#0b1425}
 .game-info-tab{flex:1;min-height:44px;border:0;border-radius:10px;background:transparent;color:#aab6ca;font:700 13px 'Plus Jakarta Sans',sans-serif;cursor:pointer;transition:.2s}
 .game-info-tab.active{color:#fff;background:linear-gradient(110deg,#713cf0,#4f46e5);box-shadow:0 5px 18px #5b3bd744}
@@ -98,7 +100,7 @@ body{top:0!important}.skiptranslate iframe{display:none!important}.goog-logo-lin
 .game-review-summary{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;padding:16px;margin-bottom:14px;border:1px solid rgba(148,163,184,.14);border-radius:13px;background:#0b1425}
 .game-review-score strong{display:block;font-size:28px;color:#fff}.game-review-score span{color:#f6c453;letter-spacing:1px}.game-review-score small{display:block;color:#91a0b8;font-size:10px;margin-top:3px}
 .game-review-bars{display:grid;gap:5px}.game-review-bar{display:grid;grid-template-columns:13px 1fr 25px;gap:7px;align-items:center;color:#aab6ca;font-size:10px}.game-review-bar-track{height:6px;border-radius:20px;background:#263248;overflow:hidden}.game-review-bar-fill{height:100%;border-radius:20px;background:#f6c453}
-.game-review-list{display:grid;gap:10px}.game-review-card{padding:15px;border:1px solid rgba(148,163,184,.15);border-radius:13px;background:rgba(9,17,31,.75)}.game-review-card-top{display:flex;justify-content:space-between;gap:10px;align-items:center}.game-review-card strong{font-size:12px;color:#f0f4ff}.game-review-card .stars{color:#f6c453;letter-spacing:1px;white-space:nowrap}.game-review-card p{margin:10px 0;color:#c6d0e0;font-size:12px;line-height:1.7;overflow-wrap:anywhere}.game-review-meta{color:#8292aa;font-size:10px;line-height:1.7}.game-review-empty{padding:18px;border:1px dashed #34435c;border-radius:12px;color:#91a0b8;font-size:12px;text-align:center}
+.game-review-list{display:grid;gap:10px}.game-review-all-bottom{display:block;margin:16px 0 0;padding:13px 16px;text-align:center;font-size:12px}.game-review-card{padding:15px;border:1px solid rgba(148,163,184,.15);border-radius:13px;background:rgba(9,17,31,.75)}.game-review-card-top{display:flex;justify-content:space-between;gap:10px;align-items:center}.game-review-card strong{font-size:12px;color:#f0f4ff}.game-review-card .stars{color:#f6c453;letter-spacing:1px;white-space:nowrap}.game-review-card p{margin:10px 0;color:#c6d0e0;font-size:12px;line-height:1.7;overflow-wrap:anywhere}.game-review-meta{color:#8292aa;font-size:10px;line-height:1.7}.game-review-empty{padding:18px;border:1px dashed #34435c;border-radius:12px;color:#91a0b8;font-size:12px;text-align:center}
 @media(max-width:520px){.game-description-panel{padding:17px}.game-review-heading{align-items:flex-start;flex-direction:column}.game-review-all{width:100%;text-align:center}.game-review-summary{gap:12px;padding:13px}}
 </style>
 </head>
@@ -153,12 +155,13 @@ body{top:0!important}.skiptranslate iframe{display:none!important}.goog-logo-lin
 <section class="game-description-panel" id="gameDescriptionPanel" hidden>
 <h2 id="gameDescriptionTitle">Deskripsi Game</h2>
 <div class="game-description-copy" id="gameDescriptionCopy"></div>
-<div class="game-review-heading"><h3>Ulasan Pelanggan</h3><a class="game-review-all" href="ulasan.html">Lihat Seluruh Ulasan</a></div>
+<div class="game-review-heading"><h3>Ulasan Pelanggan</h3></div>
 <div class="game-review-summary" id="gameReviewSummary">
 <div class="game-review-score"><strong id="gameReviewAverage">—</strong><span>★★★★★</span><small id="gameReviewCount">Memuat ulasan…</small></div>
 <div class="game-review-bars" id="gameReviewBars"></div>
 </div>
 <div class="game-review-list" id="gameReviewList"><div class="game-review-empty">Memuat ulasan pelanggan…</div></div>
+<a class="game-review-all game-review-all-bottom" href="ulasan.html">Lihat Seluruh Ulasan</a>
 </section>
 <div class="checkout-layout" id="checkoutLayout">
 <div class="checkout-main">
@@ -215,7 +218,7 @@ body{top:0!important}.skiptranslate iframe{display:none!important}.goog-logo-lin
 
 <script src="js/products.js?v=20261018-catalog2"></script>
 <script src="js/supabase-catalog.js?v=20261124-image-studio-scale1"></script>
-<script src="js/checkout.js?v=20261128-game-tabs1"></script>
+<script src="js/checkout.js?v=20261128-game-tabs2"></script>
 
 <a class="leo-floating-admin" href="https://wa.me/628975278685?text=Halo%20Admin%20LEOOSTORE.id%2C%20saya%20ingin%20bertanya%20mengenai%20produk%20dan%20layanan%20yang%20tersedia." aria-label="Hubungi Admin via WhatsApp" title="WhatsApp Admin" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13v-1a8 8 0 0 1 16 0v1"/><path d="M4 13v4a2 2 0 0 0 2 2h1v-6H6a2 2 0 0 0-2 2Z"/><path d="M20 13v4a2 2 0 0 1-2 2h-1v-6h1a2 2 0 0 1 2 2Z"/><path d="M15 19c-.7 1-1.7 1.5-3 1.5"/></svg></a>
 <div id="google_translate_element" style="display:none!important"></div><script src="js/language-selector.js?v=20261017-languages3" defer></script>
