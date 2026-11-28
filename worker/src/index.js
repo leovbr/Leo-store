@@ -122,56 +122,18 @@ async function handlePublicReviews(env,url){
   await ensureOrderTable(env.DB);await ensureOrderReviewTable(env.DB);
   const limit=Math.max(1,Math.min(50,Number(url.searchParams.get("limit"))||12));
   const offset=Math.max(0,Number(url.searchParams.get("offset"))||0);
-  const summary=await env.DB.prepare("SELECT COUNT(*) AS count,ROUND(AVG(rating),1) AS average FROM order_reviews r INNER JOIN orders o ON o.id=r.order_id WHERE o.status IN ('Pembayaran Berhasil','Pesanan Diproses','Top Up Berhasil')").first();
-  const rows=await env.DB.prepare("SELECT r.order_id AS orderId,r.review_number AS reviewNumber,r.rating,r.comment,r.created_at AS createdAt,r.display_name AS displayName,r.reviewer_id AS reviewerId,o.product_name AS productName,o.denomination_name AS denomination,o.created_at AS transactionCreatedAt FROM order_reviews r INNER JOIN orders o ON o.id=r.order_id WHERE o.status IN ('Pembayaran Berhasil','Pesanan Diproses','Top Up Berhasil') ORDER BY r.created_at DESC LIMIT ? OFFSET ?").bind(limit,offset).all();
-  const items=(rows.results||[]).map(row=>({orderId:row.orderId,reviewNumber:Number(row.reviewNumber)||0,rating:Number(row.rating),comment:String(row.comment||""),createdAt:row.createdAt,productName:String(row.productName||""),denomination:String(row.denomination||""),transactionCreatedAt:row.transactionCreatedAt||null,displayName:String(row.displayName==="Pelanggan LEOOSTORE"?"Pelanggan LEOOSTORE.id":(row.displayName||(row.reviewerId?("Pelanggan LEOOSTORE.id #"+String(row.reviewerId).padStart(3,"0")):"Pelanggan LEOOSTORE.id"))))}));
-  return json({ok:true,average:Number(summary?.average)||0,count:Number(summary?.count)||0,items,limit,offset});
-}
-async function ensureEmailNotificationTable(db){await db.prepare("CREATE TABLE IF NOT EXISTS email_notifications (id INTEGER PRIMARY KEY AUTOINCREMENT, order_id TEXT NOT NULL, event_type TEXT NOT NULL, recipient TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'pending', attempts INTEGER NOT NULL DEFAULT 0, last_error TEXT, created_at TEXT NOT NULL, updated_at TEXT NOT NULL, UNIQUE(order_id,event_type,recipient))").run();}
-async function sendOrderEmail(env,order,eventType){
-  const apiKey=String(env.RESEND_API_KEY||"").trim(),from=String(env.RESEND_FROM_EMAIL||"").trim();
-  const admin=String(env.ADMIN_EMAIL||"leovbransyh791@gmail.com").trim();
-  const customer=String(order.customer_email||"").trim();
-  const recipient=eventType==="paid"?customer:admin;
-  if(!apiKey||!from||!recipient){console.log("Order email skipped: Resend configuration or recipient missing",{orderId:order.id,eventType,recipientPresent:!!recipient,configured:!!apiKey&&!!from});return;}
-  await ensureEmailNotificationTable(env.DB);
-  const now=new Date().toISOString();
-  await env.DB.prepare("INSERT OR IGNORE INTO email_notifications (order_id,event_type,recipient,status,attempts,created_at,updated_at) VALUES (?,?,?,'pending',0,?,?)").bind(order.id,eventType,recipient,now,now).run();
-  const row=await env.DB.prepare("SELECT status FROM email_notifications WHERE order_id=? AND event_type=? AND recipient=?").bind(order.id,eventType,recipient).first();
-  if(row?.status==="sent")return;
-  await env.DB.prepare("UPDATE email_notifications SET status='sending',attempts=attempts+1,updated_at=?,last_error=NULL WHERE order_id=? AND event_type=? AND recipient=?").bind(now,order.id,eventType,recipient).run();
-  const paid=eventType==="paid"||eventType==="paid_admin",subject=paid?"Pembayaran berhasil — LEOOSTORE.id":"Pesanan baru menunggu pembayaran — LEOOSTORE.id";
-  const textBody=[paid?"PEMBAYARAN BERHASIL":"PESANAN BARU", "Order ID: "+order.id, "Pelanggan: "+(order.customer_name||"Customer"), "Email: "+(customer||"-"), "WhatsApp: "+(order.customer_whatsapp||"-"), "Produk: "+(order.product_name||"-")+" — "+(order.denomination_name||"-"), "Total: Rp"+Number(order.total||0).toLocaleString("id-ID"), "Status: "+(paid?"Pembayaran Berhasil":(order.status||"Menunggu Pembayaran")), "Cek transaksi: https://leovbr.github.io/Leo-store/order.html?id="+encodeURIComponent(order.id)].join("\n");
-  try{
-    const response=await fetch("https://api.resend.com/emails",{method:"POST",headers:{"Authorization":"Bearer "+apiKey,"Content-Type":"application/json"},body:JSON.stringify({from,to:[recipient],subject,text:textBody})});
-    if(!response.ok)throw new Error("Resend HTTP "+response.status+": "+(await response.text()).slice(0,400));
-    await env.DB.prepare("UPDATE email_notifications SET status='sent',updated_at=?,last_error=NULL WHERE order_id=? AND event_type=? AND recipient=?").bind(new Date().toISOString(),order.id,eventType,recipient).run();
-  }catch(error){
-    console.error("Order email failed",{orderId:order.id,eventType,error:String(error?.message||error)});
-    await env.DB.prepare("UPDATE email_notifications SET status='failed',updated_at=?,last_error=? WHERE order_id=? AND event_type=? AND recipient=?").bind(new Date().toISOString(),String(error?.message||error).slice(0,500),order.id,eventType,recipient).run();
-  }
-}
-async function ensurePromoUsageTable(db){
-  await db.prepare("CREATE TABLE IF NOT EXISTS promo_redemptions (promo_code TEXT NOT NULL, order_id TEXT NOT NULL UNIQUE, customer_key TEXT NOT NULL, status TEXT NOT NULL CHECK(status IN ('reserved','paid','released')), created_at TEXT NOT NULL, updated_at TEXT NOT NULL, PRIMARY KEY(promo_code, order_id))").run();
-  await db.prepare("CREATE INDEX IF NOT EXISTS idx_promo_redemptions_code_status ON promo_redemptions(promo_code,status)").run();
-  await db.prepare("CREATE INDEX IF NOT EXISTS idx_promo_redemptions_customer ON promo_redemptions(promo_code,customer_key,status)").run();
-}
-async function makePromoCustomerKey(email,whatsapp){
-  const identity=email.toLowerCase()||whatsapp.replace(/[^0-9]/g,"");
-  if(!identity)return null;
-  const digest=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(identity));
-  return [...new Uint8Array(digest)].map(b=>b.toString(16).padStart(2,"0")).join("");
-}
-async function reservePromoUsage(db,{code,orderId,customerKey,usageLimit,usageCount,perUserLimit,now}){
-  await ensurePromoUsageTable(db);
-  const totalLimit=usageLimit==null?null:Number(usageLimit);
-  const priorCount=Math.max(0,Number(usageCount)||0);
-  const perLimit=perUserLimit==null?null:Number(perUserLimit);
-  const result=await db.prepare("INSERT OR IGNORE INTO promo_redemptions (promo_code,order_id,customer_key,status,created_at,updated_at) SELECT ?,?,?, 'reserved',?,? WHERE (? IS NULL OR (? + (SELECT COUNT(*) FROM promo_redemptions WHERE promo_code=? AND status IN ('reserved','paid'))) < ?) AND (? IS NULL OR (SELECT COUNT(*) FROM promo_redemptions WHERE promo_code=? AND customer_key=? AND status IN ('reserved','paid')) < ?)").bind(code,orderId,customerKey,now,now,totalLimit,priorCount,code,totalLimit,perLimit,code,customerKey,perLimit).run();
-  return Number(result?.meta?.changes||0)===1;
-}
-async function releasePromoUsage(db,orderId,now){
-  await db.prepare("UPDATE promo_redemptions SET status='released',updated_at=? WHERE order_id=? AND status='reserved'").bind(now,orderId).run();
+  const game=String(url.searchParams.get("game")||"").trim().slice(0,160);
+  const where="o.status IN ('Pembayaran Berhasil','Pesanan Diproses','Top Up Berhasil')"+(game?" AND o.product_name=?":"");
+  const summaryQuery="SELECT COUNT(*) AS count,ROUND(AVG(r.rating),1) AS average FROM order_reviews r INNER JOIN orders o ON o.id=r.order_id WHERE "+where;
+  const summary=game?await env.DB.prepare(summaryQuery).bind(game).first():await env.DB.prepare(summaryQuery).first();
+  const distributionQuery="SELECT r.rating,COUNT(*) AS count FROM order_reviews r INNER JOIN orders o ON o.id=r.order_id WHERE "+where+" GROUP BY r.rating";
+  const distributionRows=game?await env.DB.prepare(distributionQuery).bind(game).all():await env.DB.prepare(distributionQuery).all();
+  const ratingDistribution={1:0,2:0,3:0,4:0,5:0};
+  for(const row of distributionRows.results||[])ratingDistribution[Number(row.rating)]=Number(row.count)||0;
+  const rowsQuery="SELECT r.order_id AS orderId,r.review_number AS reviewNumber,r.rating,r.comment,r.created_at AS createdAt,r.display_name AS displayName,r.reviewer_id AS reviewerId,o.product_name AS productName,o.denomination_name AS denomination,o.created_at AS transactionCreatedAt FROM order_reviews r INNER JOIN orders o ON o.id=r.order_id WHERE "+where+" ORDER BY r.created_at DESC LIMIT ? OFFSET ?";
+  const rows=game?await env.DB.prepare(rowsQuery).bind(game,limit,offset).all():await env.DB.prepare(rowsQuery).bind(limit,offset).all();
+  const items=(rows.results||[]).map(row=>({orderId:row.orderId,reviewNumber:Number(row.reviewNumber)||0,rating:Number(row.rating),comment:String(row.comment||""),createdAt:row.createdAt,productName:String(row.productName||""),denomination:String(row.denomination||""),transactionCreatedAt:row.transactionCreatedAt||null,displayName:String(row.displayName==="Pelanggan LEOOSTORE"?"Pelanggan LEOOSTORE.id":(row.displayName||(row.reviewerId?("Pelanggan LEOOSTORE.id #"+String(row.reviewerId).padStart(3,"0")):"Pelanggan LEOOSTORE.id")))}));
+  return json({ok:true,game:game||null,average:Number(summary?.average)||0,count:Number(summary?.count)||0,ratingDistribution,items,limit,offset});
 }
 
 
