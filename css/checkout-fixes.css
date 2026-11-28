@@ -4841,3 +4841,8 @@ body.shop-page #productList .product-info::after{
 .checkout-page.checkout-catalog-loading #accountCard{
   visibility:hidden!important;
 }
+
+
+/* Roblox preorder: remember dismissal preference */
+.checkout-page .roblox-preorder-skip{display:flex!important;align-items:center!important;justify-content:center!important;gap:9px!important;margin:18px auto 0!important;color:var(--text-muted)!important;font-size:12px!important;line-height:1.4!important;cursor:pointer!important;user-select:none!important}
+.checkout-page .roblox-preorder-skip input{width:17px!important;height:17px!important;margin:0!important;accent-color:#7950f2!important;cursor:pointer!important;flex:0 0 auto!important}
