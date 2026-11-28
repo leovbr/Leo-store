@@ -533,6 +533,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   function setGameInfoTab(tab) {
     const description = tab === "description";
+    document.body.classList.toggle("checkout-description-mode", description);
     if (checkoutLayout) checkoutLayout.hidden = description;
     if (gameDescriptionPanel) gameDescriptionPanel.hidden = !description;
     gameTopupTab?.classList.toggle("active", !description);
@@ -553,6 +554,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!product) {
       if (gameInfoTabs) gameInfoTabs.hidden = true;
       if (gameDescriptionPanel) gameDescriptionPanel.hidden = true;
+      document.body.classList.remove("checkout-description-mode");
       if (checkoutLayout) checkoutLayout.hidden = false;
       return;
     }
