@@ -100,6 +100,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   const robloxPreorderModal = $("robloxPreorderModal");
   const robloxPreorderBody = $("robloxPreorderBody");
   const robloxPreorderOk = $("robloxPreorderOk");
+  const robloxPreorderSkip = $("robloxPreorderSkip");
+  const ROBLOX_PREORDER_SKIP_KEY = "LEOOSTORE_roblox_preorder_skip";
 
   const ORDERS_KEY = "LEOOSTORE_orders";
   const LAST_ORDER_KEY = "LEOOSTORE_last_order";
@@ -497,6 +499,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const isRobloxUsername = id === "roblox-via-username";
     const isRobloxLogin = id === "roblox-via-login";
     if (!isRobloxUsername && !isRobloxLogin) return;
+    try { if (localStorage.getItem(ROBLOX_PREORDER_SKIP_KEY) === "1") return; } catch (_) {}
+    if (robloxPreorderSkip) robloxPreorderSkip.checked = false;
 
     const formatText = 'Halo min, saya sudah order (nominal robux) dengan username LeoXXXX (tidak perlu mirip)';
     if (robloxPreorderBody) {
@@ -513,6 +517,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   function closeRobloxPreorderInfo() {
     if (!robloxPreorderModal) return;
+    if (robloxPreorderSkip?.checked) {
+      try { localStorage.setItem(ROBLOX_PREORDER_SKIP_KEY, "1"); } catch (error) { console.warn("Tidak dapat menyimpan preferensi popup Roblox:", error); }
+    }
     robloxPreorderModal.hidden = true;
     robloxPreorderModal.setAttribute("aria-hidden", "true");
     document.body.classList.remove("roblox-preorder-open");
