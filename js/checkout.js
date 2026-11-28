@@ -518,6 +518,85 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.body.classList.remove("roblox-preorder-open");
   }
 
+  const gameInfoTabs = $("gameInfoTabs");
+  const checkoutLayout = $("checkoutLayout");
+  const gameTopupTab = $("gameTopupTab");
+  const gameDescriptionTab = $("gameDescriptionTab");
+  const gameDescriptionPanel = $("gameDescriptionPanel");
+  const gameDescriptionTitle = $("gameDescriptionTitle");
+  const gameDescriptionCopy = $("gameDescriptionCopy");
+  const gameReviewAverage = $("gameReviewAverage");
+  const gameReviewCount = $("gameReviewCount");
+  const gameReviewBars = $("gameReviewBars");
+  const gameReviewList = $("gameReviewList");
+  let gameReviewRequest = 0;
+
+  function setGameInfoTab(tab) {
+    const description = tab === "description";
+    if (checkoutLayout) checkoutLayout.hidden = description;
+    if (gameDescriptionPanel) gameDescriptionPanel.hidden = !description;
+    gameTopupTab?.classList.toggle("active", !description);
+    gameDescriptionTab?.classList.toggle("active", description);
+    gameTopupTab?.setAttribute("aria-selected", String(!description));
+    gameDescriptionTab?.setAttribute("aria-selected", String(description));
+  }
+
+  function formatReviewDate(value, includeTime = false) {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return "—";
+    const day = new Intl.DateTimeFormat("id-ID", {day:"numeric",month:"short",year:"numeric",timeZone:"Asia/Jakarta"}).format(date);
+    if (!includeTime) return day;
+    return day + " · " + new Intl.DateTimeFormat("id-ID", {hour:"2-digit",minute:"2-digit",hour12:false,timeZone:"Asia/Jakarta"}).format(date) + " WIB";
+  }
+
+  async function renderGameDescriptionReviews(product) {
+    if (!product) {
+      if (gameInfoTabs) gameInfoTabs.hidden = true;
+      if (gameDescriptionPanel) gameDescriptionPanel.hidden = true;
+      if (checkoutLayout) checkoutLayout.hidden = false;
+      return;
+    }
+    if (gameInfoTabs) gameInfoTabs.hidden = false;
+    if (gameDescriptionTitle) gameDescriptionTitle.textContent = "Deskripsi " + (product.name || "Game");
+    if (gameDescriptionCopy) gameDescriptionCopy.textContent = String(product.description || "").trim() || "Deskripsi game belum ditambahkan oleh admin.";
+    if (gameReviewList) gameReviewList.innerHTML = '<div class="game-review-empty">Memuat ulasan pelanggan…</div>';
+    if (gameReviewAverage) gameReviewAverage.textContent = "—";
+    if (gameReviewCount) gameReviewCount.textContent = "Memuat ulasan…";
+    if (gameReviewBars) gameReviewBars.innerHTML = "";
+    const requestId = ++gameReviewRequest;
+    try {
+      const response = await fetch("https://spring-surf-a6a7.leovbriansyh791.workers.dev/api/reviews?limit=10&game=" + encodeURIComponent(product.name || ""), {cache:"no-store"});
+      const data = await response.json();
+      if (requestId !== gameReviewRequest) return;
+      if (!response.ok || !data.ok) throw new Error(data.error || "Ulasan tidak tersedia");
+      if (gameReviewAverage) gameReviewAverage.textContent = Number(data.average || 0).toFixed(1);
+      if (gameReviewCount) gameReviewCount.textContent = Number(data.count || 0) + " ulasan untuk " + (product.name || "game ini");
+      const distribution = data.ratingDistribution || {};
+      if (gameReviewBars) gameReviewBars.innerHTML = [5,4,3,2,1].map(star => {
+        const count = Number(distribution[star] || 0);
+        const percent = Number(data.count) ? Math.round(count / Number(data.count) * 100) : 0;
+        return '<div class="game-review-bar"><span>' + star + '</span><div class="game-review-bar-track"><div class="game-review-bar-fill" style="width:' + percent + '%"></div></div><span>' + count + '</span></div>';
+      }).join("");
+      if (!data.items?.length) {
+        if (gameReviewList) gameReviewList.innerHTML = '<div class="game-review-empty">Belum ada ulasan untuk game ini. Ulasan pelanggan akan tampil setelah transaksi berhasil dan pelanggan mengirimkan ulasan.</div>';
+        return;
+      }
+      if (gameReviewList) gameReviewList.innerHTML = data.items.slice(0,10).map(item =>
+        '<article class="game-review-card"><div class="game-review-card-top"><strong>' + escapeHTML(item.displayName || "Pelanggan LEOOSTORE.id") + '</strong><span class="stars">' + "★".repeat(Math.max(0,Math.min(5,Number(item.rating)||0))) + '</span></div>' +
+        '<p>' + (item.comment ? escapeHTML(item.comment) : 'Pelanggan memberikan rating tanpa komentar.') + '</p>' +
+        '<div class="game-review-meta">' + escapeHTML(item.denomination || "Nominal tidak tersedia") + '<br>Transaksi: ' + escapeHTML(formatReviewDate(item.transactionCreatedAt,true)) + ' · Ulasan: ' + escapeHTML(formatReviewDate(item.createdAt)) + '</div></article>'
+      ).join("");
+    } catch (error) {
+      if (requestId !== gameReviewRequest) return;
+      if (gameReviewList) gameReviewList.innerHTML = '<div class="game-review-empty">Ulasan belum dapat dimuat. Silakan coba lagi nanti.</div>';
+      if (gameReviewCount) gameReviewCount.textContent = "Ulasan belum tersedia";
+      console.warn("[LEOOSTORE] Game reviews:", error);
+    }
+  }
+
+  gameTopupTab?.addEventListener("click", () => setGameInfoTab("topup"));
+  gameDescriptionTab?.addEventListener("click", () => setGameInfoTab("description"));
+
   function selectGame(gameId) {
     selectedProduct = getProduct(gameId);
     selectedDenomination = null;
@@ -525,6 +604,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (paymentInput) paymentInput.value = "";
     document.querySelectorAll(".payment-option").forEach((option) => option.classList.remove("selected"));
     updateHero(selectedProduct);
+    renderGameDescriptionReviews(selectedProduct);
+    setGameInfoTab("topup");
     updateAccountFields(selectedProduct);
     renderDenominations(selectedProduct);
     updateSummary();
