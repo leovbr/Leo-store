@@ -64,6 +64,7 @@ body.info-page{background:#080e1a;color:#f4f6ff;font-family:'Plus Jakarta Sans',
 .leo-review-purchase-meta strong{color:#e2e8f0;font-size:11px;line-height:1.5;overflow-wrap:anywhere}
 .leo-review-purchase-meta .leo-review-purchase-time{grid-column:1/-1}
 .leo-public-review-card>time{display:block;margin-top:11px;color:#8290a7;font-size:10px}
+ .leo-public-load-more{display:block;margin:22px auto 0;padding:12px 22px;border:1px solid #7552d9;border-radius:11px;background:linear-gradient(110deg,#39216d,#251944);color:#e9ddff;font:700 12px "Plus Jakarta Sans",sans-serif;cursor:pointer}.leo-public-load-more:disabled{opacity:.6;cursor:wait}.leo-public-load-more[hidden]{display:none}
 @media(max-width:480px){.leo-review-purchase-meta{gap:9px;padding:11px}.leo-review-purchase-meta strong{font-size:10px}}
 </style>
 <style id="leoostore-text-brand-override">
@@ -140,6 +141,7 @@ body.info-page{background:#080e1a;color:#f4f6ff;font-family:'Plus Jakarta Sans',
 <header class="reviews-heading"><h1>Ulasan Pelanggan</h1><p>Rating dan pengalaman pelanggan setelah transaksi berhasil di LEOOSTORE.</p></header>
 <div class="leo-review-summary"><div><strong id="leoPublicAverage">—</strong><span class="leo-review-stars">★★★★★</span><small id="leoPublicCount">Memuat ulasan…</small></div></div>
 <div id="leoPublicReviewList" class="leo-public-review-grid"><p>Memuat ulasan pelanggan…</p></div>
+<button type="button" id="leoPublicLoadMore" class="leo-public-load-more" hidden>Lihat Ulasan Lainnya</button>
 </main>
 <footer class="site-footer checkout-footer-inline universal-social-footer">
   <div class="footer-inner">
@@ -184,6 +186,6 @@ document.addEventListener("DOMContentLoaded",function(){
 </script>
 <script src="js/supabase-catalog.js?v=20261127-shared-search1"></script>
 <script src="js/site-search.js?v=20261128-navbar-align3"></script>
-<script src="js/public-reviews.js?v=20261128-public8"></script>
+<script src="js/public-reviews.js?v=20261128-pagination1"></script>
 <script src="js/floating-admin-drag.js?v=20261120-drag1" defer></script>
 </body></html>
